@@ -210,7 +210,7 @@
                 $('#gayway').on('check.bs.table', function (row, element) {
                     var l_comaddr = element.comaddr;
                     var vv = [];
-                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0);
+                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0,"${param.action}");
 
                     var obj = {};
                     obj.l_comaddr = l_comaddr;
@@ -267,7 +267,7 @@
 
 
                     var vv = [];
-                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0);
+                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0,"${param.action}");
 
 
 
@@ -428,7 +428,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "switchloopCB", ele.l_comaddr, o1.switch, ele.lid, info);
+                dealsend2("10", data, "switchloopCB", ele.l_comaddr, o1.switch, ele.lid, info,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -504,7 +504,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "restoreloopCB", ele.l_comaddr, 0, 0, info);
+                dealsend2("10", data, "restoreloopCB", ele.l_comaddr, 0, 0, info,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -571,7 +571,7 @@
                 vv.push(20); //寄存器数目 2字节                         
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info);
+                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info,"${param.action}");
             }
         </script>
     </head>

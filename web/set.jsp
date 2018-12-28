@@ -64,7 +64,7 @@
                 vv.push(0);
                 vv.push(1); //寄存器数目 2字节   
                 var data = buicode2(vv);
-                dealsend2("03", data, "readControlCB", obj.l_comaddr, 0, 0, 3901);
+                dealsend2("03", data, "readControlCB", obj.l_comaddr, 0, 0, 3901,"${param.action}");
             }
 
             function refreshControlCB(obj) {
@@ -86,7 +86,6 @@
                     console.log(v);
                 }
             }
-
 
             function refreshControl() {
                 var obj = $("#form1").serializeObject();
@@ -110,7 +109,7 @@
                 vv.push(val >> 8 & 0xff);
                 vv.push(val & 0xff);
                 var data = buicode2(vv);
-                dealsend2("10", data, "refreshControlCB", obj.l_comaddr, 0, 0, 3901);
+                dealsend2("10", data, "refreshControlCB", obj.l_comaddr, 0, 0, 3901,"${param.action}");
             }
 
             function readTrueTimeCB(obj) {
@@ -154,6 +153,7 @@
 
                 }
             }
+            
             function readTrueTime() {
 
                 var obj = $("#form1").serializeObject();
@@ -172,7 +172,7 @@
                 vv.push(0);
                 vv.push(7); //寄存器数目 2字节                         
                 var data = buicode2(vv);
-                dealsend2("03", data, "readTrueTimeCB", obj.l_comaddr, 0, 0, 1313);
+                dealsend2("03", data, "readTrueTimeCB", obj.l_comaddr, 0, 0, 1313,"${param.action}");
 
 
             }
@@ -228,7 +228,7 @@
                 vv.push(t >> 8 & 0xff);
                 vv.push(t & 0xff);
                 var data = buicode2(vv);
-                dealsend2("10", data, "setCheckTimeCB", obj.l_comaddr, 0, 0, 3900);
+                dealsend2("10", data, "setCheckTimeCB", obj.l_comaddr, 0, 0, 3900,"${param.action}");
             }
 
             function  initDataCB(obj) {
@@ -286,7 +286,7 @@
                 vv.push(0);
                 vv.push(1);
                 var data = buicode2(vv);
-                dealsend2("10", data, "initDataCB", obj.l_comaddr, 0, 0, 3928);
+                dealsend2("10", data, "initDataCB", obj.l_comaddr, 0, 0, 3928,"${param.action}");
             }
 
             function dateFormatter(value) {
@@ -350,6 +350,7 @@
                 }
                 console.log(obj);
             }
+            
             function setTimeNow() {
                 var time = $('#nowtime').datetimebox('getValue');
                 var myDate = new Date(time);
@@ -415,7 +416,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "setTimeNowCB", comaddr, 1, 0, 3920);
+                dealsend2("10", data, "setTimeNowCB", comaddr, 1, 0, 3920,"${param.action}");
 
             }
 
@@ -531,7 +532,7 @@
                 var vv = [];
                 var num = randnum(0, 9) + 0x70;
                 var data = buicode(comaddr, 0x04, 0xAA, num, 0, 1, vv); //01 03 F24    
-                dealsend2("AA", data, 1, "readSiteCB", comaddr, 0, 0, 0);
+                dealsend2("AA", data, 1, "readSiteCB", comaddr, 0, 0, 0,"${param.action}");
             }
             function readTimeCB(obj) {
                 if (obj.status == "success") {
@@ -572,7 +573,7 @@
                 var vv = [];
                 var num = randnum(0, 9) + 0x70;
                 var data = buicode(comaddr, 0x04, 0xAA, num, 0, 4, vv); //01 03 F24    
-                dealsend2("AA", data, 4, "readTimeCB", comaddr, 0, 0, 0);
+                dealsend2("AA", data, 4, "readTimeCB", comaddr, 0, 0, 0,"${param.action}");
             }
             function setSiteCB(obj) {
                 console.log(obj);
@@ -586,7 +587,7 @@
                         var v1 = [];
                         var num = randnum(0, 9) + 0x70;
                         var data1 = buicode(obj.comaddr, 0x04, 0x00, num, 0, 1, v1); //01 03 F24    
-                        dealsend2("00", data1, 1, "", obj.comaddr, 0, 0, 0);
+                        dealsend2("00", data1, 1, "", obj.comaddr, 0, 0, 0,"${param.action}");
                         layer.close(index);
                     });
                 }
@@ -648,7 +649,7 @@
                     var num = randnum(0, 9) + 0x70;
                     var data = buicode(comaddr, 0x04, 0xA4, num, 0, 1, vv); //01 03 F24    
 
-                    dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0);
+                    dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0,"${param.action}");
 
                 } else if (obj.sitetype == "0") {
 
@@ -695,7 +696,7 @@
                         var num = randnum(0, 9) + 0x70;
                         var data = buicode(comaddr, 0x04, 0xA4, num, 0, 1, vv); //01 03 F24    
 
-                        dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0);
+                        dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0,"${param.action}");
 
                     }
 
@@ -764,7 +765,7 @@
     <body>
 
 
-        <div class="panel panel-success" >
+        <div class="panel panel-default" >
             <div class="panel-heading">
                 <h3 class="panel-title"><span >网关参数设置</span></h3>
             </div>

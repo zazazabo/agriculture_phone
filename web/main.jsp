@@ -40,11 +40,27 @@
             }
             function callchild(obj) {
                 var func = obj.function;
-                var objchild = $("iframe").eq(0);
-                var win = objchild[0].contentWindow;
-                if (win.hasOwnProperty(func)) {
-                    win[func](obj);
+                var objframe = $("iframe");
+                for (var i = 0; i < objframe.length; i++) {
+                    var src = $(objframe[i]).attr("src");
+                    if (src.indexOf(obj.page) != -1) {
+                        var win = objframe[i].contentWindow;
+                        if (win.hasOwnProperty(func)) {
+                            win[func](obj);
+                        }
+                        break;
+                    }
                 }
+//                console.log(objframe);
+//                var id = $(objchild[0]).attr("id");
+//                console.log(id);
+//                var win = objchild[0].contentWindow;
+//                 console.log(win);
+//                if (win.hasOwnProperty(func)) {
+//                    win[func](obj);
+//                }else{
+//                    alert("ddd");
+//                }
             }
 
 
@@ -100,13 +116,16 @@
                     console.log(info.page);
                     var obj = $("iframe").eq(0);
                     var win = obj[0].contentWindow;
-                    if (info.page == 1) {
-                        var func = info.function;
-                        console.log(func);
-                        win[func](info);
-                    } else if (info.page == 2) {
-                        callchild(info);
-                    }
+                    var func = info.function;
+                    callchild(info);
+
+//                    if (info.page == 1) {
+//                        var func = info.function;
+//                        console.log(func);
+//                        win[func](info);
+//                    } else if (info.page == 2) {
+//                        callchild(info);
+//                    }
                 }
             }
 
@@ -150,81 +169,78 @@
         <c:if test="${empty cookie.lang.value }">
             <c:set var="lang" value="zh_CN"></c:set>     
         </c:if>
-          <c:set var="urlparam" value="lang=${lang}&name=${param.name}&userId=${param.id}&role=${param.role}"></c:set>     
-        <header class="navbar-wrapper">
-            <div class="navbar navbar-fixed-top">
-                <div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">智慧农业生产管理控制系统</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> 
-                    <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span> 
-                    <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
-                    <nav class="nav navbar-nav">
-                        <ul class="cl">
-                            <li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
-                                <ul class="dropDown-menu menu radius box-shadow">
-                                    <li><a href="javascript:;" onclick="article_add('添加资讯', 'article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
-                                    <li><a href="javascript:;" onclick="picture_add('添加资讯', 'picture-add.html')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
-                                    <li><a href="javascript:;" onclick="product_add('添加资讯', 'product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
-                                    <li><a href="javascript:;" onclick="member_add('添加用户', 'member-add.html', '', '510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
-                        <!--                         <select style="width: 200px; height: 30px; margin-top:0px; font-size: 16px; border: 1px solid; background-color:  #7aba7b; color:  white;" id="pojects">
-                                                    </select>-->
-                        <ul class="cl">
-                            <li>超级管理员</li>
-                            <li class="dropDown dropDown_hover">
-                                <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
-                                <ul class="dropDown-menu menu radius box-shadow">
-                                    <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
-                                    <li><a href="#">切换账户</a></li>
-                                    <li><a href="#">退出</a></li>
-                                </ul>
-                            </li>
-                            <li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
-                            <li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
-                                <ul class="dropDown-menu menu radius box-shadow">
-                                    <li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
-                                    <li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
-                                    <li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
-                                    <li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
-                                    <li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
-                                    <li><a href="javascript:;" data-val="orange" title="橙色">橙色</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
+        <c:set var="urlparam" value="lang=${lang}&name=${param.name}&userId=${param.id}&role=${param.role}"></c:set>     
+            <header class="navbar-wrapper">
+                <div class="navbar navbar-fixed-top">
+                    <div class="container-fluid cl"> <a class="logo navbar-logo f-l mr-10 hidden-xs" href="/aboutHui.shtml">智慧农业生产管理控制系统</a> <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a> 
+                        <span class="logo navbar-slogan f-l mr-10 hidden-xs">v3.1</span> 
+                        <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+                        <nav class="nav navbar-nav">
+                            <ul class="cl">
+                                <li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
+                                    <ul class="dropDown-menu menu radius box-shadow">
+                                        <li><a href="javascript:;" onclick="article_add('添加资讯', 'article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+                                        <li><a href="javascript:;" onclick="picture_add('添加资讯', 'picture-add.html')"><i class="Hui-iconfont">&#xe613;</i> 图片</a></li>
+                                        <li><a href="javascript:;" onclick="product_add('添加资讯', 'product-add.html')"><i class="Hui-iconfont">&#xe620;</i> 产品</a></li>
+                                        <li><a href="javascript:;" onclick="member_add('添加用户', 'member-add.html', '', '510')"><i class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+                            <!--                         <select style="width: 200px; height: 30px; margin-top:0px; font-size: 16px; border: 1px solid; background-color:  #7aba7b; color:  white;" id="pojects">
+                                                        </select>-->
+                            <ul class="cl">
+                                <li>超级管理员</li>
+                                <li class="dropDown dropDown_hover">
+                                    <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                                    <ul class="dropDown-menu menu radius box-shadow">
+                                        <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
+                                        <li><a href="#">切换账户</a></li>
+                                        <li><a href="#">退出</a></li>
+                                    </ul>
+                                </li>
+                                <li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
+                                <li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
+                                    <ul class="dropDown-menu menu radius box-shadow">
+                                        <li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
+                                        <li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
+                                        <li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
+                                        <li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
+                                        <li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
+                                        <li><a href="javascript:;" data-val="orange" title="橙色">橙色</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </header>
-        <aside class="Hui-aside">
-            <div class="menu_dropdown bk_2">
+            </header>
+            <aside class="Hui-aside">
+                <div class="menu_dropdown bk_2">
                 <c:forEach items="${menu}" var="t" varStatus="i">
                     <c:if test="${t.m_parent==0}">
                         <dl id="menu-picture">
-                   
-                                <dt>
-                                    <i class="Hui-iconfont">${t.m_icon}</i>
-                                    ${t.m_text[lang]}
-                                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <c:if test="${fn:length(t.children)==0}">
-                                            <li>
-                                                <a data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}" data-title="${t.m_text[lang]}" href="javascript:void(0)">${t.m_text[lang]}</a>
-                                            </li>
-                                        </c:if>
-                                        <c:forEach items="${t.children}" var="t1" varStatus="y">
 
-                                            <li>
-                                                <a data-href="${t1.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}" data-title="${t1.m_text[lang]}" href="javascript:void(0)">${t1.m_text[lang]}</a>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </dd>
-                          
-
+                            <dt>
+                                <span class="${t.m_icon}"></span>&nbsp;
+                                ${t.m_text[lang]}
+                                <!--                                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>-->
+                            </dt>
+                            <dd>
+                                <ul>
+                                    <c:if test="${fn:length(t.children)==0}">
+                                        <li>
+                                            <a data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t.m_action}" data-title="${t.m_text[lang]}" href="javascript:void(0)">${t.m_text[lang]}</a>
+                                        </li>
+                                    </c:if>
+                                    <c:forEach items="${t.children}" var="t1" varStatus="y">
+                                        <li>
+                                            <a data-href="${t1.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t1.m_action}" data-title="${t1.m_text[lang]}" href="javascript:void(0)">${t1.m_text[lang]}</a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                            </dd>
                         </dl>
 
                     </c:if>

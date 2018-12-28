@@ -242,7 +242,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("03", data, "getSceneNumCB", l_comaddr, 0, 0, 3800);
+                dealsend2("03", data, "getSceneNumCB", l_comaddr, 0, 0, 3800,"${param.action}");
             }
 
             function formartcomaddr(value, row, index) {
