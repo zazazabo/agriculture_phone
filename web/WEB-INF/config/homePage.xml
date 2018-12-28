@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xforms>
+    <xform desc="首页" id="homePage">
+<!--        <xhandle desc="首页显示传感" id="getSensorList" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor where show=1 AND deplayment=1 AND @CONDITION order by s_index   " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+            <xsql id="a2" list="true" page="true" tpe="SQL" tpl="select b.online as line,l_name,l_switch,show  from t_loop,t_baseinfo as b where b.comaddr = l_comaddr and show=1 AND l_deplayment=1 AND @CONDITION  " var="looprs">
+                <xflt id="CONDITION" nrp="" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>-->
+         <xhandle desc="首页显示传感" id="getSensorList" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,ts.name as name from t_sensorecord as tc,t_sensor as ts where tc.type = 1 and convert(char(10),collectime,120) = convert(char(10),GetDate(),120) and tc.comaddr = ts.l_comaddr and tc.infonum = ts.infonum and tc.sitenum = ts.sitenum and ts.show = 1 and @CONDITION " var="wdrs">
+                <xflt id="CONDITION" nrp="" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid') order by times asc"></xfltpara>
+                </xflt>
+            </xsql>
+<!--            select b.online as line,l_name,l_switch,show  from t_loop,t_baseinfo as b where b.comaddr = l_comaddr and show=1 AND l_deplayment=1-->
+<!--            select * from t_loop where show=1 AND l_deplayment=1 -->
+            <xsql id="a2" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,tc.name as name,tc.type as type from t_sensorecord as tc,t_sensor as ts where tc.type != 3 and convert(char(10),collectime,120) = convert(char(10),GetDate(),120) and tc.comaddr = ts.l_comaddr and tc.infonum = ts.infonum and tc.sitenum = ts.sitenum and ts.show = 1 and @CONDITION  " var="sdrs">
+                <xflt id="CONDITION" nrp="" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid') order by times asc"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        <xhandle desc="首页显示开关传感器" id="getkgList" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor where type = 3 and show = 1 and @CONDITION " var="bootstrap">
+                <xflt id="CONDITION" nrp="" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+         
+    </xform>
+    <xform desc="传感器管理" id="sensormanage">
+        <xhandle desc="添加传感器" id="add" rtnype="JSON">
+            <xsql id="a1" para="model,dreg,name,sitenum,l_comaddr,type" tpe="DDL" tpl="insert into t_sensor(model,dreg,worktype,name,sitenum,l_comaddr,type,deplayment) values(':model',:dreg,0,':name',':sitenum',':l_comaddr',':type',0) " var="rs"></xsql> 
+        </xhandle>   
+        <xhandle desc="添加首页显示传感" id="addshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=1 where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@id ">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>    
+        <xhandle desc="添加首页显示传感" id="removeshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@id ">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>  
+        <xhandle desc="查看传感是否同一网关下站号和数据位置相同" id="getIsSiten" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor WHERE   @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @sitenum AND @dreg">
+                    <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    </xfltpara>
+                    <xfltpara id="sitenum" nrp="1=1" para="sitenum" sql="sitenum = ':sitenum'">
+                    </xfltpara>
+                    <xfltpara id="dreg" nrp="1=1" para="dreg" sql="dreg = ':dreg'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
+        <xhandle desc="修改传感器排列顺序" id="updesc" rtnype="JSON">
+            <xsql id="a1" para="s_index" tpe="DDL" tpl="update t_sensor set s_index=':s_index' where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@id ">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>  
+        <xhandle desc="查看网关下的传感器信息" id="getsensorBycomaddr" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor WHERE   @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>
+        
+    </xform>
+    <xform desc="回路管理" id="loop">
+        <xhandle desc="添加首页显示回路" id="addshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_loop set show=1 where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@id ">
+                    <xfltpara id="id" nrp="1=1" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>    
+        <xhandle desc="添加首页显示传感" id="removeshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_loop set show=0 where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@id ">
+                    <xfltpara id="id" nrp="1=1" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>    
+    </xform>
+    <xform desc="网关管理" id="gayway">
+        <xhandle desc="查看网关下是否存在回路" id="gaywayinfo" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor WHERE   @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
+                    <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
+        <xhandle desc="网关集合" id="getComaddr" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select comaddr as id,name as text,name  FROM t_baseinfo where @CONDITION " var="list">
+                <xflt id="CONDITION" nrp="" tpl="@pid ">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql=" pid = ':pid'">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        <xhandle desc="根据网关编号查询网关名称" id="getnamebycode" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select name  FROM t_baseinfo where @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@comaddr ">
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql=" comaddr = ':comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+    </xform>
+    
+     <xform desc="回路监控" id="loopval">
+        <xhandle desc="查询场景名称" id="getl_name" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select p_name from t_plan WHERE   @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@p_comaddr AND @p_scenenum">
+                    <xfltpara id="p_comaddr" nrp="1=2" para="p_comaddr" sql="p_comaddr = ':p_comaddr'">
+                    </xfltpara>
+                    <xfltpara id="p_scenenum" nrp="1=2" para="p_scenenum" sql="p_scenenum = ':p_scenenum'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
+        <xhandle desc="查询信息点名称" id="getInfoname" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select name from t_sensor WHERE   @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @infonum">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    </xfltpara>
+                    <xfltpara id="infonum" nrp="1=2" para="infonum" sql="infonum = ':infonum'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
+    </xform>
+    
+    <xform desc="后台网关编号管理" id="gatewaymanage">
+        <xhandle desc="查找后台全部网关编号" id="gcodeLlist" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_basecode" var="bootstrap">
+                
+            </xsql> 
+        </xhandle>  
+        <xhandle desc="查找后台网关编号是否存在" id="existence" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_basecode WHERE @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@comaddr">
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr = ':comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle> 
+        <xhandle desc="添加网关编号" id="addcode" rtnype="JSON">
+            <xsql id="a1" para="comaddr,feebleday,inserpeople,remarks" tpe="DDL" tpl="insert into t_basecode(comaddr,feebleday,inserpeople,remarks,inserday) values(':comaddr',':feebleday',':inserpeople',':remarks',GETDATE()) " var="rs">
+            </xsql>
+        </xhandle> 
+        <xhandle desc="修改网关编号" id="upcode" rtnype="JSON">
+            <xsql id="a1" para="feebleday,remarks" tpe="DDL" tpl="update t_basecode set feebleday = ':feebleday',remarks=':remarks' where  @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@id ">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle> 
+        <xhandle desc="删除网关编号" id="delcode" rtnype="JSON">
+            <xsql id="a1" tpe="DDL" tpl="delete from t_basecode where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id = :id">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle> 
+    </xform>
+    
+     <xform desc="运行记录" id="function">
+        <xhandle desc="查看当天记录信息" id="getdayinfo" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,120) as days,convert(char(10),collectime,108) as times, value, name,type from t_sensorecord where   @CONDITION  " var="bootstrap">
+                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @type AND @pid">
+                    <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
+                    </xfltpara>
+                    <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
+                    </xfltpara>
+                    <xfltpara id="type" nrp="1=1" para="type" sql="type = ':type'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid') order by times asc"></xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
+        <xhandle desc="查询信息点名称" id="getInfoname" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select name from t_sensor WHERE   @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @infonum">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    </xfltpara>
+                    <xfltpara id="infonum" nrp="1=2" para="infonum" sql="infonum = ':infonum'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
+    </xform>
+</xforms>
