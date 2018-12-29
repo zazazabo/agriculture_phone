@@ -484,12 +484,12 @@
                 <xflt id="CONDITION" nrp="" tpl="@roletype AND @code ">
                     <xfltpara id="roletype" nrp="1=2" para="roletype" sql="roletype = ':roletype' ">
                     </xfltpara>
-                    <xfltpara id="code" nrp="1=2" para="code" sql="code = ':code' ">
+                    <xfltpara id="code" nrp="1=2" para="code" sql="code = ':code'">
                     </xfltpara>
                 </xflt>
             </xsql>
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select parent_id from t_role where @CONDITION " var="prs">
-                <xflt id="CONDITION" nrp="" tpl="@roletype AND @code ">
+                <xflt id="CONDITION" nrp="" tpl="@roletype">
                     <xfltpara id="roletype" nrp="1=2" para="roletype" sql="roletype = ':roletype' ">
                     </xfltpara>
                 </xflt>

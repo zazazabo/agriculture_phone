@@ -210,10 +210,10 @@
     <body id="panemask">
 
         <c:set var="lang" value="${cookie.lang.value}"></c:set>     
-        
-   
-        
-        
+
+
+
+
         <c:if test="${empty cookie.lang.value }">
             <c:set var="lang" value="zh_CN"></c:set>     
         </c:if>
@@ -469,9 +469,9 @@
                 }
 
                 $("#pojects").change(function (data) {
-                    
-                 console.log("p:"+$(this).val());    
-                    
+
+                    console.log("p:" + $(this).val());
+
 //                    var user = new Object();
 //                    user.begin = '6A';
 //                    user.res = 0;
@@ -488,6 +488,21 @@
 //
 //                    });
                 });
+
+                function getpojectId() {
+                    var pojectid = $("#pojects").val();
+                    return  pojectid;
+                }
+
+                function  getusername() {
+                    var name = $("#u_name").val();
+                    return name;
+                }
+
+                function  getupid() {
+                    var upid = $("#upid").val();
+                    return upid;
+                }
 
         </script> 
 
