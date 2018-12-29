@@ -87,7 +87,7 @@
                 vv.push(0);
                 vv.push(8); //寄存器数目 2字节                         
                 var data = buicode2(vv);
-                dealsend2("03", data, "readSensorCB", comaddr, 0, 0, infonum);
+                dealsend2("03", data, "readSensorCB", comaddr, 0, 0, infonum, "${param.action}");
             }
 
 

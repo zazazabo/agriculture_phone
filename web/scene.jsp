@@ -843,7 +843,7 @@
                 var ooo1 = {id: ele.id, index: ele.index};
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployscenPlanCB", ooo.l_comaddr, val, ooo1, scenenum);
+                dealsend2("10", data, "deployscenPlanCB", ooo.l_comaddr, val, ooo1, scenenum,"${param.action}");
 
             }
 

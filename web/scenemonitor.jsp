@@ -242,7 +242,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("03", data, "getSceneNumCB", l_comaddr, 0, 0, 3800);
+                dealsend2("03", data, "getSceneNumCB", l_comaddr, 0, 0, 3800,"${param.action}");
             }
 
             function formartcomaddr(value, row, index) {
@@ -388,7 +388,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "switchloopCB", l_comaddr, 0, 0, 3800);
+                dealsend2("10", data, "switchloopCB", l_comaddr, 0, 0, 3800,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -452,7 +452,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "restoreloopCB", l_comaddr, 0, 0, 3801);
+                dealsend2("10", data, "restoreloopCB", l_comaddr, 0, 0, 3801,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);

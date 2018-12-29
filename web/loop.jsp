@@ -335,7 +335,7 @@
                 vv.push(20); //寄存器数目 2字节                         
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info);
+                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info,"${param.action}");
             }
 
             function deployLoopCB(obj) {
@@ -505,7 +505,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployLoopCB", ele.l_comaddr, 1, ele.lid, ele.l_info);
+                dealsend2("10", data, "deployLoopCB", ele.l_comaddr, 1, ele.lid, ele.l_info,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -544,7 +544,7 @@
                 }
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployLoopCB", o.l_comaddr, 0, ele.lid, info);
+                dealsend2("10", data, "deployLoopCB", o.l_comaddr, 0, ele.lid, info,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);

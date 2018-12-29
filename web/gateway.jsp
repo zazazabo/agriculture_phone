@@ -31,8 +31,8 @@
         <script type="text/javascript" src="js/genel.js"></script>
         <script type="text/javascript" src="js/getdate.js"></script>
         <script>
-                var u_name="${param.name}";
-            var o_pid="${param.pid}";
+            var u_name = "${param.name}";
+            var o_pid = "${param.pid}";
             var lang = '${param.lang}';//'zh_CN';
             function excel() {
                 $('#dialog-excel').dialog('open');
@@ -165,7 +165,7 @@
             }
 
             $(function () {
-                
+
                 $('#warningtable').bootstrapTable({
                     columns: [
                         {
@@ -420,7 +420,7 @@
                     layerAler("请选择您要保存的数据");  //请选择您要保存的数据
                     return;
                 }
-                var pid ="${param.pid}";
+                var pid = "${param.pid}";
                 for (var i = 0; i <= selects.length - 1; i++) {
                     var comaddr = selects[i].网关编号;
                     while (comaddr.length < 18) {
@@ -728,9 +728,8 @@
             <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
                 <span name="xxx" id="110">导出Excel</span>
             </button>
-
-
         </div>
+        
         <table id="gravidaTable" style="width:100%;">
         </table>
 
@@ -755,9 +754,6 @@
                                 <input id="comaddr" class="form-control" name="comaddr" style="width:150px;display: inline;" placeholder="请输入网关地址" type="text">
                             </td>
                         </tr>
-
-
-
 
                         <tr>
                             <td>

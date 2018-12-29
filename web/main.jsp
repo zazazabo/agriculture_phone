@@ -75,10 +75,16 @@
             }
             function callchild(obj) {
                 var func = obj.function;
-                var objchild = $("iframe").eq(0);
-                var win = objchild[0].contentWindow;
-                if (win.hasOwnProperty(func)) {
-                    win[func](obj);
+                var objframe = $("iframe");
+                for (var i = 0; i < objframe.length; i++) {
+                    var src = $(objframe[i]).attr("src");
+                    if (src.indexOf(obj.page) != -1) {
+                        var win = objframe[i].contentWindow;
+                        if (win.hasOwnProperty(func)) {
+                            win[func](obj);
+                        }
+                        break;
+                    }
                 }
             }
 
@@ -135,13 +141,16 @@
                     console.log(info.page);
                     var obj = $("iframe").eq(0);
                     var win = obj[0].contentWindow;
-                    if (info.page == 1) {
-                        var func = info.function;
-                        console.log(func);
-                        win[func](info);
-                    } else if (info.page == 2) {
-                        callchild(info);
-                    }
+                    var func = info.function;
+                    callchild(info);
+
+//                    if (info.page == 1) {
+//                        var func = info.function;
+//                        console.log(func);
+//                        win[func](info);
+//                    } else if (info.page == 2) {
+//                        callchild(info);
+//                    }
                 }
             }
 
@@ -243,7 +252,7 @@
                         <dl id="menu-picture">
 
                             <dt>
-                                <i class="Hui-iconfont">${t.m_icon}</i>
+                                <span class="${t.m_icon}"></span>&nbsp;
                                 ${t.m_text[lang]}
                                 <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
                             </dt>
@@ -251,13 +260,13 @@
                                 <ul>
                                     <c:if test="${fn:length(t.children)==0}">
                                         <li>
-                                            <a data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}" data-title="${t.m_text[lang]}" href="javascript:void(0)">${t.m_text[lang]}</a>
+                                            <a data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t.m_action}" data-title="${t.m_text[lang]}" href="javascript:void(0)">${t.m_text[lang]}</a>
                                         </li>
                                     </c:if>
                                     <c:forEach items="${t.children}" var="t1" varStatus="y">
 
                                         <li>
-                                            <a data-href="${t1.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}" data-title="${t1.m_text[lang]}" href="javascript:void(0)">${t1.m_text[lang]}</a>
+                                            <a data-href="${t1.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t1.m_action}" data-title="${t1.m_text[lang]}" href="javascript:void(0)">${t1.m_text[lang]}</a>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -279,7 +288,7 @@
                         <c:forEach items="${menu}" var="t" varStatus="i">
                             <c:if test="${t.m_parent==0&&i.index==0}">
                                 <li class="active">
-                                    <span data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}" title="${t.m_text[lang]}" >${t.m_text[lang]}</span>
+                                    <span data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t.m_action}" title="${t.m_text[lang]}" >${t.m_text[lang]}</span>
                                 </li>
                                 <c:set var="main" value="${t.m_action}"></c:set>     
                             </c:if> 

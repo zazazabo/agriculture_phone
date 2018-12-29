@@ -226,14 +226,14 @@ function isNumber(val) {
 
 }
 
-function dealsend2(msg, data, func, comaddr, type, param, val) {
+function dealsend2(msg, data, func, comaddr, type, param, val,page) {
     var user = new Object();
     user.res = 1;
     user.status = "";
     user.comaddr = comaddr;
     user.function = func;
     user.param = param;
-    user.page = 2;
+    user.page = page;
     user.msg = msg;
     user.val = val;
     user.type = type;
