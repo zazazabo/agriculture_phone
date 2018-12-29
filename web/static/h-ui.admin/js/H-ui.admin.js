@@ -52,6 +52,7 @@ function getskincookie(){
 function Hui_admin_tab(obj){
 	var bStop = false,
 		bStopIndex = 0,
+                url = $(obj).attr('data-url'),
 		href = $(obj).attr('data-href'),
 		title = $(obj).attr("data-title"),
 		topWindow = $(window.parent.document),
@@ -70,13 +71,14 @@ function Hui_admin_tab(obj){
 		return false;
 	}
 	show_navLi.each(function() {
-		if($(this).find('span').attr("data-href")==href){
+		if($(this).find('span').attr("data-url")==url){
 			bStop=true;
 			bStopIndex=show_navLi.index($(this));
 			return false;
 		}
 	});
 	if(!bStop){
+            console.log("创建新页面");
 		creatIframe(href,title);
 		min_titleList();
 	}

@@ -28,7 +28,8 @@
         <script type="text/javascript"  src="js/getdate.js"></script>
         <script>
             var u_name = "${param.name}";
-            var o_pid = "${param.pid}";
+            var o_pid = "${param.pid}"; 
+            console.log(o_pid);
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -205,7 +206,7 @@
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
-                            pid: "${param.pid}",
+                            pid: 'P00001',
                             comaddr: comaddr
 
                         };      

@@ -72,9 +72,10 @@
             } 
         </style>
         <script>
-            function getpojectId() {
-                var pojectid = $("#pojects").val();
-                return  pojectid;
+            var projectId = "${fn:split(param.pid,',')[0]}";
+            function getPojectId() {
+                projectId = $("#pojects").val();
+                return  projectId;
             }
             function callchild(obj) {
                 var func = obj.function;
@@ -146,14 +147,6 @@
                     var win = obj[0].contentWindow;
                     var func = info.function;
                     callchild(info);
-
-//                    if (info.page == 1) {
-//                        var func = info.function;
-//                        console.log(func);
-//                        win[func](info);
-//                    } else if (info.page == 2) {
-//                        callchild(info);
-//                    }
                 }
             }
 
@@ -174,6 +167,18 @@
                 window.location = "${pageContext.request.contextPath }/login.jsp";
                 return;
             </c:if>
+
+
+
+                $("dd").delegate("ul li", "click", function () {
+                    var childli = $(this).children();
+                    var url = $(childli).attr("data-url");
+                    url = url + "&pid=" + getPojectId();
+                    $(childli).attr("data-href", url);
+
+                    console.log($(childli).attr("data-href"));
+                    //导航栏颜色
+                });
 
                 if ('WebSocket' in window) {
                     websocket = new WebSocket(conectstr);
@@ -212,8 +217,7 @@
         <c:set var="lang" value="${cookie.lang.value}"></c:set>     
 
 
-
-
+        <c:set var="pid" value="${fn:split(param.pid,',')[0]}"></c:set>   
         <c:if test="${empty cookie.lang.value }">
             <c:set var="lang" value="zh_CN"></c:set>     
         </c:if>
@@ -272,13 +276,12 @@
                                 <ul id="MenuBox">
                                     <c:if test="${fn:length(t.children)==0}">
                                         <li>
-                                            <a data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t.m_action}" data-title="${t.m_text[lang]}" href="javascript:void(0)">${t.m_text[lang]}</a>
+                                            <a data-url="${t.m_action}?${urlparam}&action=${t.m_action}" data-href="${t.m_action}?${urlparam}&action=${t.m_action}" data-title="${t.m_text[lang]}" href="javascript:void(0)">${t.m_text[lang]}</a>
                                         </li>
                                     </c:if>
                                     <c:forEach items="${t.children}" var="t1" varStatus="y">
-
                                         <li>
-                                            <a data-href="${t1.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t1.m_action}" data-title="${t1.m_text[lang]}" href="javascript:void(0)">${t1.m_text[lang]}</a>
+                                            <a data-url="${t1.m_action}?${urlparam}&action=${t1.m_action}" data-href="${t1.m_action}?${urlparam}&action=${t1.m_action}" data-title="${t1.m_text[lang]}" href="javascript:void(0)">${t1.m_text[lang]}</a>
                                         </li>
                                     </c:forEach>
                                 </ul>
@@ -300,9 +303,9 @@
                         <c:forEach items="${menu}" var="t" varStatus="i">
                             <c:if test="${t.m_parent==0&&i.index==0}">
                                 <li class="active">
-                                    <span data-href="${t.m_action}?pid=${fn:split(param.pid,",")[0]}&${urlparam}&action=${t.m_action}" title="${t.m_text[lang]}" >${t.m_text[lang]}</span>
+                                    <span data-url="${t.m_action}?${urlparam}&action=${t.m_action}" data-href="${t.m_action}?pid=${param.pid}&${urlparam}&action=${t.m_action}" title="${t.m_text[lang]}" >${t.m_text[lang]}</span>
                                 </li>
-                                <c:set var="main" value="${t.m_action}"></c:set>     
+                                <c:set var="main" value="${t.m_action}"></c:set>       
                             </c:if> 
                         </c:forEach>
                     </ul>
@@ -468,31 +471,23 @@
                     return false;
                 }
 
-                $("#pojects").change(function (data) {
+                $("#pojects").change(function () {
 
                     console.log("p:" + $(this).val());
+                    projectId = $(this).val();
+                    $("#MenuBox li:eq(0) a").click();
+                    $('#panemask').showLoading({
+                        'afterShow': function () {
+                            setTimeout("$('#panemask').hideLoading()", 1000);
+                        }
 
-//                    var user = new Object();
-//                    user.begin = '6A';
-//                    user.res = 0;
-//                    user.status = "";
-//                    user.msg = "CheckLamp";
-//                    user.val = getpojectId();
-//                    user.data = "aa";
-//                    user.end = '6A';
-//                    $("#MenuBox li:eq(0) a").click();
-//                    $('#panemask').showLoading({
-//                        'afterShow': function () {
-//                            setTimeout("$('#panemask').hideLoading()", 3000);
-//                        }
-//
-//                    });
+                    });
+
+
+
                 });
 
-                function getpojectId() {
-                    var pojectid = $("#pojects").val();
-                    return  pojectid;
-                }
+
 
                 function  getusername() {
                     var name = $("#u_name").val();

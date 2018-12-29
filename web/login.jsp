@@ -511,6 +511,9 @@
                     var obj = {};
                     obj.name = name;
                     obj.password = password;
+                    
+                    
+                    
                     $.ajax({async: false, url: "login.loginform.loginhand.action", type: "POST", datatype: "JSON", data: obj,
                         success: function (data) {
                             // console.log(data);

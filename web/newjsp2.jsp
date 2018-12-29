@@ -37,7 +37,7 @@
                 display: table-cell;
                 height: 100%;
                 width: 100%;
-              
+
             }
 
         </style>
@@ -46,7 +46,7 @@
 
     </head>
     <body id="activity_pane">
-       
+
         <h5 style=" margin-left: 20px; color: #FFB800; width: 100%; ">温度单位：℃ &nbsp; &nbsp;湿度单位：%RH</h5>
         <div style=" width: 100%; height:40%; ">
             <div class="topCenter1" id="echarts1" style="width: 90%; height: 98%; ">
@@ -167,7 +167,6 @@
             var sdrs;
             var obj = {};
             obj.pid = "${param.pid}";
-            console.log('${param.pid}');
             $.ajax({async: false, url: "homePage.homePage.getSensorList.action", type: "get", datatype: "JSON", data: obj,
                 success: function (data) {
                     wdrs = data.wdrs;
@@ -184,7 +183,7 @@
             var sdxdata = [];      //x轴描述 ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
             var sddata = [];   //填充数据
             if (sdrs.length > 0) {
-               
+
                 for (var i = 0; i < sdrs.length; i++) {
                     if (sdqxbs.length == 0) {
                         sdqxbs.push(sdrs[i].name);
@@ -261,37 +260,37 @@
             $('#kgtype').bootstrapTable({
                 url: 'homePage.homePage.getkgList.action',
                 columns: [
-                     [
-                            {
-                                field: 'detail',
-                                title:"开关型传感器", //详细数据
-                                width: 25,
-                                align: 'center',
-                                valign: 'middle',
-                                colspan: 2
-                            }
-                        ],
                     [
-                    {
-                        field: 'name',
-                        title: "名称",
-                        width: 25,
-                        align: 'center',
-                        valign: 'middle'
-                    }, {
-                        field: 'numvalue',
-                        title: "状态",
-                        width: 25,
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index, field) {
-                            if (value == 1) {
-                                return "闭合";
-                            } else {
-                                return "断开";
-                            }
+                        {
+                            field: 'detail',
+                            title: "开关型传感器", //详细数据
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            colspan: 2
                         }
-                    }]],
+                    ],
+                    [
+                        {
+                            field: 'name',
+                            title: "名称",
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle'
+                        }, {
+                            field: 'numvalue',
+                            title: "状态",
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index, field) {
+                                if (value == 1) {
+                                    return "闭合";
+                                } else {
+                                    return "断开";
+                                }
+                            }
+                        }]],
                 clickToSelect: true,
                 singleSelect: false,
                 sortName: 'id',
@@ -314,7 +313,7 @@
                         skip: params.offset,
                         limit: params.limit,
                         type_id: "1",
-                        pid:"${param.pid}"   
+                        pid: "${param.pid}"   
                     };      
                     return temp;  
                 },
