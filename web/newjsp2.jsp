@@ -13,6 +13,9 @@
 
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="renderer" content="webkit|ie-comp|ie-stand">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
         <title>JSP Page</title>
         <script type="text/javascript" src="js/genel.js"></script>
         <script src="echarts/dist/echarts_3.8.5_echarts.min.js"></script>
@@ -43,20 +46,21 @@
 
     </head>
     <body id="activity_pane">
-        <h4 style=" margin-left: 20px; color: #FFB800;">温度单位：℃ &nbsp; &nbsp;湿度单位：%RH</h4>
-        <div style=" width: 70%; height:90%; float: left">
+       
+        <h5 style=" margin-left: 20px; color: #FFB800; width: 100%; ">温度单位：℃ &nbsp; &nbsp;湿度单位：%RH</h5>
+        <div style=" width: 100%; height:40%; ">
             <div class="topCenter1" id="echarts1" style="width: 90%; height: 98%; ">
 
             </div>
+        </div>
+        <div style=" width: 70%; height:50%; margin-left: 15%; margin-top:10px; overflow-y: scroll;">
+            <table id="kgtype"></table>
         </div>
         <!--        <div style=" width: 70%; height: 400px; float:  left; margin-top: 20px;">
                     <div class="topCenter1" id="echarts2" style="width: 90%; height: 98%; ">
         
                     </div>
                 </div>-->
-        <div style=" width: 30%; height:90%; float: left; margin-top:10px; overflow-x: scroll;">
-            <table id="kgtype"></table>
-        </div>
     </body>
     <script>
         //动态创建折线对象
@@ -256,6 +260,17 @@
             $('#kgtype').bootstrapTable({
                 url: 'homePage.homePage.getkgList.action',
                 columns: [
+                     [
+                            {
+                                field: 'detail',
+                                title:"开关型传感器", //详细数据
+                                width: 25,
+                                align: 'center',
+                                valign: 'middle',
+                                colspan: 2
+                            }
+                        ],
+                    [
                     {
                         field: 'name',
                         title: "名称",
@@ -275,7 +290,7 @@
                                 return "断开";
                             }
                         }
-                    }],
+                    }]],
                 clickToSelect: true,
                 singleSelect: false,
                 sortName: 'id',

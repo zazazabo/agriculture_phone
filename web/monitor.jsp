@@ -296,7 +296,7 @@
     </head>
     <body id="panemask">
         <div>
-            <div  style=" width: 15% ; float: left;" >
+            <div  style=" width: 100% ;" >
                 <!--                data-height="800"-->
                 <table id="gayway" style="width:100%;"    data-toggle="table" 
                        data-single-select="true"
@@ -304,7 +304,7 @@
                        data-click-to-select="true"
                        data-search="false"
                        data-checkbox-header="true"
-                       data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
+                       data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" >
                     <thead >
                         <tr >
                             <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
@@ -314,7 +314,7 @@
 
                 </table>
             </div>   
-            <div  style=" width: 83%; float: left; margin-left: 2%;">
+            <div  style=" width: 100%;">
 
                 <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
                 </table>

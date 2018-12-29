@@ -517,7 +517,7 @@
                 vv.push(1);
 
                 var data = buicode2(vv);
-                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 1, ele.id, info);
+                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 1, ele.id, info,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -566,7 +566,7 @@
                 vv.push(0);
 
                 var data = buicode2(vv);
-                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 0, ele.id, info);
+                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 0, ele.id, info,"${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
