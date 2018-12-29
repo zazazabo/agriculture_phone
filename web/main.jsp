@@ -51,12 +51,12 @@
                     display: block;
                 }
                 #smdh{
-                   margin-right: -10px;
-                   margin-top: 2px;
+                    margin-right: -10px;
+                    margin-top: 2px;
                 }
                 #infoUL li{
                     margin-right: 1px;
-                    
+
                 }
             } 
             @media screen and (min-width:767px) and (max-width:1920px){  
@@ -213,32 +213,23 @@
                                         <option>佳德测试项目</option>
                                     </select>
                                 </li>
-                               <li class="dropDown dropDown_hover" style=" margin-right: -15px;">
+                                <li class="dropDown dropDown_hover" style=" margin-right: -15px;">
                                     <a href="#" class="dropDown_A">语言<i class="Hui-iconfont">&#xe6d5;</i></a>
                                     <ul class="dropDown-menu menu radius box-shadow">
                                         <li><a href="#">中文</a></li>
                                         <li><a href="#">英文</a></li>
                                     </ul>
-                                </li>
-                                <li class="dropDown dropDown_hover" style=" margin-right: -15px;">
-                                    <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                                </li>                             
+                                <li id="Hui-msg"> <a href="#" title="消息"><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
+                                <li class="dropDown dropDown_hover" style=" margin-left: -10px;">
+<!--                                    <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>-->
+                                    <span class="admin" style="color: rgb(255, 255, 255);"><img src="./img/user.jpg" style=" height: 40px; width: 40px;vertical-align: middle; border-radius: 16px;"></span>
                                     <ul class="dropDown-menu menu radius box-shadow">
                                         <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
                                         <li><a href="#">切换账户</a></li>
                                         <li><a href="#">退出</a></li>
                                     </ul>
                                 </li>
-                                <li id="Hui-msg"> <a href="#" title="消息"><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
-                                <!--                                <li id="Hui-skin" class="dropDown right dropDown_hover"> <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
-                                                                    <ul class="dropDown-menu menu radius box-shadow">
-                                                                        <li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
-                                                                        <li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
-                                                                        <li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
-                                                                        <li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
-                                                                        <li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
-                                                                        <li><a href="javascript:;" data-val="orange" title="橙色">橙色</a></li>
-                                                                    </ul>
-                                                                </li>-->
                             </ul>
                         </nav>
                         <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;" id="smdh">&#xe667;</a>       
