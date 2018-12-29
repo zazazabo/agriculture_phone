@@ -167,6 +167,7 @@
             var sdrs;
             var obj = {};
             obj.pid = "${param.pid}";
+            console.log('${param.pid}');
             $.ajax({async: false, url: "homePage.homePage.getSensorList.action", type: "get", datatype: "JSON", data: obj,
                 success: function (data) {
                     wdrs = data.wdrs;
