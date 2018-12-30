@@ -16,8 +16,8 @@
         <script type="text/javascript" src="js/genel.js"></script>
         <script type="text/javascript"  src="js/getdate.js"></script>
         <script>
-    var u_name="${param.name}";
-            var o_pid="${param.pid}";
+            var u_name = "${param.name}";
+            var o_pid = "${param.pid}";
             var infolist = {};
             var infoscene = {};
             function layerAler(str) {
@@ -29,12 +29,7 @@
 
             $(function () {
 
-                var aaa = $("span[name=xxx]");
-                for (var i = 0; i < aaa.length; i++) {
-                    var d = aaa[i];
-                    var e = $(d).attr("id");
-                    $(d).html(langs1[e][lang]);
-                }
+
 
                 $('#gravidaTable').bootstrapTable({
                     showExport: true, //是否显示导出
@@ -179,6 +174,7 @@
                             }
                         }],
                     clickToSelect: true,
+                    searchAlign: 'left',
                     singleSelect: true,
                     search: true,
                     locale: 'zh-CN', //中文支持,
@@ -188,7 +184,7 @@
                     pageNumber: 1,
                     pageSize: 20,
                     showRefresh: true,
-                    showToggle: true,
+                    showToggle: false,
                     // 设置默认分页为 50
                     pageList: [20, 40, 80, 160, 320],
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
@@ -210,7 +206,7 @@
                 $('#gayway').on('check.bs.table', function (row, element) {
                     var l_comaddr = element.comaddr;
                     var vv = [];
-                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0,"${param.action}");
+                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
 
                     var obj = {};
                     obj.l_comaddr = l_comaddr;
@@ -267,7 +263,7 @@
 
 
                     var vv = [];
-                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0,"${param.action}");
+                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
 
 
 
@@ -395,7 +391,7 @@
                 } else {
                     star = "断开";
                 }
-                addlogon(u_name, "设置", o_pid, "回路监控", star + "回路【" + ele.l_name + "】",l_comaddr);
+                addlogon(u_name, "设置", o_pid, "回路监控", star + "回路【" + ele.l_name + "】", l_comaddr);
                 var o = {};
                 o.l_comaddr = ele.l_comaddr;
                 console.log(ele);
@@ -428,7 +424,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "switchloopCB", ele.l_comaddr, o1.switch, ele.lid, info,"${param.action}");
+                dealsend2("10", data, "switchloopCB", ele.l_comaddr, o1.switch, ele.lid, info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -504,7 +500,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "restoreloopCB", ele.l_comaddr, 0, 0, info,"${param.action}");
+                dealsend2("10", data, "restoreloopCB", ele.l_comaddr, 0, 0, info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -571,93 +567,174 @@
                 vv.push(20); //寄存器数目 2字节                         
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info,"${param.action}");
+                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
             }
         </script>
     </head>
     <body id="panemask">
 
-        <div>
-            <div style=" width: 15%;float: left; height: 100%;">
-                <!--                  data-height="800"-->
-                <table id="gayway" style="width:100%;"    data-toggle="table" 
-                       data-single-select="true"
-                       data-striped="true"
-                       data-click-to-select="true"
-                       data-search="false"
-                       data-checkbox-header="true"
-                       data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
-                    <thead >
-                        <tr >
-                            <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                            <!--                            <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>-->
-                            <th data-width="100" data-field="name" data-align="center" data-formatter='formartcomaddr1'    >网关名称</th>
-                        </tr>
-                    </thead>       
 
-                </table>
-                <!--                    </div>
-                                </div>    -->
 
-            </div>   
-            <div style=" width: 83%; float: left; margin-left: 2%;">
+        <div id="content" class="row-fluid">
 
-                <form id="form1">
-                    <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span style="margin-left:10px;">
-                                        <!-- 合闸开关-->
-                                        回路控制
-                                        &nbsp;</span>
-
-                                    <select class="easyui-combobox" id="switch" name="switch" style="width:100px; height: 30px">
-                                        <option value="0">断开</option>
-                                        <option value="1">闭合</option>           
-                                    </select>
-
-                                    <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
-                                        设置
-                                    </button>
-                                    <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
-                                        读取
-                                    </button>
-                                    <!--
-                                                                        <span style="margin-left:10px;" id="48" name="xxx">回路</span>
-                                                                        <select class="easyui-combobox" id="type" name="type" style="width:100px; height: 30px">
-                                                                            <option value="0">单个回路</option>
-                                                                            <option value="1">所有回路</option>           
-                                                                        </select>-->
-
-                                </td>
-
-                                <td>
-
-                                    <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
-                                        恢复自动运行
-                                    </button>
-
-                                </td>
-                                <td>
-                                    <!--<button  type="button" onclick="tourloop()" class="btn btn-success btn-sm"><span name="xxx" id="454">读取回路状态</span></button>-->
-                                    &nbsp;
-                                </td>
+            <div class="row" >
+                <div class="col-xs-12 col-sm-4 col-md-3" >
+                    <table id="gayway"      data-toggle="table" 
+                           data-single-select="true"
+                           data-striped="true"
+                           data-click-to-select="true"
+                           data-search="false"
+                           data-checkbox-header="true"
+                           data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" >
+                        <thead >
+                            <tr >
+                                <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
+                                <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>
+                                <th data-width="100" data-field="name" data-align="center" data-formatter='formartcomaddr1'    >网关名称</th>
                             </tr>
+                        </thead>       
 
-
-                        </tbody>
                     </table>
-                </form>
+                </div>
 
+                <div class="col-xs-12 col-sm-8 col-md-9">
 
-                <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
-                </table>
+                    <div id="content" class="row-fluid">
+
+                        <div class="col-xs-12" >
+                            <form id="form1">
+
+                                <table style="  border-collapse:separate; border: 1px solid #16645629; margin-top: 2px; align-content:  center; ">
+                                    <tbody>
+                                        <tr>
+
+                                            <td style=" padding-left: 10px;" >
+                                                <span  >
+                                                    回路控制
+                                                </span>
+
+                                            </td>
+                                            <td style=" padding-left: 3px;">
+                                                <select class="easyui-combobox" id="switch" name="switch" style=" width: 80px; margin-left: 3px; width:0px; height: 30px">
+                                                    <option value="0">断开</option>
+                                                    <option value="1">闭合</option>           
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm  ">
+                                                    设置
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
+                                                    读取
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
+                                                    恢复自动运行
+                                                </button>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="col-xs-12" >
+                            <table id="gravidaTable"  class="text-nowrap table table-hover table-striped">
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--                <table id="gravidaTable"  class="text-nowrap table table-hover table-striped">
+                                    </table>-->
+                    <!--<h2>Sidebar</h2>-->  
+                </div>
             </div>
-
-
-
         </div>
+
+
+
+
+
+
+
+
+
+        <!--        <div>
+                    <div style=" width: 15%;float: left; height: 100%;">
+                        <table id="gayway" style="width:100%;"    data-toggle="table" 
+                               data-single-select="true"
+                               data-striped="true"
+                               data-click-to-select="true"
+                               data-search="false"
+                               data-checkbox-header="true"
+                               data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
+                            <thead >
+                                <tr >
+                                    <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
+                                                                <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>
+                                    <th data-width="100" data-field="name" data-align="center" data-formatter='formartcomaddr1'    >网关名称</th>
+                                </tr>
+                            </thead>       
+        
+                        </table>
+        
+        
+                    </div>   
+                    <div style=" width: 83%; float: left; margin-left: 2%;">
+        
+                        <form id="form1">
+                            <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span style="margin-left:10px;">
+                                                 合闸开关
+                                                回路控制
+                                                &nbsp;</span>
+        
+                                            <select class="easyui-combobox" id="switch" name="switch" style="width:100px; height: 30px">
+                                                <option value="0">断开</option>
+                                                <option value="1">闭合</option>           
+                                            </select>
+        
+                                            <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
+                                                设置
+                                            </button>
+                                            <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
+                                                读取
+                                            </button>
+        
+        
+                                        </td>
+        
+                                        <td>
+        
+                                            <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
+                                                恢复自动运行
+                                            </button>
+        
+                                        </td>
+                                        <td>
+                                            <button  type="button" onclick="tourloop()" class="btn btn-success btn-sm"><span name="xxx" id="454">读取回路状态</span></button>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+        
+        
+                                </tbody>
+                            </table>
+                        </form>
+                        <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
+                        </table>
+                    </div>
+        
+        
+        
+                </div>-->
 
 
 

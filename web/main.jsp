@@ -322,7 +322,7 @@
             <div id="iframe_box" class="Hui-article">
                 <div class="show_iframe">
                     <div style="display:none" class="loading"></div>
-                    <iframe id="iframe" scrolling="yes" frameborder="0" src="${main}?pid=${fn:split(param.pid,",")[0]}&${urlparam}"></iframe>
+                    <iframe id="iframe" scrolling="yes" frameborder="0" src="${main}?${urlparam}&pid=${param.pid}"></iframe>
                 </div>
             </div>
         </section>
