@@ -16,8 +16,8 @@
         <script type="text/javascript" src="js/genel.js"></script>
         <script type="text/javascript"  src="js/getdate.js"></script>
         <script>
-    var u_name="${param.name}";
-            var o_pid="${param.pid}";
+            var u_name = "${param.name}";
+            var o_pid = "${param.pid}";
             var lang = '${param.lang}';//'zh_CN';
             var infolist = {};
             var scenenum = null;
@@ -224,7 +224,7 @@
                 var sceneval = data[3] * 256 + data[4];
                 console.log(scenenum, sceneval);
                 if (scenenum != sceneval) {
-                    scenenum=sceneval;
+                    scenenum = sceneval;
                     $("#table0").bootstrapTable('refresh');
                 }
             }
@@ -242,7 +242,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("03", data, "getSceneNumCB", l_comaddr, 0, 0, 3800,"${param.action}");
+                dealsend2("03", data, "getSceneNumCB", l_comaddr, 0, 0, 3800, "${param.action}");
             }
 
             function formartcomaddr(value, row, index) {
@@ -388,7 +388,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "switchloopCB", l_comaddr, 0, 0, 3800,"${param.action}");
+                dealsend2("10", data, "switchloopCB", l_comaddr, 0, 0, 3800, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -452,7 +452,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "restoreloopCB", l_comaddr, 0, 0, 3801,"${param.action}");
+                dealsend2("10", data, "restoreloopCB", l_comaddr, 0, 0, 3801, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -467,68 +467,70 @@
     </head>
     <body id="panemask">
 
-        <div>
-            <div style=" width: 15%; float: left;">
-<!--                data-height="800"-->
-                <table id="gayway" style="width:100%;"    data-toggle="table" 
-                       data-single-select="true"
-                       data-striped="true"
-                       data-click-to-select="true"
-                       data-search="false"
-                       data-checkbox-header="true"
-                       data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
-                    <thead >
-                        <tr >
-                            <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                            <!--                            <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>-->
-                            <th data-width="100" data-field="name" data-align="center"  data-formatter='formartcomaddr1'   >网关名称</th>
-                        </tr>
-                    </thead>       
-
-                </table>
-            </div>   
-            <div style=" width: 83%; float: left; margin-left: 2%; ">
-
-                <form id="form1">
-                    <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span style="margin-left:10px;">
-                                        <!-- 合闸开关-->
-                                        场景控制
-                                        &nbsp;</span>
-                                    <select id="scenenum" class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="scenenum" style="width:100px; height: 30px">
-                                    </select>
-
-                                    <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
-                                        设置
-                                    </button>
 
 
-                                </td>
 
-                                <td>
 
-                                    <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
-                                        恢复自动运行
-                                    </button>
+        <div id="content" class="row-fluid">
 
-                                </td>
-
+            <div class="row" >
+                <div class="col-xs-12 col-sm-4 col-md-3" >
+                    <table id="gayway" style="width:100%;"    data-toggle="table" 
+                           data-single-select="true"
+                           data-striped="true"
+                           data-click-to-select="true"
+                           data-search="false"
+                           data-checkbox-header="true"
+                           data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
+                        <thead >
+                            <tr >
+                                <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
+                                <!--<th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>-->
+                                <th data-width="100" data-field="name" data-align="center"  data-formatter='formartcomaddr1'   >网关名称</th>
                             </tr>
+                        </thead>       
 
-
-                        </tbody>
                     </table>
-                </form>
+                </div>
 
-                <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
+                <div class="col-xs-12 col-sm-8 col-md-9">
 
-                </table> 
+                    <div id="content" class="row-fluid">
+
+                        <div class="col-xs-12" >
+                            <form id="form1">
+                                <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center">
+                                    <tbody>
+                                        <tr>
+                                            <td>场景控制</td>
+                                            <td style=" padding-left: 3px;">
+                                                
+                                                <select id="scenenum" class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="scenenum" style="width:100px;  height: 30px">
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
+                                                    设置
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
+                                                    恢复自动运行
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="col-xs-12" >
+                            <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-
-
         </div>
     </body>
 </html>

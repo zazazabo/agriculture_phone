@@ -589,7 +589,7 @@
                         <thead >
                             <tr >
                                 <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                                <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>
+                                <!--<th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>-->
                                 <th data-width="100" data-field="name" data-align="center" data-formatter='formartcomaddr1'    >网关名称</th>
                             </tr>
                         </thead>       
@@ -615,7 +615,7 @@
 
                                             </td>
                                             <td style=" padding-left: 3px;">
-                                                <select class="easyui-combobox" id="switch" name="switch" style=" width: 80px; margin-left: 3px; width:0px; height: 30px">
+                                                <select class="easyui-combobox" id="switch" name="switch" style=" width: 100px; margin-left: 3px;  height: 30px">
                                                     <option value="0">断开</option>
                                                     <option value="1">闭合</option>           
                                                 </select>
@@ -647,96 +647,9 @@
                             </table>
                         </div>
                     </div>
-
-                    <!--                <table id="gravidaTable"  class="text-nowrap table table-hover table-striped">
-                                    </table>-->
-                    <!--<h2>Sidebar</h2>-->  
+ 
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-        <!--        <div>
-                    <div style=" width: 15%;float: left; height: 100%;">
-                        <table id="gayway" style="width:100%;"    data-toggle="table" 
-                               data-single-select="true"
-                               data-striped="true"
-                               data-click-to-select="true"
-                               data-search="false"
-                               data-checkbox-header="true"
-                               data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
-                            <thead >
-                                <tr >
-                                    <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                                                                <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>
-                                    <th data-width="100" data-field="name" data-align="center" data-formatter='formartcomaddr1'    >网关名称</th>
-                                </tr>
-                            </thead>       
-        
-                        </table>
-        
-        
-                    </div>   
-                    <div style=" width: 83%; float: left; margin-left: 2%;">
-        
-                        <form id="form1">
-                            <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <span style="margin-left:10px;">
-                                                 合闸开关
-                                                回路控制
-                                                &nbsp;</span>
-        
-                                            <select class="easyui-combobox" id="switch" name="switch" style="width:100px; height: 30px">
-                                                <option value="0">断开</option>
-                                                <option value="1">闭合</option>           
-                                            </select>
-        
-                                            <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
-                                                设置
-                                            </button>
-                                            <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
-                                                读取
-                                            </button>
-        
-        
-                                        </td>
-        
-                                        <td>
-        
-                                            <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
-                                                恢复自动运行
-                                            </button>
-        
-                                        </td>
-                                        <td>
-                                            <button  type="button" onclick="tourloop()" class="btn btn-success btn-sm"><span name="xxx" id="454">读取回路状态</span></button>
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-        
-        
-                                </tbody>
-                            </table>
-                        </form>
-                        <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
-                        </table>
-                    </div>
-        
-        
-        
-                </div>-->
-
-
-
     </body>
 </html>
