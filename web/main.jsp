@@ -335,7 +335,6 @@
         </div>
 
         <div id="dialog-add"  class="bodycenter"  style=" display: none" title="网关添加">
-
             <form action="" method="POST" id="formadd" onsubmit="return checkAdd()">   
                 <input id="id" name="id" type="hidden">
                 <table>
@@ -474,6 +473,7 @@
                 $("#pojects").change(function () {
 
                     console.log("p:" + $(this).val());
+                    removeIframeAll();
                     projectId = $(this).val();
                     $("#MenuBox li:eq(0) a").click();
                     $('#panemask').showLoading({
