@@ -35,6 +35,7 @@
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/bootstrap.min.css" />
+        <script type="text/javascript"  src="js/getdate.js"></script>
         <!--[if IE 6]>
         <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
         <script>DD_belatedPNG.fix('*');</script>
@@ -58,8 +59,16 @@
                     margin-right: 1px;
 
                 }
+                #userinfo{
+                    margin-left: -20px;
+                }
+                html{
+                    font-size: 14px;
+                }
+                
+
             } 
-            @media screen and (min-width:767px) and (max-width:1920px){  
+            @media screen and (min-width:767px){  
                 #pojects{
                     width: 200px;
                 } 
@@ -69,11 +78,18 @@
                 #Hui-userbar{
                     margin-right: 20px;
                 }
+                #userinfo{
+                    margin-left: -20px;
+                }
+                html{
+                    font-size: 18px;
+                }
             } 
+            table td { line-height: 40px; } 
         </style>
         <script>
             var projectId = "${fn:split(param.pid,',')[0]}";
-            function getPojectId() {
+            function getpojectId() {
                 projectId = $("#pojects").val();
                 return  projectId;
             }
@@ -173,7 +189,7 @@
                 $("dd").delegate("ul li", "click", function () {
                     var childli = $(this).children();
                     var url = $(childli).attr("data-url");
-                    url = url + "&pid=" + getPojectId();
+                    url = url + "&pid=" + getpojectId();
                     $(childli).attr("data-href", url);
 
                     console.log($(childli).attr("data-href"));
@@ -200,13 +216,27 @@
                     $("#userinfo").show();
                 });
                 $("#admin").mouseout(function () {
-                    $("#languages").hide();
+                    $("#userinfo").hide();
                 });
 
             });
             function size() {
                 var iframeWidth = $(window).width();
                 $("#iframe").css("width", iframeWidth);
+            }
+
+            function getout() {
+                layer.confirm("确定退出吗？", {
+                    btn: ["确定", "取消"]//确定、取消按钮
+                }, function (index) {
+
+                    window.location = "${pageContext.request.contextPath }/login.jsp";
+                    var name = $("#u_name").val();
+                    addlogon(name, "退出", getpojectId(), "首页", "退出");
+
+                    layer.close(index);
+
+                });
             }
 
 
@@ -230,7 +260,7 @@
                         <nav id="Hui-userbar" style=" display: block; color: white;">
                             <ul class=" inline" style=" margin-top: 10px; float: left" id="infoUL">
                                 <li>
-                                    <select style=" height: 30px; margin-top:0px; font-size: 16px; background-color:  #7aba7b; color:  white;" id="pojects">
+                                    <select style=" height: 30px; margin-top:0px;  background-color:  #7aba7b; color:  white; font-size: 16px;" id="pojects">
                                     </select>
                                 </li>
                                 <li class="dropDown dropDown_hover" style=" margin-right: -15px;">
@@ -241,7 +271,7 @@
                                     </ul>
                                 </li>                             
                                 <li id="Hui-msg"> <a href="#" title="消息"><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
-                                <li class="dropDown dropDown_hover" style=" margin-right: 10px;">
+                                <li  style=" margin-right: 10px;">
                                     <!--                                    <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>-->
                                     <span  id="admin" style="color: rgb(255, 255, 255);"><img src="./img/user.jpg" style=" height: 40px; width: 40px;vertical-align: middle; border-radius: 16px;"></span>
                                     <input id="m_code" type="hidden" value="${rs[0].m_code}"/>
@@ -249,10 +279,15 @@
                                 <input id="userid" type="hidden" value="${rs[0].id}"/>
                                 <input id="upid" type="hidden" value="${rs[0].pid}"/>
                                 <input id="u_name" type="hidden" value="${rs[0].name}"/>
-                                <ul class="dropDown-menu menu radius box-shadow" id="userinfo">
+                                <input id="email" type="hidden" value="${rs[0].email}">
+                                <input id="phone" type="hidden" value="${rs[0].phone}">
+                                <input id="department" type="hidden" value="${rs[0].department}">
+                                <ul class="dropDown-menu menu radius box-shadow" id="userinfo" style="display: none;">
                                     <li onclick="showDialog()"><a href="#">个人信息</a></li>
-                                    <li><a href="#">切换账户</a></li>
-                                    <li><a href="#">退出</a></li>
+                                        <c:if test="${rs[0].Ismanage==1}">
+                                        <li onclick="manage()"><a href="#">后台数据管理</a></li>
+                                        </c:if>
+                                    <li onclick="getout()"><a href="#">退出</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -334,54 +369,34 @@
             </ul>
         </div>
 
-        <div id="dialog-add"  class="bodycenter"  style=" display: none" title="网关添加">
+        <div id="dialog-add"  class="bodycenter"  style=" display: none" title="个人信息">
 
-            <form action="" method="POST" id="formadd" onsubmit="return checkAdd()">   
+            <form action="" method="POST" id="userInfo">   
                 <input id="id" name="id" type="hidden">
                 <table>
                     <tbody>
-
                         <tr>
                             <td>
-                                <span style="margin-left:20px;">网关名称</span>&nbsp;
-                                <input id="name" class="form-control" name="name" style="width:150px;display: inline;" placeholder="请输入网关名称" type="text">
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:10px;" >网关编号</span>&nbsp;
-                                <input id="comaddr" class="form-control" name="comaddr" style="width:150px;display: inline;" placeholder="请输入网关地址" type="text">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span style="margin-left:20px;">&#8195;&#8195;经度</span>&nbsp;
-                                <input id="Longitude" class="form-control" name="Longitude" style="width:150px;display: inline;" placeholder="经度" type="text">
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:10px;" >&#8195;&#8195;纬度</span>&nbsp;
-                                <input id="latitude" class="form-control" name="latitude" style="width:150px;display: inline;" placeholder="纬度" type="text">
+                                <span style="margin-left:15px;">用户名：</span>&nbsp;
+                                <input id="uname1" class="form-control" style="width:150px;display: inline;" readonly="true"  type="text">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <span style="margin-left:20px;">&#8195;&#8195;站号</span>&nbsp;
-                                <input id="sitenum" value="1" readonly="true" class="form-control" name="sitenum" style="width:150px;display: inline;" placeholder="站号" type="text">
+                                <span style="margin-left:28px;">邮箱：</span>&nbsp;
+                                <input id="email1" class="form-control" style="width:150px;display: inline;" placeholder="请输入邮箱" type="text">
                             </td>
-                            <td></td>
+                        </tr>
+                        <tr>
                             <td>
-                                <span style="margin-left:10px;" >网关型号</span>&nbsp;
-
-
-                                <span class="menuBox">
-
-                                    <!--<input id="model" class="easyui-combobox" readonly="true" name="model" style="width:150px; height: 30px" data-options="editable:false" />-->
-                                    <select class="easyui-combobox" data-options="editable:true"  id="model" name="model" style="width:150px; height: 30px">
-                                        <option value=""></option>
-                                        <!--<option value="L-30MT-ES2">L-30MT-ES2</option>-->
-                                    </select>
-                                </span>
+                                <span style="margin-left:28px;">电话：</span>&nbsp;
+                                <input id="phone1" class="form-control" style="width:150px;display: inline;" placeholder="请输入联系方式" type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span style="margin-left:28px;">部门：</span>&nbsp;
+                                <input id="department1" class="form-control" style="width:150px;display: inline;" placeholder="请输入部门" type="text">
                             </td>
                         </tr>
                     </tbody>
@@ -398,107 +413,118 @@
         <!--请在下方写此页面业务相关的脚本-->
         <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
         <script type="text/javascript">
-                $(function () {
-                    var pid = '${rs[0].pid}';
-                    var pids = [];
-                    if (pid != null && pid != "") {
-                        pids = pid.split(",");   //项目编号
-                    }
-
-                    // $("#pojects").val(pids[0]);
-                    var pname = [];   //项目名称
-                    for (var i = 0; i < pids.length; i++) {
-                        var obj = {};
-                        obj.code = pids[i];
-                        $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
-                            success: function (data) {
-                                pname.push(data.rs[0].name);
-                            },
-                            error: function () {
-                                alert("出现异常！");
-                            }
-                        });
-                    }
-
-                    for (var i = 0; i < pids.length; i++) {
-                        var options;
-                        options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
-                        $("#pojects").html(options);
-                    }
-
-                    $("#dialog-add").dialog({
-                        autoOpen: false,
-                        modal: true,
-                        width: 700,
-                        height: 350,
-                        position: ["top", "top"],
-                        buttons: {
-                            添加: function () {
-                                // $("#formadd").submit();
-                            }, 关闭: function () {
-                                $(this).dialog("close");
-                            }
-                        }
-                    });
-
-
-
+            function layerAler(str) {
+                layer.alert(str, {
+                    icon: 6,
+                    offset: 'center'
                 });
-                /*个人信息*/
-                function myselfinfo() {
-                    layer.open({
-                        type: 1,
-                        area: ['300px', '200px'],
-                        fix: false, //不固定
-                        maxmin: true,
-                        shade: 0.4,
-                        title: '查看信息',
-                        content: '<div>管理员信息</div>'
-                    });
+            }
+            $(function () {
+                var pid = '${rs[0].pid}';
+                var pids = [];
+                if (pid != null && pid != "") {
+                    pids = pid.split(",");   //项目编号
                 }
 
-                function  updshow() {
-//                $("#uname").val($("#u_name").val());
-//                $("#email").val($("#e1").text());
-//                $("#phone").val($("#p1").text());
-//                $("#department").val($("#d1").text());
-                    $('#updinfo').modal("show");
-                }
-
-                function showDialog() {
-
-                    $('#dialog-add').dialog('open');
-                    return false;
-                }
-
-                $("#pojects").change(function () {
-
-                    console.log("p:" + $(this).val());
-                    projectId = $(this).val();
-                    $("#MenuBox li:eq(0) a").click();
-                    $('#panemask').showLoading({
-                        'afterShow': function () {
-                            setTimeout("$('#panemask').hideLoading()", 1000);
+                // $("#pojects").val(pids[0]);
+                var pname = [];   //项目名称
+                for (var i = 0; i < pids.length; i++) {
+                    var obj = {};
+                    obj.code = pids[i];
+                    $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
+                        success: function (data) {
+                            pname.push(data.rs[0].name);
+                        },
+                        error: function () {
+                            alert("出现异常！");
                         }
-
                     });
+                }
 
+                for (var i = 0; i < pids.length; i++) {
+                    var options;
+                    options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
+                    $("#pojects").html(options);
+                }
 
-
+                $("#dialog-add").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 300,
+                    height: 350,
+                    position: ["top", "top"],
+                    buttons: {
+                        修改: function () {
+                            updateinfo();
+                        }, 关闭: function () {
+                            $(this).dialog("close");
+                        }
+                    }
                 });
 
 
 
-                function  getusername() {
-                    var name = $("#u_name").val();
-                    return name;
-                }
+            });
+            //修改个人信息
+            function updateinfo() {
+                var obj = {};
+                obj.id = $("#id").val();
+                obj.email = $("#email1").val();
+                obj.phone = $("#phone1").val();
+                obj.department = $("#department1").val();
+                $.ajax({async: false, url: "login.usermanage.editUinfo.action", type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var arrlist = data.rs;
+                        if (arrlist.length > 0) {
+                            layerAler("修改成功！");
+                            $('#dialog-add').dialog('close');
+                        }
+                    }
+                });
 
-                function  getupid() {
-                    var upid = $("#upid").val();
-                    return upid;
-                }
+            }
 
+            function showDialog() {
+                $("#id").val($("#userid").val());
+                $("#uname1").val($("#u_name").val());
+                $("#email1").val($("#email").val());
+                $("#phone1").val($("#phone").val());
+                $("#department1").val($("#department").val());
+                $('#dialog-add').dialog('open');
+                return false;
+            }
+
+            $("#pojects").change(function () {
+                projectId = $(this).val();
+                $("#MenuBox li:eq(0) a").click();
+                $('#panemask').showLoading({
+                    'afterShow': function () {
+                        setTimeout("$('#panemask').hideLoading()", 1000);
+                    }
+
+                });
+
+
+
+            });
+
+
+
+            function  getusername() {
+                var name = $("#u_name").val();
+                return name;
+            }
+
+            function  getupid() {
+                var upid = $("#upid").val();
+                return upid;
+            }
+
+            //后台管理
+            function  manage() {
+                $("#iframe").attr('src', "gatewaymanage.jsp");
+            }
+          
         </script> 
 
     </body>

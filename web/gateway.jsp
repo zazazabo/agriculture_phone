@@ -24,6 +24,45 @@
             .a-upload:hover { color: #444; background: #eee; border-color: #ccc; text-decoration: none } 
 
             .bodycenter { text-align: -webkit-center; text-align: -moz-center; width: 600px; margin: auto; } 
+             @media screen and (max-width:767px) {  
+                 #dialog-add{
+                     font-size: 4px;
+                 }
+                 html{
+                     font-size: 4px;
+                 }
+                 body{
+                    font-size: 4px; 
+                 }
+                #dialog-add input {
+                     width: 100px;
+                 }
+                 #model{
+                     width: 100px;
+                 }
+            }
+
+            @media screen and (min-width:768px) {  
+                #dialog-add{
+                     font-size: 14px;
+                 }
+                 html{
+                     font-size: 14px;
+                 }
+                 body{
+                    font-size: 14px; 
+                 }
+                #dialog-add input {
+                     width: 100px;
+                 }
+                 #model{
+                     width: 100px;
+                 }
+
+            }
+            @media screen and (min-width:1025px) {  
+               
+            }
 
         </style>
 
@@ -31,6 +70,7 @@
         <script type="text/javascript" src="js/genel.js"></script>
         <script type="text/javascript" src="js/getdate.js"></script>
         <script>
+            var withs;
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
             var lang = '${param.lang}';//'zh_CN';
@@ -165,7 +205,7 @@
             }
 
             $(function () {
-
+                size();
                 $('#warningtable').bootstrapTable({
                     columns: [
                         {
@@ -264,7 +304,7 @@
                 $("#dialog-add").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
+                    width: withs,
                     height: 350,
                     position: ["top", "top"],
                     buttons: {
@@ -278,8 +318,8 @@
                 $("#dialog-edit").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
-                    height: 300,
+                    width: 350,
+                    height: 350,
                     position: "top",
                     buttons: {
                         修改: function () {
@@ -294,7 +334,7 @@
                 $("#dialog-excel").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 750,
+                    width: 350,
                     height: 500,
                     position: "top",
                     buttons: {
@@ -705,6 +745,18 @@
 
                 return namesss;
             }
+            function size() {
+                var Wwidth = $(window).width();
+                if(Wwidth>768){
+                    withs = $(window).width() * 0.5;
+                }else{
+                   withs = 350;
+                }
+               
+            }
+            window.onresize = function () {
+                size();
+            };
         </script>
     </head>
     <body>
@@ -797,41 +849,41 @@
 
                     <tr>
                         <td>
-                            <span style="margin-left:20px;">网关名称</span>&nbsp;
-                            <input id="name" class="form-control" name="name" style="width:150px;display: inline;" placeholder="请输入网关名称" type="text">
+                            <span>网关名称</span>&nbsp;
+                            <input id="name" class="form-control" name="name" style="display: inline;" placeholder="请输入网关名称" type="text">
                         </td>
                         <td></td>
                         <td>
-                            <span style="margin-left:10px;" >网关编号</span>&nbsp;
-                            <input id="comaddr" class="form-control" name="comaddr" style="width:150px;display: inline;" placeholder="请输入网关地址" type="text">
+                            <span style="margin-left:4px;" >网关编号</span>&nbsp;
+                            <input id="comaddr" class="form-control" name="comaddr" style="display: inline;" placeholder="请输入网关地址" type="text">
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <span style="margin-left:20px;">&#8195;&#8195;经度</span>&nbsp;
-                            <input id="Longitude" class="form-control" name="Longitude" style="width:150px;display: inline;" placeholder="经度" type="text">
+                            <span>&#8195;&#8195;经度</span>&nbsp;
+                            <input id="Longitude" class="form-control" name="Longitude" style="display: inline;" placeholder="经度" type="text">
                         </td>
                         <td></td>
                         <td>
-                            <span style="margin-left:10px;" >&#8195;&#8195;纬度</span>&nbsp;
-                            <input id="latitude" class="form-control" name="latitude" style="width:150px;display: inline;" placeholder="纬度" type="text">
+                            <span style="margin-left:4px;" >&#8195;&#8195;纬度</span>&nbsp;
+                            <input id="latitude" class="form-control" name="latitude" style="display: inline;" placeholder="纬度" type="text">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span style="margin-left:20px;">&#8195;&#8195;站号</span>&nbsp;
-                            <input id="sitenum" value="1" readonly="true" class="form-control" name="sitenum" style="width:150px;display: inline;" placeholder="站号" type="text">
+                            <span style="">&#8195;&#8195;站号</span>&nbsp;
+                            <input id="sitenum" value="1" readonly="true" class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
                         </td>
                         <td></td>
                         <td>
-                            <span style="margin-left:10px;" >网关型号</span>&nbsp;
+                            <span style="margin-left:4px;" >网关型号</span>&nbsp;
 
 
                             <span class="menuBox">
 
                                 <!--<input id="model" class="easyui-combobox" readonly="true" name="model" style="width:150px; height: 30px" data-options="editable:false" />-->
-                                <select class="easyui-combobox" data-options="editable:true"  id="model" name="model" style="width:150px; height: 30px">
+                                <select class="easyui-combobox" data-options="editable:true"  id="model" name="model" style="height: 30px">
                                     <option value=""></option>
                                     <!--<option value="L-30MT-ES2">L-30MT-ES2</option>-->
                                 </select>
@@ -847,49 +899,48 @@
         <form action="" method="POST" id="form2" onsubmit="return editComplete()">  
             <table>
                 <tbody>
+                    <tr style=" border: 1px solid red">
+                        <td>
+                            <span>网关编号</span>&nbsp;
+                            <input id="comaddr_" class="form-control" name="comaddr" style=" width: 100px;display: inline;" placeholder="请输入网关名称" type="text" readonly="readonly">
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     <tr>
                         <td>
-                            <span style="margin-left:20px;">网关名称</span>&nbsp;
-                            <input id="name_" class="form-control" name="name" style="width:150px;display: inline;" placeholder="请输入网关名称" type="text">
+                            <span>网关名称</span>&nbsp;
+                            <input id="name_" class="form-control" name="name" style="width: 100px;display: inline;" placeholder="请输入网关名称" type="text">
                             <input id="id_" name="id" type="hidden">
                         </td>
+                        <td></td>
                         <td>
-                        </td>
-                        <td>
-                            <span style="margin-left:10px;">网关型号</span>&nbsp;
+                            <span style="margin-left:4px;">网关型号</span>&nbsp;
                             <span class="menuBox">
                                 <!--<input id="model_" class="easyui-combobox" name="model" style="width:150px; height: 30px" data-options="editable:true,valueField:'id', textField:'text',url:'test1.f5.h2.action'" />-->
-                                <select class="easyui-combobox" readonly="true" id="model_" name="model" style="width:150px; height: 30px">
+                                <select class="easyui-combobox" readonly="true" id="model_" name="model" style="width: 100px; height: 30px">
                                     <option value="L-30MT-ES2">L-30MT-ES2</option>
                                 </select>
                             </span>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <span style="margin-left:20px;">网关编号</span>&nbsp;
-                            <input id="comaddr_" class="form-control" name="comaddr" style="width:150px;display: inline;" placeholder="请输入网关名称" type="text" readonly="readonly">
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-
-                        </td>
-                    </tr>
 
 
                     <tr>
+<!--                        51/45/45-->
                         <td>
-                            <span style="margin-left:20px;">经度</span>&nbsp;
-                            <input id="longitudem26d_" class="form-control" name="longitudem26d" style="width:51px;display: inline;" type="text">&nbsp;°
-                            <input id="longitudem26m_" class="form-control" name="longitudem26m" style="width:45px;display: inline;" type="text">&nbsp;'
-                            <input id="longitudem26s_" class="form-control" name="longitudem26s" style="width:45px;display: inline;" type="text">&nbsp;"</td>
+                            <span>经度</span>&nbsp;
+<!--                            <input id="longitudem26d_" class="form-control jwd" name="longitudem26d" style=" width: 51px;display: inline;" type="text">&nbsp;°
+                            <input id="longitudem26m_" class="form-control jwd" name="longitudem26m" style=" width: 45px;display: inline;" type="text">&nbsp;'
+                            <input id="longitudem26s_" class="form-control jwd" name="longitudem26s" style=" width: 45px;display: inline;" type="text">&nbsp;"</td>-->
+                            <input id="name_" class="form-control" name="name" style="width: 100px;display: inline;" placeholder="请输入网关名称" type="text">
                         <td></td>
                         <td>
-                            <span style="margin-left:10px;">纬度</span>&nbsp;
-                            <input id="latitudem26d_" class="form-control" name="latitudem26d" style="width:51px;display: inline;" type="text">&nbsp;°
-                            <input id="latitudem26m_" class="form-control" name="latitudem26m" style="width:45px;display: inline;" type="text">&nbsp;'
-                            <input id="latitudem26s_" class="form-control" name="latitudem26s" style="width:45px;display: inline;" type="text">&nbsp;"</td>
+<!--                            <span style="margin-left:4px;">纬度</span>&nbsp;
+                            <input id="latitudem26d_" class="form-control jwd" name="latitudem26d" style=" width: 51px;display: inline;" type="text">&nbsp;°
+                            <input id="latitudem26m_" class="form-control jwd" name="latitudem26m" style=" width: 45px;display: inline;" type="text">&nbsp;'
+                            <input id="latitudem26s_" class="form-control jwd" name="latitudem26s" style=" width: 45px;display: inline;" type="text">&nbsp;"</td>-->
+                            <input id="name_" class="form-control" name="name" style="width: 100px;display: inline;" placeholder="请输入网关名称" type="text">
                     </tr>
 
                 </tbody>

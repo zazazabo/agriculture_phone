@@ -203,50 +203,113 @@
                     },
                 });
 
-                $('#gayway').on('check.bs.table', function (row, element) {
-                    var l_comaddr = element.comaddr;
-                    var vv = [];
-                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
-
-                    var obj = {};
-                    obj.l_comaddr = l_comaddr;
-                    obj.pid = "${param.pid}";
-                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
+                $("#l_comaddr").combobox({
+                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                    formatter: function (row) {
+                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                        var v = row.text + v1;
+                        row.id = row.id;
+                        row.text = v;
+                        var opts = $(this).combobox('options');
+                        return row[opts.textField];
+                    },
+                    onLoadSuccess: function (data) {
+                        if (Array.isArray(data) && data.length > 0) {
                             for (var i = 0; i < data.length; i++) {
-                                var o = data[i];
-                                infolist[o.id] = o.text;
+                                data[i].text = data[i].name;
                             }
-                        },
-                        error: function () {
-                            alert("提交失败！");
+                            $(this).combobox('select', data[0].id);
                         }
-                    });
 
+                    },
+                    onSelect: function (record) {
+                        var l_comaddr = record.id;
+                        var vv = [];
+                        dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
 
-                    $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                var o = data[i];
-                                infoscene[o.id] = o.text;
+                        var obj = {};
+                        obj.l_comaddr = l_comaddr;
+                        obj.pid = "${param.pid}";
+                        $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+                            success: function (data) {
+                                for (var i = 0; i < data.length; i++) {
+                                    var o = data[i];
+                                    infolist[o.id] = o.text;
+                                }
+                            },
+                            error: function () {
+                                alert("提交失败！");
                             }
-                        },
-                        error: function () {
-                            alert("提交失败！");
-                        }
-                    });
+                        });
+
+
+                        $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
+                            success: function (data) {
+                                for (var i = 0; i < data.length; i++) {
+                                    var o = data[i];
+                                    infoscene[o.id] = o.text;
+                                }
+                            },
+                            error: function () {
+                                alert("提交失败！");
+                            }
+                        });
 
 
 
-                    var opt = {
-                        url: "loop.loopForm.getLoopList.action",
-                        silent: false,
-                        query: obj
-                    };
-                    $("#gravidaTable").bootstrapTable('refresh', opt);
+                        var opt = {
+                            url: "loop.loopForm.getLoopList.action",
+                            silent: false,
+                            query: obj
+                        };
+                        $("#gravidaTable").bootstrapTable('refresh', opt);
+                    }
                 });
 
-            })
+//                $('#gayway').on('check.bs.table', function (row, element) {
+//                    var l_comaddr = element.comaddr;
+//                    var vv = [];
+//                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
+//
+//                    var obj = {};
+//                    obj.l_comaddr = l_comaddr;
+//                    obj.pid = "${param.pid}";
+//                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+//                        success: function (data) {
+//                            for (var i = 0; i < data.length; i++) {
+//                                var o = data[i];
+//                                infolist[o.id] = o.text;
+//                            }
+//                        },
+//                        error: function () {
+//                            alert("提交失败！");
+//                        }
+//                    });
+//
+//
+//                    $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
+//                        success: function (data) {
+//                            for (var i = 0; i < data.length; i++) {
+//                                var o = data[i];
+//                                infoscene[o.id] = o.text;
+//                            }
+//                        },
+//                        error: function () {
+//                            alert("提交失败！");
+//                        }
+//                    });
+//
+//
+//
+//                    var opt = {
+//                        url: "loop.loopForm.getLoopList.action",
+//                        silent: false,
+//                        query: obj
+//                    };
+//                    $("#gravidaTable").bootstrapTable('refresh', opt);
+//                });
+
+            });
             function formartcomaddr(value, row, index) {
                 if (index == 0) {
                     var l_comaddr = row.comaddr;
@@ -373,11 +436,12 @@
             }
 
             function switchloop() {
-                var s2 = $('#gayway').bootstrapTable('getSelections');
-                if (s2.length == 0) {
+                var l_comaddr = $("#l_comaddr").val();
+                if (l_comaddr == "") {
                     layerAler('请勾选网关');  //请勾选网关
+                    return ;
                 }
-                var l_comaddr = s2[0].comaddr;
+               
                 var o1 = $("#form1").serializeObject();
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 if (selects.length == 0) {
@@ -458,11 +522,11 @@
             }
             function restoreloop() {
 
-                var s2 = $('#gayway').bootstrapTable('getSelections');
-                if (s2.length == 0) {
+                var l_comaddr = $("#l_comaddr").val();
+                if (l_comaddr == "") {
                     layerAler('请勾选网关');  //请勾选网关
+                    return ;
                 }
-                var l_comaddr = s2[0].comaddr;
                 var o1 = $("#form1").serializeObject();
                 console.log(o1);
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
@@ -576,78 +640,83 @@
 
 
         <div id="content" class="row-fluid">
-
-            <div class="row" >
-                <div class="col-xs-12 col-sm-4 col-md-3" >
-                    <table id="gayway"      data-toggle="table" 
-                           data-single-select="true"
-                           data-striped="true"
-                           data-click-to-select="true"
-                           data-search="false"
-                           data-checkbox-header="true"
-                           data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" >
-                        <thead >
-                            <tr >
-                                <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                                <!--<th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>-->
-                                <th data-width="100" data-field="name" data-align="center" data-formatter='formartcomaddr1'    >网关名称</th>
-                            </tr>
-                        </thead>       
-
-                    </table>
-                </div>
-
-                <div class="col-xs-12 col-sm-8 col-md-9">
-
-                    <div id="content" class="row-fluid">
-
-                        <div class="col-xs-12" >
-                            <form id="form1">
-
-                                <table style="  border-collapse:separate; border: 1px solid #16645629; margin-top: 2px; align-content:  center; ">
-                                    <tbody>
-                                        <tr>
-
-                                            <td style=" padding-left: 10px;" >
-                                                <span  >
-                                                    回路控制
-                                                </span>
-
-                                            </td>
-                                            <td style=" padding-left: 3px;">
-                                                <select class="easyui-combobox" id="switch" name="switch" style=" width: 100px; margin-left: 3px;  height: 30px">
-                                                    <option value="0">断开</option>
-                                                    <option value="1">闭合</option>           
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm  ">
-                                                    设置
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
-                                                    读取
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
-                                                    恢复自动运行
-                                                </button>
-
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                        <div class="col-xs-12" >
-                            <table id="gravidaTable"  class="text-nowrap table table-hover table-striped">
+            <!--            <div class="col-xs-12 col-sm-4 col-md-3" >
+                            <table id="gayway"      data-toggle="table" 
+                                   data-single-select="true"
+                                   data-striped="true"
+                                   data-click-to-select="true"
+                                   data-search="false"
+                                   data-checkbox-header="true"
+                                   data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" >
+                                <thead >
+                                    <tr >
+                                        <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
+                                        <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>
+                                        <th data-width="100" data-field="name" data-align="center" data-formatter='formartcomaddr1'    >网关名称</th>
+                                    </tr>
+                                </thead>       
+            
                             </table>
-                        </div>
+                        </div>-->
+
+            <div id="content" class="row-fluid">
+
+                <div class=" row" >
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+                                    <td>网关名称：</td>
+                                    <td style=" padding-left: 3px;">
+                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
- 
+                    <form id="form1" class="col-xs-12 col-sm-6 col-md-6">
+
+                        <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+
+                                    <td style=" padding-left: 10px;" >
+                                        <span  >
+                                            回路控制
+                                        </span>
+
+                                    </td>
+                                    <td style=" padding-left: 3px;">
+                                        <select class="easyui-combobox" id="switch" name="switch" style=" width: 100px; margin-left: 3px;  height: 30px">
+                                            <option value="0">断开</option>
+                                            <option value="1">闭合</option>           
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm  ">
+                                            设置
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
+                                            读取
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
+                                            恢复自动运行
+                                        </button>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div style=" width: 100%;" >
+                    <table id="gravidaTable"  class="text-nowrap table table-hover table-striped">
+                    </table>
                 </div>
             </div>
         </div>
