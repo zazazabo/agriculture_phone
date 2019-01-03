@@ -35,6 +35,16 @@
                     url: 'login.policereord.reordInfo.action',
                     columns: [
                         {
+                            title: '单选',
+                            field: 'select',
+                            //复选框
+                            checkbox: true,
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle'
+                        },
+                        {
+
                             field: 'f_comaddr',
                             title: '设备名称', //设备名称
                             width: 25,
@@ -51,19 +61,30 @@
                             }
                         }, {
                             field: 'f_type',
-                            title: '异常类型', //异常类型
+                            title: '设备类型', //异常类型
                             width: 25,
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            formatter: function (value) {
+                                if (value == 1) {
+                                    return "温度传感器";
+                                } else if (value == 2) {
+                                    return "湿度传感器";
+                                }
+                            }
                         }, {
                             field: 'f_comment',
                             title: '异常说明', //异常说明
                             width: 25,
                             align: 'center',
                             valign: 'middle',
+                            formatter: function (value, row, index, field) {
+                                var str = "通信中断";
+                                return str;
+                            }
                         }
                         , {
-                            field: 'l_factorycode',
+                            field: 'f_name',
                             title: '传感器编号', //灯具编号
                             width: 25,
                             align: 'center',
@@ -76,6 +97,7 @@
                             align: 'center',
                             valign: 'middle',
                             formatter: function (value, row, index, field) {
+
                                 return value;
                             }
                         },
@@ -116,7 +138,7 @@
                             align: 'center',
                             valign: 'middle',
                             formatter: function (value, row, index, field) {
-                                if (value == 0) {
+                                if (value == 1) {
                                     var str = "<span class='label label-success'>" + "已处理" + "</span>";  //已处理
                                     return  str;
                                 } else {
@@ -199,6 +221,70 @@
                     autoclose: 1
                 });
             });
+
+
+            function dealfaultCB(obj) {
+//                $('#panemask').hideLoading();
+                if (obj.status == "success") {
+                    var data = Str2BytesH(obj.data);
+                    var v = "";
+                    for (var i = 0; i < data.length; i++) {
+                        v = v + sprintf("%02x", data[i]) + " ";
+                    }
+                    console.log(v);
+                    if (data[1] == 0x10) {
+                        var infonum = (2000 + obj.val * 10 + 6) | 0x1000;
+                        console.log(infonum);
+                        var high = infonum >> 8 & 0xff;
+                        var low = infonum & 0xff;
+                        if (data[2] == high && data[3] == low) {
+                            console.log("${param.name}");
+                            var ooo = {id: obj.param, f_handlep: "${param.name}"};
+                            console.log(ooo);
+                            $.ajax({async: false, url: "sensor.sensorform.updfualt.action", type: "get", datatype: "JSON", data: ooo,
+                                success: function (data) {
+//                                    $("#reordtabel").bootstrapTable('refresh');
+                                }
+                            });
+                        }
+
+                    }
+
+                }
+            }
+            function dealfault() {
+                var eles = $("#reordtabel").bootstrapTable('getSelections');
+                if (eles.length == 0) {
+                    alert("请勾选表格");
+                    return;
+                }
+                var ele = eles[0];
+                if (ele.f_Isfault != 1) {
+                    var vv = [];
+                    vv.push(1);
+                    vv.push(0x10);
+                    var info = parseInt(ele.f_setcode);
+                    var infonum = (2000 + info * 10 + 6) | 0x1000;
+                    vv.push(infonum >> 8 & 0xff);
+                    vv.push(infonum & 0xff);
+                    vv.push(0);
+                    vv.push(1); //寄存器数目 2字节     
+                    vv.push(2)
+                    vv.push(0);
+                    vv.push(0);
+                    var data = buicode2(vv);
+                    console.log(data);
+                    dealsend2("10", data, "dealfaultCB", ele.f_comaddr, 0, ele.id, info, "${param.action}");
+                }
+
+            }
+
+
+
+
+
+
+
         </script>
     </head>
     <body>
@@ -227,12 +313,17 @@
             </form>
             <span style="font-size: 18px; margin-left: 10px;">
                 <button type="button" class="btn btn-sm btn-success" id="select" >
-                    <span name="xxxx" id="34">搜索</span>
+                    搜索
                 </button>
             </span>
             <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="$('#reordtabel').tableExport({type: 'excel', escape: 'false'})">
-                <span id="110" name="xxxx">导出Excel</span>
+                导出Excel
             </button>
+
+            <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="dealfault()">
+                处理故障
+            </button>
+
         </div>
         <div>
             <table id="reordtabel">
