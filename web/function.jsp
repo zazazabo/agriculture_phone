@@ -17,8 +17,6 @@
         <script src="bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript" src="js/genel.js"></script>
         <script>
-                var u_name="${param.name}";
-            var o_pid="${param.pid}";
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -26,7 +24,27 @@
                 });
             }
 
+            var lang = '${param.lang}';//'zh_CN';
+          //  var langs1 = parent.parent.getLnas();
+            var pid = parent.parent.getpojectId();
             $(function () {
+                $("#l_comaddr2").combobox({
+                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
+                    onLoadSuccess: function (data) {
+                        $(this).combobox('select', data[0].id);
+                    },
+                    onSelect: function (record) {
+                        console.log(record);
+                        var l_comaddr = record.id;
+                        $("#sensorlist").combobox({
+                            url: "homePage.function.gesensroList.action?l_comaddr=" + l_comaddr,
+                            onLoadSuccess: function (data) {
+                                $(this).combobox('select', data[0].id);
+                            }
+                        });
+                    }
+                });
+                console.log();
                 $('#reordtabel').bootstrapTable({
                     url: 'homePage.function.getdayinfo.action',
                     columns: [
@@ -57,26 +75,26 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle',
-                             formatter: function (value, row, index, field) {
-                               if(row.type == "1"){
-                                   if(parseInt(value)>0){
-                                       return (parseInt(value)/10).toString()+"℃";
-                                   }else{
-                                       return value+"℃";
-                                   }
-                               }else if(row.type =="2"){
-                                   if(parseInt(value)>0){
-                                       return (parseInt(value)/10).toString()+"%RH";
-                                   }else{
-                                       return value+"%RH";
-                                   }
-                               }else if(row.type=="3"){
-                                   if(parseInt(value)=="1"){
-                                       return "闭合";
-                                   }else{
-                                       return "断开";
-                                   }
-                               }
+                            formatter: function (value, row, index, field) {
+                                if (row.type == "1") {
+                                    if (parseInt(value) > 0) {
+                                        return (parseInt(value) / 10).toString() + "℃";
+                                    } else {
+                                        return value + "℃";
+                                    }
+                                } else if (row.type == "2") {
+                                    if (parseInt(value) > 0) {
+                                        return (parseInt(value) / 10).toString() + "%RH";
+                                    } else {
+                                        return value + "%RH";
+                                    }
+                                } else if (row.type == "3") {
+                                    if (parseInt(value) == "1") {
+                                        return "闭合";
+                                    } else {
+                                        return "断开";
+                                    }
+                                }
                             }
                         }
                     ],
@@ -106,9 +124,10 @@
                             skip: params.offset,
                             limit: params.limit,
                             type: "1",
-                            pid:"${param.pid}",
                             statr: $("#sday").val(),
-                            end: $("#eday").val()
+                            end: $("#eday").val(),
+                            name:encodeURI($("#sensorlist").val()),
+                            comaddr:$("#l_comaddr2").val()
                                
                         };      
                         return temp;  
@@ -118,21 +137,20 @@
                 $("#select").click(function () {
                     var statr = $("#sday").val();
                     var end = $("#eday").val();
-                    var type = $("#querytype").val();
                     var obj = {};
-
+                    obj.type = "ALL";
                     if (statr == "") {
 
                     } else {
                         obj.statr = statr;
                     }
                     if (end == "") {
-   
+
                     } else {
                         obj.end = end;
                     }
-                    obj.pid = pid;
-                    obj.type = type;
+                    obj.name = encodeURI($("#sensorlist").val());
+                    obj.comaddr = $("#l_comaddr2").val();
                     var opt = {
                         url: "homePage.function.getdayinfo.action",
                         query: obj,
@@ -151,13 +169,13 @@
         </script>
     </head>
     <body>
-        <div>
-            <span style=" margin-left: 10px;">类型：</span>
-            <select class="easyui-combobox" id="querytype" data-options='editable:false,valueField:"id", textField:"text" ' name="querytype" style="width:150px; height: 30px">
-                <option value="1">温度</option>
-                <option value="2">湿度</option>
-                <option value="3">开关</option>
-            </select>  
+        <div style=" margin-top: 10px;"> 
+            <span style=" margin-left: 10px;">网关名称：</span>
+            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style="width:150px; height: 30px" 
+                   data-options="editable:true,valueField:'id', textField:'text' " />
+            <span style=" margin-left: 10px;">传感器：</span>
+            <input id="sensorlist" class="easyui-combobox"  style="width:150px; height: 30px" 
+                   data-options="editable:true,valueField:'id', textField:'text' " />
         </div>
 
         <div style="margin-top:15px; font-size: 18px;margin-left: 10px;" id="Day">

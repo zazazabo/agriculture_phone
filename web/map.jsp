@@ -20,7 +20,7 @@
             }
             #showtext{
                 width: 230px;
-                height: 50px;
+                height: 30px;
                 font-size: 20px;
             }
             #fdiv{
@@ -52,13 +52,126 @@
 
             } 
             .items li:hover {color: #FF00FF}
-            #showdiv{
-                top:0%;
-                left:14%;
-                position:absolute;
-                z-index:9999;
-                filter:alpha(opacity=40);
+
+            @media screen and (max-width:767px) {  
+                #up-map-div{
+                    width:260px;
+                    top:20%;
+                    left:25%;
+                    position:absolute;
+                    z-index:9999;
+                    border:1px solid blue;
+                    background-color:#FFFFFF;
+                }
+
+                #showdiv{
+                    top:1%;
+                    left:3%;
+                    position:absolute;
+                    z-index:9999;
+                    filter:alpha(opacity=40);
+                }
+                #showtext{
+                    display: none;
+                }
+                html{
+                    font-size: 6px;
+                }
+                #abut{
+                    margin-top: 3px;
+                }
+                #righttext{
+                    font-size: 12px;
+                }
+                #textdiv{
+                    font-size: 10px;
+                }
+                #showwg{
+                    margin-top: 2px;
+                }
             }
+
+            @media screen and (min-width:768px) {  
+                #up-map-div{
+                    width:260px;
+                    top:20%;
+                    left:25%;
+                    position:absolute;
+                    z-index:9999;
+                    border:1px solid blue;
+                    background-color:#FFFFFF;
+                }
+
+                #showdiv{
+                    top:1%;
+                    left:1%;
+                    position:absolute;
+                    z-index:9999;
+                    filter:alpha(opacity=40);
+                }
+                #showtext{
+                    display: none;
+                }
+                html{
+                    font-size: 6px;
+                }
+                #abut{
+                    margin-top: 3px;
+                    width: 30%;
+                    float: left;
+                }
+                #showtext{
+                    display: block;
+                    width: 30%;
+                    float: left;
+                }
+                #showwg{
+                    width: 40%;
+                    float: left;
+                }
+
+            }
+            @media screen and (min-width:1025px) {  
+                #up-map-div{
+                    width:260px;
+                    top:20%;
+                    left:25%;
+                    position:absolute;
+                    z-index:9999;
+                    border:1px solid blue;
+                    background-color:#FFFFFF;
+                }
+
+                #showdiv{
+                    top:2%;
+                    left:5%;
+                    position:absolute;
+                    z-index:9999;
+                    filter:alpha(opacity=40);
+                }
+                #showtext{
+                    display: none;
+                }
+                html{
+                    font-size: 6px;
+                }
+                #abut{
+                    margin-top: 3px;
+                    width: 300px;
+                    float: left;
+                }
+                #showtext{
+                    display: block;
+                    width: 230px;
+                    float: left;
+                }
+                #showwg{
+                    width: 250px;
+                    float: left;
+                }
+
+            }
+
         </style>
         <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=19mXqU4pjrrqSH20w2gORu6OhFaKddYo"></script>
         <script type="text/javascript" src="js/genel.js"></script>
@@ -67,8 +180,8 @@
         <script type="text/javascript" src="bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
         <script type="text/javascript" src="bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
         <script>
-                var u_name="${param.name}";
-            var o_pid="${param.pid}";
+            var u_name = "${param.name}";
+            var o_pid = "${param.pid}";
             function wg() {
                 var allOver = map.getOverlays(); //获取全部标注
                 for (var j = 0; j < allOver.length; j++) {
@@ -132,16 +245,27 @@
                     }
                 });
             }
+            function size() {
+                var showdivWidth = $(window).width() * 0.8;
+                $("#showdiv").css("width", showdivWidth);
+            }
+            window.onresize = function () {
+                size();
+            };
         </script>
     </head>
     <body>
         <div id="showdiv">
-            <input type="text" id="showtext" readonly="true" >
-            <span style=" margin-left: 20px;">网关</span>：
-            <input id="lampcomaddrlist2" data-options="editable:true,valueField:'id', textField:'text'"  class="easyui-combobox"/>&nbsp;
-            <button onclick="wg()"><span>网关</span></button>
-            <button onclick="cgq()" id="dj"><span >传感器</span></button>
-            <button id="bzzt"><span>标识状态</span></button>
+            <input type="text" id="showtext" readonly="true">
+            <div  id="showwg">
+                <span>网关</span>：
+                <input id="lampcomaddrlist2" data-options="editable:true,valueField:'id', textField:'text'"  class="easyui-combobox"/>&nbsp; 
+            </div>
+            <div id="abut">
+                <button onclick="wg()"><span>网关</span></button>
+                <button onclick="cgq()" id="dj"><span >传感器</span></button>
+                <button id="bzzt"><span>标识状态</span></button>
+            </div>
         </div>
         <div id="allmap" style=" width: 85%; height: 100%; float: left;">
 
@@ -934,6 +1058,7 @@
                 $("#lamptable").bootstrapTable('refresh', opt);
             }
             $(function () {
+                size();
                 var porjectId = parent.getpojectId();
                 combobox("#lampcomaddrlist2", porjectId);
                 $("#bzzt").mouseover(function () {
@@ -1745,30 +1870,30 @@
                                 var p = document.createElement("p");
                                 var name = sensor.name;
                                 var val = "";
-                                if(sensor.type=="1"){
+                                if (sensor.type == "1") {
                                     var num;
-                                    if(sensor.numvalue>0){
-                                        num = sensor.numvalue/10;
-                                    }else{
+                                    if (sensor.numvalue > 0) {
+                                        num = sensor.numvalue / 10;
+                                    } else {
                                         num = sensor.numvalue;
                                     }
-                                    val = num.toString()+"℃";
-                                }else if(sensor.type=="2"){
+                                    val = num.toString() + "℃";
+                                } else if (sensor.type == "2") {
                                     var num;
-                                    if(sensor.numvalue>0){
-                                        num = sensor.numvalue/10;
-                                    }else{
+                                    if (sensor.numvalue > 0) {
+                                        num = sensor.numvalue / 10;
+                                    } else {
                                         num = sensor.numvalue;
                                     }
-                                    val = num.toString()+"%RH";
-                                }else if(sensor.type=="3"){
-                                     if(sensor.numvalue=="1"){
-                                        val="闭合";
-                                    }else{
-                                       val="断开";
+                                    val = num.toString() + "%RH";
+                                } else if (sensor.type == "3") {
+                                    if (sensor.numvalue == "1") {
+                                        val = "闭合";
+                                    } else {
+                                        val = "断开";
                                     }
                                 }
-                                p.innerHTML = name+":      "+ val;
+                                p.innerHTML = name + ":      " + val;
                                 $("#textdiv").append(p);
                             }
                         }

@@ -161,41 +161,92 @@
                     },
                 });
 
-
-                $('#gayway').on('check.bs.table', function (row, element) {
-                    var l_comaddr = element.comaddr;
-
-
-                    var obj = {};
-                    obj.l_comaddr = l_comaddr;
-                    obj.pid = "${param.pid}";
-                    console.log(obj);
-                    var obj2 = {};
-                    obj2.l_comaddr = element.comaddr;
-                    obj2.pid = "${param.pid}";
-                    obj2.p_comaddr = element.comaddr;
-                    var opt = {
-                        url: "plan.planForm.getSensorPlan.action",
-                        query: obj2,
-                        silent: true
-                    };
-
-                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
+                $("#l_comaddr").combobox({
+                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                    formatter: function (row) {
+                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                        var v = row.text + v1;
+                        row.id = row.id;
+                        row.text = v;
+                        var opts = $(this).combobox('options');
+                        return row[opts.textField];
+                    },
+                    onLoadSuccess: function (data) {
+                        if (Array.isArray(data) && data.length > 0) {
                             for (var i = 0; i < data.length; i++) {
-                                var o = data[i];
-                                infolist[o.id] = o.text;
+                                data[i].text = data[i].name;
                             }
-                            $("#table0").bootstrapTable('refresh', opt);
-                        },
-                        error: function () {
-                            alert("提交失败！");
+                            $(this).combobox('select', data[0].id);
                         }
-                    });
 
-                    getSceneNum(l_comaddr);
+                    },
+                    onSelect: function (record) {
+                        var l_comaddr = record.id;
+                        var obj = {};
+                        obj.l_comaddr = l_comaddr;
+                        obj.pid = "${param.pid}";
+                        var obj2 = {};
+                        obj2.l_comaddr = l_comaddr;
+                        obj2.pid = "${param.pid}";
+                        obj2.p_comaddr = l_comaddr;
+                        var opt = {
+                            url: "plan.planForm.getSensorPlan.action",
+                            query: obj2,
+                            silent: true
+                        };
 
+                        $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+                            success: function (data) {
+                                for (var i = 0; i < data.length; i++) {
+                                    var o = data[i];
+                                    infolist[o.id] = o.text;
+                                }
+                                $("#table0").bootstrapTable('refresh', opt);
+                            },
+                            error: function () {
+                                alert("提交失败！");
+                            }
+                        });
+
+                        getSceneNum(l_comaddr);
+                    }
                 });
+
+
+//                $('#gayway').on('check.bs.table', function (row, element) {
+//                    var l_comaddr = element.comaddr;
+//
+//
+//                    var obj = {};
+//                    obj.l_comaddr = l_comaddr;
+//                    obj.pid = "${param.pid}";
+//                    console.log(obj);
+//                    var obj2 = {};
+//                    obj2.l_comaddr = element.comaddr;
+//                    obj2.pid = "${param.pid}";
+//                    obj2.p_comaddr = element.comaddr;
+//                    var opt = {
+//                        url: "plan.planForm.getSensorPlan.action",
+//                        query: obj2,
+//                        silent: true
+//                    };
+//
+//                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+//                        success: function (data) {
+//                            for (var i = 0; i < data.length; i++) {
+//                                var o = data[i];
+//                                infolist[o.id] = o.text;
+//                            }
+//                            $("#table0").bootstrapTable('refresh', opt);
+//                        },
+//                        error: function () {
+//                            alert("提交失败！");
+//                        }
+//                    });
+//
+//                    getSceneNum(l_comaddr);
+//
+//                });
 
                 $('#scenenum').combobox({
                     url: "sensor.planForm.getSensorPlanBynum1.action?pid=${param.pid}",
@@ -350,12 +401,13 @@
 
             function switchloop() {
 
-                var s2 = $('#gayway').bootstrapTable('getSelections');
-                if (s2.length == 0) {
-                    layerAler('请勾选网关');  //请勾选网关
-                }
-                var l_comaddr = s2[0].comaddr;
 
+
+                var l_comaddr = $("#l_comaddr").val();
+                if (l_comaddr == "") {
+                    layerAler('请勾选网关');  //请勾选网关
+                    return;
+                }
                 var obj = $("#form1").serializeObject();
 
                 var o = {};
@@ -422,11 +474,11 @@
             }
             function restoreloop() {
 
-                var s2 = $('#gayway').bootstrapTable('getSelections');
-                if (s2.length == 0) {
+                var l_comaddr = $("#l_comaddr").val();
+                if (l_comaddr == "") {
                     layerAler('请勾选网关');  //请勾选网关
+                    return;
                 }
-                var l_comaddr = s2[0].comaddr;
 
                 var obj = $("#form1").serializeObject();
 
@@ -472,64 +524,73 @@
 
 
         <div id="content" class="row-fluid">
+            <!--            <div style=" margin-top: 10px;">
+                            <table id="gayway" style="width:100%;"    data-toggle="table" 
+                                   data-single-select="true"
+                                   data-striped="true"
+                                   data-click-to-select="true"
+                                   data-search="false"
+                                   data-checkbox-header="true"
+                                   data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
+                                <thead >
+                                    <tr >
+                                        <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
+                                        <th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>
+                                        <th data-width="100" data-field="name" data-align="center"  data-formatter='formartcomaddr1'   >网关名称</th>
+                                    </tr>
+                                </thead>       
+            
+                            </table>
+                        </div>-->
 
-            <div class="row" >
-                <div class="col-xs-12 col-sm-4 col-md-3" >
-                    <table id="gayway" style="width:100%;"    data-toggle="table" 
-                           data-single-select="true"
-                           data-striped="true"
-                           data-click-to-select="true"
-                           data-search="false"
-                           data-checkbox-header="true"
-                           data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" style="width:200px;" >
-                        <thead >
-                            <tr >
-                                <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                                <!--<th data-width="100" data-field="comaddr" data-align="center"   data-formatter='formartcomaddr1'  >网关地址</th>-->
-                                <th data-width="100" data-field="name" data-align="center"  data-formatter='formartcomaddr1'   >网关名称</th>
-                            </tr>
-                        </thead>       
+            <div >
 
-                    </table>
-                </div>
+                <div id="content" class="row-fluid">
 
-                <div class="col-xs-12 col-sm-8 col-md-9">
-
-                    <div id="content" class="row-fluid">
-
-                        <div class="col-xs-12" >
-                            <form id="form1">
-                                <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center">
-                                    <tbody>
-                                        <tr>
-                                            <td>场景控制</td>
-                                            <td style=" padding-left: 3px;">
-                                                
-                                                <select id="scenenum" class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="scenenum" style="width:100px;  height: 30px">
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
-                                                    设置
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
-                                                    恢复自动运行
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                        <div class="col-xs-12" >
-                            <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3" style=" ">
+                            <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                                <tbody>
+                                    <tr>
+                                        <td>网关名称：</td>
+                                        <td style=" padding-left: 3px;">
+                                            <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
-                    </div>
+                        <form id="form1" class="col-xs-12 col-sm-6 col-md-6">
+                            <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                                <tbody>
+                                    <tr>
+                                        <td>&nbsp;场景控制</td>
+                                        <td style=" padding-left: 3px;">
 
+                                            <select id="scenenum" class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="scenenum" style="width:100px;  height: 30px">
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
+                                                设置
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
+                                                恢复自动运行
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div style=" width: 100%;">
+                        <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
+                        </table>
+                    </div>
                 </div>
+
             </div>
         </div>
     </body>

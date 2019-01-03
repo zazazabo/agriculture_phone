@@ -28,7 +28,7 @@
         <script type="text/javascript"  src="js/getdate.js"></script>
         <script>
             var u_name = "${param.name}";
-            var o_pid = "${param.pid}"; 
+            var o_pid = "${param.pid}";
             console.log(o_pid);
             function layerAler(str) {
                 layer.alert(str, {
@@ -213,22 +213,36 @@
                         return temp;  
                     }
                 });
+                $("#l_comaddr").combobox({
+                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                    formatter: function (row) {
+                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                        var v = row.text + v1;
+                        row.id = row.id;
+                        row.text = v;
+                        var opts = $(this).combobox('options');
+                        return row[opts.textField];
+                    },
+                    onLoadSuccess: function (data) {
+                        if (Array.isArray(data) && data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                data[i].text = data[i].name;
+                            }
+                            $(this).combobox('select', data[0].id);
+                        }
 
-                $('#gayway').on('check.bs.table', function (row, element) {
-                    var l_comaddr = element.comaddr;
-                    var vv = [];
-                    dealsend2("sensor", "00", "sensorCB", l_comaddr, 0, 0, 0);
-
-                    var obj = {};
-                    obj.l_comaddr = l_comaddr;
-                    obj.pid = "${param.pid}";
-                    var opt = {
-                        url: "monitor.monitorForm.getSensorList.action",
-                        silent: true,
-                        query: obj
-                    };
-                    $("#gravidaTable").bootstrapTable('refresh', opt);
-
+                    },
+                    onSelect: function (record) {
+                        var obj = {};
+                        obj.l_comaddr = record.id;
+                        obj.pid = "${param.pid}";
+                        var opt = {
+                            url: "monitor.monitorForm.getSensorList.action",
+                            silent: true,
+                            query: obj
+                        };
+                        $("#gravidaTable").bootstrapTable('refresh', opt);
+                    }
                 });
             });
             //定时刷新数据
@@ -297,23 +311,26 @@
     </head>
     <body id="panemask">
         <div>
-            <div  style=" width: 100% ;" >
+            <div  style=" width: 100% ; margin-top: 10px;" >
                 <!--                data-height="800"-->
-                <table id="gayway" style="width:100%;"    data-toggle="table" 
-                       data-single-select="true"
-                       data-striped="true"
-                       data-click-to-select="true"
-                       data-search="false"
-                       data-checkbox-header="true"
-                       data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" >
-                    <thead >
-                        <tr >
-                            <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                            <th data-width="100" data-field="name" data-formatter='formartcomaddr1' data-align="center"     >网关名称</th>
-                        </tr>
-                    </thead>       
-
-                </table>
+                <!--                <table id="gayway" style="width:100%;"    data-toggle="table" 
+                                       data-single-select="true"
+                                       data-striped="true"
+                                       data-click-to-select="true"
+                                       data-search="false"
+                                       data-checkbox-header="true"
+                                       data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" >
+                                    <thead >
+                                        <tr >
+                                            <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
+                                            <th data-width="100" data-field="name" data-formatter='formartcomaddr1' data-align="center"     >网关名称</th>
+                                        </tr>
+                                    </thead>       
+                
+                                </table>-->
+                <span style=" margin-left:3%;">网关名称：</span>
+                <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
+                       data-options="editable:true,valueField:'id', textField:'text' " />
             </div>   
             <div  style=" width: 100%;">
 
