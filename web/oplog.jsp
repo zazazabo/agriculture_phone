@@ -15,6 +15,17 @@
         <link rel="stylesheet" type="text/css" href="bootstrap-datetimepicker/bootstrap-datetimepicker.css">
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css">
         <script src="bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+        <style>
+            /*            手机*/
+            @media screen and (min-width:0px) and (max-width:666px) {  
+
+                #selectdiv{
+                    position:relative; top: 10px;
+                }
+
+
+            }
+        </style>
         <script>
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
@@ -176,7 +187,7 @@
                     <span style="margin-left: 10px">至：<input type="date" id="endtime"/></span>
                     <span><input type="button" class="btn btn-sm btn-success" value="查询" id="select"></span>
                 </div>-->
-        <div style="margin-top:15px; font-size: 18px;margin-left: 10px;" id="Day">
+        <div style="margin-top:15px;margin-left: 10px;" id="Day">
             <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px;">
                 <label for="dtp_input2" class="control-label" style="float: left;"></label>
                 <input id="dtp_input2" value="" type="hidden">
@@ -186,7 +197,7 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </span>
             </form>
-            <span style=" font-size: 18px; float: left; margin-top: 4px;">&nbsp;
+            <span style="  float: left; margin-top: 4px;">&nbsp;
                 <span name="xxx" id="119">至</span>
                 &nbsp;</span>
             <form action="" id="day2" class="form-horizontal" role="form" style="float:left; width: 166px;">
@@ -198,14 +209,17 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </span>
             </form>
-            <span style="font-size: 18px; margin-left: 10px;">
-                <button type="button" class="btn btn-sm btn-success" id="select" >
-                    <span id="34" name="xxx">搜索</span>
+            <div id="selectdiv">
+                <span style="font-size: 18px; margin-left: 10px;">
+                    <button type="button" class="btn btn-sm btn-success" id="select" >
+                        <span id="34" name="xxx">搜索</span>
+                    </button>
+                </span>
+                <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="$('#oplogtabel').tableExport({type: 'excel', escape: 'false'})">
+                    <span id="110" name="xxx">导出Excel</span>
                 </button>
-            </span>
-            <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="$('#oplogtabel').tableExport({type: 'excel', escape: 'false'})">
-                <span id="110" name="xxx">导出Excel</span>
-            </button>
+            </div>
+
         </div>
         <div>
             <table id="oplogtabel">

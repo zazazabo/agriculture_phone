@@ -14,14 +14,49 @@
 
         <style>
 
-            .btn { margin-left: 20px;}
+            .btn { margin-left: 10px;}
+             /*            手机*/
+            @media screen and (min-width:0px) and (max-width:666px) {  
+                #l_comaddr{
+                    width: 120px;
+                }
+                
+                #type{
+                    width: 100px;
+                }
+                
+                #nowtime{
+                    width: 100px;
+                }
+                
+                .btn { margin-left: 5px;}
+                
+
+            }
+            /*            手机横屏*/
+            @media screen and (min-width:667px) {  
+                #l_comaddr{
+                    width: 150px;
+                }
+                
+                #type{
+                    width: 150px;
+                }
+                
+                #nowtime{
+                    width: 180px;
+                }
+                
+                .btn { margin-left: 10px;}
+
+            }
         </style>
 
         <script type="text/javascript" src="js/genel.js"></script>
         <script type="text/javascript" src="js/getdate.js"></script>
         <script>
-            var u_name="${param.name}";
-            var o_pid="${param.pid}";
+            var u_name = "${param.name}";
+            var o_pid = "${param.pid}";
             var lang = '${param.lang}';//'zh_CN';
             function isValidIP(ip) {
                 var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
@@ -64,7 +99,7 @@
                 vv.push(0);
                 vv.push(1); //寄存器数目 2字节   
                 var data = buicode2(vv);
-                dealsend2("03", data, "readControlCB", obj.l_comaddr, 0, 0, 3901,"${param.action}");
+                dealsend2("03", data, "readControlCB", obj.l_comaddr, 0, 0, 3901, "${param.action}");
             }
 
             function refreshControlCB(obj) {
@@ -109,7 +144,7 @@
                 vv.push(val >> 8 & 0xff);
                 vv.push(val & 0xff);
                 var data = buicode2(vv);
-                dealsend2("10", data, "refreshControlCB", obj.l_comaddr, 0, 0, 3901,"${param.action}");
+                dealsend2("10", data, "refreshControlCB", obj.l_comaddr, 0, 0, 3901, "${param.action}");
             }
 
             function readTrueTimeCB(obj) {
@@ -153,7 +188,7 @@
 
                 }
             }
-            
+
             function readTrueTime() {
 
                 var obj = $("#form1").serializeObject();
@@ -172,7 +207,7 @@
                 vv.push(0);
                 vv.push(7); //寄存器数目 2字节                         
                 var data = buicode2(vv);
-                dealsend2("03", data, "readTrueTimeCB", obj.l_comaddr, 0, 0, 1313,"${param.action}");
+                dealsend2("03", data, "readTrueTimeCB", obj.l_comaddr, 0, 0, 1313, "${param.action}");
 
 
             }
@@ -228,7 +263,7 @@
                 vv.push(t >> 8 & 0xff);
                 vv.push(t & 0xff);
                 var data = buicode2(vv);
-                dealsend2("10", data, "setCheckTimeCB", obj.l_comaddr, 0, 0, 3900,"${param.action}");
+                dealsend2("10", data, "setCheckTimeCB", obj.l_comaddr, 0, 0, 3900, "${param.action}");
             }
 
             function  initDataCB(obj) {
@@ -286,7 +321,7 @@
                 vv.push(0);
                 vv.push(1);
                 var data = buicode2(vv);
-                dealsend2("10", data, "initDataCB", obj.l_comaddr, 0, 0, 3928,"${param.action}");
+                dealsend2("10", data, "initDataCB", obj.l_comaddr, 0, 0, 3928, "${param.action}");
             }
 
             function dateFormatter(value) {
@@ -350,7 +385,7 @@
                 }
                 console.log(obj);
             }
-            
+
             function setTimeNow() {
                 var time = $('#nowtime').datetimebox('getValue');
                 var myDate = new Date(time);
@@ -416,7 +451,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "setTimeNowCB", comaddr, 1, 0, 3920,"${param.action}");
+                dealsend2("10", data, "setTimeNowCB", comaddr, 1, 0, 3920, "${param.action}");
 
             }
 
@@ -532,7 +567,7 @@
                 var vv = [];
                 var num = randnum(0, 9) + 0x70;
                 var data = buicode(comaddr, 0x04, 0xAA, num, 0, 1, vv); //01 03 F24    
-                dealsend2("AA", data, 1, "readSiteCB", comaddr, 0, 0, 0,"${param.action}");
+                dealsend2("AA", data, 1, "readSiteCB", comaddr, 0, 0, 0, "${param.action}");
             }
             function readTimeCB(obj) {
                 if (obj.status == "success") {
@@ -573,7 +608,7 @@
                 var vv = [];
                 var num = randnum(0, 9) + 0x70;
                 var data = buicode(comaddr, 0x04, 0xAA, num, 0, 4, vv); //01 03 F24    
-                dealsend2("AA", data, 4, "readTimeCB", comaddr, 0, 0, 0,"${param.action}");
+                dealsend2("AA", data, 4, "readTimeCB", comaddr, 0, 0, 0, "${param.action}");
             }
             function setSiteCB(obj) {
                 console.log(obj);
@@ -587,7 +622,7 @@
                         var v1 = [];
                         var num = randnum(0, 9) + 0x70;
                         var data1 = buicode(obj.comaddr, 0x04, 0x00, num, 0, 1, v1); //01 03 F24    
-                        dealsend2("00", data1, 1, "", obj.comaddr, 0, 0, 0,"${param.action}");
+                        dealsend2("00", data1, 1, "", obj.comaddr, 0, 0, 0, "${param.action}");
                         layer.close(index);
                     });
                 }
@@ -649,7 +684,7 @@
                     var num = randnum(0, 9) + 0x70;
                     var data = buicode(comaddr, 0x04, 0xA4, num, 0, 1, vv); //01 03 F24    
 
-                    dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0,"${param.action}");
+                    dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0, "${param.action}");
 
                 } else if (obj.sitetype == "0") {
 
@@ -696,7 +731,7 @@
                         var num = randnum(0, 9) + 0x70;
                         var data = buicode(comaddr, 0x04, 0xA4, num, 0, 1, vv); //01 03 F24    
 
-                        dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0,"${param.action}");
+                        dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0, "${param.action}");
 
                     }
 
@@ -785,7 +820,7 @@
                                                 <span style="margin-left:10px;" >网关</span>&nbsp;
 
                                                 <span class="menuBox">
-                                                    <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
+                                                    <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style=" height: 30px" 
                                                            data-options="editable:true,valueField:'id', textField:'text' " />
                                                 </span>  
                                             </td>
@@ -793,7 +828,7 @@
                                                 <span style="margin-left:10px;" >功能选择</span>&nbsp;
 
                                                 <span class="menuBox">
-                                                    <select class="easyui-combobox" id="type" name="type" data-options="editable:false,valueField:'id', textField:'text' " style="width:200px; height: 30px">
+                                                    <select class="easyui-combobox" id="type" name="type" data-options="editable:false,valueField:'id', textField:'text' " style=" height: 30px">
                                                         <option value="1" >IP设置</option>
                                                         <option value="2">读取网关时间</option> 
                                                         <option value="3">数据初始化</option> 
@@ -860,10 +895,11 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2">
-                                                <button type="button"  onclick="setSite()" class="btn  btn-success btn-sm" style="margin-left: 2px;"><span name="xxx" id="192">设置主站信息</span></button>
+                                                <button type="button"  onclick="setSite()" class="btn  btn-success btn-sm" style="margin-left: 2px; "><span name="xxx" id="192">设置主站信息</span></button>
                                                 <button  type="button" onclick="readSite()" class="btn btn-success btn-sm"><span name="xxx" id="193">读取主站信息</span></button>
                                                 <button  type="button"  onclick="setAPN()" class="btn btn-success btn-sm"><span name="xxx" id="194">设置运营商APN</span></button>
                                             </td>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -880,7 +916,7 @@
                                                 <span style="margin-left:10px;">当前时间</span>
                                                 <span class="menuBox">
                                                     <input class="easyui-datetimebox" name="nowtime" id="nowtime"
-                                                           data-options="formatter:dateFormatter,showSeconds:true" value="" style="width:180px">
+                                                           data-options="formatter:dateFormatter,showSeconds:true" value="" style="">
                                                 </span> 
                                                 <button  type="button" onclick="setNowtime()"  class="btn btn-success btn-sm"><span >获取当前时间</sspan>
                                                 </button>&nbsp; 
@@ -948,8 +984,7 @@
                                         <tr>
 
                                             <td>
-=
-                                                <span  style="  margin-right: 2px;" >刷新控制</span>
+                                                <span  style=" margin-right: 2px;">刷新控制</span>
                                                 <select class="easyui-combobox" id="controlval" name="controlval" style="width:150px; height: 30px">
                                                     <option value="0">0</option>
                                                     <option value="1">1</option>

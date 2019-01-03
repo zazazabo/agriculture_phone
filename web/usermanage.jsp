@@ -19,7 +19,221 @@
         <script type="text/javascript"  src="js/getdate.js"></script>
         <title>用户管理页面</title>
 
-        <style>* { margin: 0; padding: 0; } body, html { width: 100%; height: 100%; } .zuheanniu { margin-top: 2px; margin-left: 10px; } table { font-size: 14px; } .modal-body input[type="text"], .modal-body select, .modal-body input[type="radio"] { height: 30px; } .modal-body table td { line-height: 40px; } .menuBox { position: relative; background: skyblue; } .getMenu { z-index: 1000; display: none; background: white; list-style: none; border: 1px solid skyblue; width: 150px; height: auto; max-height: 200px; position: absolute; left: 0; top: 25px; overflow: auto; } .getMenu li { width: 148px; padding-left: 10px; line-height: 22px; font-size: 14px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } .getMenu li:hover { background: #eee; cursor: pointer; } .a-upload { padding: 4px 10px; height: 30px; line-height: 20px; position: relative; cursor: pointer; color: #888; background: #fafafa; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; display: inline-block; *display: inline; *zoom: 1 } .a-upload input { position: absolute; font-size: 100px; right: 0; top: 0; opacity: 0; filter: alpha(opacity = 0); cursor: pointer } .a-upload:hover { color: #444; background: #eee; border-color: #ccc; text-decoration: none } .pagination-info { float: left; margin-top: - 4px; } .modal-body { text-align:-webkit-center; text-align:-moz-center; width: 600px; margin: auto; } .btn-primary { color: #fff; background-color: #0099CC; border-color: #0099CC; }</style>
+        <style>
+            * { margin: 0; padding: 0; } 
+            body, html { width: 100%; height: 100%; }
+            .zuheanniu { margin-top: 2px; margin-left: 10px; } 
+            table { font-size: 14px; } 
+            .modal-body input[type="text"],.modal-body select, .modal-body input[type="radio"] { height: 30px; } .modal-body table td { line-height: 40px; } .menuBox { position: relative; background: skyblue; } .getMenu { z-index: 1000; display: none; background: white; list-style: none; border: 1px solid skyblue; width: 150px; height: auto; max-height: 200px; position: absolute; left: 0; top: 25px; overflow: auto; } .getMenu li { width: 148px; padding-left: 10px; line-height: 22px; font-size: 14px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } .getMenu li:hover { background: #eee; cursor: pointer; } .a-upload { padding: 4px 10px; height: 30px; line-height: 20px; position: relative; cursor: pointer; color: #888; background: #fafafa; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; display: inline-block; *display: inline; *zoom: 1 } .a-upload input { position: absolute; font-size: 100px; right: 0; top: 0; opacity: 0; filter: alpha(opacity = 0); cursor: pointer } .a-upload:hover { color: #444; background: #eee; border-color: #ccc; text-decoration: none } .pagination-info { float: left; margin-top: - 4px; } .modal-body { text-align:-webkit-center; text-align:-moz-center; width: 600px; margin: auto; } .btn-primary { color: #fff; background-color: #0099CC; border-color: #0099CC; }
+            @media screen and (min-width:0px) and (max-width:666px) {  
+                #addutable{
+                    margin-left: -240px;
+                }
+                #updatetable{
+                   margin-left: -240px;
+                }
+                #adddiv{
+                    width: 350px;
+                }
+                #adddiv input{
+
+                    width: 100px;
+                }
+
+                #sex{
+                    width: 100px;
+                }
+                #sex_edit{
+                  width: 100px;  
+                }
+                #sel_menu2{
+                    width: 200px;
+                }
+                #sel_menu1{
+                    width: 280px;
+                }
+
+                #updatediv {
+                    width: 350px;
+                }
+
+                
+                #name_edit{
+                    width: 100px;
+                }
+                
+                #phone_edit{
+                     width: 100px;
+                }
+                
+                #email_edit{
+                    width: 100px;
+                }
+                
+                #department_edit{
+                     width: 100px;
+                }
+                
+                #updaterole{
+                     width: 100px;
+                }
+
+
+            }
+            /*            手机横屏*/
+            @media screen and (min-width:667px) and (max-width:767px) {  
+                #adddiv{
+                    width: 500px;
+                }
+                #adddiv input{
+
+                    width: 150px;
+                }
+
+                #sex{
+                    width: 150px;
+                }
+                #sel_menu2{
+                    width: 300px;
+                }
+                #updatediv{
+                    width: 500px;
+                }
+                
+                 #sel_menu1{
+                    width: 280px;
+                }
+                
+                #name_edit{
+                    width: 150px;
+                }
+                
+                #phone_edit{
+                     width: 150px;
+                }
+                
+                #email_edit{
+                    width: 150px;
+                }
+                
+                #department_edit{
+                     width: 150px;
+                }
+                
+                #updaterole{
+                     width: 150px;
+                }
+                
+                 #sex_edit{
+                  width: 150px;  
+                }
+
+
+            }
+
+
+            /*           ipad竖屏*/
+            @media screen and (min-width:767px) and (max-width:1023px) {  
+                 #adddiv{
+                    width: 500px;
+                }
+                #adddiv input{
+                    width: 150px;
+                }
+                
+                #sex{
+                    width: 150px;
+                }
+                #sel_menu2{
+                    width: 300px;
+                }
+                
+                 #updatediv{
+                    width: 500px;
+                }
+                
+                 #sel_menu1{
+                    width: 280px;
+                }
+                
+                #name_edit{
+                    width: 150px;
+                }
+                
+                #phone_edit{
+                     width: 150px;
+                }
+                
+                #email_edit{
+                    width: 150px;
+                }
+                
+                #department_edit{
+                     width: 150px;
+                }
+                
+                #updaterole{
+                     width: 150px;
+                }
+                
+                #sex_edit{
+                  width: 150px;  
+                }
+
+            }
+
+            @media screen and (min-width:1024px){  
+                #adddiv{
+                    width: 500px;
+                }
+                #updatediv{
+                    width: 500px;
+                }
+                #adddiv input{
+                    width: 150px;
+                }
+                
+                 #sex{
+                    width: 150px;
+                }
+                #sel_menu2{
+                    width: 380px;
+                }
+                
+                 #updatediv{
+                    width: 500px;
+                }
+                
+                 #sel_menu1{
+                    width: 380px;
+                }
+                
+                #name_edit{
+                    width: 150px;
+                }
+                
+                #phone_edit{
+                     width: 150px;
+                }
+                
+                #email_edit{
+                    width: 150px;
+                }
+                
+                #department_edit{
+                     width: 150px;
+                }
+                
+                #updaterole{
+                     width: 150px;
+                }
+                
+                #sex_edit{
+                  width: 150px;  
+                }
+           
+            } 
+        </style>
 
 
         <script>
@@ -423,7 +637,7 @@
         <!-- 添加 -->
         <div class="modal" id="pjj" data-backdrop="static">
             <div class="modal-dialog">
-                <div class="modal-content" style="min-width:700px;">
+                <div class="modal-content" id="adddiv">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             <span style="font-size:20px ">×</span></button>
@@ -432,17 +646,17 @@
 
                     <form action="" method="POST" id="Form_User">      
                         <div class="modal-body">
-                            <table>
+                            <table id="addutable">
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <span style="margin-left:5px;"><span name="xxx" id="223">用户名</span>&nbsp;</span>
-                                            <input id="name"    class="form-control"  name="name" style="width:150px;display: inline;" placeholder="请输入名字" type="text"></td>
+                                            <span style="margin-left:-15px;"><span name="xxx" id="223">用户名</span>&nbsp;</span>
+                                            <input id="name"    class="form-control"  name="name" style="display: inline;" placeholder="请输入名字" type="text"></td>
                                         <td></td>
                                         <td>
                                             <span style="margin-left:10px;" name="xxx" id="225">姓别</span>&nbsp;
                                             <span class="menuBox">
-                                                <select name="sex" id="sex"  style="width:150px;">
+                                                <select name="sex" id="sex">
                                                     <option value="男">男</option>
                                                     <option value="女">女</option>
                                                 </select>
@@ -452,29 +666,29 @@
 
                                     <tr>
                                         <td>
-                                            <span style="margin-left:20px;" name="xxx" id="136">电话</span>&nbsp;
-                                            <input id="phone" class="form-control"  name="phone" style="width:150px;display: inline;" placeholder="请输入电话" type="text"></td>
+                                            <span style="margin-left:0px;" name="xxx" id="136">电话</span>&nbsp;
+                                            <input id="phone" class="form-control"  name="phone" style="display: inline;" placeholder="请输入电话" type="text"></td>
                                         <td></td>
                                         <td>
                                             <span style="margin-left:10px;" name="xxx" id="137" >邮箱</span>&nbsp;
-                                            <input id="email" class="form-control" name="email" style="width:150px;display: inline;" placeholder="请输入邮箱" type="text"></td>
+                                            <input id="email" class="form-control" name="email" style="display: inline;" placeholder="请输入邮箱" type="text"></td>
                                         </td>
                                     </tr>                                   
 
                                     <tr>
                                         <td>
-                                            <span style="margin-left:20px;" name="xxx" id="224">部门</span>&nbsp;
-                                            <input id="department" class="form-control"  name="department" style="width:150px;display: inline;" placeholder="请输入部门名称" type="text"></td>
+                                            <span style="margin-left:0px;" name="xxx" id="224">部门</span>&nbsp;
+                                            <input id="department" class="form-control"  name="department" style="display: inline;" placeholder="请输入部门名称" type="text"></td>
                                         <td></td>
                                         <td>
                                             <span style="margin-left:10px;" name="xxx" id="233">角色</span>&nbsp;
-                                            <input id="role" class="easyui-combobox" name="m_code" style="width:150px; height: 34px" data-options="editable:true,valueField:'id', textField:'text',url:'login.usermanage.rolemenu.action?parent_id=${param.role}'" />
+                                            <input id="role" class="easyui-combobox" name="m_code" style=" height: 34px" data-options="editable:true,valueField:'id', textField:'text',url:'login.usermanage.rolemenu.action?parent_id=${param.role}'" />
                                         </td>
                                     </tr> 
                                     <tr>
                                         <td colspan="3">
-                                            <span style="margin-left:20px;" name="xxx" id="1">项目</span>&nbsp;
-                                            <select id="sel_menu2" multiple="multiple" style="width: 360px;">
+                                            <span style="margin-left:0px;" name="xxx" id="1">项目</span>&nbsp;
+                                            <select id="sel_menu2" multiple="multiple">
 
                                             </select>
                                         </td>
@@ -499,7 +713,7 @@
         <!-- 修改 -->
         <div class="modal" id="pjj2" data-backdrop="static">
             <div class="modal-dialog">
-                <div class="modal-content" style="min-width:700px;">
+                <div class="modal-content" style="updatediv">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             <span style="font-size:20px ">×</span></button>
@@ -509,17 +723,17 @@
                         <input type="hidden" id="id" name="id" />
                         <input type="hidden" id="hpid"  />
                         <div class="modal-body">
-                            <table>
+                            <table id="updatetable">
                                 <tbody>
                                     <tr>
                                         <td>
                                             <span style="margin-left:5px;" name="xxx" id="223">用户名</span>&nbsp;
-                                            <input id="name_edit" readonly="true"   class="form-control"  name="name_edit" style="width:150px;display: inline;"  type="text" readonly="readonly"></td>
+                                            <input id="name_edit" readonly="true"   class="form-control"  name="name_edit" style="display: inline;"  type="text" readonly="readonly"></td>
                                         <td></td>
                                         <td>
                                             <span style="margin-left:10px;" name="xxx" id="225">姓别</span>&nbsp;
                                             <span class="menuBox">
-                                                <select name="sex_edit" id="sex_edit"  style="width:150px;">
+                                                <select name="sex_edit" id="sex_edit">
                                                     <option value="男">男</option>
                                                     <option value="女">女</option>
                                                 </select>
@@ -530,28 +744,28 @@
                                     <tr>
                                         <td>
                                             <span style="margin-left:20px;" name="xxx" id="136">电话</span>&nbsp;
-                                            <input id="phone_edit" class="form-control"  name="phone_edit" style="width:150px;display: inline;" placeholder="请输入电话" type="text"></td>
+                                            <input id="phone_edit" class="form-control"  name="phone_edit" style="display: inline;" placeholder="请输入电话" type="text"></td>
                                         <td></td>
                                         <td>
                                             <span style="margin-left:10px;" name="xxx" id="137">邮箱</span>&nbsp;
-                                            <input id="email_edit" class="form-control" name="email_edit" style="width:150px;display: inline;" placeholder="请输入邮箱" type="text"></td>
+                                            <input id="email_edit" class="form-control" name="email_edit" style="display: inline;" placeholder="请输入邮箱" type="text"></td>
                                         </td>
                                     </tr>                                   
 
                                     <tr>
                                         <td>
                                             <span style="margin-left:20px;" name="xxx" id="224">部门</span>&nbsp;
-                                            <input id="department_edit" class="form-control"  name="department_edit" style="width:150px;display: inline;" placeholder="请输入部门名称" type="text"></td>
+                                            <input id="department_edit" class="form-control"  name="department_edit" style="display: inline;" placeholder="请输入部门名称" type="text"></td>
                                         <td></td>
                                         <td>
-                                            <span style="margin-left:20px;" name="xxx" id="233">角色</span>&nbsp;
-                                            <input id="updaterole" class="easyui-combobox" name="up_role" style="width:150px; height: 34px" data-options="editable:true,valueField:'id', textField:'text',url:'login.usermanage.rolemenu.action?parent_id=${param.role}'" />
+                                            <span style="margin-left:10px;" name="xxx" id="233">角色</span>&nbsp;
+                                            <input id="updaterole" class="easyui-combobox" name="up_role" style="height: 34px" data-options="editable:true,valueField:'id', textField:'text',url:'login.usermanage.rolemenu.action?parent_id=${param.role}'" />
                                         </td>
                                     </tr>
                                     <tr>                                
                                         <td colspan='3' >
                                             <span style="margin-left:10px;" name="xxx" id="1">项目</span>&nbsp;
-                                            <select id="sel_menu1" multiple="multiple" style="width: 360px;">
+                                            <select id="sel_menu1" multiple="multiple">
 
                                             </select>
                                         </td>

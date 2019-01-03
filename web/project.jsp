@@ -31,6 +31,34 @@
             .a-upload:hover { color: #444; background: #eee; border-color: #ccc; text-decoration: none } 
             .pagination-info { float: left; margin-top: -4px; } .modal-body { text-align: -webkit-center; text-align: -moz-center; width: 600px; margin: auto; }
             .btn-primary { color: #fff; background-color: #0099CC; border-color: #0099CC; }
+            /*            手机*/
+            @media screen and (min-width:0px) and (max-width:666px) {  
+
+               #adddiv{ width: 350px;}
+               #addtable{  margin-left: -260px;}
+               #updatediv { width: 350px;}
+               #updtable{  margin-left: -260px;}
+
+            }
+            /*            手机横屏*/
+            @media screen and (min-width:667px) and (max-width:767px) {  
+                 #addtable{  margin-left: -260px;}
+                  #adddiv{ width: 350px;}
+                 #updatediv { width: 350px;}
+                  #updtable{  margin-left: -260px;}
+
+            }
+
+
+            /*           ipad竖屏*/
+            @media screen and (min-width:767px) and (max-width:1023px) {  
+                
+
+            }
+
+            @media screen and (min-width:1024px){  
+              
+            } 
         </style>
 
 
@@ -505,7 +533,7 @@
         <!-- 添加 -->
         <div class="modal" id="pjj">
             <div class="modal-dialog">
-                <div class="modal-content" style="min-width:700px;">
+                <div class="modal-content" id="adddiv">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             <span style="font-size:20px ">×</span></button>
@@ -514,13 +542,13 @@
 
                     <form action="" method="POST" id="Form_User" onsubmit="return checkProjectAdd()">      
                         <div class="modal-body">
-                            <table>
+                            <table  id="addtable">
                                 <tbody>
 
                                     <tr>
                                         <td>
                                             <span style="margin-left:20px;" name="xxx" id="256">项目名称</span>&nbsp;
-                                            <input id="name"    class="form-control"  name="name" style="width:150px;display: inline;" placeholder="项目名称" type="text">
+                                            <input id="name"    class="form-control"  name="name" style=" width: 150px;display: inline;" placeholder="项目名称" type="text">
                                         </td>
 
                                         <td></td>
@@ -529,7 +557,7 @@
                                     <tr>
                                         <td>
                                             <span style="margin-left:20px;" name="xxx" id="258">项目地址</span>&nbsp;
-                                            <input id="area"    class="form-control"  name="area" style="width:150px;display: inline;" placeholder="区域" type="text">
+                                            <input id="area"    class="form-control"  name="area" style=" width: 150px;display: inline;" placeholder="区域" type="text">
                                         </td>
                                         <td></td>
                                         <td>
@@ -554,7 +582,7 @@
         <!--编辑-->
         <div class="modal" id="pjj2">
             <div class="modal-dialog">
-                <div class="modal-content" style="min-width:700px;">
+                <div class="modal-content" id="updatediv">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             <span style="font-size:20px ">×</span></button>
@@ -562,7 +590,7 @@
                         <h4 class="modal-title" style="display: inline;"><span name="xxx" id="267">修改项目</span></h4></div>
                     <div class="modal-body">
                         <input type="hidden" id="p_id" name="id" />
-                        <table>
+                        <table  id="updtable">
                             <tbody>
                                 <tr>
                                     <td>

@@ -18,19 +18,87 @@
         <title>JSP Page</title>
         <style>
             table { font-size: 14px; } .modal-body input[type="text"], .modal-body select, .modal-body input[type="radio"] { height: 30px; } .modal-body table td { line-height: 40px; }
+            /*            手机*/
+            @media screen and (min-width:0px) and (max-width:666px) {  
+
+                #adddiv{
+                    width: 350px;
+                }
+                #adddiv input{
+                    
+                    width: 100px;
+                }
+                
+                #updatediv{
+                    width: 350px;
+                }
+                
+                #updatediv input{
+                    
+                    width: 100px;
+                }
+
+
+            }
+            /*            手机横屏*/
+            @media screen and (min-width:667px) and (max-width:767px) {  
+                #adddiv{
+                    width: 500px;
+                }
+                #adddiv input{
+                    
+                    width: 150px;
+                }
+                
+                #updatediv{
+                    width: 500px;
+                }
+                
+                #updatediv input{
+                    
+                    width: 150px;
+                }
+
+            }
+
+
+            /*           ipad竖屏*/
+            @media screen and (min-width:767px) and (max-width:1023px) {  
+                 #adddiv input{
+                    width: 150px;
+                }
+                
+                #updatediv input{
+                    
+                    width: 150px;
+                }
+
+            }
+
+            @media screen and (min-width:1024px){  
+                #adddiv input{
+                    width: 150px;
+                }
+                
+                #updatediv input{
+                    
+                    width: 150px;
+                }
+            } 
         </style>
         <script>
-              var u_name = "${param.name}";
+            var u_name = "${param.name}";
             var o_pid = "${param.pid}";
             var lang = '${param.lang}';//'zh_CN';
+            var withs;
             $(function () {
-                
+                size();
 
                 $('#gravidaTable').bootstrapTable({
                     url: 'login.warnning.queryData.action?pid=' + o_pid,
                     columns: [[{
                                 field: '',
-                                title: '告警配置',  //告警配置
+                                title: '告警配置', //告警配置
                                 width: 25,
                                 align: 'center',
                                 valign: 'middle',
@@ -47,7 +115,7 @@
                             },
                             {
                                 field: 'u_name',
-                                title: '姓名',  //姓名
+                                title: '姓名', //姓名
                                 width: 25,
                                 align: 'center',
                                 valign: 'middle'
@@ -59,13 +127,13 @@
                                 valign: 'middle'
                             }, {
                                 field: 'u_email',
-                                title: '邮箱',  //邮箱
+                                title: '邮箱', //邮箱
                                 width: 25,
                                 align: 'center',
                                 valign: 'middle'
                             }, {
                                 field: 'u_content',
-                                title:'备注',  //告警类型
+                                title: '备注', //告警类型
                                 width: 25,
                                 align: 'center',
                                 valign: 'middle'
@@ -106,7 +174,7 @@
                     var uphone = $("#updphone").val();
                     var uid = $("#updid").val();
                     var uemail = $("#updemail").val();
-                   // var uwarntype = $("#upd_warntype").val();
+                    // var uwarntype = $("#upd_warntype").val();
                     var u_content = $("#u_content").val();
                     if (uname == "") {
                         alert('姓名不能为空');  //姓名不能为空
@@ -120,7 +188,7 @@
                         alert('邮箱不能为空'); //邮箱不能为空
                         return;
                     }
-                   
+
 
                     var obj = {};
                     obj.u_name = uname;
@@ -165,7 +233,7 @@
                 var phone = $("#adphone").val();
                 var name = $("#adname").val();
                 var email = $("#ademail").val();
-               // var warntype = $("#adu_warntype").val();
+                // var warntype = $("#adu_warntype").val();
                 var content = $("#adu_content").val();
                 var pid = o_pid;
                 if (name == "") {
@@ -211,7 +279,7 @@
                     alert(langs1[73][lang]);  //请勾选数据
                     return;
                 }
-                layer.confirm('确定要删除吗?', {    //确定要删除吗？
+                layer.confirm('确定要删除吗?', {//确定要删除吗？
                     btn: ['确定', '取消']//按钮
                 }, function (index) {
                     addlogon(u_name, "删除", o_pid, "报警设置", "删除报警管理人员");
@@ -232,6 +300,20 @@
                 });
 
             }
+            function size() {
+                var Wwidth = $(window).width();
+                if (Wwidth > 768) {
+                    withs = $(window).width() * 0.5;
+                } else if (Wwidth > 1024) {
+                    withs = $(window).width() * 0.3;
+                } else {
+                    withs = 350;
+                }
+
+            }
+            window.onresize = function () {
+                size();
+            };
         </script>
     </head>
     <body>
@@ -243,11 +325,11 @@
             </button>
             <button class="btn btn-primary ctrol"   onclick="updatepeople()" id="update" >
                 <span class="glyphicon glyphicon-pencil"></span>&nbsp;
-                 <span name="xxx" id="66">编辑</span>
+                <span name="xxx" id="66">编辑</span>
             </button>
             <button class="btn btn-danger ctrol" onclick="deletepeople();"  id="del">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;
-                 <span name="xxx" id="67">删除</span>
+                <span name="xxx" id="67">删除</span>
             </button> 
 
         </div>
@@ -259,7 +341,7 @@
         </div>
         <div class="modal" id="addtable" data-backdrop="static">
             <div class="modal-dialog">
-                <div class="modal-content" style="min-width:700px;">
+                <div class="modal-content" id="adddiv">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             <span style="font-size:20px ">×</span></button>
@@ -272,24 +354,24 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <span style="margin-left:20px;" name="xxx" id="135">姓名</span>&nbsp;
-                                            <input id="adname"    class="form-control"   style="width:150px;display: inline;" placeholder="请输入名字" type="text">
+                                            <span style="margin-left:0px;" name="xxx" id="135">姓名</span>&nbsp;
+                                            <input id="adname"    class="form-control"   style="display: inline;" placeholder="请输入名字" type="text">
                                         </td>
                                         <td></td>
                                         <td>
-                                            <span style="margin-left:50px;" name="xxx" id="149">备注</span>&nbsp;
-                                            <input id="adu_content"    class="form-control"   style="width:150px;display: inline;" placeholder="请输入备注" type="text">
+                                            <span style="margin-left:10px;" name="xxx" id="149">备注</span>&nbsp;
+                                            <input id="adu_content"    class="form-control"   style="display: inline;" placeholder="请输入备注" type="text">
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <span style="margin-left:20px;" name="xxx" id="136">电话</span>&nbsp;
-                                            <input id="adphone" class="form-control"  name="phone" style="width:150px;display: inline;" placeholder="请输入电话" type="text"></td>
+                                            <span style="margin-left:0px;" name="xxx" id="136">电话</span>&nbsp;
+                                            <input id="adphone" class="form-control"  name="phone" style="display: inline;" placeholder="请输入电话" type="text"></td>
                                         <td></td>
                                         <td>
-                                            <span style="margin-left:50px;" name="xxx" id="137">邮箱</span>&nbsp;
-                                            <input id="ademail" class="form-control" name="email" style="width:150px;display: inline;" placeholder="请输入邮箱" type="text">
+                                            <span style="margin-left:10px;" name="xxx" id="137">邮箱</span>&nbsp;
+                                            <input id="ademail" class="form-control" name="email" style="display: inline;" placeholder="请输入邮箱" type="text">
                                         </td>
                                     </tr> 
 
@@ -312,7 +394,7 @@
         </div>
         <div class="modal" id="updatetable" data-backdrop="static">
             <div class="modal-dialog">
-                <div class="modal-content" style="min-width:700px;">
+                <div class="modal-content" id="updatediv">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             <span style="font-size:20px ">×</span></button>
@@ -325,24 +407,24 @@
                                 <tr>
                                     <td>
                                         <span style="margin-left:20px;" name="xxx" id="135">姓名</span>&nbsp;
-                                        <input id="updname"    class="form-control"  name="name" style="width:150px;display: inline;" placeholder="请输入名字" type="text">
+                                        <input id="updname"    class="form-control"  name="name" style="display: inline;" placeholder="请输入名字" type="text">
                                     </td>
                                     <td></td>
                                     <td>
-                                        <span style="margin-left:48px;">备注</span>&nbsp;
-                                        <input type="text" class="form-control"  style="width:175px;display: inline;" id="u_content">
+                                        <span style="margin-left:20px;">备注</span>&nbsp;
+                                        <input type="text" class="form-control"  style="display: inline;" id="u_content">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td>
                                         <span style="margin-left:20px;" name="xxx" id="136">电话</span>&nbsp;
-                                        <input id="updphone" class="form-control"  style="width:150px;display: inline;" placeholder="请输入电话" type="text">
+                                        <input id="updphone" class="form-control"  style="display: inline;" placeholder="请输入电话" type="text">
                                     </td>
                                     <td></td>
                                     <td>
-                                        <span style="margin-left:48px;" name="xxx" id="137">邮箱</span>&nbsp;
-                                        <input id="updemail" class="form-control"  style="width:175px;display: inline;" placeholder="请输入邮箱" type="text">
+                                        <span style="margin-left:20px;" name="xxx" id="137">邮箱</span>&nbsp;
+                                        <input id="updemail" class="form-control"  style="display: inline;" placeholder="请输入邮箱" type="text">
                                     </td>
                                 </tr>   
                             </tbody>
