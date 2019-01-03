@@ -28,7 +28,7 @@
             .a-upload:hover { color: #444; background: #eee; border-color: #ccc; text-decoration: none } 
 
             .bodycenter { text-align: -webkit-center; text-align: -moz-center; width: 600px; margin: auto; } 
-            
+
             .t tr td{
                 border: 1px solid #16645629;
                 text-align:center;
@@ -37,11 +37,113 @@
                 border: 1px solid #16645629;
                 text-align:center;
             }
+            /*            手机*/
+            @media screen and (min-width:0px) and (max-width:767px) {  
+                #dialog-add{
+                    font-size: 4px;
+                }
+                #dialog-add input{
+                    width: 95px;
+                }
+                #dialog-edit input{
+                    width: 90px;
+                }
+                #type{
+                    width: 100px;
+                }
+                #type1{
+                    width: 100px;
+                }
+                html{
+                    font-size: 4px;
+                }
+                body{
+                    font-size: 4px; 
+                }
+                #l_comaddr {
+                    width: 140px;
+                }
+                #busu{
+                    width: 85px;
+                }
+                #cz{
+                    margin-top: 15px;
+                }
+
+            }
+            /*           ipad竖屏*/
+            @media screen and (min-width:767px) and (max-width:1023px) {  
+                #selectlist{
+                    float: left;
+                }
+                #cz{
+                    /*                    float: left;*/
+                    margin-left: 10px;
+                }
+                #l_comaddr2 {
+                    width: 130px;
+                }
+                #busu{
+                    width: 85px;
+                }
+                #dialog-add input{
+                    width: 100px;
+                }
+                #type{
+                    width: 100px;
+                }
+                 #dialog-edit input{
+                    width: 100px;
+                }
+                 #type1{
+                    width: 100px;
+                }
+
+            }
+
+            @media screen and (min-width:1024px) and (max-width:1366px){  
+                html{
+                    font-size: 14px;
+                }
+                body{
+                    font-size: 14px; 
+                }
+                #cz{
+                    margin-left: 10px;
+                }
+
+                #l_comaddr2 {
+                    width: 150px;
+                }
+                #busu{
+                    width: 150px;
+
+                }
+                #selectlist{
+                    float: left;
+                }
+                #cz{
+                    margin-left: 10px;
+                }
+                html{
+                    font-size: 14px;
+                }
+                body{
+                    font-size: 14px; 
+                }
+
+                #dialog-add input{
+                    width: 150px;
+                }
+                #type{
+                    width: 150px;
+                }
+            } 
         </style>
         <script>
             var infolist = {};
-    var u_name="${param.name}";
-            var o_pid="${param.pid}";
+            var u_name = "${param.name}";
+            var o_pid = "${param.pid}";
 
             function  Search() {
                 var obj = {};
@@ -133,7 +235,8 @@
 
 
             $(function () {
-
+                
+                size();
 
                 $('#table0').bootstrapTable({
 //                    url: 'sensor.planForm.getSensorPlan.action',
@@ -408,7 +511,7 @@
                 $("#dialog-add").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
+                    width: withs,
                     height: 500,
                     position: ["top", "top"],
                     buttons: {
@@ -429,7 +532,7 @@
                 $("#dialog-edit").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
+                    width: withs,
                     height: 500,
                     position: "top",
                     buttons: {
@@ -843,9 +946,24 @@
                 var ooo1 = {id: ele.id, index: ele.index};
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployscenPlanCB", ooo.l_comaddr, val, ooo1, scenenum,"${param.action}");
+                dealsend2("10", data, "deployscenPlanCB", ooo.l_comaddr, val, ooo1, scenenum, "${param.action}");
 
             }
+            
+            function size() {
+                var Wwidth = $(window).width();
+                if (Wwidth > 768) {
+                    withs = $(window).width() * 0.5;
+                } else if (Wwidth > 1024) {
+                    withs = $(window).width() * 0.3;
+                } else {
+                    withs = 350;
+                }
+
+            }
+            window.onresize = function () {
+                size();
+            };
 
         </script>
         <title>JSP Page</title>
@@ -855,55 +973,34 @@
 
             <input type="hidden" name="p_type" readonly="true"/>
             <input type="hidden" name="pid" value="${param.pid}"/>
-            <table id="scentable" style="border-collapse:separate;  border-spacing:0px 10px;border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; align-content:  center" >
-                <tbody>
-                    <tr>
+            <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
+                <div id="selectlist">
+                    <span style="margin-left:10px;">
+                        网关名称
+                        &nbsp;</span>
+                    <span class="menuBox">
+                        <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                    </span>  
 
-                        <td>
-                            <span style="margin-left:10px;">
-                                网关名称
-                                &nbsp;</span>
-                        </td>
-                        <td>
+                    <span style="margin-left:5px;">
+                        部署情况
+                        &nbsp;</span>
+                    <select class="easyui-combobox" name="deplayment"  id="busu" style="height: 30px">
+                        <option value="1">已部署</option>     
+                        <option value="0">未部署</option> 
+                    </select>   
+                </div>
+                <div id="cz">
+                    <button  type="button" style="margin-left:20px;" onclick="Search1()" class="btn btn-success btn-sm">
+                        筛选
+                    </button>
 
-                            <span class="menuBox">
-                                <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
-                                       data-options="editable:true,valueField:'id', textField:'text' " />
-                            </span>  
-                        </td>
-                        <td>
-                            <span style="margin-left:10px;">
-                                部署情况
-                                &nbsp;</span>
-                        </td>
-                        <td>
-                            <select class="easyui-combobox" name="deplayment"  id="busu" style="width:150px; height: 30px">
-                                <option value="1">已部署</option>     
-                                <option value="0">未部署</option> 
-                            </select>                           
-                        </td>
-                        <td>
-                            <button  type="button" style="margin-left:20px;" onclick="Search1()" class="btn btn-success btn-sm">
-                                筛选
-                            </button>&nbsp;
-                        </td>
+                    <button style="margin-left:10px;" id="btndeploySensor" onclick="deployscenPlan(1)" type="button" class="btn btn-success btn-sm">部署</button>
 
+                    <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="deployscenPlan(0)" class="btn btn-success btn-sm">移除</button>
+                </div>
 
-
-                        <td>
-                            <button   type="button" style="margin-left: 20px;" onclick="deployscenPlan(1)" class="btn btn-success btn-sm">部署</button>&emsp;
-                        </td>
-                        <td>
-                            <button   type="button" style="margin-left: 20px;" onclick="deployscenPlan(0)" class="btn btn-success btn-sm">移除</button>&emsp;
-                        </td>
-
-                    </tr>
-
-
-
-
-                </tbody>
-            </table>
+            </div>
 
 
 
@@ -969,40 +1066,40 @@
                         </tr>
                         <tr >
                             <td>
-                               
+
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info1" name="info1" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
+
                             <td>
-                               
+
                                 <input id="down1" style="width:100px; height: 30px;" value="0" name="down1">
                             </td>
 
                             <td>
-                                
+
                                 <input id="up1" style="width:100px; height: 30px;" value="0" name="up1">
 
                             </td>
 
-                          
+
 
                         </tr>
 
                         <tr >
                             <td>
-                               
+
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info2" name="info2" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
+
                             <td>
-                                
+
                                 <input id="down2" style="width:100px; height: 30px;" value="0" name="down2">
                             </td>
 
                             <td>
-                                
+
                                 <input id="up2" style="width:100px; height: 30px;" value="0" name="up2">
 
                             </td>
@@ -1013,11 +1110,11 @@
 
                         <tr >
                             <td>
-                                
+
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info3" name="info3" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
+
                             <td>
                                 <input id="down3" style="width:100px; height: 30px;" value="0" name="down3">
                             </td>
@@ -1028,53 +1125,53 @@
 
                             </td>
 
-                            
+
 
 
                         </tr>
 
                         <tr >
                             <td>
-                                
+
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info4" name="info4" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
-                             <td>
-                               
-                                <input id="down4" style="width:100px; height: 30px;" value="0" name="down4">
-                            </td>
-                            
 
                             <td>
-                               
+
+                                <input id="down4" style="width:100px; height: 30px;" value="0" name="down4">
+                            </td>
+
+
+                            <td>
+
                                 <input id="up4" style="width:100px; height: 30px;" value="0" name="up4">
 
                             </td>
 
-                           
+
 
                         </tr>
 
                         <tr >
                             <td>
-                                
+
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info5" name="info5" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
+
                             <td>
-                                
+
                                 <input id="down5" style="width:100px; height: 30px;" value="0" name="down5">
                             </td>
 
                             <td>
-                              
+
                                 <input id="up5" style="width:100px; height: 30px;" value="0" name="up5">
 
                             </td>
 
-                      
+
 
                         </tr>
                     </tbody>
@@ -1149,7 +1246,7 @@
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info22" name="info2" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
+
                             <td>
                                 <input id="down22" style="width:100px; height: 30px;" value="0" name="down2">
                             </td>
@@ -1166,7 +1263,7 @@
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info33" name="info3" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
+
                             <td>
                                 <input id="down33" style="width:100px; height: 30px;" value="0" name="down3">
                             </td>
@@ -1185,8 +1282,8 @@
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info44" name="info4" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
-                             <td>
+
+                            <td>
                                 <input id="down44" style="width:100px; height: 30px;" value="0" name="down4">
                             </td>
 
@@ -1203,8 +1300,8 @@
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info55" name="info5" style="width:100px; height: 30px">
                                 </select>
                             </td>
-                            
-                            
+
+
                             <td>
                                 <input id="down55" style="width:100px; height: 30px;" value="0" name="down5">
                             </td>

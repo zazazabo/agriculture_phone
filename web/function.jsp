@@ -16,6 +16,61 @@
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css">
         <script src="bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
         <script type="text/javascript" src="js/genel.js"></script>
+        <style>
+            /*            手机*/
+            @media screen and (min-width:0px) and (max-width:666px) {  
+                #l_comaddr2{
+                    width: 120px;
+                }
+                #sensorlist{
+                    width: 90px;
+                }
+                #selectdiv{
+                    margin-top: 10px;
+                }
+
+            }
+/*            手机横屏*/
+            @media screen and (min-width:667px) and (max-width:767px) {  
+                #l_comaddr2{
+                    width: 120px;
+                }
+                #sensorlist{
+                    width: 90px;
+                }
+                #selectdiv{
+                   margin-left: 20px;
+                }
+
+            }
+            /*           ipad竖屏*/
+            @media screen and (min-width:768px) and (max-width:1023px) {  
+                #l_comaddr2{
+                    width: 150px;
+                }
+                #sensorlist{
+                    width: 150px;
+                }
+                #selectdiv{
+                    margin-left: 20px;
+                }
+
+            }
+
+            @media screen and (min-width:1024px){  
+                 #l_comaddr2{
+                    width: 150px;
+                }
+                #sensorlist{
+                    width: 150px;
+                }
+                #selectdiv{
+                    margin-top: 0px;
+                    margin-left: 20px;
+                }
+            } 
+
+        </style>
         <script>
             function layerAler(str) {
                 layer.alert(str, {
@@ -25,7 +80,7 @@
             }
 
             var lang = '${param.lang}';//'zh_CN';
-          //  var langs1 = parent.parent.getLnas();
+            //  var langs1 = parent.parent.getLnas();
             var pid = parent.parent.getpojectId();
             $(function () {
                 $("#l_comaddr2").combobox({
@@ -126,8 +181,8 @@
                             type: "1",
                             statr: $("#sday").val(),
                             end: $("#eday").val(),
-                            name:encodeURI($("#sensorlist").val()),
-                            comaddr:$("#l_comaddr2").val()
+                            name: encodeURI($("#sensorlist").val()),
+                            comaddr: $("#l_comaddr2").val()
                                
                         };      
                         return temp;  
@@ -171,15 +226,15 @@
     <body>
         <div style=" margin-top: 10px;"> 
             <span style=" margin-left: 10px;">网关名称：</span>
-            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style="width:150px; height: 30px" 
+            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" 
                    data-options="editable:true,valueField:'id', textField:'text' " />
             <span style=" margin-left: 10px;">传感器：</span>
-            <input id="sensorlist" class="easyui-combobox"  style="width:150px; height: 30px" 
+            <input id="sensorlist" class="easyui-combobox"  style="height: 30px" 
                    data-options="editable:true,valueField:'id', textField:'text' " />
         </div>
 
-        <div style="margin-top:15px; font-size: 18px;margin-left: 10px;" id="Day">
-            <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px;">
+        <div style="margin-top:15px;margin-left: 10px;" id="Day">
+            <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
                 <label for="dtp_input2" class="control-label" style="float: left;"></label>
                 <input id="dtp_input2" value="" type="hidden">
                 <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
@@ -188,10 +243,10 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </span>
             </form>
-            <span style=" font-size: 18px; float: left; margin-top: 4px;">&nbsp;
+            <span style="float: left; margin-top: 4px;">&nbsp;
                 <span name="xxxx" id="119">至</span>
                 &nbsp;</span>
-            <form action="" id="day2" class="form-horizontal" role="form" style="float:left; width: 166px;">
+            <form action="" id="day2" class="form-horizontal" role="form" style="float:left;width: 166px">
                 <label for="dtp_input2" class="control-label" style="float: left;"></label>
                 <input id="dtp_input2" value="" type="hidden">
                 <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
@@ -200,14 +255,14 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </span>
             </form>
-            <span style="font-size: 18px; margin-left: 10px;">
+            <div id="selectdiv" style=" float: left;">
                 <button type="button" class="btn btn-sm btn-success" id="select" >
                     <span name="xxxx" id="34">搜索</span>
                 </button>
-            </span>
-            <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="$('#reordtabel').tableExport({type: 'excel', escape: 'false'})">
-                <span id="110" name="xxxx">导出Excel</span>
-            </button>
+                <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="$('#reordtabel').tableExport({type: 'excel', escape: 'false'})">
+                    <span id="110" name="xxxx">导出Excel</span>
+                </button>
+            </div>
         </div>
         <div>
             <table id="reordtabel">

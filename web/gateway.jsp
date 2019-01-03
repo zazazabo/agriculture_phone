@@ -24,44 +24,115 @@
             .a-upload:hover { color: #444; background: #eee; border-color: #ccc; text-decoration: none } 
 
             .bodycenter { text-align: -webkit-center; text-align: -moz-center; width: 600px; margin: auto; } 
-             @media screen and (max-width:767px) {  
-                 #dialog-add{
-                     font-size: 4px;
-                 }
-                 html{
-                     font-size: 4px;
-                 }
-                 body{
+            @media screen and (max-width:767px) {  
+                #dialog-add{
+                    font-size: 4px;
+                }
+                html{
+                    font-size: 4px;
+                }
+                body{
                     font-size: 4px; 
-                 }
+                }
                 #dialog-add input {
-                     width: 100px;
-                 }
-                 #model{
-                     width: 100px;
-                 }
+                    width: 100px;
+                }
+                #model{
+                    width: 150px;
+
+                }
+                #model_{
+                    width: 150px;
+                }
+                #name_{
+                    width: 150px;
+                }
+                #comaddr_{
+                    width: 150px;
+                }
+                #namediv{
+                    margin-top: 10px;
+                }
+                #modeldiv{
+                    margin-top: 10px;
+                }
+                #jwddiv{
+                     margin-top: 10px;
+                }
+                #comaddrdiv{
+                     margin-top: 10px;
+                }
+                #wddiv{
+                     margin-top: 10px;
+                }
+                .jwd{
+                    width: 50px;
+                }
+
             }
 
             @media screen and (min-width:768px) {  
                 #dialog-add{
-                     font-size: 14px;
-                 }
-                 html{
-                     font-size: 14px;
-                 }
-                 body{
+                    font-size: 14px;
+                }
+                html{
+                    font-size: 14px;
+                }
+                body{
                     font-size: 14px; 
-                 }
+                }
                 #dialog-add input {
-                     width: 100px;
-                 }
-                 #model{
-                     width: 100px;
-                 }
+                    width: 120px;
+                }
+                #model{
+                    width: 120px;
+                }
+                
+                 #model_{
+                    width: 150px;
+                }
+                #name_{
+                    width: 150px;
+                }
+                #comaddr_{
+                    width: 150px;
+                }
+                #namediv{
+                    margin-top: 10px;
+                }
+                #modeldiv{
+                    margin-top: 10px;
+                }
+                #jwddiv{
+                     margin-top: 10px;
+                }
+                #comaddrdiv{
+                     margin-top: 10px;
+                }
+                #wddiv{
+                     margin-top: 10px;
+                }
+                .jwd{
+                    width: 80px;
+                }
 
             }
-            @media screen and (min-width:1025px) {  
-               
+            @media screen and (min-width:1024px) {  
+                #dialog-add{
+                    font-size: 14px;
+                }
+                html{
+                    font-size: 14px;
+                }
+                body{
+                    font-size: 14px; 
+                }
+                #dialog-add input {
+                    width: 150px;
+                }
+                #model{
+                    width: 150px;
+                }
             }
 
         </style>
@@ -318,7 +389,7 @@
                 $("#dialog-edit").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 350,
+                    width: withs,
                     height: 350,
                     position: "top",
                     buttons: {
@@ -334,7 +405,7 @@
                 $("#dialog-excel").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 350,
+                    width: withs,
                     height: 500,
                     position: "top",
                     buttons: {
@@ -355,8 +426,6 @@
                         }
                     }
                 });
-
-                var bb = $(window).height() - 20;
                 $('#gravidaTable').bootstrapTable({
                     columns: [
                         {
@@ -747,12 +816,14 @@
             }
             function size() {
                 var Wwidth = $(window).width();
-                if(Wwidth>768){
+                if (Wwidth > 768) {
                     withs = $(window).width() * 0.5;
-                }else{
-                   withs = 350;
+                } else if (Wwidth > 1024) {
+                    withs = $(window).width() * 0.3;
+                } else {
+                    withs = 350;
                 }
-               
+
             }
             window.onresize = function () {
                 size();
@@ -763,55 +834,34 @@
         <!--<div id="content" class="row-fluid">-->
 
         <div class="row" >
-                   <div class="col-xs-12 col-sm-12 col-md-12  ">
-<!--                            <div class="btn-group"  style="float:left;position:relative;z-index:100;margin-left: 10px; margin-top: 10px;">
-                                <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
-                                    <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
-                                </button>
-                                <button class="btn btn-primary ctrol" onclick="modifyModal()" id="xiugai1">
-                                    <span class="glyphicon glyphicon-pencil">&nbsp;编辑</span>
-                                </button>
-                                <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
-                                    <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
-                                </button>
-                            </div>-->
-<!--                            <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 0px; margin-top: 10px;">
-                                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
-                                    <span>导出模板</span>
-                                </button>
-                                <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
-                                    <span class="glyphicon glyphicon-plus-sign">导入Excel</span>
-                                </button>
-                                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                                    <span name="xxx" id="110">导出Excel</span>
-                                </button>
-                            </div>-->
-                        </div>
-        </div>
+            <div class="col-xs-12 col-sm-12 col-md-12  ">
+                <!--                            <div class="btn-group"  style="float:left;position:relative;z-index:100;margin-left: 10px; margin-top: 10px;">
+                                                <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
+                                                    <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
+                                                </button>
+                                                <button class="btn btn-primary ctrol" onclick="modifyModal()" id="xiugai1">
+                                                    <span class="glyphicon glyphicon-pencil">&nbsp;编辑</span>
+                                                </button>
+                                                <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
+                                                    <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
+                                                </button>
+                                            </div>-->
+                <!--                            <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 0px; margin-top: 10px;">
+                                                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
+                                                    <span>导出模板</span>
+                                                </button>
+                                                <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
+                                                    <span class="glyphicon glyphicon-plus-sign">导入Excel</span>
+                                                </button>
+                                                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+                                                    <span name="xxx" id="110">导出Excel</span>
+                                                </button>
+                                            </div>-->
+            </div>
         </div>
     </div>
-    <!--        <div class="btn-group"  style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
-                <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
-                    <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
-                </button>
-                <button class="btn btn-primary ctrol" onclick="modifyModal()" id="xiugai1">
-                    <span class="glyphicon glyphicon-pencil">&nbsp;编辑</span>
-                </button>
-                <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
-                    <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
-                </button>
-                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
-                    <span>导出Excel模板</span>
-                </button>
-                <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
-                    <span class="glyphicon glyphicon-plus-sign">&nbsp;导入Excel</span>
-                </button>
-                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                    <span name="xxx" id="110">导出Excel</span>
-                </button>
-            </div>-->
-
-        <div class="btn-group"  style="float:left;position:relative;z-index:100;margin-left: 10px; margin-top: 10px;">
+</div>
+<!--        <div class="btn-group"  style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
             <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
                 <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
             </button>
@@ -821,160 +871,169 @@
             <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
                 <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
             </button>
-        </div>
-        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
             <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
-                <span>导出模板</span>
+                <span>导出Excel模板</span>
             </button>
             <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
-                <span class="glyphicon glyphicon-plus-sign">导入Excel</span>
+                <span class="glyphicon glyphicon-plus-sign">&nbsp;导入Excel</span>
             </button>
             <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
                 <span name="xxx" id="110">导出Excel</span>
             </button>
+        </div>-->
+
+<div class="btn-group"  style="float:left;position:relative;z-index:100;margin-left: 10px; margin-top: 10px;">
+    <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
+        <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
+    </button>
+    <button class="btn btn-primary ctrol" onclick="modifyModal()" id="xiugai1">
+        <span class="glyphicon glyphicon-pencil">&nbsp;编辑</span>
+    </button>
+    <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
+        <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
+    </button>
+</div>
+<div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
+    <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
+        <span>导出模板</span>
+    </button>
+    <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
+        <span class="glyphicon glyphicon-plus-sign">导入Excel</span>
+    </button>
+    <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+        <span name="xxx" id="110">导出Excel</span>
+    </button>
+</div>
+
+<table id="gravidaTable" >
+</table>
+
+
+
+
+<div id="dialog-add"  class="bodycenter"  style=" display: none" title="网关添加">
+
+    <form action="" method="POST" id="formadd" onsubmit="return checkAdd()">   
+        <input id="id" name="id" type="hidden">
+        <table>
+            <tbody>
+
+                <tr>
+                    <td>
+                        <span>网关名称</span>&nbsp;
+                        <input id="name" class="form-control" name="name" style="display: inline;" placeholder="请输入网关名称" type="text">
+                    </td>
+                    <td></td>
+                    <td>
+                        <span style="margin-left:4px;" >网关编号</span>&nbsp;
+                        <input id="comaddr" class="form-control" name="comaddr" style="display: inline;" placeholder="请输入网关地址" type="text">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span>&#8195;&#8195;经度</span>&nbsp;
+                        <input id="Longitude" class="form-control" name="Longitude" style="display: inline;" placeholder="经度" type="text">
+                    </td>
+                    <td></td>
+                    <td>
+                        <span style="margin-left:4px;" >&#8195;&#8195;纬度</span>&nbsp;
+                        <input id="latitude" class="form-control" name="latitude" style="display: inline;" placeholder="纬度" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span style="">&#8195;&#8195;站号</span>&nbsp;
+                        <input id="sitenum" value="1" readonly="true" class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
+                    </td>
+                    <td></td>
+                    <td>
+                        <span style="margin-left:4px;" >网关型号</span>&nbsp;
+
+
+                        <span class="menuBox">
+
+                            <!--<input id="model" class="easyui-combobox" readonly="true" name="model" style="width:150px; height: 30px" data-options="editable:false" />-->
+                            <select class="easyui-combobox" data-options="editable:true"  id="model" name="model" style="height: 30px">
+                                <option value=""></option>
+                                <!--<option value="L-30MT-ES2">L-30MT-ES2</option>-->
+                            </select>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>                        
+</div>
+
+<div id="dialog-edit"  class="bodycenter" style=" display: none"  title="网关修改">
+    <form action="" method="POST" id="form2" onsubmit="return editComplete()">  
+        <div id="namediv">
+            <span>网关名称</span>&nbsp;
+            <input id="name_" class="form-control" name="name" style="display: inline;" placeholder="请输入网关名称" type="text">
+            <input id="id_" name="id" type="hidden">
+        </div>
+        <div id="modeldiv">
+            <span style="margin-left:4px;">网关型号</span>&nbsp;
+            <span class="menuBox">
+                <!--<input id="model_" class="easyui-combobox" name="model" style="width:150px; height: 30px" data-options="editable:true,valueField:'id', textField:'text',url:'test1.f5.h2.action'" />-->
+                <select class="easyui-combobox" readonly="true" id="model_" name="model" style="height: 30px">
+                    <option value="L-30MT-ES2">L-30MT-ES2</option>
+                </select>
+            </span>
+        </div>
+        <div id="comaddrdiv">
+            <span>网关编号</span>&nbsp;
+            <input id="comaddr_" class="form-control" name="comaddr" style="display: inline;" placeholder="请输入网关名称" type="text" readonly="readonly">
         </div>
 
-    <table id="gravidaTable" >
+
+        <div id="jwddiv">
+            <!--                        51/45/45-->
+            <div id="jddiv">
+                <span>经度</span>&nbsp;
+                <input id="longitudem26d_" class="form-control jwd" name="longitudem26d" style="display: inline;" type="text">&nbsp;°
+                <input id="longitudem26m_" class="form-control jwd" name="longitudem26m" style=" display: inline;" type="text">&nbsp;'
+                <input id="longitudem26s_" class="form-control jwd" name="longitudem26s" style=" display: inline;" type="text">&nbsp;"
+            </div>
+
+            <div id="wddiv">
+                <span style="margin-left:4px;">纬度</span>&nbsp;
+                <input id="latitudem26d_" class="form-control jwd" name="latitudem26d" style=" display: inline;" type="text">&nbsp;°
+                <input id="latitudem26m_" class="form-control jwd" name="latitudem26m" style=" display: inline;" type="text">&nbsp;'
+                <input id="latitudem26s_" class="form-control jwd" name="latitudem26s" style=" display: inline;" type="text">&nbsp;"</div>
+
+        </div>
+    </form>
+</div>
+
+<div id="dialog-excel"  class="bodycenter"  style=" display: none" title="导入Excel">
+    <input type="file" id="excel-file" style=" height: 40px;">
+    <table id="warningtable"></table>
+
+</div>
+
+
+<div  style=" top:-60%;position:absolute; z-index:9999;background-color:#FFFFFF;">
+    <table id="wgmb" style=" border: 1px">
+        <tr>
+            <td>序号</td>
+            <td>网关名称</td>
+            <td>网关编号</td>
+            <td>型号</td>
+            <td>经度</td>
+            <td>纬度</td>
+        </tr>
+        <tr>
+            <td>如1、2、3</td>
+            <td>网关名称</td>
+            <td>网关编号不可重复</td>
+            <td>可以不输入</td>
+            <td>可以不输入</td>
+            <td>可以不输入</td>
+        </tr>
     </table>
-
-
-
-
-    <div id="dialog-add"  class="bodycenter"  style=" display: none" title="网关添加">
-
-        <form action="" method="POST" id="formadd" onsubmit="return checkAdd()">   
-            <input id="id" name="id" type="hidden">
-            <table>
-                <tbody>
-
-                    <tr>
-                        <td>
-                            <span>网关名称</span>&nbsp;
-                            <input id="name" class="form-control" name="name" style="display: inline;" placeholder="请输入网关名称" type="text">
-                        </td>
-                        <td></td>
-                        <td>
-                            <span style="margin-left:4px;" >网关编号</span>&nbsp;
-                            <input id="comaddr" class="form-control" name="comaddr" style="display: inline;" placeholder="请输入网关地址" type="text">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <span>&#8195;&#8195;经度</span>&nbsp;
-                            <input id="Longitude" class="form-control" name="Longitude" style="display: inline;" placeholder="经度" type="text">
-                        </td>
-                        <td></td>
-                        <td>
-                            <span style="margin-left:4px;" >&#8195;&#8195;纬度</span>&nbsp;
-                            <input id="latitude" class="form-control" name="latitude" style="display: inline;" placeholder="纬度" type="text">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span style="">&#8195;&#8195;站号</span>&nbsp;
-                            <input id="sitenum" value="1" readonly="true" class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
-                        </td>
-                        <td></td>
-                        <td>
-                            <span style="margin-left:4px;" >网关型号</span>&nbsp;
-
-
-                            <span class="menuBox">
-
-                                <!--<input id="model" class="easyui-combobox" readonly="true" name="model" style="width:150px; height: 30px" data-options="editable:false" />-->
-                                <select class="easyui-combobox" data-options="editable:true"  id="model" name="model" style="height: 30px">
-                                    <option value=""></option>
-                                    <!--<option value="L-30MT-ES2">L-30MT-ES2</option>-->
-                                </select>
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>                        
-    </div>
-
-    <div id="dialog-edit"  class="bodycenter" style=" display: none"  title="网关修改">
-        <form action="" method="POST" id="form2" onsubmit="return editComplete()">  
-            <table>
-                <tbody>
-                    <tr style=" border: 1px solid red">
-                        <td>
-                            <span>网关编号</span>&nbsp;
-                            <input id="comaddr_" class="form-control" name="comaddr" style=" width: 100px;display: inline;" placeholder="请输入网关名称" type="text" readonly="readonly">
-                        </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span>网关名称</span>&nbsp;
-                            <input id="name_" class="form-control" name="name" style="width: 100px;display: inline;" placeholder="请输入网关名称" type="text">
-                            <input id="id_" name="id" type="hidden">
-                        </td>
-                        <td></td>
-                        <td>
-                            <span style="margin-left:4px;">网关型号</span>&nbsp;
-                            <span class="menuBox">
-                                <!--<input id="model_" class="easyui-combobox" name="model" style="width:150px; height: 30px" data-options="editable:true,valueField:'id', textField:'text',url:'test1.f5.h2.action'" />-->
-                                <select class="easyui-combobox" readonly="true" id="model_" name="model" style="width: 100px; height: 30px">
-                                    <option value="L-30MT-ES2">L-30MT-ES2</option>
-                                </select>
-                            </span>
-                        </td>
-                    </tr>
-
-
-                    <tr>
-<!--                        51/45/45-->
-                        <td>
-                            <span>经度</span>&nbsp;
-<!--                            <input id="longitudem26d_" class="form-control jwd" name="longitudem26d" style=" width: 51px;display: inline;" type="text">&nbsp;°
-                            <input id="longitudem26m_" class="form-control jwd" name="longitudem26m" style=" width: 45px;display: inline;" type="text">&nbsp;'
-                            <input id="longitudem26s_" class="form-control jwd" name="longitudem26s" style=" width: 45px;display: inline;" type="text">&nbsp;"</td>-->
-                            <input id="name_" class="form-control" name="name" style="width: 100px;display: inline;" placeholder="请输入网关名称" type="text">
-                        <td></td>
-                        <td>
-<!--                            <span style="margin-left:4px;">纬度</span>&nbsp;
-                            <input id="latitudem26d_" class="form-control jwd" name="latitudem26d" style=" width: 51px;display: inline;" type="text">&nbsp;°
-                            <input id="latitudem26m_" class="form-control jwd" name="latitudem26m" style=" width: 45px;display: inline;" type="text">&nbsp;'
-                            <input id="latitudem26s_" class="form-control jwd" name="latitudem26s" style=" width: 45px;display: inline;" type="text">&nbsp;"</td>-->
-                            <input id="name_" class="form-control" name="name" style="width: 100px;display: inline;" placeholder="请输入网关名称" type="text">
-                    </tr>
-
-                </tbody>
-            </table>
-        </form>
-    </div>
-
-    <div id="dialog-excel"  class="bodycenter"  style=" display: none" title="导入Excel">
-        <input type="file" id="excel-file" style=" height: 40px;">
-        <table id="warningtable"></table>
-
-    </div>
-
-
-    <div  style=" top:-60%;position:absolute; z-index:9999;background-color:#FFFFFF;">
-        <table id="wgmb" style=" border: 1px">
-            <tr>
-                <td>序号</td>
-                <td>网关名称</td>
-                <td>网关编号</td>
-                <td>型号</td>
-                <td>经度</td>
-                <td>纬度</td>
-            </tr>
-            <tr>
-                <td>如1、2、3</td>
-                <td>网关名称</td>
-                <td>网关编号不可重复</td>
-                <td>可以不输入</td>
-                <td>可以不输入</td>
-                <td>可以不输入</td>
-            </tr>
-        </table>
-    </div>
+</div>
 
 
 

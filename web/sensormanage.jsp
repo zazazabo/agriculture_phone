@@ -15,7 +15,115 @@
         <script type="text/javascript" src="js/getdate.js"></script>
         <!--        <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+        <style>
+/*            手机*/
+            @media screen and (min-width:0px) and (max-width:767px) {  
+                #dialog-add{
+                    font-size: 4px;
+                }
+                #dialog-add input{
+                    width: 95px;
+                }
+                #dialog-edit input{
+                    width: 90px;
+                }
+                #type{
+                    width: 100px;
+                }
+                #type1{
+                    width: 100px;
+                }
+                html{
+                    font-size: 4px;
+                }
+                body{
+                    font-size: 4px; 
+                }
+                #l_comaddr2 {
+                    width: 140px;
+                }
+                #busu{
+                    width: 85px;
+                }
+                #cz{
+                    margin-top: 15px;
+                }
+
+            }
+            /*           ipad竖屏*/
+            @media screen and (min-width:767px) and (max-width:1023px) {  
+                #selectlist{
+                    float: left;
+                }
+                #cz{
+                    /*                    float: left;*/
+                    margin-left: 10px;
+                }
+                #l_comaddr2 {
+                    width: 130px;
+                }
+                #busu{
+                    width: 85px;
+                }
+                #dialog-add input{
+                    width: 100px;
+                }
+                #type{
+                    width: 100px;
+                }
+                 #dialog-edit input{
+                    width: 100px;
+                }
+                 #type1{
+                    width: 100px;
+                }
+
+            }
+
+            @media screen and (min-width:1024px){  
+                html{
+                    font-size: 14px;
+                }
+                body{
+                    font-size: 14px; 
+                }
+                #cz{
+                    margin-left: 10px;
+                }
+
+                #l_comaddr2 {
+                    width: 150px;
+                }
+                #busu{
+                    width: 150px;
+
+                }
+                #selectlist{
+                    float: left;
+                }
+                #cz{
+                    margin-left: 10px;
+                }
+                html{
+                    font-size: 14px;
+                }
+                body{
+                    font-size: 14px; 
+                }
+
+                #dialog-add input{
+                    width: 150px;
+                }
+                #dialog-edit input{
+                    width: 150px;
+                }
+                #type{
+                    width: 150px;
+                }
+            } 
+        </style>
         <script>
+            var withs;
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
             function excel() {
@@ -114,7 +222,7 @@
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
-                    offset: 'center'
+                    offset: '10px'
                 });
             }
 
@@ -517,7 +625,7 @@
                 vv.push(1);
 
                 var data = buicode2(vv);
-                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 1, ele.id, info,"${param.action}");
+                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 1, ele.id, info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -566,7 +674,7 @@
                 vv.push(0);
 
                 var data = buicode2(vv);
-                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 0, ele.id, info,"${param.action}");
+                dealsend2("10", data, "deploySensorCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -646,6 +754,7 @@
 
             }
             $(function () {
+                size();
                 $('#gravidaTable').bootstrapTable({
                     // url: 'lamp.lampform.getlampList.action',
                     showExport: true, //是否显示导出
@@ -935,7 +1044,7 @@
                 $("#dialog-add").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
+                    width: withs,
                     height: 300,
                     position: ["top", "top"],
                     buttons: {
@@ -950,7 +1059,7 @@
                 $("#dialog-edit").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
+                    width: withs,
                     height: 350,
                     position: "top",
                     buttons: {
@@ -966,7 +1075,7 @@
                 $("#dialog-excel").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 750,
+                    width: withs,
                     height: 500,
                     position: "top",
                     buttons: {
@@ -997,79 +1106,33 @@
                 }
                 $("#l_groupe").combobox({data: d, onLoadSuccess: function (data) {
                         $(this).combobox("select", data[0].id);
-                    }, });
+                    }});
                 $("#l_groupe1").combobox({data: d, onLoadSuccess: function (data) {
                         $(this).combobox("select", data[0].id);
-                    }, });
+                    }});
 
                 $("#l_groupe2").combobox({data: d, onLoadSuccess: function (data) {
                         $(this).combobox("select", data[0].id);
-                    }, });
-
-//
-//                $('#gravidaTable').on('click-cell.bs.table', function (field, value, row, element)
-//                {
-//
-//                });
-
-
+                    }
+                });
             });
 
-//            function  sy() {
-//                $("#gravidaTable").find(":checkbox:checked").each(function () {
-//                    var $tr = $(this).parents("tr");
-////                    var id = $(this).parents("tr").find("td:first").html();
-////                    console.log(id);
-//                    if ($tr.index() == 0) {
-//                        layerAler("数据已是第一行");
-//                        return;
-//                    } else {
-////                      $tr.fadeOut().fadeIn();
-//                        //           $tr.prev().before($tr);
-//                        $tr.fadeOut().fadeIn();
-//                        $tr.prev().before($tr);
-//                    }
-//                });
-//
-//            }
-//
-//            function xy() {
-//                $("#gravidaTable").find(":checkbox:checked").each(function () {
-//                    var $tr = $(this).parents("tr");
-//                    $tr.fadeOut().fadeIn();
-//                    $tr.next().after($tr);
-//                    console.log($tr.index());
-//                });
-//                //下移
-//                /*var $tr = $(this).parents("tr"); 
-//                 if ($tr.index() != len - 1) { 
-//                 $tr.fadeOut().fadeIn(); 
-//                 $tr.next().after($tr); 
-//                 } */
-//            }
-//
-//            function bc() {
-//                // var number = $("#gravidaTable").bootstrapTable('getOptions').pageNumber;
-//                var allTableData = $("#gravidaTable").bootstrapTable('getData');
-//                for (var i = 0; i < allTableData.length; i++) {
-//                    var sen = allTableData[i];
-//                    console.log("i:" + allTableData[i].name);
-//                    var obj = {};
-//                    obj.id = sen.id;
-//                    obj.s_index = i;
-//                    $.ajax({async: false, url: "homePage.sensormanage.updesc.action", type: "get", datatype: "JSON", data: obj,
-//                        success: function (data) {
-//
-//                        },
-//                        error: function () {
-//                            alert("提交失败！");
-//                        }
-//                    });
-//
-//                }
-//                layerAler("成功！");
-//
-//            }
+            function size() {
+                var Wwidth = $(window).width();
+                if (Wwidth > 768) {
+                    withs = $(window).width() * 0.5;
+                } else if (Wwidth > 1024) {
+                    withs = $(window).width() * 0.3;
+                } else {
+                    withs = 350;
+                }
+
+            }
+            window.onresize = function () {
+                size();
+            };
+
+
 
         </script>
 
@@ -1088,60 +1151,38 @@
     </head>
 
     <body id="panemask">
-        <div>
-            <form id="formsearch">
-                <div>
-                    <table style="border-collapse:separate;  border-spacing:0px 10px;border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; align-content:  center">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span style="margin-left:10px;">
-                                        网关名称
-                                        &nbsp;</span>
-                                </td>
-                                <td>
+        <form id="formsearch">
+            <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
+                <div id="selectlist">
+                    <span style="margin-left:10px;">
+                        网关名称
+                        &nbsp;</span>
+                    <span class="menuBox">
+                        <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                    </span>  
 
-                                    <span class="menuBox">
-                                        <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style="width:150px; height: 30px" 
-                                               data-options="editable:true,valueField:'id', textField:'text' " />
-                                    </span>  
-                                </td>
-                                <td>
-                                    <span style="margin-left:10px;">
-                                        部署情况
-                                        &nbsp;</span>
-                                </td>
-                                <td>
-                                    <select class="easyui-combobox" name="deplayment"  id="busu" style="width:150px; height: 30px">
-                                        <option value ="-1">全部</option>
-                                        <option value="1">已部署</option>     
-                                        <option value="0">未部署</option> 
-                                    </select>
-                                </td>
-                                <td>
-                                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-xm">
-                                        筛选
-                                    </button>&nbsp;
-                                </td>
-
-                                <td>
-                                    <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
-                                </td>
-                                <td>
-                                    <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
-                                </td>
-                                <!--                                <td>
-                                                                    <button style="margin-left:10px;"  type="button" onclick="readSensor()" class="btn btn-success btn-sm">读取</button>
-                                                                </td> -->
-
-                            </tr>
-                        </tbody>
-                    </table> 
+                    <span style="margin-left:5px;">
+                        部署情况
+                        &nbsp;</span>
+                    <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px">
+                        <option value ="-1">全部</option>
+                        <option value="1">已部署</option>     
+                        <option value="0">未部署</option> 
+                    </select>
                 </div>
-            </form>
-        </div>
+                <div id="cz">
+                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
+                        筛选
+                    </button>
 
-        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
+                    <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
+
+                    <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
+                </div>
+
+            </div>
+        </form>
+        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
             <button class="btn btn-success ctrol"  onclick="showDialog();" data-toggle="modal" data-target="#pjj33" id="add">
                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
             </button>
@@ -1150,7 +1191,9 @@
             </button>
             <button class="btn btn-danger ctrol" onclick="deleteSensor();" id="shanchu">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
-            </button>
+            </button>    
+        </div>
+        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
             <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#cgqmb').tableExport({type: 'excel', escape: 'false'})">
                 导出Excel模板
             </button>
@@ -1161,21 +1204,14 @@
             <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
                 导出Excel
             </button>
+        </div>
+        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
             <button class="btn btn-success ctrol"  onclick="addshow()">
                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加到首页显示
             </button>
             <button class="btn btn-danger ctrol" onclick="removeshow();">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
             </button>
-            <!--            <button class="btn btn-success ctrol" onclick="sy()">
-                            &nbsp;上移
-                        </button>
-                        <button class="btn btn-success ctrol" onclick="xy()">
-                            &nbsp;下移
-                        </button>
-                        <button class="btn btn-success ctrol" onclick="bc()">
-                            &nbsp;保存
-                        </button>-->
         </div>
 
         <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
@@ -1195,25 +1231,25 @@
                     <tbody>
                         <tr>
                             <td>
-                                <span style="margin-left:20px;" >网关名称</span>&nbsp;
+                                <span style="margin-left:0px;" >网关名称</span>&nbsp;
                                 <span class="menuBox">
 
-                                    <input id="l_comaddr"  class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
+                                    <input id="l_comaddr"  class="easyui-combobox" name="l_comaddr" style="height: 30px" 
                                            data-options='editable:false,valueField:"id", textField:"text"' />
                                 </span>  
 
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;" >传感器名</span>&nbsp;
-                                <input id="name" class="form-control"  name="name" style="width:150px;display: inline;" placeholder="传感器名" type="text">
+                                <span style="margin-left:0px;" >传感器名</span>&nbsp;
+                                <input id="name" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
 
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <span style="margin-left:20px;" >&#8195;&#8195;站号</span>&nbsp;
-                                <input id="sitenum" class="form-control" name="sitenum" style="width:150px;display: inline;" placeholder="站号" type="text">
+                                <span style="margin-left:0px;" >&#8195;&#8195;站号</span>&nbsp;
+                                <input id="sitenum" class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
                             </td>
                             <td></td>
                             <td>
@@ -1223,8 +1259,8 @@
                                                                     <option value="0" >模拟量</option>
                                                                     <option value="1" >开关量</option>  
                                                                 </select>-->
-                                <span style="margin-left:10px;" >&#8195;&#8195;类型</span>&nbsp;
-                                <select class="easyui-combobox" id="type" name="type" style="width:150px; height: 30px">
+                                <span style="margin-left:0px;" >&#8195;&#8195;类型</span>&nbsp;
+                                <select class="easyui-combobox" id="type" name="type" style=" height: 30px">
                                     <option value="1" >温度</option>
                                     <option value="2" >湿度</option>  
                                     <option value="3" >开关</option>  
@@ -1236,14 +1272,14 @@
 
                         <tr>
                             <td>
-                                <span style="margin-left:20px;" >数据位置</span>&nbsp;
-                                <input id="dreg" class="form-control" name="dreg" style="width:150px;display: inline;" placeholder="数据位置" type="text">
+                                <span style="margin-left:0px;" >数据位置</span>&nbsp;
+                                <input id="dreg" class="form-control" name="dreg" style="display: inline;" placeholder="数据位置" type="text">
                             </td>
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;" >&#8195;&#8195;备注</span>&nbsp;
+                                <span style="margin-left:0px;" >&#8195;&#8195;备注</span>&nbsp;
                                 <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
-                                <input id="model" value="" class="form-control" name="model" style="width:150px;display: inline;" placeholder="备注" type="text">
+                                <input id="model" value="" class="form-control" name="model" style="display: inline;" placeholder="备注" type="text">
                             </td>
                         </tr>  
                     </tbody>
@@ -1260,20 +1296,20 @@
 
                         <tr>
                             <td>
-                                <span style="margin-left:20px;" >&#8195;&#8195;站号</span>&nbsp;
-                                <input id="sitenum1"  class="form-control" name="sitenum" style="width:150px;display: inline;" placeholder="站号" type="text">
+                                <span style="margin-left:0px;" >&#8195;&#8195;站号</span>&nbsp;
+                                <input id="sitenum1"  class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
                             </td>
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;" >传感器名</span>&nbsp;
-                                <input id="name1" class="form-control"  name="name" style="width:150px;display: inline;" placeholder="传感器名" type="text">
+                                <span style="margin-left:0px;" >传感器名</span>&nbsp;
+                                <input id="name1" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
 
                             </td>
                         </tr>    
                         <tr>
                             <td>
-                                <span style="margin-left:20px;" >数据位置</span>&nbsp;
-                                <input id="dreg1" class="form-control" name="dreg" style="width:150px;display: inline;" placeholder="数据位置" type="text">
+                                <span style="margin-left:0px;" >数据位置</span>&nbsp;
+                                <input id="dreg1" class="form-control" name="dreg" style="display: inline;" placeholder="数据位置" type="text">
                             </td>
                             <td></td>
                             <!--                            <td>
@@ -1285,8 +1321,8 @@
                                                             </select>
                                                         </td>-->
                             <td>
-                                <span style="margin-left:10px;" >&#8195;&#8195;类型</span>&nbsp;
-                                <select class="easyui-combobox" id="type1" name="type" style="width:150px; height: 30px">
+                                <span style="margin-left:0px;" >&#8195;&#8195;类型</span>&nbsp;
+                                <select class="easyui-combobox" id="type1" name="type" style="height: 30px">
                                     <option value="1" >温度</option>
                                     <option value="2" >湿度</option>  
                                     <option value="3" >开关</option> 
@@ -1298,8 +1334,8 @@
                         <tr>
 
                             <td>
-                                <span style="margin-left:20px;" >&#8195;&#8195;备注</span>&nbsp;
-                                <input id="model1"  class="form-control" name="model" style="width:150px;display: inline;" placeholder="备注" type="text">
+                                <span style="margin-left:0px;" >&#8195;&#8195;备注</span>&nbsp;
+                                <input id="model1"  class="form-control" name="model" style="display: inline;" placeholder="备注" type="text">
                             </td>
                             <td></td>
                             <td></td>

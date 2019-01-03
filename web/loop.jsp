@@ -22,10 +22,188 @@
                 border: 1px solid #16645629;
                 text-align:center;
             }
+            /*            手机*/
+            @media screen and (min-width:0px) and (max-width:767px) {  
+                #dialog-add{
+                    font-size: 2px;
+                }
+                #comaddr{
+                    width: 100px;
+                }
+                #comaddrname{
+                    width: 100px;
+                }
+                #l_site{
+                    width: 100px;
+                }
+                #l_name{
+                    width: 100px;
+                }
+                #l_pos{
+                    width: 90px; 
+                }
+                #l_worktype{
+                    width: 100px;
+                }
+                #l_mutex{
+                    width: 100px;
+                }
+
+                #l_site1{
+                    width: 100px;
+                }
+                #l_name1{
+                    width: 90px;
+                }
+                #l_pos1{
+                    width: 90px; 
+                }
+
+                #l_worktype1{
+                    width: 90px;
+                }
+                #l_mutex1{
+                    width: 100px;
+                }
+
+                html{
+                    font-size: 2px;
+                }
+                body{
+                    font-size: 2px; 
+                }
+                #l_comaddr {
+                    width: 140px;
+                }
+                #busu{
+                    width: 85px;
+                }
+                #cz{
+                    margin-top: 15px;
+                }
+
+            }
+            /*           ipad竖屏*/
+            @media screen and (min-width:767px) and (max-width:1023px) {  
+                #selectlist{
+                    float: left;
+                }
+                #cz{
+                    /*                    float: left;*/
+                    margin-left: 10px;
+                }
+                #l_comaddr2 {
+                    width: 130px;
+                }
+                #busu{
+                    width: 85px;
+                }
+                #l_worktype{
+                    width: 100px;
+                }
+                #l_mutex{
+                    width: 100px;
+                }
+                #comaddr{
+                    width: 100px;
+                }
+                #comaddrname{
+                    width: 100px;
+                }
+                #l_site{
+                    width: 100px;
+                }
+                #l_name{
+                    width: 100px;
+                }
+                #l_pos{
+                    width: 90px; 
+                }
+                #dialog-edit input{
+                    width: 100px;
+                }
+
+                #l_worktype1{
+                    width: 100px;
+                }
+                #l_mutex1{
+                    width: 100px;
+                }
+
+
+            }
+
+            @media screen and (min-width:1024px){  
+                html{
+                    font-size: 14px;
+                }
+                body{
+                    font-size: 14px; 
+                }
+                #cz{
+                    margin-left: 10px;
+                }
+
+                #l_comaddr2 {
+                    width: 150px;
+                }
+                #busu{
+                    width: 150px;
+
+                }
+                #selectlist{
+                    float: left;
+                }
+                #cz{
+                    margin-left: 10px;
+                }
+                html{
+                    font-size: 14px;
+                }
+                body{
+                    font-size: 14px; 
+                }
+                #l_worktype{
+                    width: 150px;
+                }
+                #l_mutex{
+                    width: 150px;
+                }
+                #comaddr{
+                    width: 150px;
+                }
+                #comaddrname{
+                    width: 150px;
+                }
+                #l_site{
+                    width: 150px;
+                }
+                #l_name{
+                    width: 150px;
+                }
+                #l_pos{
+                    width: 150px; 
+                }
+                
+                #l_site1{
+                    width: 150px;
+                }
+                #l_name1{
+                    width: 150px;
+                }
+                #l_pos1{
+                    width: 150px; 
+                }
+
+                #l_worktype1{
+                    width: 150px;
+                }
+            } 
+            
         </style>
         <script>
-                var u_name="${param.name}";
-            var o_pid="${param.pid}";
+            var u_name = "${param.name}";
+            var o_pid = "${param.pid}";
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -335,7 +513,7 @@
                 vv.push(20); //寄存器数目 2字节                         
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info,"${param.action}");
+                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
             }
 
             function deployLoopCB(obj) {
@@ -429,7 +607,7 @@
                 var worktype = parseInt(ele.l_worktype);
 
                 if (ele.l_mutex == 1) {
-                   worktype=worktype|0x8000;
+                    worktype = worktype | 0x8000;
                 }
                 vv.push(worktype >> 8 & 0xff)   //工作模式
                 vv.push(worktype & 0xff);
@@ -505,7 +683,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployLoopCB", ele.l_comaddr, 1, ele.lid, ele.l_info,"${param.action}");
+                dealsend2("10", data, "deployLoopCB", ele.l_comaddr, 1, ele.lid, ele.l_info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -544,7 +722,7 @@
                 }
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployLoopCB", o.l_comaddr, 0, ele.lid, info,"${param.action}");
+                dealsend2("10", data, "deployLoopCB", o.l_comaddr, 0, ele.lid, info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -780,7 +958,7 @@
             }
 
             $(function () {
-
+                size();
                 $('#gravidaTable').bootstrapTable({
                     //                    url: 'loop.loopForm.getLoopList.action',
                     //服务器url
@@ -906,7 +1084,7 @@
                             limit: params.limit,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr:$("#l_comaddr").val()   
+                            l_comaddr: $("#l_comaddr").val()   
                         };      
                         return temp;  
                     }, });
@@ -971,7 +1149,7 @@
                 $("#dialog-add").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
+                    width: withs,
                     height: 450,
                     position: ["top", "top"],
                     buttons: {
@@ -986,7 +1164,7 @@
                 $("#dialog-edit").dialog({
                     autoOpen: false,
                     modal: true,
-                    width: 700,
+                    width: withs,
                     height: 450,
                     position: "top",
                     buttons: {
@@ -1138,6 +1316,21 @@
 
             }
 
+            function size() {
+                var Wwidth = $(window).width();
+                if (Wwidth > 768) {
+                    withs = $(window).width() * 0.5;
+                } else if (Wwidth > 1024) {
+                    withs = $(window).width() * 0.3;
+                } else {
+                    withs = 350;
+                }
+
+            }
+            window.onresize = function () {
+                size();
+            };
+
 
 
         </script>
@@ -1163,55 +1356,85 @@
 
         <div>
             <form id="formsearch">
-                <div>
-                    <table style="border-collapse:separate;  border-spacing:0px 10px;border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; align-content:  center">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span style="margin-left:10px;">
-                                        <span >网关名称</span>
-                                        &nbsp;</span>
-                                </td>
-                                <td>
+                <!--                <div>
+                                    <table style="border-collapse:separate;  border-spacing:0px 10px;border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; align-content:  center">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span style="margin-left:10px;">
+                                                        <span >网关名称</span>
+                                                        &nbsp;</span>
+                                                </td>
+                                                <td>
+                
+                                                    <span class="menuBox">
+                                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
+                                                               data-options="editable:true,valueField:'id', textField:'text' " />
+                                                    </span>  
+                                                </td>
+                                                <td>
+                                                    <span style="margin-left:10px;">
+                                                        <span id="317" name="xxxx">部署情况</span>
+                                                        &nbsp;</span>
+                                                </td>
+                                                <td>
+                                                    <select class="easyui-combobox" id="busu" name="l_deplayment" style="width:150px; height: 30px">
+                                                        <option value="-1">全部</option>   
+                                                        <option value="1">已部署</option>   
+                                                        <option value="0">未部署</option>
+                
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-xm">
+                                                         搜索
+                                                        筛选
+                                                    </button>&nbsp;
+                                                    <button  type="button" style="margin-left:20px;" onclick="deployLoop()" class="btn btn-success btn-xm">
+                                                        部署
+                                                    </button>&nbsp;
+                
+                                                    <button  type="button" style="margin-left:20px;" onclick="removeLoop()" class="btn btn-success btn-xm">
+                                                        移除
+                                                    </button>&nbsp;
+                                                                                        <button  type="button" style="margin-left:20px;" onclick="readinfo()" class="btn btn-success btn-xm">
+                                                                                            读取
+                                                                                        </button>&nbsp;
+                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>-->
+                <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
+                    <div id="selectlist">
+                        <span style="margin-left:10px;">
+                            网关名称
+                            &nbsp;</span>
+                        <span class="menuBox">
+                            <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                        </span>  
 
-                                    <span class="menuBox">
-                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
-                                               data-options="editable:true,valueField:'id', textField:'text' " />
-                                    </span>  
-                                </td>
-                                <td>
-                                    <span style="margin-left:10px;">
-                                        <span id="317" name="xxxx">部署情况</span>
-                                        &nbsp;</span>
-                                </td>
-                                <td>
-                                    <select class="easyui-combobox" id="busu" name="l_deplayment" style="width:150px; height: 30px">
-                                        <option value="-1">全部</option>   
-                                        <option value="1">已部署</option>   
-                                        <option value="0">未部署</option>
+                        <span style="margin-left:5px;">
+                            部署情况
+                            &nbsp;</span>
+                        <select class="easyui-combobox" id="busu" name="l_deplayment" style="height: 30px">
+                            <option value="-1">全部</option>   
+                            <option value="1">已部署</option>   
+                            <option value="0">未部署</option>
 
-                                    </select>
-                                </td>
-                                <td>
-                                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-xm">
-                                        <!-- 搜索-->
-                                        筛选
-                                    </button>&nbsp;
-                                    <button  type="button" style="margin-left:20px;" onclick="deployLoop()" class="btn btn-success btn-xm">
-                                        部署
-                                    </button>&nbsp;
+                        </select> 
+                    </div>
+                    <div id="cz">
+                        <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
+                            筛选
+                        </button>
 
-                                    <button  type="button" style="margin-left:20px;" onclick="removeLoop()" class="btn btn-success btn-xm">
-                                        移除
-                                    </button>&nbsp;
-                                    <!--                                    <button  type="button" style="margin-left:20px;" onclick="readinfo()" class="btn btn-success btn-xm">
-                                                                            读取
-                                                                        </button>&nbsp;-->
+                        <button style="margin-left:10px;" id="btndeploySensor" onclick="deployLoop()" type="button" class="btn btn-success btn-sm">部署</button>
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table> 
+                        <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeLoop()" class="btn btn-success btn-sm">移除</button>
+                    </div>
+
                 </div>
             </form>
         </div>
@@ -1232,6 +1455,9 @@
             <button class="btn btn-danger ctrol" onclick="deleteloop()"  id="shanchu">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
             </button>
+
+        </div>
+        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
             <button class="btn btn-success ctrol" onclick="addshow()">  
                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加首页显示
             </button>
@@ -1259,31 +1485,31 @@
                     <tbody>
                         <tr>
                             <td>
-                                <span style="margin-left:20px;" >网关地址</span>&nbsp;
+                                <span style="margin-left:0px;" >网关地址</span>&nbsp;
                                 <span class="menuBox">
 
-                                    <input id="comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
+                                    <input id="comaddr" class="easyui-combobox" name="l_comaddr" style=" height: 30px" 
                                            data-options='editable:false,valueField:"id", textField:"text"' />
                                 </span>  
 
 
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;" >网关名称</span>&nbsp;
-                                <input id="comaddrname" readonly="true"   class="form-control"  name="comaddrname" style="width:150px;display: inline;" placeholder="请输入网关名称" type="text"></td>
+                                <span style="margin-left:0px;" >网关名称</span>&nbsp;
+                                <input id="comaddrname" readonly="true"   class="form-control"  name="comaddrname" style="display: inline;" placeholder="请输入网关名称" type="text"></td>
 
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <span style="margin-left:20px;">&emsp;&emsp;站号</span>&nbsp;
-                                <input id="l_site" class="form-control" name="l_site" style="width:150px;display: inline;" placeholder="站号" type="text">
+                                <span style="margin-left:0px;">&emsp;&emsp;站号</span>&nbsp;
+                                <input id="l_site" class="form-control" name="l_site" style="display: inline;" placeholder="站号" type="text">
 
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;">回路名称</span>&nbsp;
-                                <input id="l_name" class="form-control"  name="l_name" style="width:150px;display: inline;" placeholder="请输入回路名称" type="text">
+                                <span style="margin-left:2px;">回路名称</span>&nbsp;
+                                <input id="l_name" class="form-control"  name="l_name" style="display: inline;" placeholder="请输入回路名称" type="text">
                             </td>
                             </td>
                             </td>
@@ -1291,17 +1517,17 @@
 
                         <tr>
                             <td>
-                                <span style="margin-left:8px;" >寄存器位置</span>&nbsp;
+                                <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
                                 <span class="menuBox">
-                                    <input id="l_pos" class="form-control"  name="l_pos" style="width:150px;display: inline;" placeholder="寄存器位置" type="text">
+                                    <input id="l_pos" class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
                                 </span>
 
                             </td>
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;" >工作方式</span>&nbsp;
+                                <span style="margin-left:0px;" >工作方式</span>&nbsp;
                                 <span class="menuBox">
-                                    <select class="easyui-combobox" id="l_worktype" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style="width:150px; height: 30px">          
+                                    <select class="easyui-combobox" id="l_worktype" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style="height: 30px">          
                                         <!--<option value="0">手动</option>-->
                                         <option value="3">时间</option>
                                         <option value="5">场景</option>
@@ -1313,11 +1539,11 @@
                         <tr>
                             <td>
 
-                                <span style="margin-left:20px;" >互斥模式</span>&nbsp;
+                                <span style="margin-left:0px;" >互斥模式</span>&nbsp;
                                 <span class="menuBox">
 
                                     <span class="menuBox">
-                                        <select class="easyui-combobox" id="l_mutex" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style="width:150px; height: 30px">          
+                                        <select class="easyui-combobox" id="l_mutex" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
                                             <option value="1">有</option> 
                                             <option value="0">无</option> 
                                         </select>
@@ -1426,7 +1652,7 @@
                                     信息点:
                                 </span>
                                 <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infonum" name="infonum" style="width:100px; height: 30px"></select>
-                                <span style=" margin-left: 100px;">
+                                <span style=" margin-left: 0px;">
                                     偏差值:
                                 </span>
 
@@ -1493,13 +1719,13 @@
 
                         <tr>
                             <td>
-                                <span style="margin-left:20px;" >&emsp;&emsp;站号</span>&nbsp;
-                                <input id="l_site1"  class="form-control" name="l_site" style="width:150px;display: inline;" placeholder="站号" type="text">
+                                <span style="margin-left:0px;" >&emsp;&emsp;站号</span>&nbsp;
+                                <input id="l_site1"  class="form-control" name="l_site" style="display: inline;" placeholder="站号" type="text">
 
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;" >回路名称</span>&nbsp;
-                                <input id="l_name1" class="form-control"  name="l_name" style="width:150px;display: inline;" placeholder="请输入回路名称" type="text">
+                                <span style="margin-left:0px;" >回路名称</span>&nbsp;
+                                <input id="l_name1" class="form-control"  name="l_name" style="display: inline;" placeholder="请输入回路名称" type="text">
                             </td>
                             </td>
                             </td>
@@ -1507,16 +1733,16 @@
 
                         <tr>
                             <td>
-                                <span style="margin-left:8px;" >寄存器位置</span>&nbsp;
+                                <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
                                 <span class="menuBox">
-                                    <input id="l_pos1"  class="form-control"  name="l_pos" style="width:150px;display: inline;" placeholder="寄存器位置" type="text">
+                                    <input id="l_pos1"  class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
                                 </span>
                             </td>
                             <td></td>
                             <td>
-                                <span style="margin-left:10px;" >工作方式</span>&nbsp;
+                                <span style="margin-left:0px;" >工作方式</span>&nbsp;
                                 <span class="menuBox">
-                                    <select class="easyui-combobox" id="l_worktype1" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style="width:150px; height: 30px">          
+                                    <select class="easyui-combobox" id="l_worktype1" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
                                         <option value="3">时间</option>
                                         <option value="5">场景</option>
                                         <option value="9">信息点</option>
@@ -1527,11 +1753,11 @@
                         <tr>
                             <td>
 
-                                <span style="margin-left:20px;" >互斥模式</span>&nbsp;
+                                <span style="margin-left:0px;" >互斥模式</span>&nbsp;
                                 <span class="menuBox">
 
                                     <span class="menuBox">
-                                        <select class="easyui-combobox" id="l_mutex1" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style="width:150px; height: 30px">          
+                                        <select class="easyui-combobox" id="l_mutex1" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
                                             <option value="1">有</option> 
                                             <option value="0">无</option> 
                                         </select>
@@ -1643,11 +1869,10 @@
                                 <span>
                                     信息点:
                                 </span>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infonum1" name="infonum" style="width:100px; height: 30px"></select>
-                                <span style=" margin-left: 100px;">
+                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infonum1" name="infonum" style="width:100px; height: 30px;"></select>
+                                <span style=" margin-left: 0px;">
                                     偏差值:
                                 </span>
-
                                 <input id="offset1" class="form-control"  name="offset" style="width:50px;display: inline;" placeholder="偏差值" type="text" />
                             </td>
                         </tr>

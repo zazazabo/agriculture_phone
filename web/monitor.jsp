@@ -33,7 +33,7 @@
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
-                    offset: 'center'
+                    offset: '5px'
                 });
             }
 
