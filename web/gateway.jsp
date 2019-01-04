@@ -38,17 +38,17 @@
                     width: 100px;
                 }
                 #model{
-                    width: 150px;
+                    width: 100px;
 
                 }
                 #model_{
-                    width: 150px;
+                    width: 100px;
                 }
                 #name_{
-                    width: 150px;
+                    width: 100px;
                 }
                 #comaddr_{
-                    width: 150px;
+                    width: 100px;
                 }
                 #namediv{
                     margin-top: 10px;

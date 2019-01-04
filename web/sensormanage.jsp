@@ -682,77 +682,6 @@
                 }
                 );
             }
-            //添加到首页显示
-            function addshow() {
-                var selects = $('#gravidaTable').bootstrapTable('getSelections');
-                if (selects.length == 0) {
-                    layerAler('请勾选表格数据'); //请勾选表格数据
-                    return;
-                }
-
-                for (var i = 0; i < selects.length; i++) {
-                    if (selects[i].deplayment == 0) {
-                        layerAler('设备未部署不能添加到首页'); //请勾选表格数据
-                        return;
-                    }
-                }
-
-                for (var i = 0; i < selects.length; i++) {
-                    var id = selects[i].id;
-                    $.ajax({async: false, url: "homePage.sensormanage.addshow.action", type: "get", datatype: "JSON", data: {id: id},
-                        success: function (data) {
-
-                        },
-                        error: function () {
-                            alert("提交失败！");
-                        }
-                    });
-                }
-                layerAler("添加成功！");
-                var obj = {};
-                obj.l_comaddr = $("#l_comaddr2").val();
-                obj.pid = "${param.pid}";
-                var opt = {
-                    url: "sensor.sensorform.getSensorList.action",
-                    query: obj,
-                    silent: false
-                };
-                $("#gravidaTable").bootstrapTable('refresh', opt);
-
-
-            }
-
-            function removeshow() {
-                var selects = $('#gravidaTable').bootstrapTable('getSelections');
-                if (selects.length == 0) {
-                    layerAler('请勾选表格数据'); //请勾选表格数据
-                    return;
-                }
-
-                for (var i = 0; i < selects.length; i++) {
-                    var id = selects[i].id;
-                    $.ajax({async: false, url: "homePage.sensormanage.removeshow.action", type: "get", datatype: "JSON", data: {id: id},
-                        success: function (data) {
-
-                        },
-                        error: function () {
-                            alert("提交失败！");
-                        }
-                    });
-                }
-                layerAler("移除成功！");
-                var obj = {};
-                obj.l_comaddr = $("#l_comaddr2").val();
-                obj.pid = "${param.pid}";
-                var opt = {
-                    url: "sensor.sensorform.getSensorList.action",
-                    query: obj,
-                    silent: false
-                };
-                $("#gravidaTable").bootstrapTable('refresh', opt);
-
-
-            }
             $(function () {
                 size();
                 $('#gravidaTable').bootstrapTable({
@@ -844,23 +773,7 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle'
-                        }, {
-                            field: 'show',
-                            title: '是否首页显示', //部署情况
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            sortable: true,
-                            formatter: function (value, row, index, field) {
-                                if (value == "1") {
-                                    var str = "<span class='label label-success'>" + "是" + "</span>"; //已部署
-                                    return  str;
-                                } else {
-                                    var str = "<span class='label label-warning'>" + "否" + "</span>"; //未部署
-                                    return  str;
-                                }
-                            }
-                        },
+                        }, 
                         {
                             field: 'deplayment',
                             title: '部署情况', //部署情况
@@ -1205,14 +1118,14 @@
                 导出Excel
             </button>
         </div>
-        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
+<!--        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
             <button class="btn btn-success ctrol"  onclick="addshow()">
                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加到首页显示
             </button>
             <button class="btn btn-danger ctrol" onclick="removeshow();">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
             </button>
-        </div>
+        </div>-->
 
         <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
         </table>
