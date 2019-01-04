@@ -19,11 +19,11 @@
         <style>
             /*            手机*/
             @media screen and (min-width:0px) and (max-width:666px) {  
-               
+
                 #selectdiv{
                     position:relative; top: 10px;
                 }
-                
+
 
             }
             /*            手机横屏*/
@@ -39,8 +39,8 @@
                 }
 
             }
-            
-            
+
+
             /*           ipad竖屏*/
             @media screen and (min-width:767px) and (max-width:1023px) {  
                 #l_comaddr2{
@@ -99,7 +99,21 @@
                             title: '设备名称', //设备名称
                             width: 25,
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                // return  value.replace(/\b(0+)/gi, "");
+                                var obj = {};
+                                obj.comaddr = value;
+                                var name = "";
+                                $.ajax({async: false, url: "homePage.gayway.getnamebycode.action", type: "get", datatype: "JSON", data: obj,
+                                    success: function (data) {
+                                        var rs = data.rs;
+                                        name = rs[0].name;
+                                    }
+                                });
+                                return  name;
+
+                            }
                         }, {
                             field: 'f_day',
                             title: '报警时间', //时间
@@ -293,7 +307,8 @@
                             console.log(ooo);
                             $.ajax({async: false, url: "sensor.sensorform.updfualt.action", type: "get", datatype: "JSON", data: ooo,
                                 success: function (data) {
-//                                    $("#reordtabel").bootstrapTable('refresh');
+                                 parent.parent.getfNumber();
+                                 $("#reordtabel").bootstrapTable('refresh');
                                 }
                             });
                         }

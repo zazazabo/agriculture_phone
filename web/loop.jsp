@@ -1246,76 +1246,6 @@
                 });
             });
 
-            //添加到首页显示
-            function addshow() {
-                var selects = $('#gravidaTable').bootstrapTable('getSelections');
-                if (selects.length == 0) {
-                    layerAler('请勾选表格数据'); //请勾选表格数据
-                    return;
-                }
-
-                for (var i = 0; i < selects.length; i++) {
-                    if (selects[i].deplayment == 0) {
-                        layerAler('设备未部署不能添加到首页'); //请勾选表格数据
-                        return;
-                    }
-                }
-
-                for (var i = 0; i < selects.length; i++) {
-                    var id = selects[i].id;
-                    $.ajax({async: false, url: "homePage.loop.addshow.action", type: "get", datatype: "JSON", data: {id: id}, success: function (data) {
-
-                        },
-                        error: function () {
-                            alert("提交失败！");
-                        }
-                    });
-                    layerAler("添加成功！");
-                    var obj = {};
-                    obj.l_comaddr = $("#l_comaddr").val();
-                    obj.pid = "${param.pid}";
-                    var opt = {
-                        url: "loop.loopForm.getLoopList.action",
-                        query: obj,
-                        silent: false
-                    };
-                    $("#gravidaTable").bootstrapTable('refresh', opt);
-                }
-
-
-            }
-
-            function removeshow() {
-                var selects = $('#gravidaTable').bootstrapTable('getSelections');
-                if (selects.length == 0) {
-                    layerAler('请勾选表格数据'); //请勾选表格数据
-                    return;
-                }
-
-                for (var i = 0; i < selects.length; i++) {
-                    var id = selects[i].id;
-                    $.ajax({async: false, url: "homePage.loop.removeshow.action", type: "get", datatype: "JSON", data: {id: id}, success: function (data) {
-
-                        },
-                        error: function () {
-                            alert("提交失败！");
-                        }
-                    });
-                    layerAler("移除成功！");
-                    var obj = {};
-                    obj.l_comaddr = $("#l_comaddr").val();
-                    obj.pid = "${param.pid}";
-                    var opt = {
-                        url: "loop.loopForm.getLoopList.action",
-                        query: obj,
-                        silent: false
-                    };
-                    $("#gravidaTable").bootstrapTable('refresh', opt);
-                }
-
-
-            }
-
             function size() {
                 var Wwidth = $(window).width();
                 if (Wwidth > 768) {
@@ -1455,19 +1385,20 @@
             <button class="btn btn-danger ctrol" onclick="deleteloop()"  id="shanchu">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
             </button>
+             <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+                <span >导出Excel</span>
+            </button>
 
         </div>
-        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
+<!--        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
             <button class="btn btn-success ctrol" onclick="addshow()">  
                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加首页显示
             </button>
             <button class="btn btn-danger ctrol" onclick="removeshow()">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
             </button>
-            <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                <span >导出Excel</span>
-            </button>
-        </div>
+           
+        </div>-->
 
         <div style="width:100%;">
             <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">

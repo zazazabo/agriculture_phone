@@ -36,11 +36,24 @@
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/bootstrap.min.css" />
         <script type="text/javascript"  src="js/getdate.js"></script>
+        <script type="text/javascript"  src="js/genel.js"></script>
         <!--[if IE 6]>
         <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
         <script>DD_belatedPNG.fix('*');</script>
         <![endif]-->
         <style>
+            #fnumber{
+                background-color: red;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                vertical-align: middle;
+
+                border-radius: 14px;
+                position: absolute;
+                left: 78%;
+                top: 5px;
+            }
             @media screen and (max-width:767px) {  
                 #pojects{
                     width: 120px;
@@ -65,7 +78,17 @@
                 html{
                     font-size: 14px;
                 }
+
+                #fnumber{
+                    position: absolute;
+                    left: 72%;
+                    top: 5px;
+                }
                 
+                #l_comaddr{
+                    width: 100px;
+                }
+
 
             } 
             @media screen and (min-width:767px){  
@@ -84,28 +107,266 @@
                 html{
                     font-size: 18px;
                 }
+                #l_comaddr{
+                    width: 140px;
+                }
             } 
             table td { line-height: 40px; } 
         </style>
         <script>
             var projectId = "${fn:split(param.pid,',')[0]}";
+            var withs;
             function getpojectId() {
                 projectId = $("#pojects").val();
                 return  projectId;
             }
             function callchild(obj) {
-                var func = obj.function;
-                var objframe = $("iframe");
-                for (var i = 0; i < objframe.length; i++) {
-                    var src = $(objframe[i]).attr("src");
-                    if (src.indexOf(obj.page) != -1) {
-                        var win = objframe[i].contentWindow;
-                        if (win.hasOwnProperty(func)) {
-                            win[func](obj);
+                console.log(obj);
+                if (obj.page == "main.jsp") {
+                    dealfaultCB(obj);
+                } else {
+                    var func = obj.function;
+                    var objframe = $("iframe");
+                    for (var i = 0; i < objframe.length; i++) {
+                        var src = $(objframe[i]).attr("src");
+                        if (src.indexOf(obj.page) != -1) {
+                            var win = objframe[i].contentWindow;
+                            if (win.hasOwnProperty(func)) {
+                                win[func](obj);
+                            }
+                            break;
                         }
-                        break;
                     }
+
                 }
+
+            }
+
+            function dealfaultCB(obj) {
+//                $('#panemask').hideLoading();
+                console.log("o:" + obj.status);
+                if (obj.status == "success") {
+                    var data = Str2BytesH(obj.data);
+                    var v = "";
+                    for (var i = 0; i < data.length; i++) {
+                        v = v + sprintf("%02x", data[i]) + " ";
+                    }
+                    if (data[1] == 0x10) {
+                        var infonum = (2000 + obj.val * 10 + 6) | 0x1000;
+                        var high = infonum >> 8 & 0xff;
+                        var low = infonum & 0xff;
+                        if (data[2] == high && data[3] == low) {
+                            var ooo = {id: obj.param, f_handlep: getusername()};
+                            $.ajax({async: false, url: "sensor.sensorform.updfualt.action", type: "get", datatype: "JSON", data: ooo,
+                                success: function (data) {
+                                    getfNumber();
+                                    $("#fauttable").bootstrapTable('refresh');
+                                }
+                            });
+                        }
+
+                    }
+
+                }
+            }
+
+            //处理报警
+            function handle() {
+                var eles = $("#fauttable").bootstrapTable('getSelections');
+                if (eles.length == 0) {
+                    alert("请勾选表格");
+                    return;
+                }
+                var ele = eles[0];
+                if (ele.f_Isfault != 1) {
+                    var vv = [];
+                    vv.push(1);
+                    vv.push(0x10);
+                    var info = parseInt(ele.f_setcode);
+                    var infonum = (2000 + info * 10 + 6) | 0x1000;
+                    vv.push(infonum >> 8 & 0xff);
+                    vv.push(infonum & 0xff);
+                    vv.push(0);
+                    vv.push(1); //寄存器数目 2字节     
+                    vv.push(2)
+                    vv.push(0);
+                    vv.push(0);
+                    var data = buicode2(vv);
+                    console.log(data);
+                    dealsend2("10", data, "dealfaultCB", ele.f_comaddr, 0, ele.id, info, "main.jsp");
+                }
+            }
+
+            //获取故障数量
+            function getfNumber() {
+                $.ajax({async: false, url: "homePage.fault.getfaultNumber.action", type: "get", datatype: "JSON", data:{pid:getpojectId()},
+                    success: function (data) {
+                        var rs = data.rs;
+                        if(rs[0].number>0){
+                            $("#fnumber").html(rs[0].number);
+                            $("#fnumber").show();
+                        }else{
+                            $("#fnumber").hide();
+                        }
+                    }
+                });
+            }
+
+
+
+            function  imgM() {
+                $("#l_comaddr").combobox({
+                    url: "gayway.GaywayForm.getComaddr.action?pid=" + getpojectId()
+//                    formatter: function (row) {
+//                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+//                        var v = row.text + v1;
+//                        row.id = row.id;
+//                        row.text = v;
+//                        var opts = $(this).combobox('options');
+//                        return row[opts.textField];
+//                    },
+//                    onLoadSuccess: function (data) {
+//                        if (Array.isArray(data) && data.length > 0) {
+//                            for (var i = 0; i < data.length; i++) {
+//                                data[i].text = data[i].name;
+//                            }
+//                            $(this).combobox('select', data[0].id);
+//                        }
+//
+//                    }
+                });
+                $('#fauttable').bootstrapTable({
+                    url: 'homePage.fault.getfault.action',
+                    columns: [
+                        {
+                            title: '单选',
+                            field: 'select',
+                            //复选框
+                            checkbox: true,
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle'
+                        },
+                        {
+
+                            field: 'f_comaddr',
+                            title: '设备名称', //设备名称
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                // return  value.replace(/\b(0+)/gi, "");
+                                var obj = {};
+                                obj.comaddr = value;
+                                var name = "";
+                                $.ajax({async: false, url: "homePage.gayway.getnamebycode.action", type: "get", datatype: "JSON", data: obj,
+                                    success: function (data) {
+                                        var rs = data.rs;
+                                        name = rs[0].name;
+                                    }
+                                });
+                                return  name;
+
+                            }
+                        }, {
+                            field: 'f_day',
+                            title: '报警时间', //时间
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value) {
+                                if (value == null || value == "") {
+                                    return  null;
+                                } else {
+                                    var date = new Date(value);
+                                    var year = date.getFullYear();
+                                    var month = date.getMonth() + 1; //月份是从0开始的 
+                                    var day = date.getDate(), hour = date.getHours();
+                                    var min = date.getMinutes(), sec = date.getSeconds();
+                                    var preArr = Array.apply(null, Array(10)).map(function (elem, index) {
+                                        return '0' + index;
+                                    });////开个长度为10的数组 格式为 00 01 02 03 
+                                    var newTime = year + '-' + (preArr[month] || month) + '-' + (preArr[day] || day) + ' ' + (preArr[hour] || hour) + ':' + (preArr[min] || min) + ':' + (preArr[sec] || sec);
+                                    return newTime;
+                                }
+                            }
+                        }, {
+                            field: 'f_type',
+                            title: '设备类型', //异常类型
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value) {
+                                if (value == 1) {
+                                    return "温度传感器";
+                                } else if (value == 2) {
+                                    return "湿度传感器";
+                                }
+                            }
+                        }, {
+                            field: 'f_comment',
+                            title: '异常说明', //异常说明
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index, field) {
+                                var str = "通信中断";
+                                return str;
+                            }
+                        }
+                        , {
+                            field: 'f_name',
+                            title: '传感器编号', //灯具编号
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle'
+                        }
+//                        ,
+//                        {
+//                            field: 'f_detail',
+//                            title: '详情', //状态字2
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle',
+//                            formatter: function (value, row, index, field) {
+//
+//                                return value;
+//                            }
+//                        }
+                    ],
+                    clickToSelect: true,
+                    singleSelect: true,
+                    sortName: 'id',
+                    locale: 'zh-CN', //中文支持,
+                    showColumns: true,
+                    sortOrder: 'desc',
+                    pagination: true,
+                    sidePagination: 'server',
+                    pageNumber: 1,
+                    pageSize: 5,
+                    showRefresh: true,
+                    showToggle: true,
+                    // 设置默认分页为 50
+                    pageList: [5, 10, 15],
+                    striped: true,
+                    onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
+//                        console.info("加载成功");
+                    },
+
+                    //服务器url
+                    queryParams: function (params)  {   //配置参数     
+                        var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
+                            search: params.search,
+                            skip: params.offset,
+                            limit: params.limit,
+                            pid: getpojectId(),
+                            type_id: "1",
+                            f_comaddr: "" 
+                        };      
+                        return temp;  
+                    }
+                });
+                $('#faultDiv').dialog('open');
             }
 
 
@@ -183,7 +444,7 @@
                 window.location = "${pageContext.request.contextPath }/login.jsp";
                 return;
             </c:if>
-
+                size();
 
 
                 $("dd").delegate("ul li", "click", function () {
@@ -219,6 +480,21 @@
                     $("#userinfo").hide();
                 });
 
+                $("#faultDiv").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: withs,
+                    height: 500,
+                    position: ["top", "top"],
+                    buttons: {
+                        处理报警: function () {
+                            handle();
+                        }, 关闭: function () {
+                            $("#faultDiv").dialog("close");
+                        }
+                    }
+                });
+
             });
             function size() {
                 var iframeWidth = $(window).width();
@@ -237,6 +513,18 @@
                     layer.close(index);
 
                 });
+            }
+
+            function select() {
+                var obj = {};
+                obj.pid = getpojectId();
+                obj.f_comaddr = $("#l_comaddr").val();
+                var opt = {
+                    url: "homePage.fault.getfault.action",
+                    silent: true,
+                    query: obj
+                };
+                $("#fauttable").bootstrapTable('refresh', opt);
             }
 
 
@@ -270,7 +558,7 @@
                                         <li><a href="#">英文</a></li>
                                     </ul>
                                 </li>                             
-                                <li id="Hui-msg"> <a href="#" title="消息"><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
+                                <li id="Hui-msg" onclick="imgM()"> <a href="#" title="消息"><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> <div id="fnumber">1</div></li>
                                 <li  style=" margin-right: 10px;" id="admin">
                                     <!--                                    <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>-->
                                     <span  style="color: rgb(255, 255, 255);"><img src="./img/user.jpg" style=" height: 40px; width: 40px;vertical-align: middle; border-radius: 16px;"></span>
@@ -404,6 +692,21 @@
             </form>                        
         </div>
 
+        <div id="faultDiv"  class=""  style=" display: none" title="报警信息">
+            <div>
+                <span style="margin-left:10px;">网关&nbsp;</span>
+                <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                <button style=" height: 30px;" class="btn btn-sm btn-success" onclick="select()" style="margin-left:10px;"><label id="34" name="xxx">搜索</label></button>
+                <button style=" height: 30px; margin-left: 5px;" type="button" id="btn_download" class="btn btn-primary" onClick ="$('#fauttable').tableExport({type: 'excel', escape: 'false'})">
+                    <label id="110" name="xxx">导出Excel</label>
+                </button>
+            </div>
+            <hr>
+            <table id="fauttable">
+
+            </table>
+        </div>
+
         <!--_footer 作为公共模版分离出去-->
         <!--<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>--> 
         <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
@@ -413,118 +716,135 @@
         <!--请在下方写此页面业务相关的脚本-->
         <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
         <script type="text/javascript">
-            function layerAler(str) {
-                layer.alert(str, {
-                    icon: 6,
-                    offset: 'center'
-                });
-            }
-            $(function () {
-                var pid = '${rs[0].pid}';
-                var pids = [];
-                if (pid != null && pid != "") {
-                    pids = pid.split(",");   //项目编号
-                }
-
-                // $("#pojects").val(pids[0]);
-                var pname = [];   //项目名称
-                for (var i = 0; i < pids.length; i++) {
-                    var obj = {};
-                    obj.code = pids[i];
-                    $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
-                            pname.push(data.rs[0].name);
-                        },
-                        error: function () {
-                            alert("出现异常！");
+                    function layerAler(str) {
+                        layer.alert(str, {
+                            icon: 6,
+                            offset: 'center'
+                        });
+                    }
+                    $(function () {
+                        var pid = '${rs[0].pid}';
+                        var pids = [];
+                        if (pid != null && pid != "") {
+                            pids = pid.split(",");   //项目编号
                         }
+
+                        // $("#pojects").val(pids[0]);
+                        var pname = [];   //项目名称
+                        for (var i = 0; i < pids.length; i++) {
+                            var obj = {};
+                            obj.code = pids[i];
+                            $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
+                                success: function (data) {
+                                    pname.push(data.rs[0].name);
+                                },
+                                error: function () {
+                                    alert("出现异常！");
+                                }
+                            });
+                        }
+
+                        for (var i = 0; i < pids.length; i++) {
+                            var options;
+                            options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
+                            $("#pojects").html(options);
+                        }
+
+                        $("#dialog-add").dialog({
+                            autoOpen: false,
+                            modal: true,
+                            width: 300,
+                            height: 350,
+                            position: ["top", "top"],
+                            buttons: {
+                                修改: function () {
+                                    updateinfo();
+                                }, 关闭: function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        });
+                        
+                        getfNumber();
+
+
+
                     });
-                }
+                    //修改个人信息
+                    function updateinfo() {
+                        var obj = {};
+                        obj.id = $("#id").val();
+                        obj.email = $("#email1").val();
+                        obj.phone = $("#phone1").val();
+                        obj.department = $("#department1").val();
+                        $.ajax({async: false, url: "login.usermanage.editUinfo.action", type: "get", datatype: "JSON", data: obj,
+                            success: function (data) {
+                                var arrlist = data.rs;
+                                if (arrlist.length > 0) {
+                                    layerAler("修改成功！");
+                                    $('#dialog-add').dialog('close');
+                                }
+                            }
+                        });
 
-                for (var i = 0; i < pids.length; i++) {
-                    var options;
-                    options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
-                    $("#pojects").html(options);
-                }
+                    }
 
-                $("#dialog-add").dialog({
-                    autoOpen: false,
-                    modal: true,
-                    width: 300,
-                    height: 350,
-                    position: ["top", "top"],
-                    buttons: {
-                        修改: function () {
-                            updateinfo();
-                        }, 关闭: function () {
-                            $(this).dialog("close");
+                    function showDialog() {
+                        $("#id").val($("#userid").val());
+                        $("#uname1").val($("#u_name").val());
+                        $("#email1").val($("#email").val());
+                        $("#phone1").val($("#phone").val());
+                        $("#department1").val($("#department").val());
+                        $('#dialog-add').dialog('open');
+                        return false;
+                    }
+
+                    $("#pojects").change(function () {
+                        projectId = $(this).val();
+                        $("#MenuBox li:eq(0) a").click();
+                        $('#panemask').showLoading({
+                            'afterShow': function () {
+                                setTimeout("$('#panemask').hideLoading()", 1000);
+                            }
+
+                        });
+
+
+
+                    });
+
+
+
+                    function  getusername() {
+                        var name = $("#u_name").val();
+                        return name;
+                    }
+
+                    function  getupid() {
+                        var upid = $("#upid").val();
+                        return upid;
+                    }
+
+                    //后台管理
+                    function  manage() {
+                        $("#iframe").attr('src', "gatewaymanage.jsp");
+                    }
+
+                    function size() {
+                        var Wwidth = $(window).width();
+                        if (Wwidth > 768) {
+                            withs = $(window).width() * 0.5;
+                        } else if (Wwidth > 1024) {
+                            withs = $(window).width() * 0.3;
+                        } else {
+                            withs = 350;
                         }
+
                     }
-                });
+                    window.onresize = function () {
+                        size();
+                    };
 
-
-
-            });
-            //修改个人信息
-            function updateinfo() {
-                var obj = {};
-                obj.id = $("#id").val();
-                obj.email = $("#email1").val();
-                obj.phone = $("#phone1").val();
-                obj.department = $("#department1").val();
-                $.ajax({async: false, url: "login.usermanage.editUinfo.action", type: "get", datatype: "JSON", data: obj,
-                    success: function (data) {
-                        var arrlist = data.rs;
-                        if (arrlist.length > 0) {
-                            layerAler("修改成功！");
-                            $('#dialog-add').dialog('close');
-                        }
-                    }
-                });
-
-            }
-
-            function showDialog() {
-                $("#id").val($("#userid").val());
-                $("#uname1").val($("#u_name").val());
-                $("#email1").val($("#email").val());
-                $("#phone1").val($("#phone").val());
-                $("#department1").val($("#department").val());
-                $('#dialog-add').dialog('open');
-                return false;
-            }
-
-            $("#pojects").change(function () {
-                projectId = $(this).val();
-                $("#MenuBox li:eq(0) a").click();
-                $('#panemask').showLoading({
-                    'afterShow': function () {
-                        setTimeout("$('#panemask').hideLoading()", 1000);
-                    }
-
-                });
-
-
-
-            });
-
-
-
-            function  getusername() {
-                var name = $("#u_name").val();
-                return name;
-            }
-
-            function  getupid() {
-                var upid = $("#upid").val();
-                return upid;
-            }
-
-            //后台管理
-            function  manage() {
-                $("#iframe").attr('src', "gatewaymanage.jsp");
-            }
-          
         </script> 
 
     </body>
