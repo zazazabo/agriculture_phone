@@ -91,10 +91,10 @@
                 dealsend2("03", data, "readSensorCB", comaddr, 0, 0, infonum, "${param.action}");
             }
 
-
-            function toursensor(comaddr, infonum) {
-                console.log(comaddr);
-                console.log(infonum);
+            function tourSensor() {
+                var l_comaddr = $("#l_comaddr").combobox('getValue');
+                var vv = [];
+                dealsend2("sensor", "00", "sensorCB", l_comaddr, 0, 0, 0);
             }
             $(function () {
                 $('#gravidaTable').bootstrapTable({
@@ -187,7 +187,7 @@
                     sidePagination: 'server',
                     pageNumber: 1,
                     pageSize: 50,
-                    showRefresh: false,
+                    showRefresh: true,
                     showToggle: true,
                     // 设置默认分页为 50
                     pageList: [50, 100, 150, 200, 250],
@@ -196,18 +196,21 @@
                     },
                     //服务器url
                     queryParams: function (params)  {   //配置参数 
-                        var selects = $('#gravidaTable').bootstrapTable('getSelections');
-                        var comaddr = "";
-                        if (selects.length > 0) {
-                            comaddr = selects[0];
-                        }
+
+                        var l_comaddr = $("#l_comaddr").combobox('getValue');
+                        console.log("abcdefg", l_comaddr);
+//                        var selects = $('#gravidaTable').bootstrapTable('getSelections');
+//                        var comaddr = "";
+//                        if (selects.length > 0) {
+//                            comaddr = selects[0];
+//                        }
                         var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
                             search: params.search,
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
                             pid: 'P00001',
-                            comaddr: comaddr
+                            l_comaddr: l_comaddr
 
                         };      
                         return temp;  
@@ -233,6 +236,13 @@
 
                     },
                     onSelect: function (record) {
+
+                        var l_comaddr = record.id;
+                        var vv = [];
+                        dealsend2("sensor", "00", "sensorCB", l_comaddr, 0, 0, 0);
+
+
+
                         var obj = {};
                         obj.l_comaddr = record.id;
                         obj.pid = "${param.pid}";
@@ -331,6 +341,11 @@
                 <span style=" margin-left:3%;">网关名称：</span>
                 <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
                        data-options="editable:true,valueField:'id', textField:'text' " />
+
+                <button type="button" id="btnswitch" onclick="tourSensor()" class="btn btn-success btn-sm">
+                    巡测数据
+                </button>
+
             </div>   
             <div  style=" width: 100%;">
 

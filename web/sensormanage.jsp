@@ -16,7 +16,7 @@
         <!--        <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
         <style>
-/*            手机*/
+            /*            手机*/
             @media screen and (min-width:0px) and (max-width:767px) {  
                 #dialog-add{
                     font-size: 4px;
@@ -71,10 +71,10 @@
                 #type{
                     width: 100px;
                 }
-                 #dialog-edit input{
+                #dialog-edit input{
                     width: 100px;
                 }
-                 #type1{
+                #type1{
                     width: 100px;
                 }
 
@@ -266,8 +266,6 @@
 
             function  editlamp() {
                 var o = $("#form2").serializeObject();
-//                var worktype = $("#worktype1").val();
-//                o.worktype = worktype;
                 addlogon(u_name, "修改", o_pid, "传感器管理", "修改传感器");
                 $.ajax({async: false, url: "sensor.sensorform.modifySensor.action", type: "get", datatype: "JSON", data: o,
                     success: function (data) {
@@ -302,6 +300,8 @@
                 $("#worktype1").combobox('setValue', s.worktype);
                 $("#dreg1").val(s.dreg);
                 $("#sitenum1").val(s.sitenum);
+                $("#minValue1").val(s.minValue);
+                $("#maxValue1").val(s.maxValue);
                 if (s.type != "" && s.type != null) {
                     $("#type1").combobox('setValue', s.type);
                 } else {
@@ -1240,7 +1240,7 @@
 
                             <td></td>
                             <td>
-                                <span style="margin-left:0px;" >传感器名</span>&nbsp;
+                                <span style="margin-left:20px;" >传感器名</span>
                                 <input id="name" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
 
                             </td>
@@ -1259,7 +1259,7 @@
                                                                     <option value="0" >模拟量</option>
                                                                     <option value="1" >开关量</option>  
                                                                 </select>-->
-                                <span style="margin-left:0px;" >&#8195;&#8195;类型</span>&nbsp;
+                                <span style="margin-left:20px;" >&#8195;&#8195;类型</span>&nbsp;
                                 <select class="easyui-combobox" id="type" name="type" style=" height: 30px">
                                     <option value="1" >温度</option>
                                     <option value="2" >湿度</option>  
@@ -1277,11 +1277,25 @@
                             </td>
                             <td></td>
                             <td>
-                                <span style="margin-left:0px;" >&#8195;&#8195;备注</span>&nbsp;
+                                <span style="margin-left:20px;" >&#8195;&#8195;备注</span>&nbsp;
                                 <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
                                 <input id="model" value="" class="form-control" name="model" style="display: inline;" placeholder="备注" type="text">
                             </td>
                         </tr>  
+
+                        <tr>
+                            <td>
+                                <span style="margin-left:-15px;" >最小预警值</span>&nbsp;
+                                <input id="minValue" class="form-control" name="minValue" style="display: inline;" placeholder="最小预警值" type="text">
+                            </td>
+                            <td></td>
+                            <td>
+                                <span style="margin-left:-20px;" >&#8195;&#8195;最大预警值</span>&nbsp;
+                                <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
+                                <input id="maxValue" value="" class="form-control" name="maxValue" style="display: inline;" placeholder="最大预警值" type="text">
+                            </td>
+                        </tr> 
+
                     </tbody>
                 </table>
             </form>                        
@@ -1301,7 +1315,7 @@
                             </td>
                             <td></td>
                             <td>
-                                <span style="margin-left:0px;" >传感器名</span>&nbsp;
+                                <span style="margin-left:20px;" >传感器名</span>&nbsp;
                                 <input id="name1" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
 
                             </td>
@@ -1321,7 +1335,7 @@
                                                             </select>
                                                         </td>-->
                             <td>
-                                <span style="margin-left:0px;" >&#8195;&#8195;类型</span>&nbsp;
+                                <span style="margin-left:20px;" >&#8195;&#8195;类型</span>&nbsp;
                                 <select class="easyui-combobox" id="type1" name="type" style="height: 30px">
                                     <option value="1" >温度</option>
                                     <option value="2" >湿度</option>  
@@ -1331,6 +1345,19 @@
                             </td>  
 
                         </tr>                  
+
+                        <tr>
+                            <td>
+                                <span style="margin-left:-15px;" >最小预警值</span>&nbsp;
+                                <input id="minValue1" class="form-control" name="minValue" style="display: inline;" placeholder="最小预警值" type="text">
+                            </td>
+                            <td></td>
+                            <td>
+                                <span style="margin-left:-20px;" >&#8195;&#8195;最大预警值</span>&nbsp;
+                                <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
+                                <input id="maxValue1" value="" class="form-control" name="maxValue" style="display: inline;" placeholder="最大预警值" type="text">
+                            </td>
+                        </tr> 
                         <tr>
 
                             <td>
