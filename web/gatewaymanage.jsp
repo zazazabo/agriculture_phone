@@ -35,7 +35,7 @@
         <script src="bootstrap-datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
         <script>
             var u_name = parent.getusername();
-            var o_pid = parent.getPojectId();
+            var o_pid = parent.getpojectId();
             var lang = '${param.lang}';//'zh_CN';
             function excel() {
                 $('#dialog-excel').dialog('open');

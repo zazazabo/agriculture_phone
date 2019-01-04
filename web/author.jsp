@@ -31,27 +31,74 @@
             @media screen and (min-width:0px) and (max-width:666px) {  
 
                 #role{
-                    width: 100px;
+                    width: 95px;
+                }
+
+                #rolename{
+                    width: 95px;
+                }
+
+                #roledel{
+                    margin-left: 30px;
+                }
+
+                #rowtext{
+                    margin-left: 30px;
+                }
+
+                #nametext{
+                    margin-left: 30px;
+                }
+
+                #roleadd{
+                    margin-left: 30px;
                 }
                 
-                #rolename{
-                    width: 100px;
+                #uprole{
+                    margin-left: 25%;
+                }
+
+                #czdiv{
+                    width: 60%;
                 }
 
 
             }
             /*            手机横屏*/
-            @media screen and (min-width:667px) and (max-width:767px) {  
-                #l_comaddr2{
-                    width: 120px;
-                }
-                #sensorlist{
-                    width: 90px;
-                }
-                #selectdiv{
-                    position:relative; left: 10px;
+            @media screen and (min-width:667px){  
+
+                #role{
+                    width: 150px;
+                    border: 1px solid red;
                 }
 
+                #rolename{
+                    width: 150px;
+                }
+
+                #roledel{
+                   
+                }
+
+                #rowtext{
+                   float: left;
+                }
+
+                #nametext{
+                    float: left;
+                }
+
+                #roleadd{
+                    margin-left: 30px;
+                }
+                
+                 #uprole{
+                    margin-left: 25%;
+                }
+
+                #czdiv{
+                    width: 60%;
+                }
             }
 
 
@@ -69,14 +116,15 @@
             }
 
             @media screen and (min-width:1024px){  
-                #l_comaddr2{
-                    width: 150px;
+                 #uprole{
+                    margin-left: 15%;
                 }
-                #sensorlist{
-                    width: 150px;
+                #roleadd{
+                    margin-left: 70px;
                 }
-                #selectdiv{
-                    position:relative; left: 10px;
+                
+                #roledel{
+                     margin-left: 70px;
                 }
             } 
         </style>
@@ -607,26 +655,30 @@
                                 </div>
                             </div>
                         </div>-->
-            <div style=" border: 1px solid red">
-                <div class="" style="width:20%;float: left; border: 1px solid blue;">
+            <div>
+                <div class="" style="width:20%;float: left;">
                     <ul id="treeDemo" class="ztree"></ul>
                 </div>
-                <div class="" style=" width: 70%; margin-left: 10%; float: right; margin-top: 2%; border: 1px solid red;" >
+                <div class="" style=" margin-left: 10%; float: right; margin-top: 2%;" id="czdiv" >
                     <div id="btnauthor" style=" display: none;" >
 
-                        <button class="btn btn-success" onclick="addauthor()" style=" margin-left: 30%;"><span>修改权限</span></button>
+                        <button class="btn btn-success" onclick="addauthor()" style="" id="uprole"><span>修改权限</span></button>
 
                     </div>
-                    <div style=" margin-top: 3%;">
-                        <span style="" name="xxx" id="245">角色列表</span>
-                        <input id="role" class="easyui-combobox" name="role" style="height: 34px;" data-options="editable:true,valueField:'id', textField:'text',url:'login.usermanage.rolemenu.action?parent_id=${param.role}'" />
-<!--                        <input id="role" data-options='editable:false,valueField:"id", textField:"text"' style=" height: 34px;" class="easyui-combobox"/>-->
-                        <button class="btn btn-success" style="" onclick="delrole()" ><span>删除角色</span></button>
+                    <div style=" margin-top: 3%;" id="rolwlistdiv">
+                        <div id="rowtext"><span name="xxx" id="245">角色列表</span></div>
+                        <div id="roledel">
+                            <input id="role" class="easyui-combobox" name="role" style="height: 34px;" data-options="editable:true,valueField:'id', textField:'text',url:'login.usermanage.rolemenu.action?parent_id=${param.role}'" />
+                            <button class="btn btn-success" style="" onclick="delrole()" ><span>删除角色</span></button>
+                        </div>
                     </div>
                     <div style=" margin-top: 3%;">
-                        <span style="" name="xxx" id="246">角色名称</span>&nbsp;
-                        <input id="rolename" class="form-control" name="rolename" style="display: inline;" placeholder="请输入角色名称" type="text">
-                        <button id="btnrole" onclick="addrole()" class="btn btn-success" style=""><span name="xxx" id="247">生成角色</span></button>
+                        <div id="nametext"><span style="" name="xxx" id="246">角色名称</span></div>
+                        <div id="roleadd">
+                            <input id="rolename" class="form-control" name="rolename" style="display: inline;" placeholder="请输入角色名称" type="text">
+                            <button id="btnrole" onclick="addrole()" class="btn btn-success" style=""><span name="xxx" id="247">生成角色</span></button>
+                        </div>
+
                     </div>
 
                 </div>

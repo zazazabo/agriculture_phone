@@ -271,9 +271,9 @@
                                     </ul>
                                 </li>                             
                                 <li id="Hui-msg"> <a href="#" title="消息"><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
-                                <li  style=" margin-right: 10px;">
+                                <li  style=" margin-right: 10px;" id="admin">
                                     <!--                                    <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>-->
-                                    <span  id="admin" style="color: rgb(255, 255, 255);"><img src="./img/user.jpg" style=" height: 40px; width: 40px;vertical-align: middle; border-radius: 16px;"></span>
+                                    <span  style="color: rgb(255, 255, 255);"><img src="./img/user.jpg" style=" height: 40px; width: 40px;vertical-align: middle; border-radius: 16px;"></span>
                                     <input id="m_code" type="hidden" value="${rs[0].m_code}"/>
                                 <input id="pwd" type="hidden" value="${rs[0].password}"/>
                                 <input id="userid" type="hidden" value="${rs[0].id}"/>
