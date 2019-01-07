@@ -541,9 +541,10 @@
         </c:if>
         <c:set var="urlparam" value="lang=${lang}&name=${param.name}&userId=${param.id}&role=${param.role}"></c:set>     
             <header class="navbar-wrapper">
-                <div class="navbar navbar-fixed-top" style=" background-color: green;">
+                <div class="navbar navbar-fixed-top" style=" background-color:rgb(92, 183, 92);">
                     <div class="container-fluid cl">
-                        <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#">智慧农业生产管理控制系统</a> 
+                        <a href='#' class="logo navbar-logo f-l mr-10 hidden-xs"><img src="img/jdkj.png" style=" width: 110px;"></a>
+                        <a class="logo navbar-logo f-l mr-10 hidden-xs" href="#" style=' font-size: 18px;'>智慧农业生产管理控制系统</a> 
                         <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="#"></a> 
                         <nav id="Hui-userbar" style=" display: block; color: white;">
                             <ul class=" inline" style=" margin-top: 10px; float: left" id="infoUL">
@@ -584,7 +585,7 @@
                 </div>
             </div>
         </header>
-        <aside class="Hui-aside" style=" background-color: #0044cc;">
+        <aside class="Hui-aside" style=" background-color: rgb(14, 98, 199);">
             <div class="menu_dropdown bk_2">
                 <c:forEach items="${menu}" var="t" varStatus="i">
                     <c:if test="${t.m_parent==0}">

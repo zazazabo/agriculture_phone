@@ -94,6 +94,12 @@
                     margin-top: 0px;
                     margin-left: 20px;
                 }
+                #selectdiv2{
+                    float: left;
+                }
+                #Day{
+                    /*                   margin-right: 110px;*/
+                }
             } 
 
         </style>
@@ -103,19 +109,19 @@
     </head>
     <body id="activity_pane">
 
-        <div style=" margin-top: 10px;"> 
+        <div style=" margin-top: 10px;" id="selectdiv2"> 
             <span style=" margin-left: 10px;">查询条件</span>
-            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" 
+            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox" 
                    data-options="editable:true,valueField:'id', textField:'text' " />
             <select class="easyui-combobox" id="sensorlist" style=" margin-left: 3px;  height: 30px">
                 <option value="0">15分钟</option>
                 <option value="1">30分钟</option>   
                 <option value="2">1小时</option> 
             </select>
-
+            &nbsp;
         </div>
 
-        <div style="margin-top:15px;margin-left: 10px;" id="Day">
+        <div id="Day" style=' margin-top:10px;' >
             <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
                 <label for="dtp_input2" class="control-label" style="float: left;"></label>
                 <input id="dtp_input2" value="" type="hidden">
@@ -144,12 +150,12 @@
             </div>
         </div>
         <!--        <h5 style=" margin-left: 20px; color: #FFB800; width: 100%;clear:both; margin-top: 80px; ">温度单位：℃ &nbsp; &nbsp;湿度单位：%RH</h5>-->
-        <div class="topCenter1" id="echarts1" style="width: 90%; height: 40%;">
+        <div class="topCenter1" id="echarts1" style="width: 95%; height: 80%;">
 
         </div>
-        <div style=" width:70%; height:40%; margin-left: 15%; margin-top:80px; overflow-y: scroll;">
+<!--        <div style=" width:70%; height:40%; margin-left: 15%; margin-top:80px; overflow-y: scroll;">
             <table id="kgtype"></table>
-        </div>
+        </div>-->
     </body>
     <script>
         var pid = parent.parent.getpojectId();
@@ -281,7 +287,8 @@
             $.ajax({async: false, url: "homePage.homePage.getSensorList.action", type: "get", datatype: "JSON", data: obj,
                 success: function (data) {
                     var sdrs = data.sdrs;
-                    createChart(sdrs);
+                    var xdata = data.xdata;
+                    createChart(sdrs, xdata);
                 },
                 error: function () {
                     alert("提交失败！");
@@ -292,67 +299,67 @@
 
             //  wd("echarts2", qxbs, xdata, data, "℃");
 
-            $('#kgtype').bootstrapTable({
-                url: 'homePage.homePage.getkgList.action',
-                columns: [
-                    [
-                        {
-                            field: 'detail',
-                            title: "开关型传感器", //详细数据
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            colspan: 2
-                        }
-                    ],
-                    [
-                        {
-                            field: 'name',
-                            title: "名称",
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle'
-                        }, {
-                            field: 'numvalue',
-                            title: "状态",
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index, field) {
-                                if (value == 1) {
-                                    return "闭合";
-                                } else {
-                                    return "断开";
-                                }
-                            }
-                        }]],
-                clickToSelect: true,
-                singleSelect: false,
-                sortName: 'id',
-                locale: 'zh-CN', //中文支持,
-                showColumns: false,
-                sortOrder: 'desc',
-                pagination: true,
-                sidePagination: 'server',
-                pageNumber: 1,
-                pageSize: 96,
-                // 设置默认分页为 50
-                pageList: [96],
-                onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
-                    //                        console.info("加载成功");
-                },
-                //服务器url
-                queryParams: function (params)  {   //配置参数     
-                    var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
-                        search: params.search,
-                        skip: params.offset,
-                        limit: params.limit,
-                        type_id: "1",
-                        pid: pid  
-                    };      
-                    return temp;  
-                }
-            });
+//            $('#kgtype').bootstrapTable({
+//                url: 'homePage.homePage.getkgList.action',
+//                columns: [
+//                    [
+//                        {
+//                            field: 'detail',
+//                            title: "开关型传感器", //详细数据
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle',
+//                            colspan: 2
+//                        }
+//                    ],
+//                    [
+//                        {
+//                            field: 'name',
+//                            title: "名称",
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle'
+//                        }, {
+//                            field: 'numvalue',
+//                            title: "状态",
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle',
+//                            formatter: function (value, row, index, field) {
+//                                if (value == 1) {
+//                                    return "闭合";
+//                                } else {
+//                                    return "断开";
+//                                }
+//                            }
+//                        }]],
+//                clickToSelect: true,
+//                singleSelect: false,
+//                sortName: 'id',
+//                locale: 'zh-CN', //中文支持,
+//                showColumns: false,
+//                sortOrder: 'desc',
+//                pagination: true,
+//                sidePagination: 'server',
+//                pageNumber: 1,
+//                pageSize: 96,
+//                // 设置默认分页为 50
+//                pageList: [96],
+//                onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
+//                    //                        console.info("加载成功");
+//                },
+//                //服务器url
+//                queryParams: function (params)  {   //配置参数     
+//                    var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
+//                        search: params.search,
+//                        skip: params.offset,
+//                        limit: params.limit,
+//                        type_id: "1",
+//                        pid: pid  
+//                    };      
+//                    return temp;  
+//                }
+//            });
             $(".day").datetimepicker({
                 format: 'yyyy/mm/dd',
                 language: 'zh-CN',
@@ -363,7 +370,8 @@
         });
         //创建曲线图
 
-        function createChart(sdrs) {
+        function createChart(sdrs, xdata) {
+            console.log("s:"+sdrs.length+"x:"+xdata.length);
             var sdqxbs = [];  //湿度曲线标识
             var qxbstype = [];  //曲线标识类型
             var sdxdata = [];      //x轴描述 ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
@@ -395,9 +403,14 @@
                     }
                 }
 
-                for (var i = 0; i < sdrs.length; i = i + sdqxbs.length) {
-
-                   sdxdata.push(sdrs[i].times.substring(0, 5));
+//                for (var i = 0; i < sdrs.length; i = i + sdqxbs.length) {
+//
+//                   sdxdata.push(sdrs[i].times.substring(0, 5));
+//
+//                }
+                for (var i = 0; i < xdata.length; i++) {
+                    // sdxdata.push(xdata[i].collectime);
+                    sdxdata.push(xdata[i].times.substring(0, 5));
 
                 }
             }
@@ -425,15 +438,48 @@
                     }
                     obj.name = sdqxbs[i];
                     if (qxbstype[i] == 1) {
-                        obj.data = wdvals;
+                        var wdvals2 = [];
+                        console.log("w:"+wdvals.length+"x:"+sdxdata.length);
+                        if (wdvals.length < sdxdata.length) {
+                            for (var m = 0; m < wdvals.length; m++) {
+                                for (var k = 0; k < sdxdata.length; k++) {
+                                    if (k >= (sdxdata.length - wdvals.length)) {
+                                        wdvals2.push(wdvals[m]);
+                                    } else {
+                                        wdvals2.push(0);
+                                    }
+
+                                }
+
+                            }
+
+                        } else {
+                            wdvals2 = wdvals;
+                        }
+                        obj.data = wdvals2;
                     } else {
-                        obj.data = sdvals;
+                        var sdvals2 = [];
+                        if (sdvals.length < sdxdata.length) {
+                            for (var l = 0; l < sdvals.length; l++) {
+                                for (var k = 0; k < sdxdata.length; k++) {
+                                    if (k >= (sdxdata.length - sdvals.length)) {
+                                        sdvals2.push(sdvals[l]);
+                                    } else {
+                                        sdvals2.push(0);
+                                    }
+
+                                }
+
+                            }
+                        }else{
+                            sdvals2 = sdvals;
+                        }
+                        obj.data = sdvals2;
                     }
 
                     sddata.push(obj);
                 }
-            }
-            if (sdxdata.length == 0) {
+            } else {
                 sdxdata = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00'];
                 sdqxbs = ['虚拟数据'];
                 sddata = [{name: "虚拟数据", data: [1, 3, 2, 5, 4, 7, 6]}];
@@ -466,7 +512,8 @@
                 $.ajax({async: false, url: "homePage.homePage.getSensorListBytj.action", type: "post", datatype: "JSON", data: obj2,
                     success: function (data) {
                         var sdrs = data.sdrs;
-                        createChart(sdrs);
+                        var xdata = data.xdata;
+                        createChart(sdrs, xdata);
                     },
                     error: function () {
                         alert("提交失败！");
@@ -476,7 +523,8 @@
                 $.ajax({async: false, url: "homePage.homePage.getSensorListBy30.action", type: "post", datatype: "JSON", data: obj2,
                     success: function (data) {
                         var sdrs = data.sdrs;
-                        createChart(sdrs);
+                        var xdata = data.xdata;
+                        createChart(sdrs, xdata);
                     },
                     error: function () {
                         alert("提交失败！");
@@ -486,7 +534,8 @@
                 $.ajax({async: false, url: "homePage.homePage.getSensorListBy00.action", type: "post", datatype: "JSON", data: obj2,
                     success: function (data) {
                         var sdrs = data.sdrs;
-                        createChart(sdrs);
+                        var xdata = data.xdata;
+                        createChart(sdrs, xdata);
                     },
                     error: function () {
                         alert("提交失败！");
