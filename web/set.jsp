@@ -58,9 +58,49 @@
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
             var lang = '${param.lang}';//'zh_CN';
+
             function isValidIP(ip) {
-                var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
-                return reg.test(ip);
+                var iparr = ip.split(".");
+                if (typeof iparr == "object") {
+                    if (iparr.length == 4) {
+                        var ret = true;
+                        for (var i = 0; i < 4; i++) {
+                            if (isNumber(iparr[i] == false)) {
+                                ret = false;
+                            }
+                        }
+                        return ret;
+                    }
+                }
+                return false;
+//                var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/  
+//                return reg.test(ip);
+            }
+            function removeGayway() {
+                var data = $("#l_comaddr").combobox('getData');
+                var obj = $("#form1").serializeObject();
+                for (var i = 0; i < data.length; i++) {
+                    var o1 = data[i];
+                    if (o1.id == obj.l_comaddr) {
+                        console.log("find gayway");
+                        console.log(data[i]);
+                        if (data[i].online != "1") {
+                            $.ajax({async: false, url: "gayway.GaywayForm.EmptyGayWay.action", type: "get", datatype: "JSON", data: obj,
+                                success: function (data) {
+                                        console.log(data);
+                                },
+                                error: function () {
+                                    alert("提交失败！");
+                                }
+                            });
+
+
+                        } else {
+                            layerAler('在线的网关不能清除');
+                        }
+                        console.log(data[i]);
+                    }
+                }
             }
             function readControlCB(obj) {
                 if (obj.status == "success") {
@@ -648,19 +688,153 @@
 
                 }
             }
-            function readSite() {
+            function setRemoteAddrCB(obj) {
+                console.log(obj);
+                if (obj.status == "success") {
+
+                    var str = "";
+                    var data = Str2BytesH(obj.data);
+                    for (var i = 0; i < data.length; i++) {
+                        str += String.fromCharCode(data[i]);
+                    }
+                    console.log(str);
+                    //var s1 = str.split("\r\n");
+                    var substr = str.match(/\S*\r\n\r\n(\S*)\r\n/);
+                    console.log(substr);
+                    ;
+                    if (typeof substr == "object") {
+                        if (substr[1] == "OK") {
+                            layerAler("设置成功");
+                        }
+                    }
+
+
+
+                }
+
+            }
+
+            function setRemoteAddr() {
                 var obj = $("#form1").serializeObject();
+                var obj2 = $("#form2").serializeObject();
                 if (obj.l_comaddr == "") {
-                    layerAler(langs1[172][lang]); //网关不能为空
+                    layerAler('网关不能为空'); //
+                    return;
+                }
+                console.log(obj, obj2);
+                if (isNumber(obj2.port) == false) {
+                    layerAler('端口只能是数字'); //
                     return;
                 }
 
 
-                var comaddr = obj.l_comaddr;
                 var vv = [];
-                var num = randnum(0, 9) + 0x70;
-                var data = buicode(comaddr, 0x04, 0xAA, num, 0, 1, vv); //01 03 F24    
-                dealsend2("AA", data, 1, "readSiteCB", comaddr, 0, 0, 0, "${param.action}");
+                if (obj2.sitetype == "1") {
+                    if (isValidIP(obj2.ip) == false) {
+                        layerAler('不是合法ip');  //不是合法ip
+                        return;
+                    }
+                    // alert("验证成功");
+
+                    var data = "@DTU:0000:DSCADDR:0,TCP, " + $("#ip").val() + "," + $("#port").val() + "\r\n";
+                    var strtosend = ""
+                    for (var i = 0; i < data.length; i++) {
+                        var param1 = sprintf("%02x", data.charCodeAt(i));
+                        strtosend = strtosend + param1 + " ";
+                        // hexCharCode.push((data.charCodeAt(i)).toString(16));
+                    }
+
+
+
+//                    var data1 = "@DTU:0000:DSCADDR:1,TCP,47.99.78.186,24228\r\n";
+//                    var strtosend1 = ""
+//                    for (var i = 0; i < data1.length; i++) {
+//                        var param1 = sprintf("%02x", data1.charCodeAt(i));
+//                        strtosend1 = strtosend1 + param1 + " ";
+//                        // hexCharCode.push((data.charCodeAt(i)).toString(16));
+//                    }
+//
+//                    dealsend2("@", strtosend1, "", obj.l_comaddr, 0, 0, 0, "${param.action}");
+
+
+                    //console.log(strtosend);
+                    dealsend2("@", strtosend, "setRemoteAddrCB", obj.l_comaddr, 0, 0, 0, "${param.action}");
+
+                } else if (obj2.sitetype == "0") {
+                    if (isValidIP(obj.ip) == true) {
+                        layerAler('请填写正确的域名');  // 请填写正确的域名
+                        return;
+                    }
+                    if (obj.ip != "") {
+
+                        //dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0, "${param.action}");
+
+                    }
+
+                }
+
+            }
+            function readRemoteAddrCB(obj) {
+                if (obj.status == "success") {
+                    var str = "";
+                    var data = Str2BytesH(obj.data);
+                    for (var i = 0; i < data.length; i++) {
+                        str += String.fromCharCode(data[i]);
+                    }
+                    console.log(str);
+                    //var s1 = str.split("\r\n");
+                    var substr = str.match(/\S*0,"TCP",(\S*) /);
+//                    console.log(typeof substr);
+//                    var substr1 = str.match(/\S*1,"TCP",(\S*)\r/);
+                    if (typeof substr == "object") {
+                        var ip = substr[1];
+                        console.log(ip);
+                        ip = ip.replace(/"/g, "");
+                        var iparr = ip.split(",");
+
+                        $("#ip").val(iparr[0]);
+                        $("#port").val(iparr[1]);
+                        layerAler("读取成功");
+//                        console.log(substr[1]);
+                    }
+//                    console.log(substr, substr1);
+                }
+
+//                console.log(obj);
+            }
+
+            function readRemoteAddr() {
+//                                var str="000201809043930675\J@DTU:0000:DSCADDR?\r\n+DSCADDR: 0,\"TCP\",\"47.99.78.186\",24228\r\n +DSCADDR: 1,\"TCP\",\"www.cdebyte.com\",8000";
+//                                console.log(str);
+                //  var str=""
+                //  var str2 = 'erwab999999d789eeff';
+
+                var obj = $("#form1").serializeObject();
+                if (obj.l_comaddr == "") {
+                    layerAler('网关不能为空'); //
+                    return;
+                }
+
+
+                console.log(obj);
+
+
+                var vv = [];
+                var data = "40 44 54 55 3A 30 30 30 30 3A 44 53 43 41 44 44 52 3F 0D 0A";
+//                vv.push(1);
+//                vv.push(3);
+//                
+//                var str="";
+//                var infonum = 3928 | 0x1000;
+//                vv.push(infonum >> 8 & 0xff);
+//                vv.push(infonum & 0xff);
+//                vv.push(0);
+//                vv.push(1); //寄存器数目 2字节   
+//                vv.push(2);
+//                vv.push(0);
+//                vv.push(1);
+//                var data = buicode2(vv);
+                dealsend2("@", data, "readRemoteAddrCB", obj.l_comaddr, 0, 0, 0, "${param.action}");
             }
             function readTimeCB(obj) {
                 if (obj.status == "success") {
@@ -703,134 +877,7 @@
                 var data = buicode(comaddr, 0x04, 0xAA, num, 0, 4, vv); //01 03 F24    
                 dealsend2("AA", data, 4, "readTimeCB", comaddr, 0, 0, 0, "${param.action}");
             }
-            function setSiteCB(obj) {
-                console.log(obj);
-                if (obj.status == "success") {
-                    layer.confirm(langs1[173][lang], {//确定修改网关指向的域名？
-                        btn: [langs1[146][lang], langs1[147][lang]], //确定、取消按钮
-                        icon: 3,
-                        offset: 'center',
-                        title: langs1[174][lang]  //提示
-                    }, function (index) {
-                        var v1 = [];
-                        var num = randnum(0, 9) + 0x70;
-                        var data1 = buicode(obj.comaddr, 0x04, 0x00, num, 0, 1, v1); //01 03 F24    
-                        dealsend2("00", data1, 1, "", obj.comaddr, 0, 0, 0, "${param.action}");
-                        layer.close(index);
-                    });
-                }
 
-            }
-
-            function setSite() {
-                var obj = $("#form2").serializeObject();
-                var obj1 = $("#form1").serializeObject();
-                console.log(obj);
-                if (isNumber(obj.port) == false) {
-                    layerAler(langs1[175][lang]); //端口只能是数字
-                    return;
-                }
-
-                if (obj.apn.length > 16) {
-                    layerAler(langs1[176][lang]); //apn长度不能超过16
-                    return;
-                }
-                var hexport = parseInt(obj.port);
-                var u1 = hexport >> 8 & 0x00ff;
-                var u2 = hexport & 0x000ff;
-                addlogon(u_name, "设置", o_pid, "网关参数设置", "设置主站信息");
-                var vv = [];
-                if (obj.sitetype == "1") {
-                    if (isValidIP(obj.ip) == false) {
-                        layerAler(langs1[177][lang]);  //不是合法ip
-                        return;
-                    }
-                    for (var i = 0; i < 12; i++) {
-                        vv.push(0);
-                    }
-                    var iparr = obj.ip.split(".");
-                    for (var i = 0; i < iparr.length; i++) {
-                        vv.push(parseInt(iparr[i]));
-                    }
-                    vv.push(u2);
-                    vv.push(u1);
-
-                    for (var i = 0; i < 6; i++) {
-                        vv.push(0);
-                    }
-
-
-                    for (var i = 0; i < 16; i++) {
-                        var apn = obj.apn;
-                        var len = apn.length;
-                        if (len <= i) {
-                            vv.push(0);
-                        } else {
-                            var c = apn.charCodeAt(i);
-                            vv.push(c);
-                        }
-
-                    }
-
-                    vv.push(0);
-                    var comaddr = obj1.l_comaddr;
-                    var num = randnum(0, 9) + 0x70;
-                    var data = buicode(comaddr, 0x04, 0xA4, num, 0, 1, vv); //01 03 F24    
-
-                    dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0, "${param.action}");
-
-                } else if (obj.sitetype == "0") {
-
-
-
-                    if (isValidIP(obj.ip) == true) {
-                        layerAler(langs1[178][lang]);  // 请填写正确的域名
-                        return;
-                    }
-
-
-                    if (obj.ip != "") {
-                        vv.push(0);
-                        vv.push(0);
-                        vv.push(0);
-                        vv.push(0);
-                        vv.push(u2);
-                        vv.push(u1);
-
-                        for (var i = 0; i < 18; i++) {
-                            vv.push(0);
-                        }
-
-                        for (var i = 0; i < 16; i++) {
-                            var apn = obj.apn.trim();
-                            var len = apn.length;
-                            if (len <= i) {
-                                vv.push(0);
-                            } else {
-                                var c = apn.charCodeAt(i);
-                                vv.push(c);
-                            }
-
-                        }
-
-                        var ip = obj.ip.trim();
-                        var len = ip.length;
-                        vv.push(len);
-                        for (var i = 0; i < len; i++) {
-                            var c = ip.charCodeAt(i);
-                            vv.push(c);
-                        }
-                        var comaddr = obj1.l_comaddr;
-                        var num = randnum(0, 9) + 0x70;
-                        var data = buicode(comaddr, 0x04, 0xA4, num, 0, 1, vv); //01 03 F24    
-
-                        dealsend2("A4", data, 1, "setSiteCB", comaddr, 0, 0, 0, "${param.action}");
-
-                    }
-
-                }
-
-            }
 
             $(function () {
                 $("#l_comaddr").combobox({
@@ -977,21 +1024,22 @@
 
                                         </tr>                                   
 
-                                        <tr>
-                                            <td>
-                                                <span  style=" float: right; margin-right: 2px;" name="xxx" id="191" >运营商APN</span>
-                                            </td>
-
-                                            <td >
-                                                <input id="apn" class="form-control" name="apn" value="cmnet" style="width:150px;" placeholder="输入APN" type="text">
-                                            </td>
-
-                                        </tr>
+                                        <!--                                        <tr>
+                                                                                    <td>
+                                                                                        <span  style=" float: right; margin-right: 2px;" name="xxx" id="191" >运营商APN</span>
+                                                                                    </td>
+                                        
+                                                                                    <td >
+                                                                                        <input id="apn" class="form-control" name="apn" value="cmnet" style="width:150px;" placeholder="输入APN" type="text">
+                                                                                    </td>
+                                        
+                                                                                </tr>-->
                                         <tr>
                                             <td colspan="2">
-                                                <button type="button"  onclick="setSite()" class="btn  btn-success btn-sm" style="margin-left: 2px; "><span name="xxx" id="192">设置主站信息</span></button>
-                                                <button  type="button" onclick="readSite()" class="btn btn-success btn-sm"><span name="xxx" id="193">读取主站信息</span></button>
-                                                <button  type="button"  onclick="setAPN()" class="btn btn-success btn-sm"><span name="xxx" id="194">设置运营商APN</span></button>
+                                                &emsp;
+                                                <button type="button"  onclick="setRemoteAddr()" class="btn  btn-success btn-sm" style="margin-left: 2px; "><span name="xxx" id="192">设置主站信息</span></button>
+                                                <button  type="button" onclick="readRemoteAddr()" class="btn btn-success btn-sm"><span name="xxx" id="193">读取主站信息</span></button>&emsp;
+                                                <!--<button  type="button"  onclick="setAPN()" class="btn btn-success btn-sm"><span name="xxx" id="194">设置运营商APN</span></button>-->
                                             </td>
                                         </tr>
 
@@ -1040,7 +1088,9 @@
                                         <tr>
                                             <td>
 
-                                                <button  type="button" onclick="initData()"  class="btn btn-success btn-sm"><span >初始化数据区</sspan>
+                                                <button  type="button" onclick="initData()"  class="btn btn-success btn-sm"><span >传感器复位</sspan>
+                                                </button>&ensp;
+                                                <button  type="button" onclick="removeGayway()"  class="btn btn-success btn-sm"><span >强制清除网关</sspan>
                                                 </button>&nbsp; 
 
                                             </td>
@@ -1122,9 +1172,6 @@
                                                 </button>
                                                 &emsp;
                                             </td>
-
-
-
 
                                             </td>
                                         </tr>

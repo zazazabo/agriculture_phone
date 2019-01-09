@@ -9,7 +9,36 @@
                 </xflt>
             </xsql>
         </xhandle>
-        
+         <xhandle desc="" id="EmptyGayWay" rtnype="JSON">
+            <xsql id="a1" para="l_comaddr" tpe="DDL" tpl="DELETE FROM t_plan WHERE  @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="1=2" tpl="@l_comaddr">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="p_comaddr=':l_comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+            
+            <xsql id="a1" para="l_comaddr" tpe="DDL" tpl="DELETE FROM t_loop WHERE  @CONDITION " var="rs1">
+                <xflt id="CONDITION" nrp="1=2" tpl="@l_comaddr">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr=':l_comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql>   
+            
+            <xsql id="a1" para="l_comaddr" tpe="DDL" tpl="DELETE FROM t_sensor WHERE  @CONDITION " var="rs1">
+                <xflt id="CONDITION" nrp="1=2" tpl="@l_comaddr">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr=':l_comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql>     
+            
+            <xsql id="a1" para="l_comaddr" tpe="DDL" tpl="DELETE FROM t_baseinfo WHERE  @CONDITION " var="rs1">
+                <xflt id="CONDITION" nrp="1=2" tpl="@l_comaddr">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="comaddr=':l_comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+            
+        </xhandle>
            <xhandle desc="" id="ClearData" rtnype="JSON">
             
             <xsql id="a1" para="l_deplayment" tpe="DDL" tpl="update t_sensor set deplayment=:l_deplayment where @CONDITION " var="rs">
