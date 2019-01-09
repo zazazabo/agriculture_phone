@@ -310,7 +310,7 @@
         </div>
 
         <!-- 添加 网关-->
-        <div  id="addwanguang" class="bodycenter"  style=" display: none" >
+        <div  id="addwanguang" class="bodycenter"  style=" display: none" title=" 添加网关" >
             <div class="">
                 <div class="">
                     <table>
@@ -345,7 +345,7 @@
             </div>
         </div>
         <!--添加传感器-->
-        <div  id="addlamp" class="bodycenter"  style=" display: none" >
+        <div  id="addlamp" class="bodycenter"  style=" display: none" title="添加传感器" >
             <div class="">
                 <div  style="min-width:700px;">   
                     <div class="">
@@ -382,7 +382,7 @@
         </div>
 
         <!--添加回路-->
-        <div  id="addloop" class="bodycenter"  style=" display: none" >
+        <div  id="addloop" class="bodycenter"  style=" display: none" title="添加回路" >
             <div class="">
                 <div  style="min-width:700px;">   
                     <div class="">
@@ -514,7 +514,7 @@
                             valign: 'middle'
                         }, {
                             field: 'onlinetime',
-                            title: '在线状态', //在线状态
+                            title: '状态', //在线状态
                             width: 25,
                             align: 'center',
                             valign: 'middle',
@@ -523,25 +523,48 @@
                                 var time1 = value.substring(0, 16);
                                 var time2 = row.dtime.substring(0, 16);
                                 var stime = TimeDifference(time1, time2);
-                                var obj = {};
-                                obj.comaddr = row.l_comaddr; //selects[0];
-                                $.ajax({url: "login.gateway.comaddrzx.action", async: false, type: "get", datatype: "JSON", data: obj,
+                                var sobj = {};
+                                sobj.f_comaddr = row.l_comaddr;
+                                sobj.f_setcode = row.infonum;
+                                var isred = 0;
+                                $.ajax({url: "homePage.sensormanage.IssensroRed.action", async: false, type: "get", datatype: "JSON", data: sobj,
                                     success: function (data) {
                                         var arrlist = data.rs;
-                                        if (arrlist[0].online == 1) {
-                                            if (stime <= 15) {
-                                                str = "<img  src='img/online1.png'/>";
-                                            } else {
-                                                str = "<img  src='img/off.png'/>";
-                                            }
-                                        } else {
-                                            str = "<img  src='img/off.png'/>";
+                                        if (arrlist.length > 0) {
+                                            isred = 1;
                                         }
                                     },
                                     error: function () {
-                                        alert("提交添加失败！请刷新");
+                                        console.log("提交添加失败！请刷新");
+                                        // alert("提交添加失败！请刷新");
                                     }
                                 });
+                                if (isred == 1) {
+                                     //创建传感器离线图标
+                                     console.log("1");
+                                    str = "<img  src='img/cgred.png'/>";
+                                } else {
+                                    var obj = {};
+                                    obj.comaddr = row.l_comaddr; //selects[0];
+                                    $.ajax({url: "login.gateway.comaddrzx.action", async: false, type: "get", datatype: "JSON", data: obj,
+                                        success: function (data) {
+                                            var arrlist = data.rs;
+                                            if (arrlist[0].online == 1) {
+                                                if (stime <= 15) {
+                                                    str = "<img  src='img/cglv.png'/>";
+                                                } else {
+                                                    str = "<img  src='img/cglan.png'/>";
+                                                }
+                                            }else{
+                                                  str = "<img  src='img/cglan.png'/>";
+                                            }
+                                        },
+                                        error: function () {
+                                            alert("提交添加失败！请刷新");
+                                        }
+                                    });
+                                }
+
                                 return  str;
                             }
                         }],
@@ -724,23 +747,8 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle'
-                        }, {
-                            field: 'l_state',
-                            title: '在线状态', //
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index, field) {
-//                                console.log(row);
-                                if (row.online == 1) {
-                                    var str = "<img  src='img/online1.png'/>";
-                                    return  str;
-                                } else {
-                                    var str = "<img  src='img/off.png'/>";
-                                    return  str;
-                                }
-                            }
-                        }],
+                        }
+                    ],
                     singleSelect: false,
                     sortName: 'id',
                     locale: 'zh-CN', //中文支持,
@@ -2036,25 +2044,23 @@
                             }
                         });
                         var isred = 0; //判断是否为故障 0非故障
-                        $.ajax({url: "login.gateway.comaddrzx.action", async: false, type: "get", datatype: "JSON", data: gobj,
+                        var sobj = {};
+                        sobj.f_comaddr = obj.l_comaddr;
+                        sobj.f_setcode = obj.infonum;
+                        $.ajax({url: "homePage.sensormanage.IssensroRed.action", async: false, type: "get", datatype: "JSON", data: sobj,
                             success: function (data) {
                                 var arrlist = data.rs;
-                                if (arrlist[0].online == 1) {
-                                    if (stime > 15) {
-                                        lx = "离线";
-                                    } else {
-                                        lx = "在线";
-                                        isLx = 1;
-                                    }
-                                } else {
-                                    lx = "离线";
+                                if (arrlist.length > 0) {
+                                    isred = 1;
+                                    lx = "故障";
                                 }
                             },
                             error: function () {
-                                alert("提交添加失败！请刷新");
+                                console.log("提交添加失败！请刷新");
+                                // alert("提交添加失败！请刷新");
                             }
                         });
-                       
+
                         //var lampcode = parseInt(arrlist[i].l_factorycode);
 
 //                        var textvalue = "<div style='line-height:1.8em;font-size:12px;'>\n\
@@ -2085,7 +2091,11 @@
                         if ((Longitude != "" && latitude != "") && (Longitude != null && latitude != null)) {
                             var point = new BMap.Point(Longitude, latitude);
                             var marker1;
-                            if (isLx == 1) {
+                            if (isred == 1) {
+                                marker1 = new BMap.Marker(point, {
+                                    icon: lred
+                                });
+                            } else if (isLx == 1) {
                                 marker1 = new BMap.Marker(point, {
                                     icon: lgreen
                                 });
@@ -2248,7 +2258,7 @@
 //                            marker1.addEventListener("mouseover", function () {
 //                                this.openInfoWindow(infoWindow);
 //                            });
-                             marker1.setTitle(obj.l_name);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
+                            marker1.setTitle(obj.l_name);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
                             //标注点点击事件
                             marker1.addEventListener("click", function () {
                                 looprightshow(obj);
