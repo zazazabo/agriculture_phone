@@ -29,11 +29,6 @@
         <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-        <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-        <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-        <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
-        <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-        <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/bootstrap.min.css" />
         <script type="text/javascript"  src="js/getdate.js"></script>
         <script type="text/javascript"  src="js/genel.js"></script>
@@ -84,7 +79,7 @@
                     left: 72%;
                     top: 5px;
                 }
-                
+
                 #l_comaddr{
                     width: 100px;
                 }
@@ -199,13 +194,13 @@
 
             //获取故障数量
             function getfNumber() {
-                $.ajax({async: false, url: "homePage.fault.getfaultNumber.action", type: "get", datatype: "JSON", data:{pid:getpojectId()},
+                $.ajax({async: false, url: "homePage.fault.getfaultNumber.action", type: "get", datatype: "JSON", data: {pid: getpojectId()},
                     success: function (data) {
                         var rs = data.rs;
-                        if(rs[0].number>0){
+                        if (rs[0].number > 0) {
                             $("#fnumber").html(rs[0].number);
                             $("#fnumber").show();
-                        }else{
+                        } else {
                             $("#fnumber").hide();
                         }
                     }
@@ -709,142 +704,137 @@
         </div>
 
         <!--_footer 作为公共模版分离出去-->
-        <!--<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>--> 
-        <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
-        <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-        <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
-
-        <!--请在下方写此页面业务相关的脚本-->
-        <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+        <!--        <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> -->
+        <!--        <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>-->
+                <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+                <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+        <!--        <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>-->
         <script type="text/javascript">
-                    function layerAler(str) {
-                        layer.alert(str, {
-                            icon: 6,
-                            offset: 'center'
-                        });
-                    }
-                    $(function () {
-                        var pid = '${rs[0].pid}';
-                        var pids = [];
-                        if (pid != null && pid != "") {
-                            pids = pid.split(",");   //项目编号
+            function layerAler(str) {
+                layer.alert(str, {
+                    icon: 6,
+                    offset: 'center'
+                });
+            }
+            $(function () {
+                var pid = '${rs[0].pid}';
+                var pids = [];
+                if (pid != null && pid != "") {
+                    pids = pid.split(",");   //项目编号
+                }
+
+                // $("#pojects").val(pids[0]);
+                var pname = [];   //项目名称
+                for (var i = 0; i < pids.length; i++) {
+                    var obj = {};
+                    obj.code = pids[i];
+                    $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
+                        success: function (data) {
+                            pname.push(data.rs[0].name);
+                        },
+                        error: function () {
+                            alert("出现异常！");
                         }
-
-                        // $("#pojects").val(pids[0]);
-                        var pname = [];   //项目名称
-                        for (var i = 0; i < pids.length; i++) {
-                            var obj = {};
-                            obj.code = pids[i];
-                            $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
-                                success: function (data) {
-                                    pname.push(data.rs[0].name);
-                                },
-                                error: function () {
-                                    alert("出现异常！");
-                                }
-                            });
-                        }
-
-                        for (var i = 0; i < pids.length; i++) {
-                            var options;
-                            options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
-                            $("#pojects").html(options);
-                        }
-
-                        $("#dialog-add").dialog({
-                            autoOpen: false,
-                            modal: true,
-                            width: 300,
-                            height: 350,
-                            position: ["top", "top"],
-                            buttons: {
-                                修改: function () {
-                                    updateinfo();
-                                }, 关闭: function () {
-                                    $(this).dialog("close");
-                                }
-                            }
-                        });
-                        
-                        getfNumber();
-
-
-
                     });
-                    //修改个人信息
-                    function updateinfo() {
-                        var obj = {};
-                        obj.id = $("#id").val();
-                        obj.email = $("#email1").val();
-                        obj.phone = $("#phone1").val();
-                        obj.department = $("#department1").val();
-                        $.ajax({async: false, url: "login.usermanage.editUinfo.action", type: "get", datatype: "JSON", data: obj,
-                            success: function (data) {
-                                var arrlist = data.rs;
-                                if (arrlist.length > 0) {
-                                    layerAler("修改成功！");
-                                    $('#dialog-add').dialog('close');
-                                }
-                            }
-                        });
+                }
 
-                    }
+                for (var i = 0; i < pids.length; i++) {
+                    var options;
+                    options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
+                    $("#pojects").html(options);
+                }
 
-                    function showDialog() {
-                        $("#id").val($("#userid").val());
-                        $("#uname1").val($("#u_name").val());
-                        $("#email1").val($("#email").val());
-                        $("#phone1").val($("#phone").val());
-                        $("#department1").val($("#department").val());
-                        $('#dialog-add').dialog('open');
-                        return false;
-                    }
-
-                    $("#pojects").change(function () {
-                        projectId = $(this).val();
-                        $("#MenuBox li:eq(0) a").click();
-                        $('#panemask').showLoading({
-                            'afterShow': function () {
-                                setTimeout("$('#panemask').hideLoading()", 1000);
-                            }
-
-                        });
-
-
-
-                    });
-
-
-
-                    function  getusername() {
-                        var name = $("#u_name").val();
-                        return name;
-                    }
-
-                    function  getupid() {
-                        var upid = $("#upid").val();
-                        return upid;
-                    }
-
-                    //后台管理
-                    function  manage() {
-                        $("#iframe").attr('src', "gatewaymanage.jsp");
-                    }
-
-                    function size() {
-                        var Wwidth = $(window).width();
-                        if (Wwidth > 768) {
-                            withs = $(window).width() * 0.5;
-                        } else if (Wwidth > 1024) {
-                            withs = $(window).width() * 0.3;
-                        } else {
-                            withs = 350;
+                $("#dialog-add").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: 300,
+                    height: 350,
+                    position: ["top", "top"],
+                    buttons: {
+                        修改: function () {
+                            updateinfo();
+                        }, 关闭: function () {
+                            $(this).dialog("close");
                         }
-
                     }
-                    window.onresize = function () {
-                        size();
-                    };
+                });
+
+                getfNumber();
+            });
+            //修改个人信息
+            function updateinfo() {
+                var obj = {};
+                obj.id = $("#id").val();
+                obj.email = $("#email1").val();
+                obj.phone = $("#phone1").val();
+                obj.department = $("#department1").val();
+                $.ajax({async: false, url: "login.usermanage.editUinfo.action", type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var arrlist = data.rs;
+                        if (arrlist.length > 0) {
+                            layerAler("修改成功！");
+                            $('#dialog-add').dialog('close');
+                        }
+                    }
+                });
+
+            }
+
+            function showDialog() {
+                $("#id").val($("#userid").val());
+                $("#uname1").val($("#u_name").val());
+                $("#email1").val($("#email").val());
+                $("#phone1").val($("#phone").val());
+                $("#department1").val($("#department").val());
+                $('#dialog-add').dialog('open');
+                return false;
+            }
+
+            $("#pojects").change(function () {
+                projectId = $(this).val();
+                $("#MenuBox li:eq(0) a").click();
+                $('#panemask').showLoading({
+                    'afterShow': function () {
+                        setTimeout("$('#panemask').hideLoading()", 1000);
+                    }
+
+                });
+
+
+
+            });
+
+
+
+            function  getusername() {
+                var name = $("#u_name").val();
+                return name;
+            }
+
+            function  getupid() {
+                var upid = $("#upid").val();
+                return upid;
+            }
+
+            //后台管理
+            function  manage() {
+                $("#iframe").attr('src', "gatewaymanage.jsp");
+            }
+
+            function size() {
+                var Wwidth = $(window).width();
+                if (Wwidth > 768) {
+                    withs = $(window).width() * 0.5;
+                } else if (Wwidth > 1024) {
+                    withs = $(window).width() * 0.3;
+                } else {
+                    withs = 350;
+                }
+
+            }
+            window.onresize = function () {
+                size();
+            };
 
         </script> 
 

@@ -147,9 +147,11 @@
         </xhandle>
         
         <xhandle desc="查看传感器是否故障" id="IssensroRed" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor WHERE   @CONDITION  " var="rs">
-                <xflt id="CONDITION" nrp="" tpl="@id">
-                    <xfltpara id="id" nrp="1=2" para="id" sql="id = ':id'">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_fault where f_Isfault is null and @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@f_comaddr AND @f_setcode">
+                    <xfltpara id="f_comaddr" nrp="1=2" para="f_comaddr" sql="f_comaddr = ':f_comaddr'">
+                    </xfltpara>
+                    <xfltpara id="f_setcode" nrp="1=2" para="f_setcode" sql="f_setcode = ':f_setcode'">
                     </xfltpara>
                 </xflt>
             </xsql> 

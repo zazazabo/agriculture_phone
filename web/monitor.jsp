@@ -29,7 +29,6 @@
         <script>
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
-            console.log(o_pid);
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -210,7 +209,7 @@
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
-                            pid: 'P00001',
+                            pid: o_pid,
                             l_comaddr: l_comaddr
 
                         };      

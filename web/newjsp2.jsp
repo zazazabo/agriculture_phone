@@ -21,7 +21,6 @@
         <script src="echarts/dist/echarts_3.8.5_echarts.min.js"></script>
         <script src="js/chart/chart.js"></script>
         <link rel="stylesheet" type="text/css" href="bootstrap-datetimepicker/bootstrap-datetimepicker.css">
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css">
         <script src="bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
         <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.css" type="text/css">
         <style type="text/css">
