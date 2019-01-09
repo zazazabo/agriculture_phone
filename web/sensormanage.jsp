@@ -1029,7 +1029,7 @@
                             <tr>
                                 <td > &emsp;网关名称:</td>
                                 <td >
-                                    <input id="l_comaddr2" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    <input id="l_comaddr2" class="easyui-combobox" name="l_comaddr" style="width:110px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
                                 </td>
                                 <td  >
                                     &emsp;部署情况:
@@ -1051,7 +1051,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-xs-12 col-sm-7 col-md-2" >
+                <div class="col-xs-12 col-sm-7 col-md-9" >
 
                     <table  style="  margin-top: 15px; align-content:  left;">
                         <tbody>

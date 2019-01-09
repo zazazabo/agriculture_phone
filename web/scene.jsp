@@ -982,7 +982,7 @@
                                 <tr>
                                     <td > &emsp;网关名称:</td>
                                     <td >
-                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:100px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
                                     </td>
                                     <td  >
                                         &emsp;部署情况:
