@@ -102,6 +102,99 @@
                 dealsend2("03", data, "readControlCB", obj.l_comaddr, 0, 0, 3901, "${param.action}");
             }
 
+            function  readsiteCB(obj) {
+                if (obj.status == "success") {
+                    var data = Str2BytesH(obj.data);
+                    var v = "";
+                    for (var i = 0; i < data.length; i++) {
+
+                        v = v + sprintf("%02x", data[i]) + " ";
+                    }
+                    var site = data[3] * 256 + data[4];
+                    console.log(site, obj.val);
+                    if (site == obj.val) {
+                        layerAler("站号:" + site);
+                    }
+                }
+            }
+            function  readsite() {
+                var obj = $("#form1").serializeObject();
+                if (obj.l_comaddr == "") {
+                    layerAler('网关不能为空'); //
+                    return;
+                }
+                var obj1 = $("#form2").serializeObject();
+                var vv = [];
+                if (isNumber(obj1.oldsite) == false) {
+                    layerAler("站号必须是数字");
+                    return;
+                }
+                var oldsite = parseInt(obj1.oldsite);
+                var newsite = parseInt(obj1.newsite);
+                var pos = 0x3e;
+                if (oldsite > 256) {
+                    layerAler("站号最大是256");
+                }
+                vv.push(oldsite);
+                vv.push(0x03);
+                vv.push(pos >> 8 & 0xff);
+                vv.push(pos & 0xff);
+                vv.push(0);
+                vv.push(1);
+                var data = buicode2(vv);
+                dealsend2("10", data, "readsiteCB", obj.l_comaddr, 0, 0, oldsite, "${param.action}");
+            }
+
+
+            function  editsiteCB(obj) {
+                if (obj.status == "success") {
+                    var data = Str2BytesH(obj.data);
+                    var v = "";
+                    for (var i = 0; i < data.length; i++) {
+
+                        v = v + sprintf("%02x", data[i]) + " ";
+                    }
+                    var infonum = obj.val;
+                    var high = infonum >> 8 & 0xff;
+                    var low = infonum & 0xff;
+                    if (data[2] == high && data[3] == low) {
+                        layerAler("修改成功");
+                    }
+
+                    console.log(v);
+                }
+            }
+            function  editsite() {
+                var obj = $("#form1").serializeObject();
+                if (obj.l_comaddr == "") {
+                    layerAler('网关不能为空'); //
+                    return;
+                }
+                var obj1 = $("#form2").serializeObject();
+                var vv = [];
+                if (isNumber(obj1.oldsite) == false || isNumber(obj1.newsite) == false) {
+                    layerAler("站号必须是数字");
+                    return;
+                }
+                var oldsite = parseInt(obj1.oldsite);
+                var newsite = parseInt(obj1.newsite);
+                var pos = 0x3e;
+                if (oldsite > 256 || newsite > 256) {
+                    layerAler("站号最大是256");
+                }
+                vv.push(oldsite);
+                vv.push(0x10);
+                vv.push(pos >> 8 & 0xff);
+                vv.push(pos & 0xff);
+                vv.push(0);
+                vv.push(1);
+                vv.push(2);
+                vv.push(newsite >> 8 & 0xff);
+                vv.push(newsite & 0xff);
+                var data = buicode2(vv);
+                console.log(data);
+                dealsend2("10", data, "editsiteCB", obj.l_comaddr, 0, 0, pos, "${param.action}");
+            }
             function refreshControlCB(obj) {
                 if (obj.status == "success") {
                     var data = Str2BytesH(obj.data);
@@ -834,6 +927,7 @@
                                                         <option value="3">数据初始化</option> 
                                                         <option value="4">设置巡测时间</option> 
                                                         <option value="5">刷新控制</option> 
+                                                        <option value="6">设置站号</option> 
                                                     </select>
                                                 </span>  
                                             </td>
@@ -1004,7 +1098,41 @@
                                 </table>
                             </div>
                         </div>                      
+                        <div class="row" id="row6"  style=" display: none">
+                            <div class="col-xs-12">
+                                <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629;">
+                                    <tbody>
+                                        <tr>
+                                            <td> <span  style=" margin-left: 2px;"  >旧站号</span></td>
+                                            <td>
+                                                <input id="oldsite"  class="form-control" name="oldsite" style="width:50px;"  placeholder="站号" type="text"> 
+                                            </td>
+                                            <td>
+                                                <span  >&emsp;新站号:</span>
+                                            </td>
+                                            <td>
+                                                <input id="newsite"  class="form-control" name="newsite" style="width:50px;"  placeholder="站号" type="text">
+                                            </td>
+                                            <td>
+                                                <button  type="button" onclick="editsite()"  class="btn btn-success btn-sm"><span >修改</sspan>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button  type="button" onclick="readsite()"  class="btn btn-success btn-sm"><span >读取</sspan>
+                                                </button>
+                                                &emsp;
+                                            </td>
 
+
+
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>  
                     </form>
                 </div>
 
