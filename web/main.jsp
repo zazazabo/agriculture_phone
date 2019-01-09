@@ -693,7 +693,7 @@
             </form>                        
         </div>
 
-        <div id="faultDiv"  class=""  style=" display: none" title="报警信息">
+        <div id="faultDiv"  class="bodycenter"  style=" display: none" title="报警信息">
             <div>
                 <span style="margin-left:10px;">网关&nbsp;</span>
                 <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />

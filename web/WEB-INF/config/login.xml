@@ -120,7 +120,13 @@
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="pid = ':pid'">
                     </xfltpara>
                 </xflt>
-            </xsql>             
+            </xsql>      
+            <xsql id="a3" list="true" page="true" tpe="SQL" tpl="select * from t_loop where l_deplayment = 1 and @CONDITION " var="looprs">
+                <xflt id="CONDITION" nrp="" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr  FROM t_baseinfo  WHERE  pid = ':pid')">
+                    </xfltpara>
+                </xflt>      
+            </xsql>       
         </xhandle>
         <xhandle desc="查询所有网关信息" id="map" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_baseinfo where @CONDITION " var="bootstrap">
@@ -140,6 +146,18 @@
                     <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
                     </xfltpara>
                     <xfltpara id="name" nrp="1=1" para="name" sql="name = ':name'">
+                    </xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        <xhandle desc="查询所有回路信息" id="loop" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_loop  where l_deplayment = 1 and @CONDITION " var="bootstrap">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @l_name AND @pid">
+                    <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    </xfltpara>
+                    <xfltpara id="l_name" nrp="1=1" para="l_name" sql="l_name = ':l_name'">
                     </xfltpara>
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')">
                     </xfltpara>
@@ -181,21 +199,33 @@
                 </xflt>
             </xsql>
         </xhandle> 
+        <xhandle desc="修改回路经纬度" id="updateLooplnglat" rtn="rs" rtnype="JSON">
+            <xsql id="a1" para="l_longitude,l_latitude"  tpe="DDL" tpl="update t_loop set l_longitude=':l_longitude',l_latitude=':l_latitude' where @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@id">
+                    <xfltpara id="id" nrp="1=1" para="id" sql="id=:id">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle> 
         <xhandle desc="查询传感器分布" id="queryLamp" rtnype="JSON">
             <xsql id="a2" list="true" page="true" tpe="SQL" tpl="select GETDATE() as dtime, * from t_sensor where deplayment= 1 and @CONDITION " var="rs">
                 <xflt id="CONDITION" nrp="" tpl="@comaddr AND @pid">
                     <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="l_comaddr = ':comaddr'">
                     </xfltpara>
-                    <xfltpara id="pid" nrp="1=1" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')">
                     </xfltpara>
                 </xflt>      
             </xsql> 
-            <!--            <xsql id="a3" list="true" page="true" tpe="SQL" tpl=" select f_comaddr,f_setcode from t_fault where f_type ='ERC44' and @CONDITION " var="rs2">
-                <xflt id="CONDITION" nrp="" tpl="@f_day">
-                    <xfltpara id="f_day" nrp="1=1" para="f_day" sql="f_day=':f_day'">
+        </xhandle>
+         <xhandle desc="查询回路分布" id="queryloop" rtnype="JSON">
+            <xsql id="a2" list="true" page="true" tpe="SQL" tpl="select * from t_loop where l_deplayment=1 and @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @pid">
+                    <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
                     </xfltpara>
-                </xflt>  
-            </xsql>              -->
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')">
+                    </xfltpara>
+                </xflt>      
+            </xsql> 
         </xhandle>
         <xhandle desc="获取所有项目" id="getProject" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT   tl.code as id,tl.name as text FROM t_project as tl" var="list">

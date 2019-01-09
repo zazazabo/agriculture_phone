@@ -823,7 +823,7 @@
                             sortOrder: params.order,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr: $("#l_comaddr").val()
+                            l_comaddr: $("#l_comaddr2").val()
                         };   
                         return temp;  
                     }
