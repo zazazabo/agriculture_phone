@@ -184,7 +184,7 @@
                 #l_pos{
                     width: 150px; 
                 }
-                
+
                 #l_site1{
                     width: 150px;
                 }
@@ -199,7 +199,7 @@
                     width: 150px;
                 }
             } 
-            
+
         </style>
         <script>
             var u_name = "${param.name}";
@@ -1084,8 +1084,9 @@
                             limit: params.limit,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr: $("#l_comaddr").val()   
-                        };      
+                            l_comaddr: $("#l_comaddr").combobox('getValue')
+                        };   
+                        console.log(temp); 
                         return temp;  
                     }, });
 
@@ -1284,431 +1285,219 @@
 
     <body id="panemask">
 
-        <div>
-            <form id="formsearch">
-                <!--                <div>
-                                    <table style="border-collapse:separate;  border-spacing:0px 10px;border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; align-content:  center">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span style="margin-left:10px;">
-                                                        <span >网关名称</span>
-                                                        &nbsp;</span>
-                                                </td>
-                                                <td>
-                
-                                                    <span class="menuBox">
-                                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
-                                                               data-options="editable:true,valueField:'id', textField:'text' " />
-                                                    </span>  
-                                                </td>
-                                                <td>
-                                                    <span style="margin-left:10px;">
-                                                        <span id="317" name="xxxx">部署情况</span>
-                                                        &nbsp;</span>
-                                                </td>
-                                                <td>
-                                                    <select class="easyui-combobox" id="busu" name="l_deplayment" style="width:150px; height: 30px">
-                                                        <option value="-1">全部</option>   
-                                                        <option value="1">已部署</option>   
-                                                        <option value="0">未部署</option>
-                
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-xm">
-                                                         搜索
-                                                        筛选
-                                                    </button>&nbsp;
-                                                    <button  type="button" style="margin-left:20px;" onclick="deployLoop()" class="btn btn-success btn-xm">
-                                                        部署
-                                                    </button>&nbsp;
-                
-                                                    <button  type="button" style="margin-left:20px;" onclick="removeLoop()" class="btn btn-success btn-xm">
-                                                        移除
-                                                    </button>&nbsp;
-                                                                                        <button  type="button" style="margin-left:20px;" onclick="readinfo()" class="btn btn-success btn-xm">
-                                                                                            读取
-                                                                                        </button>&nbsp;
-                
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table> 
-                                </div>-->
-                <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
-                    <div id="selectlist">
-                        <span style="margin-left:10px;">
-                            网关名称
-                            &nbsp;</span>
-                        <span class="menuBox">
-                            <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
-                        </span>  
-
-                        <span style="margin-left:5px;">
-                            部署情况
-                            &nbsp;</span>
-                        <select class="easyui-combobox" id="busu" name="l_deplayment" style="height: 30px">
-                            <option value="-1">全部</option>   
-                            <option value="1">已部署</option>   
-                            <option value="0">未部署</option>
-
-                        </select> 
+        <div id="content" class="row-fluid">
+            <div class=" row " >
+                <form id="formsearch">
+                    <div class="col-xs-12 col-sm-6 col-md-3 " >
+                        <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+                                    <td > &emsp;网关名称:</td>
+                                    <td >
+                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    </td>
+                                    <td  >
+                                        &emsp;部署情况:
+                                    </td>
+                                    <td >
+                                        <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px; width: 80px;">
+                                            <option value ="-1">全部</option>
+                                            <option value="1">已部署</option>     
+                                            <option value="0">未部署</option> 
+                                        </select>
+                                    </td>
+                                    <td style=" padding-left: 10px;">
+                                        <button class="btn btn-success  btn-sm ctrol"   onclick="Search1()" data-toggle="modal" data-target="#pjj33" id="add">
+                                            筛选
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div id="cz">
-                        <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
-                            筛选
+                    <div class="col-xs-12 col-sm-6 col-md-9 " >
+                        <table  style="  margin-top: 15px; align-content:  left;">
+                            <tbody>
+                                <tr>
+                                    <td >
+                                        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
+
+                                            <button class="btn btn-primary btn-sm ctrol" onclick="deployLoop()"   id="xiugai1">
+                                                部署
+                                            </button>
+                                            <button class="btn btn-danger btn-sm ctrol" onclick="removeLoop()" id="shanchu">
+                                                移除
+                                            </button>    
+                                        </div> 
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+            <!--        <div>
+                        
+                        <form id="formsearch">
+                            <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
+                                <div id="selectlist">
+                                    <span style="margin-left:10px;">
+                                        网关名称
+                                        &nbsp;</span>
+                                    <span class="menuBox">
+                                        <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    </span>  
+            
+                                    <span style="margin-left:5px;">
+                                        部署情况
+                                        &nbsp;</span>
+                                    <select class="easyui-combobox" id="busu" name="l_deplayment" style="height: 30px">
+                                        <option value="-1">全部</option>   
+                                        <option value="1">已部署</option>   
+                                        <option value="0">未部署</option>
+            
+                                    </select> 
+                                </div>
+                                <div id="cz">
+                                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
+                                        筛选
+                                    </button>
+            
+                                    <button style="margin-left:10px;" id="btndeploySensor" onclick="deployLoop()" type="button" class="btn btn-success btn-sm">部署</button>
+            
+                                    <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeLoop()" class="btn btn-success btn-sm">移除</button>
+                                </div>
+            
+                            </div>
+                        </form>
+                    </div>-->
+
+
+
+
+
+            <!-- 页面中的弹层代码 -->
+            <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
+                <button class="btn btn-success btn-sm ctrol" onclick="showDialog();" data-toggle="modal" data-target="#pjj5" id="add" >  
+                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
+                </button>
+
+                <button class="btn btn-primary btn-sm ctrol"  onclick="modifyModal();" id="update" >
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑
+                </button>
+                <button class="btn btn-danger btn-sm ctrol" onclick="deleteloop()"  id="shanchu">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
+                </button>
+                <button type="button" id="btn_download" class="btn btn-primary btn-sm" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+                    <span >导出Excel</span>
+                </button>
+
+            </div>
+            <!--        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
+                        <button class="btn btn-success ctrol" onclick="addshow()">  
+                            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加首页显示
                         </button>
+                        <button class="btn btn-danger ctrol" onclick="removeshow()">
+                            <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
+                        </button>
+                       
+                    </div>-->
 
-                        <button style="margin-left:10px;" id="btndeploySensor" onclick="deployLoop()" type="button" class="btn btn-success btn-sm">部署</button>
-
-                        <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeLoop()" class="btn btn-success btn-sm">移除</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-
-
-
-
-
-        <!-- 页面中的弹层代码 -->
-        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
-            <button class="btn btn-success ctrol" onclick="showDialog();" data-toggle="modal" data-target="#pjj5" id="add" >  
-                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
-            </button>
-
-            <button class="btn btn-primary ctrol"  onclick="modifyModal();" id="update" >
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑
-            </button>
-            <button class="btn btn-danger ctrol" onclick="deleteloop()"  id="shanchu">
-                <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
-            </button>
-             <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                <span >导出Excel</span>
-            </button>
-
-        </div>
-<!--        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
-            <button class="btn btn-success ctrol" onclick="addshow()">  
-                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加首页显示
-            </button>
-            <button class="btn btn-danger ctrol" onclick="removeshow()">
-                <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
-            </button>
-           
-        </div>-->
-
-        <div style="width:100%;">
-            <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
-            </table>
-        </div>
+            <div style="width:100%;">
+                <table id="gravidaTable" style="width:100%;" class=" table table-hover table-striped">
+                </table>
+            </div>
 
 
 
-        <div id="dialog-add"  class="bodycenter"  style=" display: none" title="回路添加">
+            <div id="dialog-add"  class="bodycenter"  style=" display: none" title="回路添加">
 
-            <form action="" method="POST" id="formadd" onsubmit="return checkLoopAdd()">    
-                <input type="hidden" name="pid" value="${param.pid}"/>
+                <form action="" method="POST" id="formadd" onsubmit="return checkLoopAdd()">    
+                    <input type="hidden" name="pid" value="${param.pid}"/>
 
-                <table >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >网关地址</span>&nbsp;
-                                <span class="menuBox">
-
-                                    <input id="comaddr" class="easyui-combobox" name="l_comaddr" style=" height: 30px" 
-                                           data-options='editable:false,valueField:"id", textField:"text"' />
-                                </span>  
-
-
-                            <td></td>
-                            <td>
-                                <span style="margin-left:0px;" >网关名称</span>&nbsp;
-                                <input id="comaddrname" readonly="true"   class="form-control"  name="comaddrname" style="display: inline;" placeholder="请输入网关名称" type="text"></td>
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;">&emsp;&emsp;站号</span>&nbsp;
-                                <input id="l_site" class="form-control" name="l_site" style="display: inline;" placeholder="站号" type="text">
-
-                            <td></td>
-                            <td>
-                                <span style="margin-left:2px;">回路名称</span>&nbsp;
-                                <input id="l_name" class="form-control"  name="l_name" style="display: inline;" placeholder="请输入回路名称" type="text">
-                            </td>
-                            </td>
-                            </td>
-                        </tr> 
-
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
-                                <span class="menuBox">
-                                    <input id="l_pos" class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
-                                </span>
-
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:0px;" >工作方式</span>&nbsp;
-                                <span class="menuBox">
-                                    <select class="easyui-combobox" id="l_worktype" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style="height: 30px">          
-                                        <!--<option value="0">手动</option>-->
-                                        <option value="3">时间</option>
-                                        <option value="5">场景</option>
-                                        <option value="9">信息点</option>
-                                    </select>
-                                </span>
-                            </td>
-                        </tr>   
-                        <tr>
-                            <td>
-
-                                <span style="margin-left:0px;" >互斥模式</span>&nbsp;
-                                <span class="menuBox">
-
+                    <table >
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span style="margin-left:0px;" >网关地址</span>&nbsp;
                                     <span class="menuBox">
-                                        <select class="easyui-combobox" id="l_mutex" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
-                                            <option value="1">有</option> 
-                                            <option value="0">无</option> 
+
+                                        <input id="comaddr" class="easyui-combobox" name="l_comaddr" style=" height: 30px" 
+                                               data-options='editable:false,valueField:"id", textField:"text"' />
+                                    </span>  
+
+
+                                <td></td>
+                                <td>
+                                    <span style="margin-left:0px;" >网关名称</span>&nbsp;
+                                    <input id="comaddrname" readonly="true"   class="form-control"  name="comaddrname" style="display: inline;" placeholder="请输入网关名称" type="text"></td>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span style="margin-left:0px;">&emsp;&emsp;站号</span>&nbsp;
+                                    <input id="l_site" class="form-control" name="l_site" style="display: inline;" placeholder="站号" type="text">
+
+                                <td></td>
+                                <td>
+                                    <span style="margin-left:2px;">回路名称</span>&nbsp;
+                                    <input id="l_name" class="form-control"  name="l_name" style="display: inline;" placeholder="请输入回路名称" type="text">
+                                </td>
+                                </td>
+                                </td>
+                            </tr> 
+
+                            <tr>
+                                <td>
+                                    <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
+                                    <span class="menuBox">
+                                        <input id="l_pos" class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
+                                    </span>
+
+                                </td>
+                                <td></td>
+                                <td>
+                                    <span style="margin-left:0px;" >工作方式</span>&nbsp;
+                                    <span class="menuBox">
+                                        <select class="easyui-combobox" id="l_worktype" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style="height: 30px">          
+                                            <!--<option value="0">手动</option>-->
+                                            <option value="3">时间</option>
+                                            <option value="5">场景</option>
+                                            <option value="9">信息点</option>
                                         </select>
                                     </span>
-                                </span>  
+                                </td>
+                            </tr>   
+                            <tr>
+                                <td>
 
-
-                            </td>
-                            <td></td>
-                            <td>
-
-                            </td>
-                        </tr> 
-                    </tbody>
-                </table> 
-
-                <table id="timetable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-
-                    <tr style=" height: 40px;">
-                        <th></th>
-                        <th>条件1</th>
-                        <th>条件2</th>
-                        <th>条件3</th>
-                        <th>条件4</th>
-                        <th>条件5</th>
-                    </tr>
-                    <tr>
-                        <td>时间值</td>
-                        <td><input id="time1" name="time1" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
-                        <td><input id="time2" name="time2" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
-                        <td><input id="time3" name="time3" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
-                        <td><input id="time4" name="time4" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
-                        <td><input id="time5" name="time5" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
-                    </tr>
-                    <tr>
-                        <td>控制值</td>
-                        <td>
-                            <select class="easyui-combobox"  id="timeval1" class="form-control"  name="timeval1" style="width:75px;display: inline; height: 30px;" >
-                                <option value="1"> 开</option>
-                                <option value="0"> 关</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="easyui-combobox"  id="timeval2" class="form-control"  name="timeval2" style="width:75px;display: inline; height: 30px;" >
-                                <option value="1"> 开</option>
-                                <option value="0"> 关</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="easyui-combobox"  id="timeval3" class="form-control"  name="timeval3" style="width:75px;display: inline; height: 30px;" >
-                                <option value="1"> 开</option>
-                                <option value="0"> 关</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="easyui-combobox"  id="timeval4" class="form-control"  name="timeval4" style="width:75px;display: inline; height: 30px;" >
-                                <option value="1"> 开</option>
-                                <option value="0"> 关</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="easyui-combobox"  id="timeval5" class="form-control"  name="timeval5" style="width:75px;display: inline; height: 30px;" >
-                                <option value="1"> 开</option>
-                                <option value="0"> 关</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-
-                <table id="scentable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-
-                    <tbody>
-                        <tr style=" height: 40px;">
-                            <th></th>
-                            <th>条件1</th>
-                            <th>条件2</th>
-                            <th>条件3</th>
-                            <th>条件4</th>
-                            <th>条件5</th>
-                        </tr>
-                        <tr>
-                            <td>场景</td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen1" name="scen1" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen2" name="scen2" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen3" name="scen3" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen4" name="scen4" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen5" name="scen5" style="width:100px; height: 30px"></select></td>
-                        </tr>
-                        <tr>
-                            <td>控制值</td>
-                            <td><input id="scenval1" class="form-control"  name="val1" style="width:100px;display: inline;" placeholder="控制值1" type="text" /></td>
-                            <td><input id="scenval2" class="form-control"  name="val2" style="width:100px;display: inline;" placeholder="控制值2" type="text" /></td>
-                            <td><input id="scenval3" class="form-control"  name="val3" style="width:100px;display: inline;" placeholder="控制值3" type="text" /></td>
-                            <td><input id="scenval4" class="form-control"  name="val4" style="width:100px;display: inline;" placeholder="控制值4" type="text" /></td>
-                            <td><input id="scenval5" class="form-control"  name="val5" style="width:100px;display: inline;" placeholder="控制值5" type="text" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table id="infotable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-
-                    <tbody>
-                        <tr>
-                            <td colspan="5"align="left">
-
-                                <span>
-                                    信息点:
-                                </span>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infonum" name="infonum" style="width:100px; height: 30px"></select>
-                                <span style=" margin-left: 0px;">
-                                    偏差值:
-                                </span>
-
-                                <input id="offset" class="form-control"  name="offset" style="width:50px;display: inline;" placeholder="偏差值" type="text" />
-                            </td>
-
-                        </tr>
-                        <tr style=" height: 40px;">
-                            <th></th>
-                            <th>条件1</th>
-                            <th>条件2</th>
-                            <th>条件3</th>
-                            <th>条件4</th>
-                        </tr>
-                        <tr>
-                            <td>读数值</td>
-                            <td><input  class="form-control" id="info_1" name="info1" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
-                            <td><input  class="form-control" id="info_2" name="info2" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
-                            <td><input  class="form-control" id="info_3" name="info3" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
-                            <td><input  class="form-control" id="info_4" name="info4" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td>控制值</td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval1" name="infoval1" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval2" name="infoval2" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval3" name="infoval3" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval4" name="infoval4" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>     
-
-
-
-            </form>                        
-        </div>
-
-        <div id="dialog-edit"  class="bodycenter" style=" display: none"  title="回路修改">
-            <form action="" method="POST" id="form2" onsubmit="return modifyLoopName()">  
-                <input type="hidden" id="hide_id" name="hide_id" />
-                <input type="hidden" name="pid" value="${param.pid}"/>
-                <input type="hidden" id="l_deployment" name="l_deployment" />
-                <table  >
-                    <tbody>
-
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >&emsp;&emsp;站号</span>&nbsp;
-                                <input id="l_site1"  class="form-control" name="l_site" style="display: inline;" placeholder="站号" type="text">
-
-                            <td></td>
-                            <td>
-                                <span style="margin-left:0px;" >回路名称</span>&nbsp;
-                                <input id="l_name1" class="form-control"  name="l_name" style="display: inline;" placeholder="请输入回路名称" type="text">
-                            </td>
-                            </td>
-                            </td>
-                        </tr> 
-
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
-                                <span class="menuBox">
-                                    <input id="l_pos1"  class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
-                                </span>
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:0px;" >工作方式</span>&nbsp;
-                                <span class="menuBox">
-                                    <select class="easyui-combobox" id="l_worktype1" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
-                                        <option value="3">时间</option>
-                                        <option value="5">场景</option>
-                                        <option value="9">信息点</option>
-                                    </select>
-                                </span>
-                            </td>
-                        </tr>                 
-                        <tr>
-                            <td>
-
-                                <span style="margin-left:0px;" >互斥模式</span>&nbsp;
-                                <span class="menuBox">
-
+                                    <span style="margin-left:0px;" >互斥模式</span>&nbsp;
                                     <span class="menuBox">
-                                        <select class="easyui-combobox" id="l_mutex1" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
-                                            <option value="1">有</option> 
-                                            <option value="0">无</option> 
-                                        </select>
-                                    </span>
-                                </span>  
+
+                                        <span class="menuBox">
+                                            <select class="easyui-combobox" id="l_mutex" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
+                                                <option value="1">有</option> 
+                                                <option value="0">无</option> 
+                                            </select>
+                                        </span>
+                                    </span>  
 
 
-                            </td>
-                            <td></td>
-                            <td>
+                                </td>
+                                <td></td>
+                                <td>
 
-                            </td>
-                        </tr> 
+                                </td>
+                            </tr> 
+                        </tbody>
+                    </table> 
 
-                    </tbody>
-                </table>
-
-                <table id="timetable1" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-                    <tbody>
-
+                    <table id="timetable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
 
                         <tr style=" height: 40px;">
                             <th></th>
@@ -1720,149 +1509,367 @@
                         </tr>
                         <tr>
                             <td>时间值</td>
-                            <td><input id="time11" name="time1" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
-                            <td><input id="time22" name="time2" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
-                            <td><input id="time33" name="time3" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
-                            <td><input id="time44" name="time4" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
-                            <td><input id="time55" name="time5" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
+                            <td><input id="time1" name="time1" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
+                            <td><input id="time2" name="time2" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
+                            <td><input id="time3" name="time3" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
+                            <td><input id="time4" name="time4" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
+                            <td><input id="time5" name="time5" style=" height: 28px; width: 75px;  " value="00:00"  class="easyui-timespinner"></td>
                         </tr>
                         <tr>
                             <td>控制值</td>
                             <td>
-                                <select class="easyui-combobox"  id="timeval11" class="form-control"  name="timeval1" style="width:75px;display: inline; height: 30px;" >
+                                <select class="easyui-combobox"  id="timeval1" class="form-control"  name="timeval1" style="width:75px;display: inline; height: 30px;" >
                                     <option value="1"> 开</option>
                                     <option value="0"> 关</option>
                                 </select>
                             </td>
                             <td>
-                                <select class="easyui-combobox"  id="timeval22" class="form-control"  name="timeval2" style="width:75px;display: inline; height: 30px;" >
+                                <select class="easyui-combobox"  id="timeval2" class="form-control"  name="timeval2" style="width:75px;display: inline; height: 30px;" >
                                     <option value="1"> 开</option>
                                     <option value="0"> 关</option>
                                 </select>
                             </td>
                             <td>
-                                <select class="easyui-combobox"  id="timeval33" class="form-control"  name="timeval3" style="width:75px;display: inline; height: 30px;" >
+                                <select class="easyui-combobox"  id="timeval3" class="form-control"  name="timeval3" style="width:75px;display: inline; height: 30px;" >
                                     <option value="1"> 开</option>
                                     <option value="0"> 关</option>
                                 </select>
                             </td>
                             <td>
-                                <select class="easyui-combobox"  id="timeval44" class="form-control"  name="timeval4" style="width:75px;display: inline; height: 30px;" >
+                                <select class="easyui-combobox"  id="timeval4" class="form-control"  name="timeval4" style="width:75px;display: inline; height: 30px;" >
                                     <option value="1"> 开</option>
                                     <option value="0"> 关</option>
                                 </select>
                             </td>
                             <td>
-                                <select class="easyui-combobox"  id="timeval55" class="form-control"  name="timeval5" style="width:75px;display: inline; height: 30px;" >
+                                <select class="easyui-combobox"  id="timeval5" class="form-control"  name="timeval5" style="width:75px;display: inline; height: 30px;" >
                                     <option value="1"> 开</option>
                                     <option value="0"> 关</option>
                                 </select>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-                <table id="scentable1" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-                    <tbody>
+                    </table>
 
-                        <tr style=" height: 40px;">
-                            <th></th>
-                            <th>条件1</th>
-                            <th>条件2</th>
-                            <th>条件3</th>
-                            <th>条件4</th>
-                            <th>条件5</th>
-                        </tr>
-                        <tr>
-                            <td>场景</td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen11" name="scen1" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen22" name="scen2" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen33" name="scen3" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen44" name="scen4" style="width:100px; height: 30px"></select></td>
-                            <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen55" name="scen5" style="width:100px; height: 30px"></select></td>
-                        </tr>
-                        <tr>
-                            <td>控制值</td>
-                            <td><input id="scenval11" class="form-control"  name="val1" style="width:100px;display: inline;" placeholder="控制值1" type="text" /></td>
-                            <td><input id="scenval22" class="form-control"  name="val2" style="width:100px;display: inline;" placeholder="控制值2" type="text" />&emsp;</td>
-                            <td><input id="scenval33" class="form-control"  name="val3" style="width:100px;display: inline;" placeholder="控制值3" type="text" />&emsp;</td>
-                            <td><input id="scenval44" class="form-control"  name="val4" style="width:100px;display: inline;" placeholder="控制值4" type="text" />&emsp;</td>
-                            <td><input id="scenval55" class="form-control"  name="val5" style="width:100px;display: inline;" placeholder="控制值5" type="text" />&emsp;</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table id="infotable1" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-                    <tbody>
+                    <table id="scentable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
 
-                        <tr>
+                        <tbody>
+                            <tr style=" height: 40px;">
+                                <th></th>
+                                <th>条件1</th>
+                                <th>条件2</th>
+                                <th>条件3</th>
+                                <th>条件4</th>
+                                <th>条件5</th>
+                            </tr>
+                            <tr>
+                                <td>场景</td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen1" name="scen1" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen2" name="scen2" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen3" name="scen3" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen4" name="scen4" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen5" name="scen5" style="width:100px; height: 30px"></select></td>
+                            </tr>
+                            <tr>
+                                <td>控制值</td>
+                                <td><input id="scenval1" class="form-control"  name="val1" style="width:100px;display: inline;" placeholder="控制值1" type="text" /></td>
+                                <td><input id="scenval2" class="form-control"  name="val2" style="width:100px;display: inline;" placeholder="控制值2" type="text" /></td>
+                                <td><input id="scenval3" class="form-control"  name="val3" style="width:100px;display: inline;" placeholder="控制值3" type="text" /></td>
+                                <td><input id="scenval4" class="form-control"  name="val4" style="width:100px;display: inline;" placeholder="控制值4" type="text" /></td>
+                                <td><input id="scenval5" class="form-control"  name="val5" style="width:100px;display: inline;" placeholder="控制值5" type="text" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="infotable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
 
-                            <td colspan="5"align="left">
+                        <tbody>
+                            <tr>
+                                <td colspan="5"align="left">
 
-                                <span>
-                                    信息点:
-                                </span>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infonum1" name="infonum" style="width:100px; height: 30px;"></select>
-                                <span style=" margin-left: 0px;">
-                                    偏差值:
-                                </span>
-                                <input id="offset1" class="form-control"  name="offset" style="width:50px;display: inline;" placeholder="偏差值" type="text" />
-                            </td>
-                        </tr>
-                        <tr style=" height: 40px;">
-                            <th></th>
-                            <th>条件1</th>
-                            <th>条件2</th>
-                            <th>条件3</th>
-                            <th>条件4</th>
-                        </tr>
-                        <tr>
-                            <td>读数值</td>
-                            <td>
-                                <input  class="form-control" id="info_11" name="info1" style="width:60px;display: inline;" placeholder="值" type="text" />
-                            </td>
-                            <td>
-                                <input  class="form-control" id="info_22" name="info2" style="width:60px;display: inline;" placeholder="值" type="text" />
-                            </td>
-                            <td><input  class="form-control" id="info_33" name="info3" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
-                            <td><input  class="form-control" id="info_44" name="info4" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
-                        </tr>
-                        <tr>
-                            <td>控制值</td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval11" name="infoval1" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval22" name="infoval2" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval33" name="infoval3" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
+                                    <span>
+                                        信息点:
+                                    </span>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infonum" name="infonum" style="width:100px; height: 30px"></select>
+                                    <span style=" margin-left: 0px;">
+                                        偏差值:
+                                    </span>
 
-                            </td>
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval44" name="infoval4" style="width:60px; height: 30px">
-                                    <option value="0" >关</option>
-                                    <option value="1" >开</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> 
-            </form>
-        </div>
+                                    <input id="offset" class="form-control"  name="offset" style="width:50px;display: inline;" placeholder="偏差值" type="text" />
+                                </td>
+
+                            </tr>
+                            <tr style=" height: 40px;">
+                                <th></th>
+                                <th>条件1</th>
+                                <th>条件2</th>
+                                <th>条件3</th>
+                                <th>条件4</th>
+                            </tr>
+                            <tr>
+                                <td>读数值</td>
+                                <td><input  class="form-control" id="info_1" name="info1" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
+                                <td><input  class="form-control" id="info_2" name="info2" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
+                                <td><input  class="form-control" id="info_3" name="info3" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
+                                <td><input  class="form-control" id="info_4" name="info4" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
+                            </tr>
+                            <tr>
+                                <td>控制值</td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval1" name="infoval1" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval2" name="infoval2" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval3" name="infoval3" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval4" name="infoval4" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>     
 
 
-        <div id="dialog-excel"  class="bodycenter"  style=" display: none" title="导入Excel">
-            <input type="file" id="excel-file" style=" height: 40px;">
-            <table id="warningtable"></table>
-        </div>
+
+                </form>                        
+            </div>
+
+            <div id="dialog-edit"  class="bodycenter" style=" display: none"  title="回路修改">
+                <form action="" method="POST" id="form2" onsubmit="return modifyLoopName()">  
+                    <input type="hidden" id="hide_id" name="hide_id" />
+                    <input type="hidden" name="pid" value="${param.pid}"/>
+                    <input type="hidden" id="l_deployment" name="l_deployment" />
+                    <table  >
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <span style="margin-left:0px;" >&emsp;&emsp;站号</span>&nbsp;
+                                    <input id="l_site1"  class="form-control" name="l_site" style="display: inline;" placeholder="站号" type="text">
+
+                                <td></td>
+                                <td>
+                                    <span style="margin-left:0px;" >回路名称</span>&nbsp;
+                                    <input id="l_name1" class="form-control"  name="l_name" style="display: inline;" placeholder="请输入回路名称" type="text">
+                                </td>
+                                </td>
+                                </td>
+                            </tr> 
+
+                            <tr>
+                                <td>
+                                    <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
+                                    <span class="menuBox">
+                                        <input id="l_pos1"  class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
+                                    </span>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <span style="margin-left:0px;" >工作方式</span>&nbsp;
+                                    <span class="menuBox">
+                                        <select class="easyui-combobox" id="l_worktype1" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">          
+                                            <option value="3">时间</option>
+                                            <option value="5">场景</option>
+                                            <option value="9">信息点</option>
+                                        </select>
+                                    </span>
+                                </td>
+                            </tr>                 
+                            <tr>
+                                <td>
+
+                                    <span style="margin-left:0px;" >互斥模式</span>&nbsp;
+                                    <span class="menuBox">
+
+                                        <span class="menuBox">
+                                            <select class="easyui-combobox" id="l_mutex1" name="l_mutex"  data-options='editable:false,valueField:"id", textField:"text"' style=" height: 30px">    
+                                                <option value="0"  selected="true">无</option> 
+                                                <option value="1" >有</option> 
+
+                                            </select>
+                                        </span>
+                                    </span>  
+
+
+                                </td>
+                                <td></td>
+                                <td>
+
+                                </td>
+                            </tr> 
+
+                        </tbody>
+                    </table>
+
+                    <table id="timetable1" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
+                        <tbody>
+
+
+                            <tr style=" height: 40px;">
+                                <th></th>
+                                <th>条件1</th>
+                                <th>条件2</th>
+                                <th>条件3</th>
+                                <th>条件4</th>
+                                <th>条件5</th>
+                            </tr>
+                            <tr>
+                                <td>时间值</td>
+                                <td><input id="time11" name="time1" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
+                                <td><input id="time22" name="time2" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
+                                <td><input id="time33" name="time3" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
+                                <td><input id="time44" name="time4" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
+                                <td><input id="time55" name="time5" style=" height: 28px; width: 75px;  "  class="easyui-timespinner"></td>
+                            </tr>
+                            <tr>
+                                <td>控制值</td>
+                                <td>
+                                    <select class="easyui-combobox"  id="timeval11" class="form-control"  name="timeval1" style="width:75px;display: inline; height: 30px;" >
+                                        <option value="1"> 开</option>
+                                        <option value="0"> 关</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox"  id="timeval22" class="form-control"  name="timeval2" style="width:75px;display: inline; height: 30px;" >
+                                        <option value="1"> 开</option>
+                                        <option value="0"> 关</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox"  id="timeval33" class="form-control"  name="timeval3" style="width:75px;display: inline; height: 30px;" >
+                                        <option value="1"> 开</option>
+                                        <option value="0"> 关</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox"  id="timeval44" class="form-control"  name="timeval4" style="width:75px;display: inline; height: 30px;" >
+                                        <option value="1"> 开</option>
+                                        <option value="0"> 关</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox"  id="timeval55" class="form-control"  name="timeval5" style="width:75px;display: inline; height: 30px;" >
+                                        <option value="1"> 开</option>
+                                        <option value="0"> 关</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="scentable1" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
+                        <tbody>
+
+                            <tr style=" height: 40px;">
+                                <th></th>
+                                <th>条件1</th>
+                                <th>条件2</th>
+                                <th>条件3</th>
+                                <th>条件4</th>
+                                <th>条件5</th>
+                            </tr>
+                            <tr>
+                                <td>场景</td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen11" name="scen1" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen22" name="scen2" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen33" name="scen3" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen44" name="scen4" style="width:100px; height: 30px"></select></td>
+                                <td><select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="scen55" name="scen5" style="width:100px; height: 30px"></select></td>
+                            </tr>
+                            <tr>
+                                <td>控制值</td>
+                                <td><input id="scenval11" class="form-control"  name="val1" style="width:100px;display: inline;" placeholder="控制值1" type="text" /></td>
+                                <td><input id="scenval22" class="form-control"  name="val2" style="width:100px;display: inline;" placeholder="控制值2" type="text" />&emsp;</td>
+                                <td><input id="scenval33" class="form-control"  name="val3" style="width:100px;display: inline;" placeholder="控制值3" type="text" />&emsp;</td>
+                                <td><input id="scenval44" class="form-control"  name="val4" style="width:100px;display: inline;" placeholder="控制值4" type="text" />&emsp;</td>
+                                <td><input id="scenval55" class="form-control"  name="val5" style="width:100px;display: inline;" placeholder="控制值5" type="text" />&emsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="infotable1" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
+                        <tbody>
+
+                            <tr>
+
+                                <td colspan="5"align="left">
+
+                                    <span>
+                                        信息点:
+                                    </span>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infonum1" name="infonum" style="width:100px; height: 30px;"></select>
+                                    <span style=" margin-left: 0px;">
+                                        偏差值:
+                                    </span>
+                                    <input id="offset1" class="form-control"  name="offset" style="width:50px;display: inline;" placeholder="偏差值" type="text" />
+                                </td>
+                            </tr>
+                            <tr style=" height: 40px;">
+                                <th></th>
+                                <th>条件1</th>
+                                <th>条件2</th>
+                                <th>条件3</th>
+                                <th>条件4</th>
+                            </tr>
+                            <tr>
+                                <td>读数值</td>
+                                <td>
+                                    <input  class="form-control" id="info_11" name="info1" style="width:60px;display: inline;" placeholder="值" type="text" />
+                                </td>
+                                <td>
+                                    <input  class="form-control" id="info_22" name="info2" style="width:60px;display: inline;" placeholder="值" type="text" />
+                                </td>
+                                <td><input  class="form-control" id="info_33" name="info3" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
+                                <td><input  class="form-control" id="info_44" name="info4" style="width:60px;display: inline;" placeholder="值" type="text" /></td>
+                            </tr>
+                            <tr>
+                                <td>控制值</td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval11" name="infoval1" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval22" name="infoval2" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval33" name="infoval3" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+
+                                </td>
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="infoval44" name="infoval4" style="width:60px; height: 30px">
+                                        <option value="0" >关</option>
+                                        <option value="1" >开</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </form>
+            </div>
+
+
+            <div id="dialog-excel"  class="bodycenter"  style=" display: none" title="导入Excel">
+                <input type="file" id="excel-file" style=" height: 40px;">
+                <table id="warningtable"></table>
+            </div>
 
 
     </body>

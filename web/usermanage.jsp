@@ -131,7 +131,6 @@
 
             }
 
-
             /*           ipad竖屏*/
             @media screen and (min-width:767px) and (max-width:1023px) {  
                  #adddiv{
@@ -627,7 +626,7 @@
         </div>
         <div class="bootstrap-table">
             <div class="fixed-table-container">
-                <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
+                <table id="gravidaTable" style="width:100%;" class="table table-hover table-striped">
                 </table>  
             </div>
         </div>

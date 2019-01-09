@@ -835,72 +835,31 @@
 
         <div class="row" >
             <div class="col-xs-12 col-sm-12 col-md-12  ">
-                <!--                            <div class="btn-group"  style="float:left;position:relative;z-index:100;margin-left: 10px; margin-top: 10px;">
-                                                <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
-                                                    <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
-                                                </button>
-                                                <button class="btn btn-primary ctrol" onclick="modifyModal()" id="xiugai1">
-                                                    <span class="glyphicon glyphicon-pencil">&nbsp;编辑</span>
-                                                </button>
-                                                <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
-                                                    <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
-                                                </button>
-                                            </div>-->
-                <!--                            <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 0px; margin-top: 10px;">
-                                                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
-                                                    <span>导出模板</span>
-                                                </button>
-                                                <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
-                                                    <span class="glyphicon glyphicon-plus-sign">导入Excel</span>
-                                                </button>
-                                                <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                                                    <span name="xxx" id="110">导出Excel</span>
-                                                </button>
-                                            </div>-->
             </div>
         </div>
     </div>
 </div>
-<!--        <div class="btn-group"  style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
-            <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
-                <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
-            </button>
-            <button class="btn btn-primary ctrol" onclick="modifyModal()" id="xiugai1">
-                <span class="glyphicon glyphicon-pencil">&nbsp;编辑</span>
-            </button>
-            <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
-                <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
-            </button>
-            <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
-                <span>导出Excel模板</span>
-            </button>
-            <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
-                <span class="glyphicon glyphicon-plus-sign">&nbsp;导入Excel</span>
-            </button>
-            <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                <span name="xxx" id="110">导出Excel</span>
-            </button>
-        </div>-->
+
 
 <div class="btn-group"  style="float:left;position:relative;z-index:100;margin-left: 10px; margin-top: 10px;">
-    <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
+    <button class="btn btn-success btn-sm  ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj33" id="add">
         <span class="glyphicon glyphicon-plus-sign">&nbsp;添加</span>
     </button>
-    <button class="btn btn-primary ctrol" onclick="modifyModal()" id="xiugai1">
+    <button class="btn btn-primary btn-sm ctrol" onclick="modifyModal()" id="xiugai1">
         <span class="glyphicon glyphicon-pencil">&nbsp;编辑</span>
     </button>
-    <button class="btn btn-danger ctrol" onclick="deleteGateway()" id="shanchu">
+    <button class="btn btn-danger btn-sm ctrol" onclick="deleteGateway()" id="shanchu">
         <span class="glyphicon glyphicon-trash">&nbsp;删除</span>
     </button>
 </div>
 <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-    <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
+    <button type="button" id="btn_download" class="btn btn-sm btn-primary" onClick ="$('#wgmb').tableExport({type: 'excel', escape: 'false'})">
         <span>导出模板</span>
     </button>
-    <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
+    <button class="btn btn-success btn-sm ctrol" onclick="excel()" id="addexcel" >
         <span class="glyphicon glyphicon-plus-sign">导入Excel</span>
     </button>
-    <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+    <button type="button" id="btn_download" class="btn btn-primary btn-sm" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
         <span name="xxx" id="110">导出Excel</span>
     </button>
 </div>

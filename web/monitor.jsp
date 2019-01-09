@@ -98,7 +98,7 @@
             }
             $(function () {
                 $('#gravidaTable').bootstrapTable({
-                    showExport: true, //是否显示导出
+                   // showExport: true, //是否显示导出
                     exportDataType: "basic", //basic', 'a
                     //url: "loop.loopForm.getLoopList.action",
                     columns: [
@@ -189,6 +189,7 @@
                     pageSize: 50,
                     showRefresh: true,
                     showToggle: true,
+                    showColumns: true,
                     // 设置默认分页为 50
                     pageList: [50, 100, 150, 200, 250],
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态

@@ -28,7 +28,9 @@
             .a-upload:hover { color: #444; background: #eee; border-color: #ccc; text-decoration: none } 
 
             .bodycenter { text-align: -webkit-center; text-align: -moz-center; width: 600px; margin: auto; } 
-
+            .col-md-9 left{
+                margin-left: -50px;
+            }
             .t tr td{
                 border: 1px solid #16645629;
                 text-align:center;
@@ -92,10 +94,10 @@
                 #type{
                     width: 100px;
                 }
-                 #dialog-edit input{
+                #dialog-edit input{
                     width: 100px;
                 }
-                 #type1{
+                #type1{
                     width: 100px;
                 }
 
@@ -162,13 +164,14 @@
             function  Search1() {
                 var obj = {};
                 var ooo = $("#form1").serializeObject();
-                obj.l_comaddr = ooo.l_comaddr;
-                obj.p_comaddr = ooo.l_comaddr;
-                obj.pid = "${param.pid}";
-                obj.p_deployment = ooo.deplayment;
+                ooo.p_deployment = ooo.deplayment;
+                console.log(ooo);
+//                obj.l_comaddr = ooo.l_comaddr;
+//                obj.p_comaddr = ooo.l_comaddr;
+//                obj.p_deployment = ooo.deplayment;
                 var opt = {
-//                                    url: "plan.planForm.getSensorPlan.action",
-                    query: obj,
+                    url: "plan.planForm.getSensorPlan.action",
+                    query: ooo,
                     silent: false
                 };
                 $("#table0").bootstrapTable('refresh', opt);
@@ -235,7 +238,7 @@
 
 
             $(function () {
-                
+
                 size();
 
                 $('#table0').bootstrapTable({
@@ -949,7 +952,7 @@
                 dealsend2("10", data, "deployscenPlanCB", ooo.l_comaddr, val, ooo1, scenenum, "${param.action}");
 
             }
-            
+
             function size() {
                 var Wwidth = $(window).width();
                 if (Wwidth > 768) {
@@ -969,359 +972,371 @@
         <title>JSP Page</title>
     </head>
     <body id="panemask"> 
-        <form id="form1">
+        <div id="content" class="row-fluid">
+            <form id="form1">
+                <input type="hidden" name="pid" value="${param.pid}"/>
+                <div class=" row " >
+                    <div class="col-xs-12 col-sm-6 col-md-3 " >
+                        <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+                                    <td > &emsp;网关名称:</td>
+                                    <td >
+                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    </td>
+                                    <td  >
+                                        &emsp;部署情况:
+                                    </td>
+                                    <td >
+                                        <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px; width: 80px;">
+                                            <option value ="">全部</option>
+                                            <option value="1">已部署</option>     
+                                            <option value="0">未部署</option> 
+                                        </select>
+                                    </td>
+                                    <td style=" padding-left: 10px;">
+                                        <button class="btn btn-success  btn-sm ctrol" type="button"  onclick="Search1()" data-toggle="modal" data-target="#pjj33" id="add">
+                                            筛选
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-9 " >
+                        <table  style="  margin-top: 15px; align-content:  left;">
+                            <tbody>
+                                <tr>
+                                    <td >
+                                        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
 
-            <input type="hidden" name="p_type" readonly="true"/>
-            <input type="hidden" name="pid" value="${param.pid}"/>
-            <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
-                <div id="selectlist">
-                    <span style="margin-left:10px;">
-                        网关名称
-                        &nbsp;</span>
-                    <span class="menuBox">
-                        <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
-                    </span>  
+                                            <button class="btn btn-primary btn-sm ctrol" onclick="deployscenPlan(1)" type="button"   id="xiugai1">
+                                                部署
+                                            </button>
+                                            <button class="btn btn-danger btn-sm ctrol" onclick="deployscenPlan(0)" type="button" id="shanchu">
+                                                移除
+                                            </button>    
+                                        </div> 
+                                    </td>
 
-                    <span style="margin-left:5px;">
-                        部署情况
-                        &nbsp;</span>
-                    <select class="easyui-combobox" name="deplayment"  id="busu" style="height: 30px">
-                        <option value="1">已部署</option>     
-                        <option value="0">未部署</option> 
-                    </select>   
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div id="cz">
-                    <button  type="button" style="margin-left:20px;" onclick="Search1()" class="btn btn-success btn-sm">
-                        筛选
-                    </button>
+            </form>
 
-                    <button style="margin-left:10px;" id="btndeploySensor" onclick="deployscenPlan(1)" type="button" class="btn btn-success btn-sm">部署</button>
 
-                    <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="deployscenPlan(0)" class="btn btn-success btn-sm">移除</button>
-                </div>
 
+
+            <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
+                <button class="btn btn-sm btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj5" id="add" >  
+                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
+                </button>
+
+                <button class="btn btn-sm btn-primary ctrol"  onclick="editshow();" id="update" >
+                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑
+                </button>
+                <button class="btn btn-danger btn-sm ctrol" onclick="removeshow()"  id="shanchu">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
+                </button>
+                <button type="button" id="btn_download" class="btn btn-sm btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+                    <span >导出Excel</span>
+                </button>
+            </div>
+
+            <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
+            </table> 
+
+            <div id="dialog-add"  class="bodycenter"  style=" display: none" title="场景方案添加">
+
+                <form action="" method="POST" id="formadd" onsubmit="return addscenPlan()">      
+                    <input type="hidden" name="pid" value="${param.pid}"/>
+                    <input type="hidden" id="p_comaddr" name="p_comaddr" value="1"/>
+                    <input type="hidden" name="p_type" value="1"/>
+                    <input type="hidden" id="p_scenenum" name="p_scenenum" value=""/>
+                    <input type="hidden" id="p_show" name="p_show" value="1"/>
+                    <!--console.log(scennum);-->
+
+                    <table>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <span >&nbsp;&nbsp;&nbsp;
+                                        场景名称
+                                    </span>&nbsp;
+                                    <input id="p_name" class="form-control"  name="p_name" style="width:150px;display: inline;" placeholder="场景名称" type="text"></td> 
+                                </td>
+                                <td></td>
+                                <td>
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+                    <table id="scentable" style="border-collapse:separate; border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; width: 90%" class="t" >
+                        <tbody>
+                            <tr style=" text-align: center; height: 40px;">
+                                <th>信息点号</th>
+                                <th>下限值</th>
+                                <th>上限值</th>
+                            </tr>
+                            <tr >
+                                <td>
+
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info1" name="info1" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+
+                                    <input id="down1" style="width:100px; height: 30px;" value="0" name="down1">
+                                </td>
+
+                                <td>
+
+                                    <input id="up1" style="width:100px; height: 30px;" value="0" name="up1">
+
+                                </td>
+
+
+
+                            </tr>
+
+                            <tr >
+                                <td>
+
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info2" name="info2" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+
+                                    <input id="down2" style="width:100px; height: 30px;" value="0" name="down2">
+                                </td>
+
+                                <td>
+
+                                    <input id="up2" style="width:100px; height: 30px;" value="0" name="up2">
+
+                                </td>
+
+
+
+                            </tr>
+
+                            <tr >
+                                <td>
+
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info3" name="info3" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <input id="down3" style="width:100px; height: 30px;" value="0" name="down3">
+                                </td>
+
+                                <td>
+
+                                    <input id="up3" style="width:100px; height: 30px;" value="0" name="up3">
+
+                                </td>
+
+
+
+
+                            </tr>
+
+                            <tr >
+                                <td>
+
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info4" name="info4" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+
+                                    <input id="down4" style="width:100px; height: 30px;" value="0" name="down4">
+                                </td>
+
+
+                                <td>
+
+                                    <input id="up4" style="width:100px; height: 30px;" value="0" name="up4">
+
+                                </td>
+
+
+
+                            </tr>
+
+                            <tr >
+                                <td>
+
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info5" name="info5" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+
+                                    <input id="down5" style="width:100px; height: 30px;" value="0" name="down5">
+                                </td>
+
+                                <td>
+
+                                    <input id="up5" style="width:100px; height: 30px;" value="0" name="up5">
+
+                                </td>
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>                        
             </div>
 
 
+            <div id="dialog-edit"  class="bodycenter" style=" display: none"  title="场景方案修改">
+                <form action="" method="POST" id="form2" onsubmit="return modifyLoopName()">  
+                    <input type="hidden" id="hidden_id" name="id">  
+                    <input type="hidden" name="pid" value="${param.pid}"/>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span >&nbsp;&nbsp;&nbsp;
+                                        场景名称
+                                    </span>&nbsp;
+                                    <input id="p_name1" class="form-control"  name="p_name" style="width:150px;display: inline;" placeholder="请输入方案名" type="text"></td> 
+                                </td>
+                                <td></td>
+                                <td>
+                                    <!--                                 <span style="margin-left: 20px;"  >
+                                                                        场景号
+                                                                    </span>
+                                                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="p_scenenum1" name="p_scenenum" style="width:70px; height: 30px">
+                                                                                <option value="0">0</option>
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                <option value="3">3</option>
+                                                                                <option value="4">4</option>
+                                                                                <option value="5">5</option>
+                                                                                <option value="6">6</option>
+                                                                                <option value="7">7</option>
+                                                                                <option value="8">8</option>
+                                                                                <option value="9">9</option>
+                                                                    </select> -->
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                    <table id="scentable" style="border-collapse:separate; border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; align-content:  center; width: 90%;"  class="t">
+                        <tbody>
+                            <tr style=" height: 40px;">
+                                <th>信息点</th>
+                                <th>下限值</th>
+                                <th>上限值</th> 
+                            </tr>
+                            <tr >
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="info1" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <input id="down11" style="width:100px; height: 30px;" value="0" name="down1">
+                                </td>
+                                <td>
+                                    <input id="up11" style="width:100px; height: 30px;" value="0" name="up1">
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr >
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info22" name="info2" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <input id="down22" style="width:100px; height: 30px;" value="0" name="down2">
+                                </td>
+
+                                <td>
+                                    <input id="up22" style="width:100px; height: 30px;" value="0" name="up2">
+
+                                </td>
+
+                            </tr>
+
+                            <tr >
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info33" name="info3" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <input id="down33" style="width:100px; height: 30px;" value="0" name="down3">
+                                </td>
+
+
+                                <td>
+                                    <input id="up33" style="width:100px; height: 30px;" value="0" name="up3">
+
+                                </td>
+
+
+                            </tr>
+
+                            <tr >
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info44" name="info4" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
 
+                                <td>
+                                    <input id="down44" style="width:100px; height: 30px;" value="0" name="down4">
+                                </td>
 
-        </form>
+                                <td>
+                                    <input id="up44" style="width:100px; height: 30px;" value="0" name="up4">
 
+                                </td>
 
 
-        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">
-            <button class="btn btn-success ctrol" onclick="showDialog()" data-toggle="modal" data-target="#pjj5" id="add" >  
-                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
-            </button>
+                            </tr>
 
-            <button class="btn btn-primary ctrol"  onclick="editshow();" id="update" >
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑
-            </button>
-            <button class="btn btn-danger ctrol" onclick="removeshow()"  id="shanchu">
-                <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
-            </button>
-            <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                <span >导出Excel</span>
-            </button>
-        </div>
+                            <tr >
+                                <td>
+                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info55" name="info5" style="width:100px; height: 30px">
+                                    </select>
+                                </td>
 
-        <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
-        </table> 
 
-        <div id="dialog-add"  class="bodycenter"  style=" display: none" title="场景方案添加">
+                                <td>
+                                    <input id="down55" style="width:100px; height: 30px;" value="0" name="down5">
+                                </td>
 
-            <form action="" method="POST" id="formadd" onsubmit="return addscenPlan()">      
-                <input type="hidden" name="pid" value="${param.pid}"/>
-                <input type="hidden" id="p_comaddr" name="p_comaddr" value="1"/>
-                <input type="hidden" name="p_type" value="1"/>
-                <input type="hidden" id="p_scenenum" name="p_scenenum" value=""/>
-                <input type="hidden" id="p_show" name="p_show" value="1"/>
-                <!--console.log(scennum);-->
+                                <td>
+                                    <input id="up55" style="width:100px; height: 30px;" value="0" name="up5">
 
-                <table>
-                    <tbody>
-                        <tr>
+                                </td>
 
-                            <td>
-                                <span >&nbsp;&nbsp;&nbsp;
-                                    场景名称
-                                </span>&nbsp;
-                                <input id="p_name" class="form-control"  name="p_name" style="width:150px;display: inline;" placeholder="场景名称" type="text"></td> 
-                            </td>
-                            <td></td>
-                            <td>
-                            </td>
-                        </tr>
+                            </tr>
+                        </tbody>
+                    </table>
 
-
-                    </tbody>
-                </table>
-
-                <table id="scentable" style="border-collapse:separate; border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; width: 90%" class="t" >
-                    <tbody>
-                        <tr style=" text-align: center; height: 40px;">
-                            <th>信息点号</th>
-                            <th>下限值</th>
-                            <th>上限值</th>
-                        </tr>
-                        <tr >
-                            <td>
-
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info1" name="info1" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-
-                                <input id="down1" style="width:100px; height: 30px;" value="0" name="down1">
-                            </td>
-
-                            <td>
-
-                                <input id="up1" style="width:100px; height: 30px;" value="0" name="up1">
-
-                            </td>
-
-
-
-                        </tr>
-
-                        <tr >
-                            <td>
-
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info2" name="info2" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-
-                                <input id="down2" style="width:100px; height: 30px;" value="0" name="down2">
-                            </td>
-
-                            <td>
-
-                                <input id="up2" style="width:100px; height: 30px;" value="0" name="up2">
-
-                            </td>
-
-
-
-                        </tr>
-
-                        <tr >
-                            <td>
-
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info3" name="info3" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-                                <input id="down3" style="width:100px; height: 30px;" value="0" name="down3">
-                            </td>
-
-                            <td>
-
-                                <input id="up3" style="width:100px; height: 30px;" value="0" name="up3">
-
-                            </td>
-
-
-
-
-                        </tr>
-
-                        <tr >
-                            <td>
-
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info4" name="info4" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-
-                                <input id="down4" style="width:100px; height: 30px;" value="0" name="down4">
-                            </td>
-
-
-                            <td>
-
-                                <input id="up4" style="width:100px; height: 30px;" value="0" name="up4">
-
-                            </td>
-
-
-
-                        </tr>
-
-                        <tr >
-                            <td>
-
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info5" name="info5" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-
-                                <input id="down5" style="width:100px; height: 30px;" value="0" name="down5">
-                            </td>
-
-                            <td>
-
-                                <input id="up5" style="width:100px; height: 30px;" value="0" name="up5">
-
-                            </td>
-
-
-
-                        </tr>
-                    </tbody>
-                </table>
-
-            </form>                        
-        </div>
-
-
-        <div id="dialog-edit"  class="bodycenter" style=" display: none"  title="场景方案修改">
-            <form action="" method="POST" id="form2" onsubmit="return modifyLoopName()">  
-                <input type="hidden" id="hidden_id" name="id">  
-                <input type="hidden" name="pid" value="${param.pid}"/>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span >&nbsp;&nbsp;&nbsp;
-                                    场景名称
-                                </span>&nbsp;
-                                <input id="p_name1" class="form-control"  name="p_name" style="width:150px;display: inline;" placeholder="请输入方案名" type="text"></td> 
-                            </td>
-                            <td></td>
-                            <td>
-                                <!--                                 <span style="margin-left: 20px;"  >
-                                                                    场景号
-                                                                </span>
-                                                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="p_scenenum1" name="p_scenenum" style="width:70px; height: 30px">
-                                                                            <option value="0">0</option>
-                                                                            <option value="1">1</option>
-                                                                            <option value="2">2</option>
-                                                                            <option value="3">3</option>
-                                                                            <option value="4">4</option>
-                                                                            <option value="5">5</option>
-                                                                            <option value="6">6</option>
-                                                                            <option value="7">7</option>
-                                                                            <option value="8">8</option>
-                                                                            <option value="9">9</option>
-                                                                </select> -->
-                            </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-                <table id="scentable" style="border-collapse:separate; border: 1px solid #16645629; margin-left: 10px; margin-top: 10px; align-content:  center; width: 90%;"  class="t">
-                    <tbody>
-                        <tr style=" height: 40px;">
-                            <th>信息点</th>
-                            <th>下限值</th>
-                            <th>上限值</th> 
-                        </tr>
-                        <tr >
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="info1" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-                                <input id="down11" style="width:100px; height: 30px;" value="0" name="down1">
-                            </td>
-                            <td>
-                                <input id="up11" style="width:100px; height: 30px;" value="0" name="up1">
-
-                            </td>
-
-
-                        </tr>
-
-                        <tr >
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info22" name="info2" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-                                <input id="down22" style="width:100px; height: 30px;" value="0" name="down2">
-                            </td>
-
-                            <td>
-                                <input id="up22" style="width:100px; height: 30px;" value="0" name="up2">
-
-                            </td>
-
-                        </tr>
-
-                        <tr >
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info33" name="info3" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-                                <input id="down33" style="width:100px; height: 30px;" value="0" name="down3">
-                            </td>
-
-
-                            <td>
-                                <input id="up33" style="width:100px; height: 30px;" value="0" name="up3">
-
-                            </td>
-
-
-                        </tr>
-
-                        <tr >
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info44" name="info4" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-                            <td>
-                                <input id="down44" style="width:100px; height: 30px;" value="0" name="down4">
-                            </td>
-
-                            <td>
-                                <input id="up44" style="width:100px; height: 30px;" value="0" name="up4">
-
-                            </td>
-
-
-                        </tr>
-
-                        <tr >
-                            <td>
-                                <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info55" name="info5" style="width:100px; height: 30px">
-                                </select>
-                            </td>
-
-
-                            <td>
-                                <input id="down55" style="width:100px; height: 30px;" value="0" name="down5">
-                            </td>
-
-                            <td>
-                                <input id="up55" style="width:100px; height: 30px;" value="0" name="up5">
-
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
-
-            </form>
-        </div>              
-
-
-
-
-
-
+                </form>
+            </div>              
     </body>
 </html>

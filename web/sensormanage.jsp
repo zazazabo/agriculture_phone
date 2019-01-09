@@ -14,7 +14,7 @@
         <script type="text/javascript" src="js/genel.js"></script>
         <script type="text/javascript" src="js/getdate.js"></script>
         <!--        <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+        <!--<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">-->
         <style>
             /*            手机*/
             @media screen and (min-width:0px) and (max-width:767px) {  
@@ -474,66 +474,6 @@
             }
 
 
-//
-//            function  readSensorCB(obj) {
-//                $('#panemask').hideLoading();
-//                if (obj.status == "success") {
-//                    var data = Str2BytesH(obj.data);
-//                    var v = "";
-//                    for (var i = 0; i < data.length; i++) {
-//                        v = v + sprintf("%02x", data[i]) + " ";
-//                    }
-//                    console.log(v);
-//                    if (data[1] == 0x03) {
-//                        layerAler("读取成功");
-//                        var len = data[2];
-//                        var info = data[3] * 256 + data[4];
-//                        var site = data[5] * 256 + data[6];
-//                        var regpos = data[7] * 256 + data[8];
-//                        var w1 = data[9];
-//                        var w2 = data[10];
-//                        var strw1 = w1 & 0x01 == 0x01 ? "开关量" : "模拟量";
-//                        var strw2 = w2 & 0x01 == 0x01 ? "打开" : "关闭";
-//                        ; //                        var worktype = data[9] * 256 + data[10];
-//                        var dataval = data[11] * 256 + data[12];
-//                        var f1 = data[13];
-//                        var strw3 = f1 & 0x01 == 0x01 ? "有" : "无";
-//                        var faultnum = data[15] * 256 + data[16];
-//
-//                        layerAler("信息点:" + info + "<br>" + "站号" + site + "<br>" + "数据位置"
-//                                + regpos + "<br>" + "工作模式:" + strw1 + "<br>" + "通信故障参数:"
-//                                + strw2 + "<br>" + "探测值：" + dataval + "<br>" + "故障:" + strw3 + "<br>"
-//                                + "通信出错次数:" + faultnum);
-//                    }
-//
-//                }
-//                console.log(obj);
-//            }
-//
-//            function readSensor() {
-//                var selects = $('#gravidaTable').bootstrapTable('getSelections');
-//                var o = $("#form1").serializeObject();
-//
-//                var vv = new Array();
-//                if (selects.length == 0) {
-//                    layerAler('请勾选表格数据'); //请勾选表格数据
-//                    return;
-//                }
-//                var ele = selects[0];
-//                o.l_comaddr = ele.l_comaddr;
-//                var vv = [];
-//                vv.push(1);
-//                vv.push(3);
-//                var info = parseInt(ele.infonum);
-//                var infonum = (2000 + info * 10) | 0x1000;
-//                vv.push(infonum >> 8 & 0xff);
-//                vv.push(infonum & 0xff);
-//                vv.push(0);
-//                vv.push(7); //寄存器数目 2字节                         
-//                var data = buicode2(vv);
-//                dealsend2("03", data, "readSensorCB", o.l_comaddr, 0, ele.id, info);
-//            }
-
             function deploySensorCB(obj) {
                 $('#panemask').hideLoading();
                 if (obj.status == "success") {
@@ -686,7 +626,7 @@
                 size();
                 $('#gravidaTable').bootstrapTable({
                     // url: 'lamp.lampform.getlampList.action',
-                    showExport: true, //是否显示导出
+                    //showExport: true, //是否显示导出
                     exportDataType: "basic", //basic', 'a
                     columns: [
                         {
@@ -773,7 +713,7 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle'
-                        }, 
+                        },
                         {
                             field: 'deplayment',
                             title: '部署情况', //部署情况
@@ -823,7 +763,7 @@
                             sortOrder: params.order,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr: $("#l_comaddr").val()
+                            l_comaddr: $("#l_comaddr2").combobox('getValue')
                         };   
                         return temp;  
                     }
@@ -891,11 +831,24 @@
 
                 });
 
-
                 $("#l_comaddr2").combobox({
-                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
+                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                    formatter: function (row) {
+                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                        var v = row.text + v1;
+                        row.id = row.id;
+                        row.text = v;
+                        var opts = $(this).combobox('options');
+                        return row[opts.textField];
+                    },
                     onLoadSuccess: function (data) {
-                        $(this).combobox('select', data[0].id);
+                        if (Array.isArray(data) && data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                data[i].text = data[i].name;
+                            }
+                            $(this).combobox('select', data[0].id);
+                        }
+
                     },
                     onSelect: function (record) {
                         var obj = {};
@@ -909,6 +862,7 @@
                         $("#gravidaTable").bootstrapTable('refresh', opt);
                     }
                 });
+
 
                 $('#excel-file').change(function (e) {
                     var files = e.target.files;
@@ -1064,68 +1018,160 @@
     </head>
 
     <body id="panemask">
-        <form id="formsearch">
-            <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
-                <div id="selectlist">
-                    <span style="margin-left:10px;">
-                        网关名称
-                        &nbsp;</span>
-                    <span class="menuBox">
-                        <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
-                    </span>  
 
-                    <span style="margin-left:5px;">
-                        部署情况
-                        &nbsp;</span>
-                    <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px">
-                        <option value ="-1">全部</option>
-                        <option value="1">已部署</option>     
-                        <option value="0">未部署</option> 
-                    </select>
+        <div id="content" class="row-fluid">
+
+            <div class=" row " >
+                <div class="col-xs-12 col-sm-5 col-md-3">
+                    <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
+                        <tbody>
+                            <tr>
+                                <td > &emsp;网关名称:</td>
+                                <td >
+                                    <input id="l_comaddr2" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                </td>
+                                <td  >
+                                    &emsp;部署情况:
+                                </td>
+                                <td >
+                                    <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px; width: 80px;">
+                                        <option value ="-1">全部</option>
+                                        <option value="1">已部署</option>     
+                                        <option value="0">未部署</option> 
+                                    </select>
+                                </td>
+                                <td style=" padding-left: 2px;">
+                                                             <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
+                                           筛选
+                                        </button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div id="cz">
-                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
-                        筛选
-                    </button>
+                <div class="col-xs-12 col-sm-7 col-md-2" >
 
-                    <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
+                    <table  style="  margin-top: 15px; align-content:  left;">
+                        <tbody>
+                            <tr>
+                                <td >
+                                    <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
+               
+                                        <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
+                                           部署
+                                        </button>
+                                        <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
+                                          移除
+                                        </button>    
+                                    </div> 
+                                </td>
 
-                    <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+
+
+
+                    <!--                    <div style="  margin-top: 10px; align-content:  center;">
+                                            <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
+                                                <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
+                                                    <span class="glyphicon glyphicon-pencil"></span>筛选
+                                                </button>
+                                                <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
+                                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;部署
+                                                </button>
+                                                <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
+                                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;移除
+                                                </button>    
+                                            </div>  
+                                        </div>-->
+
                 </div>
+                <!--                                       <div id="cz">
+                                            <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
+                                                筛选
+                                            </button>
+                        
+                                            <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
+                        
+                                            <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
+                                        </div>-->
 
             </div>
-        </form>
+
+        </div>
+
+
+
+
+        <!--        <form id="formsearch">
+                    <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
+                        <div id="selectlist">
+                            <span style="margin-left:10px;">
+                                网关名称
+                                &nbsp;</span>
+                            <span class="menuBox">
+                                <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                            </span>  
+        
+                            <span style="margin-left:5px;">
+                                部署情况
+                                &nbsp;</span>
+                            <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px">
+                                <option value ="-1">全部</option>
+                                <option value="1">已部署</option>     
+                                <option value="0">未部署</option> 
+                            </select>
+                        </div>
+                        <div id="cz">
+                            <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
+                                筛选
+                            </button>
+        
+                            <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
+        
+                            <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
+                        </div>
+        
+                    </div>
+                </form>-->
         <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-            <button class="btn btn-success ctrol"  onclick="showDialog();" data-toggle="modal" data-target="#pjj33" id="add">
+            <button class="btn btn-success  btn-sm  ctrol"  onclick="showDialog();" data-toggle="modal" data-target="#pjj33" id="add">
                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
             </button>
-            <button class="btn btn-primary ctrol" onclick="editlampInfo()"   id="xiugai1">
+            <button class="btn btn-primary  btn-sm ctrol" onclick="editlampInfo()"   id="xiugai1">
                 <span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑
             </button>
-            <button class="btn btn-danger ctrol" onclick="deleteSensor();" id="shanchu">
+            <button class="btn btn-danger  btn-sm ctrol" onclick="deleteSensor();" id="shanchu">
                 <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
             </button>    
         </div>
         <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-            <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#cgqmb').tableExport({type: 'excel', escape: 'false'})">
-                导出Excel模板
+            <button type="button" id="btn_download" class="btn  btn-primary  btn-sm" onClick ="$('#cgqmb').tableExport({type: 'excel', escape: 'false'})">
+                导出模板
             </button>
-            <button class="btn btn-success ctrol" onclick="excel()" id="addexcel" >
+            <button class="btn btn-success  btn-sm ctrol" onclick="excel()" id="addexcel" >
                 <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
                 导入Excel
             </button>          
-            <button type="button" id="btn_download" class="btn btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+            <button type="button" id="btn_download" class="btn btn-primary  btn-sm" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
                 导出Excel
             </button>
         </div>
-<!--        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-            <button class="btn btn-success ctrol"  onclick="addshow()">
-                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加到首页显示
-            </button>
-            <button class="btn btn-danger ctrol" onclick="removeshow();">
-                <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
-            </button>
-        </div>-->
+        <!--        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
+                    <button class="btn btn-success ctrol"  onclick="addshow()">
+                        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加到首页显示
+                    </button>
+                    <button class="btn btn-danger ctrol" onclick="removeshow();">
+                        <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
+                    </button>
+                </div>-->
 
         <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
         </table>
@@ -1204,7 +1250,6 @@
                             <td></td>
                             <td>
                                 <span style="margin-left:-20px;" >&#8195;&#8195;最大预警值</span>&nbsp;
-                                <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
                                 <input id="maxValue" value="" class="form-control" name="maxValue" style="display: inline;" placeholder="最大预警值" type="text">
                             </td>
                         </tr> 

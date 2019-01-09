@@ -15,22 +15,22 @@
         <style>
 
             .btn { margin-left: 10px;}
-             /*            手机*/
+            /*            手机*/
             @media screen and (min-width:0px) and (max-width:666px) {  
                 #l_comaddr{
                     width: 120px;
                 }
-                
+
                 #type{
                     width: 100px;
                 }
-                
+
                 #nowtime{
                     width: 100px;
                 }
-                
+
                 .btn { margin-left: 5px;}
-                
+
 
             }
             /*            手机横屏*/
@@ -38,15 +38,15 @@
                 #l_comaddr{
                     width: 150px;
                 }
-                
+
                 #type{
                     width: 150px;
                 }
-                
+
                 #nowtime{
                     width: 180px;
                 }
-                
+
                 .btn { margin-left: 10px;}
 
             }
@@ -155,36 +155,36 @@
 
                         v = v + sprintf("%02x", data[i]) + " ";
                     }
-                    console.log(obj);
+                    console.log(v);
                     var infonum = obj.val;
                     var infonum = infonum | 0x1000;
                     var high = infonum >> 8 & 0xff;
                     var low = infonum & 0xff;
-                    if (data[2] == high && data[3] == low) {
-                        var yh = data[15];
-                        var yl = data[16];
-                        var mh = data[11];
-                        var ml = data[12];
 
-                        var dh = data[9];
-                        var dl = data[10];
-                        var hh = data[7];
-                        var hl = data[8];
+                    var yh = data[15];
+                    var yl = data[16];
+                    var mh = data[11];
+                    var ml = data[12];
 
-                        var minh = data[5];
-                        var minl = data[6];
-                        var sh = data[3];
-                        var sl = data[4];
-                        var y = sprintf("%d", yl);
-                        var m = sprintf("%d", ml);
-                        var d = sprintf("%d", dl);
-                        var h = sprintf("%d", hl);
-                        var min = sprintf("%d", minl);
-                        var s = sprintf("%d", sl);
-                        var timestr = sprintf("%s-%s-%s %s:%s:%s", y, m, d, h, min, s);
-                        $("#gaytime").val(timestr);
-                        layerAler("读取成功");
-                    }
+                    var dh = data[9];
+                    var dl = data[10];
+                    var hh = data[7];
+                    var hl = data[8];
+
+                    var minh = data[5];
+                    var minl = data[6];
+                    var sh = data[3];
+                    var sl = data[4];
+                    var y = sprintf("%d", yl);
+                    var m = sprintf("%02d", ml);
+                    var d = sprintf("%02d", dl);
+                    var h = sprintf("%02d", hl);
+                    var min = sprintf("%02d", minl);
+                    var s = sprintf("%02d", sl);
+                    var timestr = sprintf("%s-%s-%s %s:%s:%s", y, m, d, h, min, s);
+                    $("#gaytime").val(timestr);
+                    layerAler("读取成功");
+
 
                 }
             }

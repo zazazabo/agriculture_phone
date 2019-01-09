@@ -130,6 +130,7 @@
                             }
                         }
                     ],
+                    method: "post",
                     singleSelect: false,
                     sortName: 'id',
                     locale: 'zh-CN', //中文支持,

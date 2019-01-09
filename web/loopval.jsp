@@ -28,11 +28,8 @@
             }
 
             $(function () {
-
-
-
                 $('#gravidaTable').bootstrapTable({
-                    showExport: true, //是否显示导出
+//                    showExport: true, //是否显示导出
                     exportDataType: "basic", //basic', 'a
                     //url: "loop.loopForm.getLoopList.action",
                     columns: [
@@ -71,6 +68,7 @@
                             valign: 'middle',
                             formatter: function (value, row, index, field) {
                                 var type = parseInt(value);
+                                console.log(type);
                                 var str = "";
                                 if (type >> 1 & 0x1 == 1) {
                                     return "时间";
@@ -174,7 +172,7 @@
                             }
                         }],
                     clickToSelect: true,
-                    searchAlign: 'left',
+                    searchAlign: 'right',
                     singleSelect: true,
                     search: true,
                     locale: 'zh-CN', //中文支持,
@@ -184,7 +182,8 @@
                     pageNumber: 1,
                     pageSize: 20,
                     showRefresh: true,
-                    showToggle: false,
+                    showColumns: true,
+                    showToggle: true,
                     // 设置默认分页为 50
                     pageList: [20, 40, 80, 160, 320],
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
@@ -197,7 +196,8 @@
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
-                            pid: "${param.pid}"  
+                            pid: "${param.pid}",
+                            l_comaddr: $("#l_comaddr").combobox('getValue')
                         };      
                         return temp;  
                     },
@@ -439,9 +439,9 @@
                 var l_comaddr = $("#l_comaddr").val();
                 if (l_comaddr == "") {
                     layerAler('请勾选网关');  //请勾选网关
-                    return ;
+                    return;
                 }
-               
+
                 var o1 = $("#form1").serializeObject();
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 if (selects.length == 0) {
@@ -525,7 +525,7 @@
                 var l_comaddr = $("#l_comaddr").val();
                 if (l_comaddr == "") {
                     layerAler('请勾选网关');  //请勾选网关
-                    return ;
+                    return;
                 }
                 var o1 = $("#form1").serializeObject();
                 console.log(o1);
