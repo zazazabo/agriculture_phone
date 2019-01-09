@@ -1023,13 +1023,13 @@
         <div id="content" class="row-fluid">
 
             <div class=" row " >
-                <div class="col-xs-12 col-sm-6 col-md-1  col-lg-3">
+                <div class="col-xs-12 col-sm-5 col-md-3">
                     <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
                         <tbody>
                             <tr>
                                 <td > &emsp;网关名称:</td>
                                 <td >
-                                    <input id="l_comaddr2" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    <input id="l_comaddr2" class="easyui-combobox" name="l_comaddr" style="width:110px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
                                 </td>
                                 <td  >
                                     &emsp;部署情况:
@@ -1042,38 +1042,36 @@
                                     </select>
                                 </td>
                                 <td style=" padding-left: 2px;">
-                                    <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
-                                        筛选
-                                    </button>
+                                                             <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
+                                           筛选
+                                        </button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-12 col-sm-7 col-md-9" >
+
+                    <table  style="  margin-top: 15px; align-content:  left;">
+                        <tbody>
+                            <tr>
+                                <td >
+                                    <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
+               
+                                        <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
+                                           部署
+                                        </button>
+                                        <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
+                                          移除
+                                        </button>    
+                                    </div> 
                                 </td>
 
 
                             </tr>
                         </tbody>
                     </table>
-
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
-
-                                        <table  style="  margin-top: 15px; align-content:  left;">
-                                            <tbody>
-                                                <tr>
-                                                    <td >
-                                                        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
-                                   
-                                                            <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
-                                                               部署
-                                                            </button>
-                                                            <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
-                                                              移除
-                                                            </button>    
-                                                        </div> 
-                                                    </td>
-                    
-                    
-                                                </tr>
-                                            </tbody>
-                                        </table>
 
 
 

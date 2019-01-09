@@ -126,7 +126,7 @@
                                         if (isJSON(strobj)) {
                                             var obj = eval('(' + strobj + ')');
                                             if (i == 0) {
-                                                strret = strret + infolist[obj.infonum.toString()] + "&emsp;偏差着:" + obj.offset + "&emsp;";
+                                                strret = strret + infolist[obj.infonum.toString()] + "&emsp;偏差值:" + obj.offset + "&emsp;";
                                             } else
                                             {
                                                 var s1 = obj.value == 1 ? "闭合" : "断开";
@@ -154,23 +154,25 @@
                                     return "断开";
                                 }
                             }
-                        }, {
-                            field: 'l_state',
-                            title: '在线状态', //
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index, field) {
-//                                console.log(row);
-                                if (row.online == 1) {
-                                    var str = "<img  src='img/online1.png'/>";
-                                    return  str;
-                                } else {
-                                    var str = "<img  src='img/off.png'/>";
-                                    return  str;
-                                }
-                            }
-                        }],
+                        }
+//                        , {
+//                            field: 'l_state',
+//                            title: '在线状态', //
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle',
+//                            formatter: function (value, row, index, field) {
+////                                console.log(row);
+//                                if (row.online == 1) {
+//                                    var str = "<img  src='img/online1.png'/>";
+//                                    return  str;
+//                                } else {
+//                                    var str = "<img  src='img/off.png'/>";
+//                                    return  str;
+//                                }
+//                            }
+//                        }
+                    ],
                     clickToSelect: true,
                     searchAlign: 'right',
                     singleSelect: true,

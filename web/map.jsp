@@ -162,6 +162,12 @@
         <script>
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
+            function layerAler(str) {
+                layer.alert(str, {
+                    icon: 6,
+                    offset: 'center'
+                });
+            }
             function wg() {
                 var allOver = map.getOverlays(); //获取全部标注
                 for (var j = 0; j < allOver.length; j++) {
@@ -268,7 +274,7 @@
             };
         </script>
     </head>
-    <body>
+    <body id="panemask">
         <div id="showdiv">
             <input type="text" id="showtext" readonly="true">
             <div  id="showwg">
@@ -1888,27 +1894,27 @@
                                     icon: wghuiicon
                                 });
                             }
-                            var textvalue = "<div style='line-height:1.8em;font-size:12px;'>\n\
-                                   \n\
-                                    <table style='text-align:center'>\n\
-                                        <tr>\n\
-                                            <td>" + "网关地址" + ":</td>\n\
-                                            <td>" + obj.comaddr.replace(/\b(0+)/gi, "") + "</td>\n\
-                                            <td></td>\n\
-                                            <td>" + "名称" + ":</td>\n\
-                                            <td>" + obj.name + "</td>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <td>" + "状态" + ":</td>\n\
-                                            <td>" + Iszx + "</td>\n\
-                                             <td>&nbsp&nbsp</td>\n\
-                                        </tr>\n\ \n\
-                                    </table></div>";
-                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "网关信息" + '</span>'};//设置信息框、信息说明
-                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
-                            marker1.addEventListener("mouseover", function () {
-                                this.openInfoWindow(infoWindow);
-                            });
+//                            var textvalue = "<div style='line-height:1.8em;font-size:12px;'>\n\
+//                                   \n\
+//                                    <table style='text-align:center'>\n\
+//                                        <tr>\n\
+//                                            <td>" + "网关地址" + ":</td>\n\
+//                                            <td>" + obj.comaddr.replace(/\b(0+)/gi, "") + "</td>\n\
+//                                            <td></td>\n\
+//                                            <td>" + "名称" + ":</td>\n\
+//                                            <td>" + obj.name + "</td>\n\
+//                                        </tr>\n\
+//                                        <tr>\n\
+//                                            <td>" + "状态" + ":</td>\n\
+//                                            <td>" + Iszx + "</td>\n\
+//                                             <td>&nbsp&nbsp</td>\n\
+//                                        </tr>\n\ \n\
+//                                    </table></div>";
+//                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "网关信息" + '</span>'};//设置信息框、信息说明
+//                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
+//                            marker1.addEventListener("mouseover", function () {
+//                                this.openInfoWindow(infoWindow);
+//                            });
                             //点击事件
                             marker1.addEventListener("click", function () {
                                 rightshow(obj);
@@ -1988,7 +1994,7 @@
                                 });
 
                             });
-                            marker1.setTitle(obj.comaddr.replace(/\b(0+)/gi, "") + "," + Iszx);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
+                            marker1.setTitle(obj.name);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
                             map.addOverlay(marker1);
                             map.panTo(point);
                         }
@@ -2029,68 +2035,53 @@
                                 alert("提交添加失败！请刷新");
                             }
                         });
-                        //var s = obj.l_name;
-//                        var Iszx = lans[285][lang];    //是否离线,离线
-//                        var Isfault = lans[13][lang]; //是否有故障,默认正常
-//                        var isfault2 = 0;
-//                        if (obj.l_fault == 1) {
-//                            Isfault = lans[14][lang]; //异常
-//                            isfault2 = 1;
-//                        }
-//                        if (obj.presence == 1) {
-//                            Iszx = lans[284][lang];  //在线
-//                        }
-                        var type = "";
-                        var numvalue = "";
-                        if (obj.type == 1) {
-                            type = "温度";
-                            if (obj.numvalue > 0) {
-                                numvalue = obj.numvalue / 10 + "℃";
-                            } else {
-                                numvalue = obj.numvalue + "℃";
+                        var isred = 0; //判断是否为故障 0非故障
+                        $.ajax({url: "login.gateway.comaddrzx.action", async: false, type: "get", datatype: "JSON", data: gobj,
+                            success: function (data) {
+                                var arrlist = data.rs;
+                                if (arrlist[0].online == 1) {
+                                    if (stime > 15) {
+                                        lx = "离线";
+                                    } else {
+                                        lx = "在线";
+                                        isLx = 1;
+                                    }
+                                } else {
+                                    lx = "离线";
+                                }
+                            },
+                            error: function () {
+                                alert("提交添加失败！请刷新");
                             }
-                        } else if (obj.type == 2) {
-                            type = "湿度";
-                            if (obj.numvalue > 0) {
-                                numvalue = obj.numvalue / 10 + "%RH";
-                            } else {
-                                numvalue = obj.numvalue + "%RH";
-                            }
-                        } else {
-                            type = "开关";
-                            if (obj.numvalue != null && obj.numvalue != 0) {
-                                numvalue = "开";
-                            } else {
-                                numvalue = "关";
-                            }
-                        }
-                        var lampcode = parseInt(arrlist[i].l_factorycode);
+                        });
+                       
+                        //var lampcode = parseInt(arrlist[i].l_factorycode);
 
-                        var textvalue = "<div style='line-height:1.8em;font-size:12px;'>\n\
-                                   \n\
-                                    <table style='text-align:center'>\n\
-                                        <tr>\n\
-                                            <td>" + "名称" + ":</td>\n\
-                                            <td>" + obj.name + "</td>\n\
-                                            <td>&nbsp;&nbsp;</td>\n\
-                                            <td>" + "所属网关" + ":</td>\n\
-                                            <td>" + obj.l_comaddr.replace(/\b(0+)/gi, "") + "</td>\n\
-                                        </tr>\n\
-                                        <tr>\n\
-                                            <td>" + "型号" + ":</td>\n\
-                                            <td>" + obj.model + "</td>\n\
-                                            <td>&nbsp;&nbsp;</td>\n\
-                                            <td>" + "类型" + ":</td>\n\
-                                            <td>" + type + "</td>\n\
-                                        </tr>\n\
-                                         <tr>\n\
-                                            <td>" + "数值" + ":</td>\n\
-                                            <td>" + numvalue + "</td>\n\
-                                            <td>&nbsp;&nbsp;</td>\n\
-                                            <td>" + "状态" + ":</td>\n\
-                                            <td>" + lx + "</td>\n\
-                                        </tr>\n\
-                                    </table></div>";
+//                        var textvalue = "<div style='line-height:1.8em;font-size:12px;'>\n\
+//                                   \n\
+//                                    <table style='text-align:center'>\n\
+//                                        <tr>\n\
+//                                            <td>" + "名称" + ":</td>\n\
+//                                            <td>" + obj.name + "</td>\n\
+//                                            <td>&nbsp;&nbsp;</td>\n\
+//                                            <td>" + "所属网关" + ":</td>\n\
+//                                            <td>" + obj.l_comaddr.replace(/\b(0+)/gi, "") + "</td>\n\
+//                                        </tr>\n\
+//                                        <tr>\n\
+//                                            <td>" + "型号" + ":</td>\n\
+//                                            <td>" + obj.model + "</td>\n\
+//                                            <td>&nbsp;&nbsp;</td>\n\
+//                                            <td>" + "类型" + ":</td>\n\
+//                                            <td>" + type + "</td>\n\
+//                                        </tr>\n\
+//                                         <tr>\n\
+//                                            <td>" + "数值" + ":</td>\n\
+//                                            <td>" + numvalue + "</td>\n\
+//                                            <td>&nbsp;&nbsp;</td>\n\
+//                                            <td>" + "状态" + ":</td>\n\
+//                                            <td>" + lx + "</td>\n\
+//                                        </tr>\n\
+//                                    </table></div>";
                         if ((Longitude != "" && latitude != "") && (Longitude != null && latitude != null)) {
                             var point = new BMap.Point(Longitude, latitude);
                             var marker1;
@@ -2127,11 +2118,12 @@
 //                                });
 //                            }
 
-                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "传感器信息" + '</span>'};//设置信息框、信息说明
-                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
-                            marker1.addEventListener("mouseover", function () {
-                                this.openInfoWindow(infoWindow);
-                            });
+//                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "传感器信息" + '</span>'};//设置信息框、信息说明
+//                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
+//                            marker1.addEventListener("mouseover", function () {
+//                                this.openInfoWindow(infoWindow);
+//                            });
+                            marker1.setTitle(obj.name);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
                             //标注点点击事件
                             marker1.addEventListener("click", function () {
                                 obj.lx = lx;
@@ -2234,34 +2226,38 @@
                         var obj = arrlist[i];
                         var Longitude = obj.l_longitude;
                         var latitude = obj.l_latitude;
-                        var textvalue = "<div style='line-height:1.8em;font-size:12px;'>\n\
-                                   \n\
-                                    <table style='text-align:center'>\n\
-                                        <tr>\n\
-                                            <td>" + "名称" + ":</td>\n\
-                                            <td>" + obj.l_name + "</td>\n\
-                                            <td>&nbsp;&nbsp;</td>\n\
-                                            <td>" + "所属网关" + ":</td>\n\
-                                            <td>" + obj.l_comaddr.replace(/\b(0+)/gi, "") + "</td>\n\
-                                        </tr>\n\
-                                    </table></div>";
+//                        var textvalue = "<div style='line-height:1.8em;font-size:12px;'>\n\
+//                                   \n\
+//                                    <table style='text-align:center'>\n\
+//                                        <tr>\n\
+//                                            <td>" + "名称" + ":</td>\n\
+//                                            <td>" + obj.l_name + "</td>\n\
+//                                            <td>&nbsp;&nbsp;</td>\n\
+//                                            <td>" + "所属网关" + ":</td>\n\
+//                                            <td>" + obj.l_comaddr.replace(/\b(0+)/gi, "") + "</td>\n\
+//                                        </tr>\n\
+//                                    </table></div>";
                         if ((Longitude != "" && latitude != "") && (Longitude != null && latitude != null)) {
                             var point = new BMap.Point(Longitude, latitude);
                             var marker1;
                             marker1 = new BMap.Marker(point, {
                                 icon: lgreen
                             });
-                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "回路信息" + '</span>'};//设置信息框、信息说明
-                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
-                            marker1.addEventListener("mouseover", function () {
-                                this.openInfoWindow(infoWindow);
-                            });
+//                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "回路信息" + '</span>'};//设置信息框、信息说明
+//                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
+//                            marker1.addEventListener("mouseover", function () {
+//                                this.openInfoWindow(infoWindow);
+//                            });
+                             marker1.setTitle(obj.l_name);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
                             //标注点点击事件
-
+                            marker1.addEventListener("click", function () {
+                                looprightshow(obj);
+                            });
+                            //标注右击事件
                             marker1.addEventListener("rightclick", function () {
                                 var textvalue2 = "<ul class='items' style='list-style-type:none;'>\n\
-                                                                <li id='xx'>" + "断开" + "</li>\n\
-                                                                <li id='xxx'>" + "闭合" + "</li>\n\
+                                                                <li id='break'>" + "断开" + "</li>\n\
+                                                                <li id='close'>" + "闭合" + "</li>\n\
                                                                 <li id='lmove'>" + "移动" + "</li>\n\
                                                                 <li id='lclean'>" + "清除" + "</li>\n\
                                                                 </ul>";
@@ -2269,7 +2265,97 @@
                                 var infoWindow2 = new BMap.InfoWindow(textvalue2, opts2); // 创建信息窗口对象，引号里可以书写任意的html语句。
                                 this.openInfoWindow(infoWindow2);
 
+                                //断开
+                                $("#break").click(function () {
+                                    var l_comaddr = obj.l_comaddr;
+                                    var ele = obj;
+                                    addlogon(u_name, "设置", o_pid, "电子地图", "断开回路【" + ele.l_name + "】", l_comaddr);
+                                    var o = {};
+                                    o.l_comaddr = ele.l_comaddr;
+                                    console.log(ele);
+                                    var vv = [];
+                                    vv.push(1);
+                                    vv.push(0x10);               //头指令 
+                                    var info = parseInt(ele.l_info);
+                                    console.log(info);
+                                    var infonum = (3000 + info * 20 + 3) | 0x1000;
+                                    vv.push(infonum >> 8 & 0xff); //起始地址
+                                    vv.push(infonum & 0xff);
 
+                                    vv.push(0);           //寄存器数目 2字节  
+                                    vv.push(2);   //5
+                                    vv.push(4);           //字节数目长度  1字节 10
+
+
+
+
+                                    var worktype = parseInt(ele.l_worktype);
+                                    worktype = worktype & 0xfe;
+                                    vv.push(worktype >> 8 & 0xff)   //工作模式
+                                    vv.push(worktype & 0xff);
+
+
+
+                                    var val2 = parseInt(0);
+                                    vv.push(val2 >> 8 & 0xff);   //控制值
+                                    vv.push(val2 & 0xff);
+
+                                    var data = buicode2(vv);
+                                    console.log(data);
+                                    dealsend2("10", data, "switchloopCB", ele.l_comaddr, 0, ele.id, info, "${param.action}");
+                                    $('#panemask').showLoading({
+                                        'afterShow': function () {
+                                            setTimeout("$('#panemask').hideLoading()", 10000);
+                                        }
+                                    }
+                                    );
+                                });
+
+                                //闭合
+                                $("#close").click(function () {
+                                    var l_comaddr = obj.l_comaddr;
+                                    var ele = obj;
+                                    addlogon(u_name, "设置", o_pid, "电子地图", "闭合回路【" + ele.l_name + "】", l_comaddr);
+                                    var o = {};
+                                    o.l_comaddr = ele.l_comaddr;
+                                    console.log(ele);
+                                    var vv = [];
+                                    vv.push(1);
+                                    vv.push(0x10);               //头指令 
+                                    var info = parseInt(ele.l_info);
+                                    console.log(info);
+                                    var infonum = (3000 + info * 20 + 3) | 0x1000;
+                                    vv.push(infonum >> 8 & 0xff); //起始地址
+                                    vv.push(infonum & 0xff);
+
+                                    vv.push(0);           //寄存器数目 2字节  
+                                    vv.push(2);   //5
+                                    vv.push(4);           //字节数目长度  1字节 10
+
+
+
+
+                                    var worktype = parseInt(ele.l_worktype);
+                                    worktype = worktype & 0xfe;
+                                    vv.push(worktype >> 8 & 0xff)   //工作模式
+                                    vv.push(worktype & 0xff);
+
+
+
+                                    var val2 = parseInt(0);
+                                    vv.push(val2 >> 8 & 0xff);   //控制值
+                                    vv.push(val2 & 0xff);
+
+                                    var data = buicode2(vv);
+                                    console.log(data);
+                                    dealsend2("10", data, "switchloopCB", ele.l_comaddr, 1, ele.id, info, "${param.action}");
+                                    $('#panemask').showLoading({
+                                        'afterShow': function () {
+                                            setTimeout("$('#panemask').hideLoading()", 10000);
+                                        }
+                                    }
+                                    );
+                                });
 
 
                                 //移动
@@ -2305,7 +2391,7 @@
                                         //此处请求后台程序，下方是成功后的前台处理……
                                     });
                                 });
-                                //移除传感器
+                                //移除回路
                                 $("#lclean").click(function () {
                                     marker1.closeInfoWindow(infoWindow2);
                                     layer.confirm("确认要移除该回路吗？", {//确认要移动该灯具吗？
@@ -2346,6 +2432,54 @@
                         }
                     })(i);
                 }
+            }
+
+
+            //回路设置回调函数
+            function switchloopCB(obj) {
+                $('#panemask').hideLoading();
+                if (obj.status == "success") {
+                    var data = Str2BytesH(obj.data);
+                    var v = "";
+                    for (var i = 0; i < data.length; i++) {
+                        v = v + sprintf("%02x", data[i]) + " ";
+                    }
+                    console.log(v);
+                    if (data[1] == 0x10) {
+                        var infonum = (3000 + obj.val * 20 + 3) | 0x1000;
+                        var high = infonum >> 8 & 0xff;
+                        var low = infonum & 0xff;
+                        if (data[2] == high && data[3] == low) {
+                            var str = obj.type == 0 ? "断开成功" : "闭合成功";
+                            var param = {id: obj.param, l_switch: obj.type};
+                            $.ajax({async: false, url: "loop.loopForm.modifySwitch.action", type: "get", datatype: "JSON", data: param,
+                                success: function (data) {
+                                    var arrlist = data.rs;
+                                    if (arrlist.length == 1) {
+                                        layerAler(str);
+                                        var o = {};
+                                        o.l_comaddr = obj.comaddr;
+                                        o.pid = "${param.pid}";
+                                        o.l_deplayment = 1;
+                                        var opt = {
+                                            url: "loop.loopForm.getLoopList.action",
+                                            silent: false,
+                                            query: o
+                                        };
+                                        $("#gravidaTable").bootstrapTable('refresh', opt);
+
+                                    }
+                                },
+                                error: function () {
+                                    alert("提交失败！");
+                                }
+                            });
+                        }
+
+                    }
+
+                }
+
             }
 
             //网关下拉框
@@ -2412,49 +2546,194 @@
             }
             //传感器点击事件
             function senrightshow(obj) {
-                $("#textdiv2").html("");
-                var h4 = document.createElement("h4");
-                h4.innerHTML = obj.name;
-                $("#textdiv2").append(h4);
-                var p1 = document.createElement("p");
-                var p2 = document.createElement("p");
-                var p3 = document.createElement("p");
-                var p4 = document.createElement("p");
-                var type = "";
-                var numvalue = "";
-                if (obj.type == 1) {
-                    type = "温度";
-                    if (obj.numvalue > 0) {
-                        numvalue = obj.numvalue / 10 + "℃";
-                    } else {
-                        numvalue = obj.numvalue + "℃";
-                    }
-                } else if (obj.type == 2) {
-                    type = "湿度";
-                    if (obj.numvalue > 0) {
-                        numvalue = obj.numvalue / 10 + "%RH";
-                    } else {
-                        numvalue = obj.numvalue + "%RH";
-                    }
-                } else {
-                    type = "开关";
-                    if (obj.numvalue != null && obj.numvalue != 0) {
-                        numvalue = "开";
-                    } else {
-                        numvalue = "关";
-                    }
-                }
-                p1.innerHTML = "所属网关" + "：      " + obj.l_comaddr.replace(/\b(0+)/gi, "");
-                p2.innerHTML = "类型" + "：      " + type;
-                p3.innerHTML = "数值"+"：      "+numvalue;
-                p4.innerHTML = "状态"+"：      "+obj.lx;
+                $.ajax({url: "homePage.sensormanage.getsensorById.action", async: false, type: "get", datatype: "JSON", data: {id: obj.id},
+                    success: function (data) {
+                        var arrlist = data.rs;
+                        if (arrlist.length > 0) {
+                            var sensor = arrlist[0];
+                            $("#textdiv2").html("");
+                            var h4 = document.createElement("h4");
+                            h4.innerHTML = "传感器信息";
+                            $("#textdiv2").append(h4);
+                            var p = document.createElement("p");
+                            var p1 = document.createElement("p");
+                            var p2 = document.createElement("p");
+                            var p3 = document.createElement("p");
+                            var p4 = document.createElement("p");
+                            var type = "";
+                            var numvalue = "";
+                            if (sensor.type == 1) {
+                                type = "温度";
+                                if (sensor.numvalue > 0) {
+                                    numvalue = sensor.numvalue / 10 + "℃";
+                                } else {
+                                    numvalue = sensor.numvalue + "℃";
+                                }
+                            } else if (sensor.type == 2) {
+                                type = "湿度";
+                                if (sensor.numvalue > 0) {
+                                    numvalue = sensor.numvalue / 10 + "%RH";
+                                } else {
+                                    numvalue = sensor.numvalue + "%RH";
+                                }
+                            } else {
+                                type = "开关";
+                                if (sensor.numvalue != null && sensor.numvalue != 0) {
+                                    numvalue = "开";
+                                } else {
+                                    numvalue = "关";
+                                }
+                            }
+                            var wgname = sensor.l_comaddr.replace(/\b(0+)/gi, "");
+                            $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: obj.l_comaddr},
+                                success: function (data) {
+                                    var gay = data.rs;
+                                    if (gay.length > 0) {
+                                        wgname = gay[0].name;
+                                    }
+                                }});
+                            p.innerHTML = "名称" + "：      " + sensor.name;
+                            p1.innerHTML = "所属网关" + "：      " + wgname;
+                            p2.innerHTML = "类型" + "：      " + type;
+                            p3.innerHTML = "数值" + "：      " + numvalue;
+                            p4.innerHTML = "状态" + "：      " + obj.lx;
+                            $("#textdiv2").append(p);
+                            $("#textdiv2").append(p1);
+                            $("#textdiv2").append(p2);
+                            $("#textdiv2").append(p3);
+                            $("#textdiv2").append(p4);
+                        }
 
-                $("#textdiv2").append(p1);
-                $("#textdiv2").append(p2);
-                $("#textdiv2").append(p3);
-                $("#textdiv2").append(p4);
-                
+                    },
+                    error: function () {
+                        alert("提交添加失败！请刷新");
+                    }
+                });
 
+
+
+            }
+
+            //回路标注点击事件
+            function  looprightshow(obj) {
+                $.ajax({url: "homePage.loop.getloopById.action", async: false, type: "get", datatype: "JSON", data: {id: obj.id},
+                    success: function (data) {
+                        var arrlist = data.rs;
+                        if (arrlist.length > 0) {
+                            var loop = arrlist[0];
+                            $("#textdiv2").html("");
+                            var h4 = document.createElement("h4");
+                            var plandiv = document.createElement("div");
+                            //plandiv.html("");
+                            h4.innerHTML = "回路信息";
+                            $("#textdiv2").append(h4);
+                            var type = parseInt(loop.l_worktype);
+                            var l_switch = "";   //状态
+                            var plan = "";     //工作方案
+                            var str = "";     //工作方式
+                            var infolist = {};
+                            var infoscene = {};
+                            if (type >> 1 & 0x1 == 1) {
+                                str = "时间";
+                            } else if (type >> 2 & 0x1 == 1) {
+                                str = '场景';
+                            } else if (type >> 3 & 0x1 == 1) {
+                                str = '信息点';
+                            }
+                            if (loop.l_switch == "1") {
+                                l_switch = "闭合";
+                            } else {
+                                l_switch = "断开";
+                            }
+
+                            if (type >> 1 & 0x1 == 1) {
+                                for (var i = 0; i < 5; i++) {
+                                    var index = "l_val" + (i + 1).toString();
+                                    var strobj = loop[index];
+                                    if (isJSON(strobj)) {
+                                        var obj1 = eval('(' + strobj + ')');
+                                        var s1 = obj1.value == 1 ? "闭合" : "断开";
+                                        // plan = plan + obj1.time + ":" + s1 + "&emsp;";
+                                        var pl = document.createElement("p");
+                                        pl.innerHTML = obj1.time + ":" + s1 + "&emsp;";
+                                        plandiv.append(pl);
+                                    }
+
+                                }
+
+                            } else if (type >> 2 & 0x1 == 1) {
+
+                                // plan = "";
+                                for (var i = 0; i < 5; i++) {
+                                    var index = "l_val" + (i + 1).toString();
+                                    var strobj = loop[index];
+                                    if (isJSON(strobj)) {
+                                        var obj1 = eval('(' + strobj + ')');
+                                        var scenename = infoscene[obj1.scene.toString()];
+                                        var s1 = obj1.value == 1 ? "闭合" : "断开";
+                                        // plan = plan + scenename + ":" + s1 + "&emsp;";
+                                        var pl = document.createElement("p");
+                                        pl.innerHTML = scenename + ":" + s1 + "&emsp;";
+                                        plandiv.append(pl);
+                                    }
+                                }
+                            } else if (type >> 3 & 0x1 == 1) {
+
+                                plan = "";
+                                for (var i = 0; i < 5; i++) {
+                                    var index = "l_val" + (i + 1).toString();
+                                    var strobj = loop[index];
+                                    if (isJSON(strobj)) {
+                                        var obj1 = eval('(' + strobj + ')');
+                                        if (i == 0) {
+                                            //plan = plan + infolist[obj1.infonum.toString()] + "&emsp;偏差值:" + obj1.offset + "&emsp;";
+                                            var pl = document.createElement("p");
+                                            pl.innerHTML = infolist[obj1.infonum.toString()] + "&emsp;偏差值:" + obj1.offset + "&emsp;";
+                                            plandiv.append(pl);
+                                        } else
+                                        {
+                                            var s1 = obj1.value == 1 ? "闭合" : "断开";
+                                            //plan = plan + obj1.info + ":" + s1 + "&emsp;";
+                                            var pl = document.createElement("p");
+                                            pl.innerHTML = obj1.info + ":" + s1 + "&emsp;";
+                                            plandiv.append(pl);
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            var wgname = loop.l_comaddr.replace(/\b(0+)/gi, "");
+                            $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: loop.l_comaddr},
+                                success: function (data) {
+                                    var gay = data.rs;
+                                    if (gay.length > 0) {
+                                        wgname = gay[0].name;
+                                    }
+                                }});
+                            var p = document.createElement("p");
+                            var p1 = document.createElement("p");
+                            var p2 = document.createElement("p");
+                            var p3 = document.createElement("p");
+                            var p4 = document.createElement("p");
+                            p.innerHTML = "名称" + "：      " + loop.l_name;
+                            p1.innerHTML = "所属网关" + "：      " + wgname;
+                            p2.innerHTML = "工作模式" + "：      " + str;
+                            p3.innerHTML = "状态" + "：      " + l_switch;
+                            p4.innerHTML = "工作方案" + "：      ";
+                            $("#textdiv2").append(p);
+                            $("#textdiv2").append(p1);
+                            $("#textdiv2").append(p2);
+                            $("#textdiv2").append(p3);
+                            $("#textdiv2").append(p4);
+                            $("#textdiv2").append(plandiv);
+                        }
+
+                    },
+                    error: function () {
+                        alert("提交添加失败！请刷新");
+                    }
+                });
             }
         </script>
     </body>

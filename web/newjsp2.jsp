@@ -162,7 +162,6 @@
         //动态创建折线对象
 
         function functionNodname(data) {
-            console.log(data);
             var series = [];
             for (var p = 0; p < data.length; p++) {
                 var xyData = [];
@@ -371,7 +370,6 @@
         //创建曲线图
 
         function createChart(sdrs, xdata) {
-            console.log("s:"+sdrs.length+"x:"+xdata.length);
             var sdqxbs = [];  //湿度曲线标识
             var qxbstype = [];  //曲线标识类型
             var sdxdata = [];      //x轴描述 ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
@@ -439,7 +437,6 @@
                     obj.name = sdqxbs[i];
                     if (qxbstype[i] == 1) {
                         var wdvals2 = [];
-                        console.log("w:"+wdvals.length+"x:"+sdxdata.length);
                         if (wdvals.length < sdxdata.length) {
                             for (var m = 0; m < wdvals.length; m++) {
                                 for (var k = 0; k < sdxdata.length; k++) {
