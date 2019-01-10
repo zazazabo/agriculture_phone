@@ -1023,7 +1023,7 @@
         <div id="content" class="row-fluid">
 
             <div class=" row " >
-                <div class="col-xs-12 col-sm-5 col-md-3">
+                <div class="col-xs-12 col-sm-5 col-md-3 col-lg-3">
                     <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
                         <tbody>
                             <tr>
@@ -1051,7 +1051,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-xs-12 col-sm-7 col-md-9" >
+                <div class="col-xs-12 col-sm-7 col-md-9 col-lg-3" >
 
                     <table  style="  margin-top: 15px; align-content:  left;">
                         <tbody>
