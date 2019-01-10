@@ -295,7 +295,7 @@
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
-                            pid: o_pid,
+                            pid:o_pid,
                             l_comaddr: l_comaddr
 
                         };      
