@@ -16,7 +16,13 @@
         <!--        <script type="text/javascript" src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
         <!--<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">-->
         <style>
+
+
+
+
+
             /*            手机*/
+
             @media screen and (min-width:0px) and (max-width:767px) {  
                 #dialog-add{
                     font-size: 4px;
@@ -50,13 +56,13 @@
                 }
 
             }
-            /*           ipad竖屏*/
+            /*ipad竖屏*/
             @media screen and (min-width:767px) and (max-width:1023px) {  
                 #selectlist{
                     float: left;
                 }
                 #cz{
-                    /*                    float: left;*/
+                    float: left;
                     margin-left: 10px;
                 }
                 #l_comaddr2 {
@@ -72,7 +78,7 @@
                     width: 100px;
                 }
                 #dialog-edit input{
-                    width: 100px;
+                    width: 100px; 
                 }
                 #type1{
                     width: 100px;
@@ -215,6 +221,14 @@
             }
             function showDialog() {
 
+                var data = $('#l_comaddr').combobox('getData');
+                var commain = $("#l_comaddr2").combobox('getValue');
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].id == commain) {
+                        $("#l_comaddr").combobox('select', data[i].id);
+                    }
+                }
+
                 $('#dialog-add').dialog('open');
                 return false;
             }
@@ -321,8 +335,6 @@
                 $('#dialog-edit').dialog('open');
 
                 return false;
-
-
             }
 
             function checkSensorAdd() {
@@ -644,13 +656,6 @@
                             align: 'center',
                             valign: 'middle'
                         },
-//                        {
-//                            field: 'model',
-//                            title: '备注', //
-//                            width: 25,
-//                            align: 'center',
-//                            valign: 'middle'
-//                        }, 
                         {
                             field: 'sitenum',
                             title: '站号', //组号
@@ -865,6 +870,19 @@
                 });
 
 
+                $('#l_comaddr').combobox({
+                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
+                    onLoadSuccess: function (data) {
+                        $(this).combobox('select', data[0].id);
+                    }
+                });
+
+
+
+
+
+
+
                 $('#excel-file').change(function (e) {
                     var files = e.target.files;
                     var fileReader = new FileReader();
@@ -959,30 +977,6 @@
 
                 //  $("#addexcel").attr("disabled", true);
 
-                $('#l_comaddr').combobox({
-                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
-                    onLoadSuccess: function (data) {
-                        $(this).combobox('select', data[0].id);
-                    }
-                });
-
-
-                var d = [];
-                for (var i = 0; i < 18; i++) {
-                    var o = {"id": i + 1, "text": i + 1};
-                    d.push(o);
-                }
-                $("#l_groupe").combobox({data: d, onLoadSuccess: function (data) {
-                        $(this).combobox("select", data[0].id);
-                    }});
-                $("#l_groupe1").combobox({data: d, onLoadSuccess: function (data) {
-                        $(this).combobox("select", data[0].id);
-                    }});
-
-                $("#l_groupe2").combobox({data: d, onLoadSuccess: function (data) {
-                        $(this).combobox("select", data[0].id);
-                    }
-                });
             });
 
             function size() {
@@ -999,8 +993,6 @@
             window.onresize = function () {
                 size();
             };
-
-
 
         </script>
 
@@ -1023,7 +1015,7 @@
         <div id="content" class="row-fluid">
 
             <div class=" row " >
-                <div class="col-xs-12 col-sm-5 col-md-3 col-lg-3">
+                <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4  ">
                     <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
                         <tbody>
                             <tr>
@@ -1042,28 +1034,28 @@
                                     </select>
                                 </td>
                                 <td style=" padding-left: 2px;">
-                                                             <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
-                                           筛选
-                                        </button>
+                                    <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
+                                        筛选
+                                    </button>
                                 </td>
 
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-xs-12 col-sm-7 col-md-9 col-lg-3" >
+                <div class="col-xs-12 col-sm-6 col-md-7 col-lg-3" >
 
-                    <table  style="  margin-top: 15px; align-content:  left;">
+                    <table  style="  margin-top: 15px;  ">
                         <tbody>
                             <tr>
                                 <td >
                                     <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
-               
+
                                         <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
-                                           部署
+                                            部署
                                         </button>
                                         <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
-                                          移除
+                                            移除
                                         </button>    
                                     </div> 
                                 </td>

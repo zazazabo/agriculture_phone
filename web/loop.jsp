@@ -284,6 +284,21 @@
             }
 
             function showDialog() {
+
+                var data = $('#comaddr').combobox('getData');
+                var commain = $("#l_comaddr").combobox('getValue');
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].id == commain) {
+                        $("#comaddr").combobox('select', data[i].id);
+                    }
+                }
+
+
+
+
+
+
+
                 var o1 = $("#formsearch").serializeObject();
                 o1.pid = "${param.pid}";
                 console.log(o1);
@@ -484,6 +499,7 @@
                     layerAler("控制点:" + info + "<br>" + "站号" + site + "<br>" + "数据位置"
                             + regpos + "<br>" + "工作模式:" + strw1 + "<br>" + "执行方式:"
                             + strworktype + "<br>" + "控制值：" + dataval);
+
                 }
 
 
@@ -1288,7 +1304,7 @@
         <div id="content" class="row-fluid">
             <div class=" row " >
                 <form id="formsearch">
-                    <div class="col-xs-12 col-sm-5 col-md-3 " >
+                    <div class="col-xs-12 col-sm-5 col-md-43 " >
                         <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
                             <tbody>
                                 <tr>
@@ -1322,10 +1338,10 @@
                                     <td >
                                         <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
 
-                                            <button class="btn btn-primary btn-sm ctrol" onclick="deployLoop()"   id="xiugai1">
+                                            <button  type="button" class="btn btn-primary btn-sm ctrol" onclick="deployLoop()"   id="xiugai1">
                                                 部署
                                             </button>
-                                            <button class="btn btn-danger btn-sm ctrol" onclick="removeLoop()" id="shanchu">
+                                            <button type="button" class="btn btn-danger btn-sm ctrol" onclick="removeLoop()" id="shanchu">
                                                 移除
                                             </button>    
                                         </div> 
@@ -1454,7 +1470,7 @@
 
                             <tr>
                                 <td>
-                                    <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
+                                    <span style="margin-left:-12px;" >寄存器位置</span>&nbsp;
                                     <span class="menuBox">
                                         <input id="l_pos" class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
                                     </span>
@@ -1670,7 +1686,7 @@
 
                             <tr>
                                 <td>
-                                    <span style="margin-left:0px;" >寄存器位置</span>&nbsp;
+                                    <span style="margin-left:-12px;" >寄存器位置</span>&nbsp;
                                     <span class="menuBox">
                                         <input id="l_pos1"  class="form-control"  name="l_pos" style="display: inline;" placeholder="寄存器位置" type="text">
                                     </span>

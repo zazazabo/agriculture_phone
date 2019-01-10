@@ -36,8 +36,61 @@
                 });
             }
 
+            function dealfaultCB(obj) {
+//                $('#panemask').hideLoading();
+                if (obj.status == "success") {
+                    var data = Str2BytesH(obj.data);
+                    var v = "";
+                    for (var i = 0; i < data.length; i++) {
+                        v = v + sprintf("%02x", data[i]) + " ";
+                    }
+                    console.log(v);
+                    if (data[1] == 0x10) {
+                        var infonum = (2000 + obj.val * 10 + 6) | 0x1000;
+                        console.log(infonum);
+                        var high = infonum >> 8 & 0xff;
+                        var low = infonum & 0xff;
+                        if (data[2] == high && data[3] == low) {
+                            readSensor(obj.comaddr, obj.val, obj.param);
+                        }
+
+                    }
+
+                }
+            }
+
+            function  dealfault() {
+                var selects = $("#gravidaTable").bootstrapTable('getSelections');
+                if (selects.length == 0) {
+                    layerAler("请勾选表格");
+
+                }
+                var ele = selects[0];
+                var comaddr = ele.l_comaddr;
+
+                if (ele.errflag == "1") {
+                    var vv = [];
+                    vv.push(1);
+                    vv.push(0x10);
+                    var info = parseInt(ele.infonum);
+                    var infonum = (2000 + info * 10 + 6) | 0x1000;
+                    vv.push(infonum >> 8 & 0xff);
+                    vv.push(infonum & 0xff);
+                    vv.push(0);
+                    vv.push(1); //寄存器数目 2字节     
+                    vv.push(2)
+                    vv.push(0);
+                    vv.push(0);
+                    var data = buicode2(vv);
+                    console.log(data);
+                    dealsend2("10", data, "dealfaultCB", comaddr, 0, ele.id, info, "${param.action}");
+                } else {
+                    layerAler("请处理有故障的传感器");
+                }
+            }
 
             function  readSensorCB(obj) {
+
                 $('#panemask').hideLoading();
                 if (obj.status == "success") {
                     var data = Str2BytesH(obj.data);
@@ -69,14 +122,38 @@
                                 + regpos + "<br>" + "工作模式:" + strw1 + "<br>" + "通信故障参数:"
                                 + strw3 + "<br>" + "探测值：" + dataval + "<br>" + "是否有故障:" + faulttip + "<br>"
                                 + "通信故障出错次数:" + faultnum);
+
+                        var o = {errflag: fault, errcount: faultnum, numvalue: dataval, id: obj.param};
+                        $.ajax({async: false, url: "sensor.sensorform.upvalue.action", type: "get", datatype: "JSON", data: o,
+                            success: function (data) {
+                                var arrlist = data.rs;
+                                if (arrlist.length == 1) {
+                                    var obj = {};
+                                    obj.l_comaddr = obj.comaddr;
+                                    obj.pid = "${param.pid}";
+                                    var opt = {
+                                        url: "monitor.monitorForm.getSensorList.action",
+                                        silent: true,
+                                        query: obj
+                                    };
+                                    $("#gravidaTable").bootstrapTable('refresh', opt);
+                                }
+                            },
+                            error: function () {
+                                alert("提交失败！");
+                            }
+                        });
+
+
+
                     }
 
                 }
                 console.log(obj);
             }
 
-            function readSensor(comaddr, infonum) {
-
+            function readSensor(comaddr, infonum, id) {
+                console.log(id);
                 var vv = [];
                 vv.push(1);
                 vv.push(3);
@@ -87,7 +164,7 @@
                 vv.push(0);
                 vv.push(8); //寄存器数目 2字节                         
                 var data = buicode2(vv);
-                dealsend2("03", data, "readSensorCB", comaddr, 0, 0, infonum, "${param.action}");
+                dealsend2("03", data, "readSensorCB", comaddr, 0, id, infonum, "${param.action}");
             }
 
             function tourSensor() {
@@ -97,10 +174,19 @@
             }
             $(function () {
                 $('#gravidaTable').bootstrapTable({
-                   // showExport: true, //是否显示导出
+                    // showExport: true, //是否显示导出
                     exportDataType: "basic", //basic', 'a
                     //url: "loop.loopForm.getLoopList.action",
                     columns: [
+                        {
+                            title: '单选',
+                            field: 'select',
+                            //复选框
+                            checkbox: true,
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle'
+                        },
                         {
                             //field: 'Number',//可不加  
                             title: '序号', //标题  可不加  
@@ -112,6 +198,7 @@
                                 return index + 1;
                             }
                         },
+
                         {
                             field: 'name',
                             title: '名称',
@@ -164,14 +251,14 @@
                                 var str = value;
                                 if (row.online1 == "1") {
                                     if (row.errflag == "1") {
-                                        var str = '<img   src="img/off.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\'' + ')"/>';
+                                        var str = '<img   src="img/fault.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                         return  str;
                                     } else {
-                                        var str = '<img   src="img/online1.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\'' + ')"/>';
+                                        var str = '<img   src="img/online1.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                         return  str;
                                     }
                                 } else {
-                                    var str = '<img   src="img/off.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\'' + ')"/>';
+                                    var str = '<img   src="img/off.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                     return  str;
                                 }
                                 return  str;
@@ -198,7 +285,6 @@
                     queryParams: function (params)  {   //配置参数 
 
                         var l_comaddr = $("#l_comaddr").combobox('getValue');
-                        console.log("abcdefg", l_comaddr);
 //                        var selects = $('#gravidaTable').bootstrapTable('getSelections');
 //                        var comaddr = "";
 //                        if (selects.length > 0) {
@@ -344,6 +430,9 @@
 
                 <button type="button" id="btnswitch" onclick="tourSensor()" class="btn btn-success btn-sm">
                     巡测数据
+                </button>
+                <button type="button" id="btnswitch" onclick="dealfault()" class="btn btn-success btn-sm">
+                    处理故障
                 </button>
 
             </div>   

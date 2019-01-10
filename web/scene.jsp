@@ -976,7 +976,7 @@
             <form id="form1">
                 <input type="hidden" name="pid" value="${param.pid}"/>
                 <div class=" row " >
-                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-3" >
+                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4" >
                         <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
                             <tbody>
                                 <tr>

@@ -67,6 +67,8 @@
         <xhandle desc="添加传感器" id="addsensor" rtn="rs" rtnype="JSON">
             <xsql id="a1" para="model,dreg,name,sitenum,l_comaddr,type" tpe="DDL" tpl="insert into t_sensor(model,dreg,name,sitenum,l_comaddr,type,deplayment) values(':model',:dreg,':name',':sitenum',':l_comaddr',:type,0) " var="rs"></xsql> 
         </xhandle>
+
+
         <xhandle desc="添加传感器不带类型" id="addsensor1" rtn="rs" rtnype="JSON">
             <xsql id="a1" para="model,dreg,worktype,name,sitenum,l_comaddr" tpe="DDL" tpl="insert into t_sensor(model,dreg,worktype,name,sitenum,l_comaddr,deplayment) values(':model',:dreg,:worktype,':name',':sitenum',':l_comaddr',0) " var="rs"></xsql> 
         </xhandle>      
@@ -82,8 +84,33 @@
             </xsql>
         </xhandle>
 
+        <xhandle desc="修改即时值" id="upvalue" rtnype="JSON">
+            <xsql id="a1" para="errflag,errcount,numvalue" tpe="DDL" tpl="update t_sensor set errflag = :errflag,errcount=:errcount,numvalue=:numvalue  where  @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=:id">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+
+        <xhandle desc="修改限度值" id="uplimitvalue" rtnype="JSON">
+            <xsql id="a1" para="minValue,maxValue" tpe="DDL" tpl="update t_sensor set minValue = ':minValue',maxValue=':maxValue' where  @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=:id">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
 
 
+        <xhandle desc="修改限度值" id="uplimitenable" rtnype="JSON">
+            <xsql id="a1" para="enable" tpe="DDL" tpl="update t_sensor set enable = :enable where  @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=:id">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
 
 
 
