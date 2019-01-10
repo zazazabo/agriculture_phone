@@ -703,138 +703,169 @@
             </table>
         </div>
 
+
+<!--        <div class="modal" id="faultDiv" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content" id="adddiv">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span style="font-size:20px ">×</span></button>
+                        <span class="glyphicon glyphicon-floppy-disk" style="font-size: 20px"></span>
+                        <h4 class="modal-title" style="display: inline;"><span>报警信息</span></h4></div>  
+                    <div>
+                        <span style="margin-left:10px;">网关&nbsp;</span>
+                        <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                        <button style=" height: 30px;" class="btn btn-sm btn-success" onclick="select()" style="margin-left:10px;"><label id="34" name="xxx">搜索</label></button>
+                        <button style=" height: 30px; margin-left: 5px;" type="button" id="btn_download" class="btn btn-primary" onClick ="$('#fauttable').tableExport({type: 'excel', escape: 'false'})">
+                            <label id="110" name="xxx">导出Excel</label>
+                        </button>
+                    </div>
+                    <hr>
+                    <table id="fauttable">
+
+                    </table>
+                     注脚 
+                    <div class="modal-footer">
+                         添加按钮 
+                        <button id="tianjia1" type="button" class="btn btn-primary">处理</button>
+                         关闭按钮 
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></div>
+                </div>
+            </div>
+        </div>-->
+
         <!--_footer 作为公共模版分离出去-->
         <!--        <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> -->
         <!--        <script type="text/javascript" src="lib/layer/2.4/layer.js"></script>-->
-                <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-                <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
+        <script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
+        <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js"></script>
         <!--        <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>-->
         <script type="text/javascript">
-            function layerAler(str) {
-                layer.alert(str, {
-                    icon: 6,
-                    offset: 'center'
-                });
-            }
-            $(function () {
-                var pid = '${rs[0].pid}';
-                var pids = [];
-                if (pid != null && pid != "") {
-                    pids = pid.split(",");   //项目编号
-                }
-
-                // $("#pojects").val(pids[0]);
-                var pname = [];   //项目名称
-                for (var i = 0; i < pids.length; i++) {
-                    var obj = {};
-                    obj.code = pids[i];
-                    $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
-                            pname.push(data.rs[0].name);
-                        },
-                        error: function () {
-                            alert("出现异常！");
+                    function layerAler(str) {
+                        layer.alert(str, {
+                            icon: 6,
+                            offset: 'center'
+                        });
+                    }
+                    $(function () {
+                        var pid = '${rs[0].pid}';
+                        var pids = [];
+                        if (pid != null && pid != "") {
+                            pids = pid.split(",");   //项目编号
                         }
+
+                        // $("#pojects").val(pids[0]);
+                        var pname = [];   //项目名称
+                        for (var i = 0; i < pids.length; i++) {
+                            var obj = {};
+                            obj.code = pids[i];
+                            $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
+                                success: function (data) {
+                                    pname.push(data.rs[0].name);
+                                },
+                                error: function () {
+                                    alert("出现异常！");
+                                }
+                            });
+                        }
+
+                        for (var i = 0; i < pids.length; i++) {
+                            var options;
+                            options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
+                            $("#pojects").html(options);
+                        }
+
+                        $("#dialog-add").dialog({
+                            autoOpen: false,
+                            modal: true,
+                            width: 300,
+                            height: 350,
+                            position: ["top", "top"],
+                            buttons: {
+                                修改: function () {
+                                    updateinfo();
+                                }, 关闭: function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                        });
+
+                        getfNumber();
                     });
-                }
+                    //修改个人信息
+                    function updateinfo() {
+                        var obj = {};
+                        obj.id = $("#id").val();
+                        obj.email = $("#email1").val();
+                        obj.phone = $("#phone1").val();
+                        obj.department = $("#department1").val();
+                        $.ajax({async: false, url: "login.usermanage.editUinfo.action", type: "get", datatype: "JSON", data: obj,
+                            success: function (data) {
+                                var arrlist = data.rs;
+                                if (arrlist.length > 0) {
+                                    layerAler("修改成功！");
+                                    $('#dialog-add').dialog('close');
+                                }
+                            }
+                        });
 
-                for (var i = 0; i < pids.length; i++) {
-                    var options;
-                    options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
-                    $("#pojects").html(options);
-                }
+                    }
 
-                $("#dialog-add").dialog({
-                    autoOpen: false,
-                    modal: true,
-                    width: 300,
-                    height: 350,
-                    position: ["top", "top"],
-                    buttons: {
-                        修改: function () {
-                            updateinfo();
-                        }, 关闭: function () {
-                            $(this).dialog("close");
+                    function showDialog() {
+                        $("#id").val($("#userid").val());
+                        $("#uname1").val($("#u_name").val());
+                        $("#email1").val($("#email").val());
+                        $("#phone1").val($("#phone").val());
+                        $("#department1").val($("#department").val());
+                        $('#dialog-add').dialog('open');
+                        return false;
+                    }
+
+                    $("#pojects").change(function () {
+                        projectId = $(this).val();
+                        $("#MenuBox li:eq(0) a").click();
+                        $('#panemask').showLoading({
+                            'afterShow': function () {
+                                setTimeout("$('#panemask').hideLoading()", 1000);
+                            }
+
+                        });
+
+
+
+                    });
+
+
+
+                    function  getusername() {
+                        var name = $("#u_name").val();
+                        return name;
+                    }
+
+                    function  getupid() {
+                        var upid = $("#upid").val();
+                        return upid;
+                    }
+
+                    //后台管理
+                    function  manage() {
+                        $("#iframe").attr('src', "gatewaymanage.jsp");
+                    }
+
+                    function size() {
+                        var Wwidth = $(window).width();
+                        if (Wwidth > 768) {
+                            withs = $(window).width() * 0.5;
+                        } else if (Wwidth > 1024) {
+                            withs = $(window).width() * 0.3;
+                        } else {
+                            withs = 350;
                         }
+
                     }
-                });
-
-                getfNumber();
-            });
-            //修改个人信息
-            function updateinfo() {
-                var obj = {};
-                obj.id = $("#id").val();
-                obj.email = $("#email1").val();
-                obj.phone = $("#phone1").val();
-                obj.department = $("#department1").val();
-                $.ajax({async: false, url: "login.usermanage.editUinfo.action", type: "get", datatype: "JSON", data: obj,
-                    success: function (data) {
-                        var arrlist = data.rs;
-                        if (arrlist.length > 0) {
-                            layerAler("修改成功！");
-                            $('#dialog-add').dialog('close');
-                        }
-                    }
-                });
-
-            }
-
-            function showDialog() {
-                $("#id").val($("#userid").val());
-                $("#uname1").val($("#u_name").val());
-                $("#email1").val($("#email").val());
-                $("#phone1").val($("#phone").val());
-                $("#department1").val($("#department").val());
-                $('#dialog-add').dialog('open');
-                return false;
-            }
-
-            $("#pojects").change(function () {
-                projectId = $(this).val();
-                $("#MenuBox li:eq(0) a").click();
-                $('#panemask').showLoading({
-                    'afterShow': function () {
-                        setTimeout("$('#panemask').hideLoading()", 1000);
-                    }
-
-                });
-
-
-
-            });
-
-
-
-            function  getusername() {
-                var name = $("#u_name").val();
-                return name;
-            }
-
-            function  getupid() {
-                var upid = $("#upid").val();
-                return upid;
-            }
-
-            //后台管理
-            function  manage() {
-                $("#iframe").attr('src', "gatewaymanage.jsp");
-            }
-
-            function size() {
-                var Wwidth = $(window).width();
-                if (Wwidth > 768) {
-                    withs = $(window).width() * 0.5;
-                } else if (Wwidth > 1024) {
-                    withs = $(window).width() * 0.3;
-                } else {
-                    withs = 350;
-                }
-
-            }
-            window.onresize = function () {
-                size();
-            };
+                    window.onresize = function () {
+                        size();
+                    };
 
         </script> 
 

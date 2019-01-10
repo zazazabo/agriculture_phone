@@ -50,7 +50,7 @@
                     width: 200px;
                 }
                 #sel_menu1{
-                    width: 280px;
+                    width: 200px;
                 }
 
                 #updatediv {
@@ -94,14 +94,14 @@
                     width: 150px;
                 }
                 #sel_menu2{
-                    width: 300px;
+                    width: 250px;
                 }
                 #updatediv{
                     width: 500px;
                 }
                 
                  #sel_menu1{
-                    width: 280px;
+                    width: 250px;
                 }
                 
                 #name_edit{
@@ -144,7 +144,7 @@
                     width: 150px;
                 }
                 #sel_menu2{
-                    width: 300px;
+                    width: 250px;
                 }
                 
                  #updatediv{
@@ -152,7 +152,7 @@
                 }
                 
                  #sel_menu1{
-                    width: 280px;
+                    width: 250px;
                 }
                 
                 #name_edit{
@@ -196,7 +196,7 @@
                     width: 150px;
                 }
                 #sel_menu2{
-                    width: 380px;
+                    width: 350px;
                 }
                 
                  #updatediv{
@@ -204,7 +204,7 @@
                 }
                 
                  #sel_menu1{
-                    width: 380px;
+                    width: 350px;
                 }
                 
                 #name_edit{
