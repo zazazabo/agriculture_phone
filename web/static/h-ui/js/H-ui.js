@@ -4959,7 +4959,7 @@ $(function() {
 //				$el.removeClass(d).removeAttr(d);
 //			}
 //		},
-//		this), 0)
+//		this), 0)   
 //	}
 //
 //	Button.prototype.toggle = function() {
