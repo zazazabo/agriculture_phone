@@ -523,25 +523,8 @@
                                 var time1 = value.substring(0, 16);
                                 var time2 = row.dtime.substring(0, 16);
                                 var stime = TimeDifference(time1, time2);
-                                var sobj = {};
-                                sobj.f_comaddr = row.l_comaddr;
-                                sobj.f_setcode = row.infonum;
-                                var isred = 0;
-                                $.ajax({url: "homePage.sensormanage.IssensroRed.action", async: false, type: "get", datatype: "JSON", data: sobj,
-                                    success: function (data) {
-                                        var arrlist = data.rs;
-                                        if (arrlist.length > 0) {
-                                            isred = 1;
-                                        }
-                                    },
-                                    error: function () {
-                                        console.log("提交添加失败！请刷新");
-                                        // alert("提交添加失败！请刷新");
-                                    }
-                                });
-                                if (isred == 1) {
-                                     //创建传感器离线图标
-                                     console.log("1");
+
+                                if (row.errflag == 1) {
                                     str = "<img  src='img/cgred.png'/>";
                                 } else {
                                     var obj = {};
@@ -550,13 +533,9 @@
                                         success: function (data) {
                                             var arrlist = data.rs;
                                             if (arrlist[0].online == 1) {
-                                                if (stime <= 15) {
-                                                    str = "<img  src='img/cglv.png'/>";
-                                                } else {
-                                                    str = "<img  src='img/cglan.png'/>";
-                                                }
-                                            }else{
-                                                  str = "<img  src='img/cglan.png'/>";
+                                                str = "<img  src='img/cglv.png'/>";
+                                            } else {
+                                                str = "<img  src='img/cglan.png'/>";
                                             }
                                         },
                                         error: function () {
@@ -1788,9 +1767,9 @@
                             if (confirm("你还要继续选点吗？")) {  //你还要继续选点吗？
 
                             } else {
-                                for (var i = 0; i < looplist.length; i++) {
+                                for (var i = 0; i < idlist.length; i++) {
                                     //alert("id:" + idlist[i] + "lng:" + array[i].x + "lat:" + array[i].y);
-                                    updateMayLamplnglat(array[i].x, array[i].y, looplist[i]);
+                                    updateMayLamplnglat(array[i].x, array[i].y, idlist[i]);
                                 }
                                 alert("配置成功"); //配置经纬度成功
                                 var nobj = {};
@@ -2029,12 +2008,8 @@
                             success: function (data) {
                                 var arrlist = data.rs;
                                 if (arrlist[0].online == 1) {
-                                    if (stime > 15) {
-                                        lx = "离线";
-                                    } else {
-                                        lx = "在线";
-                                        isLx = 1;
-                                    }
+                                    lx = "在线";
+                                    isLx = 1;
                                 } else {
                                     lx = "离线";
                                 }
@@ -2044,22 +2019,22 @@
                             }
                         });
                         var isred = 0; //判断是否为故障 0非故障
-                        var sobj = {};
-                        sobj.f_comaddr = obj.l_comaddr;
-                        sobj.f_setcode = obj.infonum;
-                        $.ajax({url: "homePage.sensormanage.IssensroRed.action", async: false, type: "get", datatype: "JSON", data: sobj,
-                            success: function (data) {
-                                var arrlist = data.rs;
-                                if (arrlist.length > 0) {
-                                    isred = 1;
-                                    lx = "故障";
-                                }
-                            },
-                            error: function () {
-                                console.log("提交添加失败！请刷新");
-                                // alert("提交添加失败！请刷新");
-                            }
-                        });
+//                        var sobj = {};
+//                        sobj.f_comaddr = obj.l_comaddr;
+//                        sobj.f_setcode = obj.infonum;
+//                        $.ajax({url: "homePage.sensormanage.IssensroRed.action", async: false, type: "get", datatype: "JSON", data: sobj,
+//                            success: function (data) {
+//                                var arrlist = data.rs;
+//                                if (arrlist.length > 0) {
+//                                    isred = 1;
+//                                    lx = "故障";
+//                                }
+//                            },
+//                            error: function () {
+//                                console.log("提交添加失败！请刷新");
+//                                // alert("提交添加失败！请刷新");
+//                            }
+//                        });
 
                         //var lampcode = parseInt(arrlist[i].l_factorycode);
 
@@ -2091,7 +2066,8 @@
                         if ((Longitude != "" && latitude != "") && (Longitude != null && latitude != null)) {
                             var point = new BMap.Point(Longitude, latitude);
                             var marker1;
-                            if (isred == 1) {
+                            if (obj.errflag == 1) {
+                                lx = "故障";
                                 marker1 = new BMap.Marker(point, {
                                     icon: lred
                                 });

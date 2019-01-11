@@ -42,14 +42,31 @@
     </head>
 
     <body>
+        <input id="fscom" type="hidden" value=""/>
+        <input id="fssen" type="hidden" value=""/>  
+        <input id="ylcom" type="hidden" value=""/>
+        <input id="ylsen" type="hidden" value=""/>  
+        <input id="ylljcom" type="hidden" value=""/>
+        <input id="ylljsen" type="hidden" value=""/>  
+        <!--        土壤温度-->
+        <input id="trwdcom" type="hidden" value=""/>
+        <input id="trwdsen" type="hidden" value=""/>  
         <!--        大气温度网关-->
         <input id="dqwdcom" type="hidden" value=""/>
         <!--        大气温度传感器-->
         <input id="dqwdsen" type="hidden" value=""/>  
-        <!--        土壤湿度网关-->
+        <!--        大气湿度-->
+        <input id="dqsdcom" type="hidden" value=""/>
+        <input id="dqsdsen" type="hidden" value=""/>  
+        <!--        土壤湿度-->
         <input id="trsdcom" type="hidden" value=""/>   
-        <!--        土壤湿度传感器-->
-        <input id="trsdsen" type="hidden" value=""/>   
+        <input id="trsdsen" type="hidden" value=""/>  
+        <!--        风向-->
+        <input id="fxcom" type="hidden" value=""/>
+        <input id="fxsen" type="hidden" value=""/>  
+        <!--        照度-->
+        <input id="zdcom" type="hidden" value=""/>
+        <input id="zdsen" type="hidden" value=""/>  
         <!--        上右下左-->
         <div style=" text-align:right;margin:10px 10px 0px auto;"> 
             <button class="btn btn-primary ctrol btn-xm"   onclick="edit()"  id="update">
@@ -58,7 +75,7 @@
         </div>
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
-                <img src="./img/wd.png">
+                <img src="./img/fs.png">
             </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
@@ -70,40 +87,48 @@
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                <img src="./img/yl.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     雨量
                 </div>
                 <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    3.6m/s
+                    <span id="ylvalue">0</span>ml
                 </div>
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                 <img src="./img/yl.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     雨量累计
                 </div>
                 <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    3.6m/s
+                    <span id="ylljvalue">0</span>ml
                 </div>
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                 <img src="./img/wd.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     土壤温度
                 </div>
                 <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    3.6m/s
+                    <span id="trwdvalue">0</span>℃
                 </div>
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                <img src="./img/wd.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     大气温度
@@ -114,7 +139,9 @@
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                <img src="./img/sd.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     大气湿度
@@ -125,7 +152,9 @@
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                <img src="./img/sd.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     土壤湿度
@@ -136,24 +165,28 @@
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                <img src="./img/fx.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     风向
                 </div>
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    13.6m/s
+                    <span id="fxvalue">0</span>º
                 </div>
             </div>
         </div>
         <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;"></div>
+            <div style=" width: 35%; height: 100%;  float: left;">
+                 <img src="./img/zd.png">
+            </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
                     照度
                 </div>
                 <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    3.6m/s
+                    <span id="zdvalue">0</span> lux
                 </div>
             </div>
         </div>
@@ -259,13 +292,13 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#trsd_sensor").combobox({
-                        url: "homePage.sign.gettr_sdsensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#trsdsen").val() != "") {
                                     $(this).combobox('select', $("#trsdsen").val());
                                 } else {
-                                    $(this).combobox('select', data[0].id);
+                                   // $(this).combobox('select', data[0].id);
                                 }
 
                             }
@@ -287,13 +320,13 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#dqwd_sensor").combobox({
-                        url: "homePage.sign.getdq_wdsensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#dqwdsen").val() != "") {
                                     $(this).combobox('select', $("#dqwdsen").val());
                                 } else {
-                                    $(this).combobox('select', data[0].id);
+                                    // $(this).combobox('select', data[0].id);
                                 }
 
                             }
@@ -311,29 +344,36 @@
                     var l_comaddr = record.id;
                     //风速传感器
                     $("#fs_sensor").combobox({
-                        url: "homePage.sign.getfs_sensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                $(this).combobox('select', data[0].id);
+                                if ($("#fssen").val() != "") {
+                                    $(this).combobox('select',$("#fssen").val());
+                                } 
+                                
+                                //$(this).combobox('select', data[0].id);
                             }
                         }
                     });
                 }
             });
-             //雨量
-             $("#yl_l_comaddr").combobox({
+            //雨量
+            $("#yl_l_comaddr").combobox({
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
-                    //风速传感器
-                    $("#fs_sensor").combobox({
-                        url: "homePage.sign.getfs_sensroList.action?l_comaddr=" + l_comaddr,
+                    //雨量传感器
+                    $("#yl_sensor").combobox({
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                $(this).combobox('select', data[0].id);
+                                //$(this).combobox('select', data[0].id);
+                                if ($("#ylsen").val() != "") {
+                                    $(this).combobox('select',$("#ylsen").val());
+                                } 
                             }
                         }
                     });
@@ -347,12 +387,14 @@
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
-                    //风速传感器
-                    $("#fs_sensor").combobox({
-                        url: "homePage.sign.getfs_sensroList.action?l_comaddr=" + l_comaddr,
+                    $("#yllj_sensor").combobox({
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                $(this).combobox('select', data[0].id);
+                                //$(this).combobox('select', data[0].id);
+                                if ($("#ylljsen").val() != "") {
+                                    $(this).combobox('select',$("#ylljsen").val());
+                                } 
                             }
                         }
                     });
@@ -366,12 +408,14 @@
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
-                    //风速传感器
-                    $("#fs_sensor").combobox({
-                        url: "homePage.sign.getfs_sensroList.action?l_comaddr=" + l_comaddr,
+                    $("#trwd_sensor").combobox({
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                $(this).combobox('select', data[0].id);
+                                //$(this).combobox('select', data[0].id);
+                                if ($("#trwdsen").val() != "") {
+                                    $(this).combobox('select',$("#trwdsen").val());
+                                } 
                             }
                         }
                     });
@@ -385,12 +429,14 @@
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
-                    //风速传感器
-                    $("#fs_sensor").combobox({
-                        url: "homePage.sign.getfs_sensroList.action?l_comaddr=" + l_comaddr,
+                    $("#dqsd_sensor").combobox({
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                $(this).combobox('select', data[0].id);
+                               // $(this).combobox('select', data[0].id);
+                               if ($("#dqsdsen").val() != "") {
+                                    $(this).combobox('select',$("#dqsdsen").val());
+                                } 
                             }
                         }
                     });
@@ -404,12 +450,14 @@
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
-                    //风速传感器
-                    $("#fs_sensor").combobox({
-                        url: "homePage.sign.getfs_sensroList.action?l_comaddr=" + l_comaddr,
+                    $("#fx_sensor").combobox({
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                $(this).combobox('select', data[0].id);
+                               // $(this).combobox('select', data[0].id);
+                               if ($("#fxsen").val() != "") {
+                                    $(this).combobox('select',$("#fxsen").val());
+                                } 
                             }
                         }
                     });
@@ -423,12 +471,14 @@
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
-                    //风速传感器
-                    $("#fs_sensor").combobox({
-                        url: "homePage.sign.getfs_sensroList.action?l_comaddr=" + l_comaddr,
+                    $("#zd_sensor").combobox({
+                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                $(this).combobox('select', data[0].id);
+                                //$(this).combobox('select', data[0].id);
+                                if ($("#gdsen").val() != "") {
+                                    $(this).combobox('select',$("#gdsen").val());
+                                } 
                             }
                         }
                     });
@@ -451,6 +501,15 @@
             if (trsd != "") {
                 obj.id = trsd;
                 $.ajax({url: "homePage.sign.trsd_show.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败！");
+                    }
+                });
+            } else {
+                $.ajax({url: "homePage.sign.trsd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
                     success: function (data) {
                         var rs1 = data.rs1;
                     },
@@ -492,6 +551,9 @@
                             var value = parseInt(sen.numvalue) / 10;
                             $("#dqwd").html(value);
                         }
+                    }else{
+                        $("#dqwdcom").val("");
+                        $("#dqwdsen").val("");
                     }
                     if (trsdrs.length > 0) {
                         var trsd = trsdrs[0];
@@ -501,6 +563,9 @@
                             var value = parseInt(trsd.numvalue) / 10;
                             $("#trsd").html(value);
                         }
+                    }else{
+                        $("#trsdcom").val("");
+                        $("#trsdsen").val("");
                     }
                 },
                 error: function () {

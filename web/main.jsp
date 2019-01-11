@@ -30,7 +30,6 @@
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
         <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-
         <!--<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/bootstrap.min.css" />-->
         <script type="text/javascript"  src="js/getdate.js"></script>
         <script type="text/javascript"  src="js/genel.js"></script>
@@ -341,11 +340,12 @@
                     sidePagination: 'server',
                     pageNumber: 1,
                     pageSize: 5,
-                    showRefresh: true,
-                    showToggle: true,
+//                    showRefresh: true,
+                    //showToggle: true,
                     // 设置默认分页为 50
                     pageList: [5, 10, 15],
                     striped: true,
+                    
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
 //                        console.info("加载成功");
                     },
@@ -575,7 +575,16 @@
                         }
                     }
                 });
+                $("#pojects").change(function () {
+                    projectId = $(this).val();
+                    $("#MenuBox li:eq(0) a").click();
+                    $('#panemask').showLoading({
+                        'afterShow': function () {
+                            setTimeout("$('#panemask').hideLoading()", 1000);
+                        }
 
+                    });
+                });
                 getfNumber();
             });
             //修改个人信息
@@ -607,19 +616,7 @@
                 return false;
             }
 
-            $("#pojects").change(function () {
-                projectId = $(this).val();
-                $("#MenuBox li:eq(0) a").click();
-                $('#panemask').showLoading({
-                    'afterShow': function () {
-                        setTimeout("$('#panemask').hideLoading()", 1000);
-                    }
 
-                });
-
-
-
-            });
 
 
 
@@ -657,14 +654,14 @@
     </head>
     <body id="panemask">
 
-        
+
         <c:set var="lang" value="${cookie.lang.value}"></c:set>     
         <c:set var="pid" value="${fn:split(param.pid,',')[0]}"></c:set>   
         <c:if test="${empty cookie.lang.value }">
             <c:set var="lang" value="zh_CN"></c:set>     
         </c:if>
         <c:set var="urlparam" value="lang=${lang}&name=${param.name}&userId=${param.id}&role=${param.role}"></c:set>     
-        <header class="navbar-wrapper">
+            <header class="navbar-wrapper">
                 <div class="navbar navbar-fixed-top" style=" background-color:rgb(92, 183, 92);">
                     <div class="container-fluid cl">
                         <a href='#' class="logo navbar-logo f-l mr-10 hidden-xs"><img src="img/jdkj.png" style=" width: 110px;"></a>
