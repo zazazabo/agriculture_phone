@@ -4930,7 +4930,7 @@ $(function() {
 //	'use strict';
 //	// BUTTON PUBLIC CLASS DEFINITION
 //	// ==============================
-//	var Button = function(element, options) {
+//	var Button = function(element, options) {    
 //		this.$element = $(element);
 //		this.options = $.extend({},Button.DEFAULTS, options);
 //		this.isLoading = false;
