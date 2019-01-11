@@ -277,7 +277,7 @@
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
                     <xfltpara id="name" nrp="1=2" para="name" sql="name = ':name'"></xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr=':comaddr' order by days desc,times asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr=':comaddr' order by days desc,times desc"></xfltpara>
                 </xflt>
             </xsql> 
         </xhandle>  

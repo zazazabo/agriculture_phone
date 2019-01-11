@@ -96,7 +96,7 @@
                         {
 
                             field: 'f_comaddr',
-                            title: '设备名称', //设备名称
+                            title: '所属网关', //设备名称
                             width: 25,
                             align: 'center',
                             valign: 'middle',
@@ -149,7 +149,7 @@
                         }
                         , {
                             field: 'f_name',
-                            title: '传感器编号', //灯具编号
+                            title: '传感器名称', //灯具编号
                             width: 25,
                             align: 'center',
                             valign: 'middle'
@@ -386,9 +386,9 @@
                     导出Excel
                 </button>
 
-                <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="dealfault()">
+<!--                <button style=" height: 30px;" type="button" id="btn_download" class="btn btn-primary" onClick ="dealfault()">
                     处理故障
-                </button>
+                </button>-->
             </div>
 
 

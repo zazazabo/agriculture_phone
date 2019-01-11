@@ -443,6 +443,17 @@
             var lyello = new BMap.Icon('./img/lyello.png', new BMap.Size(27, 32), {//20，30是图片大小
                 //anchor: new BMap.Size(0, 0)      //这个是信息窗口位置（可以改改看看效果）
             });
+
+            //回路闭合图标
+            var hlbh = new BMap.Icon('./img/hll.png', new BMap.Size(27, 32), {//20，30是图片大小
+                //anchor: new BMap.Size(0, 0)      //这个是信息窗口位置（可以改改看看效果）
+            });
+
+            //回路断开图标
+            var hldk = new BMap.Icon('./img/hldk.png', new BMap.Size(27, 32), {//20，30是图片大小
+                //anchor: new BMap.Size(0, 0)      //这个是信息窗口位置（可以改改看看效果）
+            });
+
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -2226,9 +2237,16 @@
                         if ((Longitude != "" && latitude != "") && (Longitude != null && latitude != null)) {
                             var point = new BMap.Point(Longitude, latitude);
                             var marker1;
-                            marker1 = new BMap.Marker(point, {
-                                icon: lgreen
-                            });
+                            if (obj.l_switch == 1) {
+                                marker1 = new BMap.Marker(point, {
+                                    icon: hlbh
+                                });
+                            }else{
+                                marker1 = new BMap.Marker(point, {
+                                icon: hldk
+                                });
+                            }
+
 //                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "回路信息" + '</span>'};//设置信息框、信息说明
 //                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
 //                            marker1.addEventListener("mouseover", function () {

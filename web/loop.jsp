@@ -1806,7 +1806,7 @@
                             </tr>
                             <tr>
                                 <td>控制值</td>
-                                <td><input id="scenval11" class="form-control"  name="val1" style="width:100px;display: inline;" placeholder="控制值1" type="text" /></td>
+                                <td><input id="scenval11" class="form-control"  name="val1" style="width:100px;display: inline;" placeholder="控制值1" type="text" />&emsp;</td>
                                 <td><input id="scenval22" class="form-control"  name="val2" style="width:100px;display: inline;" placeholder="控制值2" type="text" />&emsp;</td>
                                 <td><input id="scenval33" class="form-control"  name="val3" style="width:100px;display: inline;" placeholder="控制值3" type="text" />&emsp;</td>
                                 <td><input id="scenval44" class="form-control"  name="val4" style="width:100px;display: inline;" placeholder="控制值4" type="text" />&emsp;</td>
