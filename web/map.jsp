@@ -301,6 +301,8 @@
                     <p>传感器异常:<img src="img/cgred.png" style=" margin-left:0px;"></p>
                     <p>网关在线:<img src="img/wzx.png" style=" margin-left:3px;"></p>
                     <p>网关离线:<img src="img/wlx.png" style=" margin-left:3px;"></p>
+                    <p>回路闭合:<img src="img/hll.png" style=" margin-left:3px;"></p>
+                    <p>回路断开:<img src="img/hldk.png" style=" margin-left:3px;"></p>
                 </div>
                 <div id="textdiv2">
 
