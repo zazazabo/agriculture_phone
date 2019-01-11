@@ -108,53 +108,56 @@
     </head>
     <body id="activity_pane">
 
-        <div style=" margin-top: 10px;" id="selectdiv2"> 
-            <span style=" margin-left: 10px;">查询条件</span>
-            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox" 
-                   data-options="editable:true,valueField:'id', textField:'text' " />
-            <select class="easyui-combobox" id="sensorlist" style=" margin-left: 3px;  height: 30px">
-                <option value="0">15分钟</option>
-                <option value="1">30分钟</option>   
-                <option value="2">1小时</option> 
-            </select>
-            &nbsp;
-        </div>
-
-        <div id="Day" style=' margin-top:10px;' >
-            <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
-                <label for="dtp_input2" class="control-label" style="float: left;"></label>
-                <input id="dtp_input2" value="" type="hidden">
-                <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
-                    <input id="sday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </span>
-            </form>
-            <span style="float: left; margin-top: 4px;">&nbsp;
-                <span>至</span>
-                &nbsp;</span>
-            <form action="" id="day2" class="form-horizontal" role="form" style="float:left;width: 166px">
-                <label for="dtp_input2" class="control-label" style="float: left;"></label>
-                <input id="dtp_input2" value="" type="hidden">
-                <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
-                    <input id="eday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </span>
-            </form>
-            <div id="selectdiv" style=" float: left;">
-                <button type="button" class="btn btn-xm btn-success" onclick="select()" >
-                    <span>搜索</span>
-                </button>
+        <div class="row"  style=" margin-top: 10px;">
+            <div id="selectdiv2"  class="col-xs-12 col-sm-6 col-md-5 col-lg-4 "> 
+                <span style=" margin-left: 10px;">查询条件</span>
+                <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox" 
+                       data-options="editable:true,valueField:'id', textField:'text' " />
+                <select class="easyui-combobox" id="sensorlist" style=" margin-left: 3px;  height: 30px">
+                    <option value="0">15分钟</option>
+                    <option value="1">30分钟</option>   
+                    <option value="2">1小时</option> 
+                </select>
+                &nbsp;
             </div>
+
+            <div id="Day"  class="col-xs-12 col-sm-6 col-md-5 col-lg-4 ">
+                <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
+                    <label for="dtp_input2" class="control-label" style="float: left;"></label>
+                    <input id="dtp_input2" value="" type="hidden">
+                    <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
+                        <input id="sday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </span>
+                </form>
+                <span style="float: left; margin-top: 4px;">&nbsp;
+                    <span>至</span>
+                    &nbsp;</span>
+                <form action="" id="day2" class="form-horizontal" role="form" style="float:left;width: 166px">
+                    <label for="dtp_input2" class="control-label" style="float: left;"></label>
+                    <input id="dtp_input2" value="" type="hidden">
+                    <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
+                        <input id="eday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </span>
+                </form>
+                <div id="selectdiv" style=" text-align:right;margin:0px 10px 0px auto;">
+                    <button type="button" class="btn btn-xm btn-success" onclick="select()" >
+                        <span>搜索</span>
+                    </button>
+                </div>
+            </div>
+
         </div>
         <!--        <h5 style=" margin-left: 20px; color: #FFB800; width: 100%;clear:both; margin-top: 80px; ">温度单位：℃ &nbsp; &nbsp;湿度单位：%RH</h5>-->
         <div class="topCenter1" id="echarts1" style="width: 95%; height: 80%;">
 
         </div>
-<!--        <div style=" width:70%; height:40%; margin-left: 15%; margin-top:80px; overflow-y: scroll;">
-            <table id="kgtype"></table>
-        </div>-->
+        <!--        <div style=" width:70%; height:40%; margin-left: 15%; margin-top:80px; overflow-y: scroll;">
+                    <table id="kgtype"></table>
+                </div>-->
     </body>
     <script>
         var pid = parent.parent.getpojectId();
@@ -259,21 +262,23 @@
         $(function () {
             $("#l_comaddr2").combobox({
                 url: "gayway.GaywayForm.getComaddr.action?pid=" + pid,
-                formatter: function (row) {
-                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
-                    var v = row.text + v1;
-                    row.id = row.id;
-                    row.text = v;
-                    var opts = $(this).combobox('options');
-                    return row[opts.textField];
-                },
+//                formatter: function (row) {
+//                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+//                    var v = row.text + v1;
+//                    row.id = row.id;
+//                    row.text = v;
+//                    var opts = $(this).combobox('options');
+//                    return row[opts.textField];
+//                },
                 onLoadSuccess: function (data) {
-                    if (Array.isArray(data) && data.length > 0) {
-                        for (var i = 0; i < data.length; i++) {
-                            data[i].text = data[i].name;
-                        }
-                        $(this).combobox('select', data[0].id);
-                    }
+//                    if (Array.isArray(data) && data.length > 0) {
+//                        for (var i = 0; i < data.length; i++) {
+//                            data[i].text = data[i].name;
+//                        }
+//                        $(this).combobox('select', data[0].id);
+//                    }
+                     $(this).combobox('select', data[0].id);
+
 
                 },
                 onSelect: function (record) {
@@ -293,71 +298,6 @@
                 }
             });
 
-
-
-            //  wd("echarts2", qxbs, xdata, data, "℃");
-
-//            $('#kgtype').bootstrapTable({
-//                url: 'homePage.homePage.getkgList.action',
-//                columns: [
-//                    [
-//                        {
-//                            field: 'detail',
-//                            title: "开关型传感器", //详细数据
-//                            width: 25,
-//                            align: 'center',
-//                            valign: 'middle',
-//                            colspan: 2
-//                        }
-//                    ],
-//                    [
-//                        {
-//                            field: 'name',
-//                            title: "名称",
-//                            width: 25,
-//                            align: 'center',
-//                            valign: 'middle'
-//                        }, {
-//                            field: 'numvalue',
-//                            title: "状态",
-//                            width: 25,
-//                            align: 'center',
-//                            valign: 'middle',
-//                            formatter: function (value, row, index, field) {
-//                                if (value == 1) {
-//                                    return "闭合";
-//                                } else {
-//                                    return "断开";
-//                                }
-//                            }
-//                        }]],
-//                clickToSelect: true,
-//                singleSelect: false,
-//                sortName: 'id',
-//                locale: 'zh-CN', //中文支持,
-//                showColumns: false,
-//                sortOrder: 'desc',
-//                pagination: true,
-//                sidePagination: 'server',
-//                pageNumber: 1,
-//                pageSize: 96,
-//                // 设置默认分页为 50
-//                pageList: [96],
-//                onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
-//                    //                        console.info("加载成功");
-//                },
-//                //服务器url
-//                queryParams: function (params)  {   //配置参数     
-//                    var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
-//                        search: params.search,
-//                        skip: params.offset,
-//                        limit: params.limit,
-//                        type_id: "1",
-//                        pid: pid  
-//                    };      
-//                    return temp;  
-//                }
-//            });
             $(".day").datetimepicker({
                 format: 'yyyy/mm/dd',
                 language: 'zh-CN',
@@ -467,7 +407,7 @@
                                 }
 
                             }
-                        }else{
+                        } else {
                             sdvals2 = sdvals;
                         }
                         obj.data = sdvals2;

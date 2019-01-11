@@ -388,6 +388,15 @@
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
             </xsql>
+        </xhandle> 
+        
+        <xhandle desc="查询网关下传感器" id="gesensroList" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and   @CONDITION  " var="list">
+                <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
         </xhandle>  
     </xform>
     
