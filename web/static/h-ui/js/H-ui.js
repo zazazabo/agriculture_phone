@@ -4930,7 +4930,7 @@ $(function() {
 //	'use strict';
 //	// BUTTON PUBLIC CLASS DEFINITION
 //	// ==============================
-//	var Button = function(element, options) {    
+//	var Button = function(element, options) {
 //		this.$element = $(element);
 //		this.options = $.extend({},Button.DEFAULTS, options);
 //		this.isLoading = false;
@@ -4959,7 +4959,7 @@ $(function() {
 //				$el.removeClass(d).removeAttr(d);
 //			}
 //		},
-//		this), 0)   
+//		this), 0)
 //	}
 //
 //	Button.prototype.toggle = function() {

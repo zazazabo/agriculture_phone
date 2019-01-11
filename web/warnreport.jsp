@@ -47,6 +47,7 @@
                 for (var i = 0; i < selects.length; i++) {
                     var ele = selects[i];
                     fmobj.id = ele.id;
+                    fmobj.enable=val;
                     $.ajax({async: false, url: "sensor.sensorform.uplimitenable.action", type: "get", datatype: "JSON", data: fmobj,
                         success: function (data) {
                             var arrlist = data.rs;
@@ -146,16 +147,7 @@
 
                             }
                         }
-                        , {
-                            field: 'dreg',
-                            title: '数据位置', //控制方案
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index, field) {
-                                return  value.toString();
-                            }
-                        }, {
+                        ,  {
                             field: 'infonum',
                             title: '信息点',
                             width: 25,
@@ -198,7 +190,7 @@
                         },
                         {
                             field: 'enable',
-                            title: '部署情况', //部署情况
+                            title: '启用状态', //部署情况
                             width: 25,
                             align: 'center',
                             valign: 'middle',
@@ -356,13 +348,13 @@
                                         </button>
 
 
-                                        <button class="btn btn-success btn-sm ctrol"   onclick="enablewarning()" data-toggle="modal" data-target="#pjj33" id="add">
+                                        <button class="btn btn-success btn-sm ctrol"  type="button"  onclick="enablewarning(1)" data-toggle="modal" data-target="#pjj33" id="add">
                                             启用
                                         </button>
 
 
 
-                                        <button class="btn btn-success btn-sm ctrol"   onclick="disablewarning()" data-toggle="modal" data-target="#pjj33" id="add">
+                                        <button class="btn btn-success btn-sm ctrol" type="button"   onclick="enablewarning(0)" data-toggle="modal" data-target="#pjj33" id="add">
                                             禁用
                                         </button>
 
