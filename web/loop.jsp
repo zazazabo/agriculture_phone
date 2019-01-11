@@ -1126,7 +1126,8 @@
                             $(this).combobox('select', data[0].id);
                         }
                     }, onSelect: function (record) {
-                        $("#comaddrname").val(record.name);
+                        var id1=record.id.replace(/\b(0+)/gi,"")
+                        $("#comaddrname").val(id1);
                     }
                 });
 
@@ -1438,7 +1439,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span style="margin-left:0px;" >网关地址</span>&nbsp;
+                                    <span style="margin-left:0px;" >网关名称</span>&nbsp;
                                     <span class="menuBox">
 
                                         <input id="comaddr" class="easyui-combobox" name="l_comaddr" style=" height: 30px" 
@@ -1447,8 +1448,8 @@
 
 
                                 <td></td>
-                                <td>
-                                    <span style="margin-left:0px;" >网关名称</span>&nbsp;
+                                <td >
+                                    <span style="margin-left:10px;" >网关地址</span>&nbsp;
                                     <input id="comaddrname" readonly="true"   class="form-control"  name="comaddrname" style="display: inline;" placeholder="请输入网关名称" type="text"></td>
 
                                 </td>
@@ -1461,7 +1462,7 @@
 
                                 <td></td>
                                 <td>
-                                    <span style="margin-left:2px;">回路名称</span>&nbsp;
+                                    <span style="margin-left:10px;">回路名称</span>&nbsp;
                                     <input id="l_name" class="form-control"  name="l_name" style="display: inline;" placeholder="请输入回路名称" type="text">
                                 </td>
                                 </td>
@@ -1478,7 +1479,7 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <span style="margin-left:0px;" >工作方式</span>&nbsp;
+                                    <span style="margin-left:10px;" >工作方式</span>&nbsp;
                                     <span class="menuBox">
                                         <select class="easyui-combobox" id="l_worktype" name="l_worktype"  data-options='editable:false,valueField:"id", textField:"text"' style="height: 30px">          
                                             <!--<option value="0">手动</option>-->
