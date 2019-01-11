@@ -88,7 +88,7 @@
         </div>
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
-                <img src="./img/yl.png">
+                <img src="./img/yuliang.png">
             </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
@@ -101,7 +101,7 @@
         </div>
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
-                 <img src="./img/yl.png">
+                 <img src="./img/yuliang.png">
             </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;text-align: center;padding-top: 10%;font-size: 2em;position:relative">
