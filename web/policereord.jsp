@@ -121,7 +121,7 @@
                             align: 'center',
                             valign: 'middle',
                             formatter: function (value, row, index, field) {
-                                return  value.replace(".0", "");
+                                return value.substring(0,19);
                             }
                         }, {
                             field: 'f_type',
@@ -175,16 +175,7 @@
                                 if (value == null || value == "") {
                                     return  null;
                                 } else {
-                                    var date = new Date(value);
-                                    var year = date.getFullYear();
-                                    var month = date.getMonth() + 1; //月份是从0开始的 
-                                    var day = date.getDate(), hour = date.getHours();
-                                    var min = date.getMinutes(), sec = date.getSeconds();
-                                    var preArr = Array.apply(null, Array(10)).map(function (elem, index) {
-                                        return '0' + index;
-                                    });////开个长度为10的数组 格式为 00 01 02 03 
-                                    var newTime = year + '-' + (preArr[month] || month) + '-' + (preArr[day] || day) + ' ' + (preArr[hour] || hour) + ':' + (preArr[min] || min) + ':' + (preArr[sec] || sec);
-                                    return newTime;
+                                    return value.substring(0,19);
                                 }
                             }
                         },

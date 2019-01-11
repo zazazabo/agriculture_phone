@@ -581,7 +581,7 @@
     
     <xform desc="操作日志" id="oplog">
         <xhandle desc="查看操作日志信息" id="oplogInfo" rtn="rs" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_oplog where  @CONDITION " var="bootstrap">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_oplog where o_type !='登陆' and o_type !='退出系统' and  @CONDITION " var="bootstrap">
                 <xflt id="CONDITION" nrp="" tpl="@o_time AND @end AND @o_pid AND @sort">
                     <xfltpara id="o_time" nrp="1=1" para="statr" sql="o_time &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
