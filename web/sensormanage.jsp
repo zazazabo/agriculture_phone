@@ -339,11 +339,11 @@
 
             function checkSensorAdd() {
                 var o = $("#formadd").serializeObject();
-                var l_comaddr = o.l_comaddr;
+                var identify = o.s_identify;
                 var sitenum = o.sitenum; //站号
                 var dreg = o.dreg;   //数据位置
                 var iobj = {};
-                iobj.l_comaddr = l_comaddr;
+                iobj.s_identify = identify;
                 iobj.sitenum = sitenum;
                 iobj.dreg = dreg;
                 $.ajax({async: false, url: "homePage.sensormanage.getIsSiten.action", type: "get", datatype: "JSON", data: iobj,
@@ -768,7 +768,7 @@
                             sortOrder: params.order,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr: $("#l_comaddr2").combobox('getValue')
+                            s_identify: $("#l_comaddr2").combobox('getValue')
 //                            l_comaddr: $("#l_comaddr2").val()
                         };   
                         return temp;  
@@ -1186,7 +1186,7 @@
                                 <span style="margin-left:0px;" >网关名称</span>&nbsp;
                                 <span class="menuBox">
 
-                                    <input id="l_comaddr"  class="easyui-combobox" name="l_comaddr" style="height: 30px" 
+                                    <input id="l_comaddr"  class="easyui-combobox" name="s_identify" style="height: 30px" 
                                            data-options='editable:false,valueField:"id", textField:"text"' />
                                 </span>  
 
