@@ -344,13 +344,17 @@
                     return  false;
                 }
 
-                var namesss = false;
-                addlogon(u_name, "添加", o_pid, "回路管理", "添加回路【" + o.l_name + "】");
+//                var namesss = false;
+//                addlogon(u_name, "添加", o_pid, "回路管理", "添加回路【" + o.l_name + "】");
 
                 if (isNumber(o.l_site) == false || isNumber(o.l_pos) == false) {
                     layerAler("数据位置站号是数字");
                     return false;
                 }
+//                o.identify = o.l_comaddr;
+                console.log(o);
+
+
                 $.ajax({async: false, cache: false, url: "loop.loopForm.ExistLoop.action", type: "GET", data: o,
                     success: function (data) {
                         console.log(data);
@@ -360,7 +364,6 @@
                         }
                         if (data.total == 0) {
                             if (o.l_worktype == 3) {
-
                                 for (var i = 0; i < 5; i++) {
                                     var time = "time" + (i + 1).toString();
                                     var timeval = "timeval" + (i + 1).toString();
@@ -398,8 +401,8 @@
 
                             $.ajax({async: false, cache: false, url: "loop.loopForm.addLoop1.action", type: "GET", data: o,
                                 success: function (data) {
-//                                    search();
-                                    $("#gravidaTable").bootstrapTable('refresh');
+                                    search(); 
+//                                    $("#gravidaTable").bootstrapTable('refresh');
 
                                 },
                                 error: function () {
@@ -417,7 +420,7 @@
                     }
 
                 })
-
+                return  false;
                 return  namesss;
             }
 
@@ -581,9 +584,7 @@
             function deployLoop() {
 
                 var infoalldata = $("#formsearch").serializeObject();
-
                 console.log(infoalldata);
-
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 var o = $("#form1").serializeObject();
                 var vv = new Array();
@@ -592,8 +593,6 @@
                     return;
                 }
                 var ele = selects[0];
-                o.l_comaddr = ele.l_comaddr;
-                console.log(ele);
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
@@ -699,7 +698,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployLoopCB", ele.l_comaddr, 1, ele.lid, ele.l_info, "${param.action}");
+                dealsend2("10", data, "deployLoopCB", infoalldata.l_comaddr, 1, ele.lid, ele.l_info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -718,7 +717,7 @@
                     return;
                 }
                 var ele = selects[0];
-                o.l_comaddr = ele.l_comaddr;
+      
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
@@ -738,7 +737,7 @@
                 }
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "deployLoopCB", o.l_comaddr, 0, ele.lid, info, "${param.action}");
+                dealsend2("10", data, "deployLoopCB", infoalldata.l_comaddr, 0, ele.lid, info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -1045,21 +1044,6 @@
                                 return value;
                             }
                         }, {
-                            field: 'show',
-                            title: '是否首页显示', //是否首页显示
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index, field) {
-                                if (value == 1) {
-                                    var str = "<span class='label label-success'>" + '是' + "</span>";
-                                    return  str;
-                                } else {
-                                    var str = "<span class='label label-warning'>" + '否' + "</span>";  //未部署
-                                    return  str;
-                                }
-                            }
-                        }, {
                             field: 'l_deployment',
                             title: '部署情况', //部署情况
                             width: 25,
@@ -1100,7 +1084,7 @@
                             limit: params.limit,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr: $("#l_comaddr").combobox('getValue')
+                            identify: $("#identify").val()
                         };   
                         console.log(temp); 
                         return temp;  
@@ -1126,8 +1110,9 @@
                             $(this).combobox('select', data[0].id);
                         }
                     }, onSelect: function (record) {
-                        var id1=record.id.replace(/\b(0+)/gi,"")
+                        var id1 = record.id.replace(/\b(0+)/gi, "")
                         $("#comaddrname").val(id1);
+                        $("#identify1").val(record.identify);
                     }
                 });
 
@@ -1152,8 +1137,9 @@
 
                     },
                     onSelect: function (record) {
+                        $("#identify").val(record.identify);
                         var obj = {};
-                        obj.l_comaddr = record.id;
+                        obj.identify = record.identify;
                         obj.pid = "${param.pid}";
                         var opt = {
                             url: "loop.loopForm.getLoopList.action",
@@ -1311,6 +1297,7 @@
                                 <tr>
                                     <td > &emsp;网关名称:</td>
                                     <td >
+                                        <input type="hidden" id="identify" value=""/>
                                         <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:100px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
                                     </td>
                                     <td  >
@@ -1324,7 +1311,7 @@
                                         </select>
                                     </td>
                                     <td style=" padding-left: 10px;">
-                                        <button class="btn btn-success  btn-sm ctrol"   onclick="Search1()" data-toggle="modal" data-target="#pjj33" id="add">
+                                        <button class="btn btn-success   btn-sm ctrol" type="button"   onclick="search()" >
                                             筛选
                                         </button>
                                     </td>
@@ -1434,7 +1421,8 @@
 
                 <form action="" method="POST" id="formadd" onsubmit="return checkLoopAdd()">    
                     <input type="hidden" name="pid" value="${param.pid}"/>
-
+                    <input type="hidden" name="identify" id="identify1" value=""/>
+                     
                     <table >
                         <tbody>
                             <tr>
@@ -1515,7 +1503,6 @@
                     </table> 
 
                     <table id="timetable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-
                         <tr style=" height: 40px;">
                             <th></th>
                             <th>条件1</th>
@@ -1568,7 +1555,6 @@
                     </table>
 
                     <table id="scentable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-
                         <tbody>
                             <tr style=" height: 40px;">
                                 <th></th>
@@ -1597,7 +1583,6 @@
                         </tbody>
                     </table>
                     <table id="infotable" style=" border: 1px solid #888; margin-left: 10px; margin-top: 10px; width: 90%; " class="t">
-
                         <tbody>
                             <tr>
                                 <td colspan="5"align="left">
@@ -1657,9 +1642,6 @@
                             </tr>
                         </tbody>
                     </table>     
-
-
-
                 </form>                        
             </div>
 

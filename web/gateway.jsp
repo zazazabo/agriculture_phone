@@ -167,14 +167,16 @@
                         btn: ['确定', '取消'] //确定、取消按钮
                     }, function (index) {
                         var o = {l_comaddr: selects[0].comaddr, id: selects[0].id};
-                        $.ajax({url: "homePage.gayway.gaywayinfo.action", type: "POST", datatype: "JSON", data: o,
+                        $.ajax({url: "gayway.GaywayForm.existcomaddr.action", type: "POST", datatype: "JSON", data: o,
                             success: function (data) {
+                                console.log(data);
                                 var arrlist = data.rs;
                                 if (arrlist.length > 0) {
                                     layerAler("该网关下存在回路不能删除");
                                 } else {
                                     $.ajax({url: "gayway.GaywayForm.deleteGateway.action", type: "POST", datatype: "JSON", data: o,
                                         success: function (data) {
+                                            
                                             var arrlist = data.rs;
                                             if (arrlist.length == 1) {
                                                 //删除成功
