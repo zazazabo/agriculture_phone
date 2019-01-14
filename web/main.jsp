@@ -233,6 +233,7 @@
 //
 //                    }
                 });
+                $("#fauttable").bootstrapTable('destroy');
                 $('#fauttable').bootstrapTable({
                     url: 'homePage.fault.getfault.action',
                     columns: [
@@ -276,7 +277,7 @@
                                 if (value == null || value == "") {
                                     return  null;
                                 } else {
-                                    return value.substring(0,19);
+                                    return value.substring(0, 19);
                                 }
                             }
                         }, {
@@ -577,6 +578,7 @@
                         }
 
                     });
+                    getfNumber();
                 });
                 getfNumber();
             });
@@ -712,13 +714,6 @@
                             </dt>
                             <dd>
                                 <ul id="MenuBox">
-                                    <li style=" display: none">
-                                        <a id="iiii" data-url="gatewaymanage.jsp?" data-href="" data-title="后台数据管理" href="javascript:void(0)">后台数据管理</a>
-                                        
-                                        <!--<a data-url="monitor.jsp?lang=zh_CN&amp;name=jiade&amp;userId=12&amp;role=1&amp;action=monitor.jsp" data-href="monitor.jsp?lang=zh_CN&amp;name=jiade&amp;userId=12&amp;role=1&amp;action=monitor.jsp" data-title="传感器监视" href="javascript:void(0)">传感器监视</a>-->
-                                        
-                                        
-                                    </li>
                                     <c:if test="${fn:length(t.children)==0}">
                                         <li>
                                             <a data-url="${t.m_action}?${urlparam}&action=${t.m_action}" data-href="${t.m_action}?${urlparam}&action=${t.m_action}" data-title="${t.m_text[lang]}" href="javascript:void(0)">${t.m_text[lang]}</a>
@@ -729,6 +724,13 @@
                                             <a data-url="${t1.m_action}?${urlparam}&action=${t1.m_action}" data-href="${t1.m_action}?${urlparam}&action=${t1.m_action}" data-title="${t1.m_text[lang]}" href="javascript:void(0)">${t1.m_text[lang]}</a>
                                         </li>
                                     </c:forEach>
+                                    <li style=" display: none">
+                                        <a id="iiii" data-url="gatewaymanage.jsp?" data-href="" data-title="后台数据管理" href="javascript:void(0)">后台数据管理</a>
+
+                                        <!--<a data-url="monitor.jsp?lang=zh_CN&amp;name=jiade&amp;userId=12&amp;role=1&amp;action=monitor.jsp" data-href="monitor.jsp?lang=zh_CN&amp;name=jiade&amp;userId=12&amp;role=1&amp;action=monitor.jsp" data-title="传感器监视" href="javascript:void(0)">传感器监视</a>-->
+
+
+                                    </li>
                                 </ul>
                             </dd>
 
