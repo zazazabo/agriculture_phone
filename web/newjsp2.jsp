@@ -121,7 +121,7 @@
                 &nbsp;
             </div>
 
-            <div id="Day"  class="col-xs-12 col-sm-6 col-md-5 col-lg-4 ">
+            <div id="Day"  class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
                 <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
                     <label for="dtp_input2" class="control-label" style="float: left;"></label>
                     <input id="dtp_input2" value="" type="hidden">
@@ -256,7 +256,7 @@
                 },
                 series: functionNodname(data)
             };
-            myChart3.setOption(option);
+            myChart3.setOption(option,true);
         }
 
         $(function () {
@@ -347,7 +347,7 @@
 //                }
                 for (var i = 0; i < xdata.length; i++) {
                     // sdxdata.push(xdata[i].collectime);
-                    sdxdata.push(xdata[i].times.substring(0, 5));
+                    sdxdata.push(xdata[i].collectime.substring(11, 16));
 
                 }
             }
@@ -395,6 +395,7 @@
                         obj.data = wdvals2;
                     } else {
                         var sdvals2 = [];
+                        console.log(sdvals.length+"x:"+sdxdata.length);
                         if (sdvals.length < sdxdata.length) {
                             for (var l = 0; l < sdvals.length; l++) {
                                 for (var k = 0; k < sdxdata.length; k++) {

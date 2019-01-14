@@ -728,7 +728,7 @@
                                 return  value.replace(/\b(0+)/gi, "");
                             }
                         }, {
-                            field: 'l_ongitude',
+                            field: 'l_longitude',
                             title: '经度', //经度
                             width: 25,
                             align: 'center',
