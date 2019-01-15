@@ -301,7 +301,6 @@
 
                 var o1 = $("#formsearch").serializeObject();
                 o1.pid = "${param.pid}";
-                console.log(o1);
                 $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: o1,
                     success: function (data) {
                         $("#infonum").combobox('loadData', data);
@@ -1291,13 +1290,14 @@
         <div id="content" class="row-fluid">
             <div class=" row " >
                 <form id="formsearch">
+                    <input type="hidden" name="identify" id="identify" value=""/>
                     <div class="col-xs-12 col-sm-5 col-md-43 " >
                         <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
                             <tbody>
                                 <tr>
                                     <td > &emsp;网关名称:</td>
                                     <td >
-                                        <input type="hidden" id="identify" value=""/>
+                                       
                                         <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:100px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
                                     </td>
                                     <td  >
