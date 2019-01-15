@@ -109,9 +109,9 @@
     
     <xform desc="地图导航" id="map">
         <xhandle desc="查询项目下所有网关和传感器" id="getAllinfo" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select GETDATE() as dtime, * from t_sensor where deplayment= 1 and @CONDITION " var="lamprs">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor where deplayment= 1 and @CONDITION " var="lamprs">
                 <xflt id="CONDITION" nrp="" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr  FROM t_baseinfo  WHERE  pid = ':pid')">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify  FROM t_baseinfo  WHERE  pid = ':pid')">
                     </xfltpara>
                 </xflt>      
             </xsql>
@@ -123,7 +123,7 @@
             </xsql>      
             <xsql id="a3" list="true" page="true" tpe="SQL" tpl="select * from t_loop where l_deplayment = 1 and @CONDITION " var="looprs">
                 <xflt id="CONDITION" nrp="" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr  FROM t_baseinfo  WHERE  pid = ':pid')">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_identify IN (SELECT identify  FROM t_baseinfo  WHERE  pid = ':pid')">
                     </xfltpara>
                 </xflt>      
             </xsql>       
@@ -141,13 +141,13 @@
             </xsql>
         </xhandle>
         <xhandle desc="查询所有传感器信息" id="sensor" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select GETDATE() as dtime, * from t_sensor where deplayment= 1 and @CONDITION " var="bootstrap">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor where deplayment= 1 and @CONDITION " var="bootstrap">
                 <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @name AND @pid">
-                    <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="identify = ':l_comaddr'">
+                    <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="s_identify = ':l_comaddr'">
                     </xfltpara>
                     <xfltpara id="name" nrp="1=1" para="name" sql="name = ':name'">
                     </xfltpara>
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')">
                     </xfltpara>
                 </xflt>
             </xsql>
@@ -208,9 +208,9 @@
             </xsql>
         </xhandle> 
         <xhandle desc="查询传感器分布" id="queryLamp" rtnype="JSON">
-            <xsql id="a2" list="true" page="true" tpe="SQL" tpl="select GETDATE() as dtime, * from t_sensor where deplayment= 1 and @CONDITION " var="rs">
+            <xsql id="a2" list="true" page="true" tpe="SQL" tpl="select  * from t_sensor where deplayment= 1 and @CONDITION " var="rs">
                 <xflt id="CONDITION" nrp="" tpl="@comaddr AND @pid">
-                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="identify = ':comaddr'">
+                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="s_identify = ':comaddr'">
                     </xfltpara>
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')">
                     </xfltpara>
@@ -562,7 +562,7 @@
                     
                     <xfltpara id="f_day2" nrp="1=1" para="end" sql="f_day &lt;= ':end'">
                     </xfltpara>
-                    <xfltpara id="pid" nrp="1=1" para="pid" sql="f_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')">
+                    <xfltpara id="pid" nrp="1=1" para="pid" sql="f_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')">
                     </xfltpara>
                 </xflt>
             </xsql> 
@@ -751,8 +751,8 @@
         </xhandle> 
         <xhandle desc="判断网关是否在线" id="comaddrzx" rtn="rs" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select online from t_baseinfo where @CONDITION " var="rs">
-                <xflt id="CONDITION" nrp="" tpl="@comaddr">
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr=':comaddr'">
+                <xflt id="CONDITION" nrp="" tpl="@identify">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="identify=':identify'">
                     </xfltpara>
                    
                 </xflt>

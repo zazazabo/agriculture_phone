@@ -505,7 +505,7 @@
                         var rs1 = data.rs1;
                     },
                     error: function () {
-                        alert("提交添加失败！");
+                        alert("提交添加失败1！");
                     }
                 });
             } else {
@@ -514,7 +514,7 @@
                         var rs1 = data.rs1;
                     },
                     error: function () {
-                        alert("提交添加失败！");
+                        alert("提交添加失败2！");
                     }
                 });
             }
@@ -527,6 +527,15 @@
                     },
                     error: function () {
                         alert("提交添加失败！");
+                    }
+                });
+            }else{
+                $.ajax({url: "homePage.sign.dqwd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败2！");
                     }
                 });
             }

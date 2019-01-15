@@ -95,7 +95,7 @@
                         },
                         {
 
-                            field: 'f_comaddr',
+                            field: 'f_identify',
                             title: '设备名称', //设备名称
                             width: 25,
                             align: 'center',
@@ -108,7 +108,9 @@
                                 $.ajax({async: false, url: "homePage.gayway.getnamebycode.action", type: "get", datatype: "JSON", data: obj,
                                     success: function (data) {
                                         var rs = data.rs;
-                                        name = rs[0].name;
+                                        if(rs.length>0){
+                                           name = rs[0].name;
+                                        }
                                     }
                                 });
                                 return  name;
@@ -260,7 +262,7 @@
                     } else {
                         obj.end = end;
                     }
-                    obj.pid = pid;
+                    obj.pid = o_pid;
                     var opt = {
                         url: "login.policereord.reordInfo.action",
                         silent: true,

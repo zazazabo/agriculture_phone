@@ -215,7 +215,7 @@
                 var lobj = {};
                 lobj.pid = pid;
                 if ($("#lampcomaddrlist2").val() != "") {
-                    lobj.l_comaddr = $("#lampcomaddrlist2").val();
+                    lobj.comaddr = $("#lampcomaddrlist2").val();
                 }
                 $.ajax({async: false, url: "login.map.queryLamp.action", type: "get", datatype: "JSON", data: lobj,
                     success: function (data) {
@@ -445,6 +445,14 @@
             var lyello = new BMap.Icon('./img/lyello.png', new BMap.Size(27, 32), {//20，30是图片大小
                 //anchor: new BMap.Size(0, 0)      //这个是信息窗口位置（可以改改看看效果）
             });
+            //创建回路闭合图标
+            var hlbh = new BMap.Icon('./img/hll.png', new BMap.Size(27, 32), {//20，30是图片大小
+                //anchor: new BMap.Size(0, 0)      //这个是信息窗口位置（可以改改看看效果）
+            });
+            //创建传感器亮灯图标
+            var hldk = new BMap.Icon('./img/hldk.png', new BMap.Size(27, 32), {//20，30是图片大小
+                //anchor: new BMap.Size(0, 0)      //这个是信息窗口位置（可以改改看看效果）
+            });
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -493,14 +501,14 @@
                             align: 'center',
                             valign: 'middle'
                         }, {
-                            field: 'l_comaddr',
+                            field: 's_identify',
                             title: '所属网关', //所属网关
                             width: 25,
                             align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index, field) {
-                                return  value.replace(/\b(0+)/gi, "");
-                            }
+                            valign: 'middle'
+//                            formatter: function (value, row, index, field) {
+//                                return  value.replace(/\b(0+)/gi, "");
+//                            }
                         },
                         {
                             field: 'longitude',
@@ -522,15 +530,11 @@
                             valign: 'middle',
                             formatter: function (value, row, index, field) {
                                 var str = "";
-                                var time1 = value.substring(0, 16);
-                                var time2 = row.dtime.substring(0, 16);
-                                var stime = TimeDifference(time1, time2);
-
                                 if (row.errflag == 1) {
                                     str = "<img  src='img/cgred.png'/>";
                                 } else {
                                     var obj = {};
-                                    obj.comaddr = row.l_comaddr; //selects[0];
+                                    obj.comaddr = row.s_identify; //selects[0];
                                     $.ajax({url: "login.gateway.comaddrzx.action", async: false, type: "get", datatype: "JSON", data: obj,
                                         success: function (data) {
                                             var arrlist = data.rs;
@@ -594,7 +598,7 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle'
-                        }, 
+                        },
 //                        {
 //                            field: 'model',
 //                            title: '型号', //型号
@@ -710,14 +714,14 @@
                             }
 
                         }, {
-                            field: 'l_comaddr',
+                            field: 'l_identify',
                             title: '所属网关', //网关地址
                             width: 25,
                             align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index, field) {
-                                return  value.replace(/\b(0+)/gi, "");
-                            }
+                            valign: 'middle'
+//                            formatter: function (value, row, index, field) {
+//                                return  value.replace(/\b(0+)/gi, "");
+//                            }
                         }, {
                             field: 'l_longitude',
                             title: '经度', //经度
@@ -806,7 +810,7 @@
             }
             // 百度地图API功能
             var map = new BMap.Map("allmap", {enableMapClick: false}); // 创建Map实例
-            map.centerAndZoom(new BMap.Point(116.404, 39.915), 15); // 初始化地图,设置中心点坐标和地图级别
+            map.centerAndZoom(new BMap.Point(110.32962, 21.281107), 15); // 初始化地图,设置中心点坐标和地图级别
             //添加地图类型控件
             map.addControl(new BMap.MapTypeControl({
                 mapTypes: [
@@ -1250,12 +1254,12 @@
                 var obj = {};
                 obj.type = "ALL";
                 if (lampname != "") {
-                    obj.l_name = encodeURI(lampname);
+                    obj.name = encodeURI(lampname);
                 }
                 obj.l_comaddr = l_commadr;
                 obj.pid = porjectId;
                 var opt = {
-                    url: "login.map.lamp.action",
+                    url: "login.map.sensor.action",
                     silent: true,
                     query: obj
                 };
@@ -1474,7 +1478,7 @@
                                                     $("#wgtable").bootstrapTable('refresh', opt);
 
                                                 } else {
-                                                    alert(lans[281][lang]);  //修改失败
+                                                    alert("修改失败");  //修改失败
                                                 }
                                             },
                                             error: function () {
@@ -1553,7 +1557,7 @@
                                 marker.addEventListener("dragend", function (e) {
                                     var x = e.point.lng; //经度
                                     var y = e.point.lat; //纬度
-                                    if (confirm(lans[288][lang])) {  //该设备已有经纬度了，您确定更改吗?
+                                    if (confirm("您确定更改该设备经纬度吗?")) {  //该设备已有经纬度了，您确定更改吗?
                                         var obj2 = {};
                                         obj2.Longitude = x;
                                         obj2.latitude = y;
@@ -1562,9 +1566,9 @@
                                             success: function (data) {
                                                 var arrlist = data.rs;
                                                 if (arrlist.length == 1) {
-                                                    alert(lans[143][lang]);  //修改成功
+                                                    alert("修改成功");  //修改成功
                                                 } else {
-                                                    alert(lans[281][lang]);  //修改失败
+                                                    alert("修改失败");  //修改失败
                                                 }
                                             },
                                             error: function () {
@@ -1575,7 +1579,7 @@
 
                                 });
                             } else {
-                                alert(lans[281][lang]);  //修改失败
+                                alert("修改失败");  //修改失败
                             }
                         },
                         error: function () {
@@ -1662,7 +1666,7 @@
                     if (wgonedraw) {
                         if (wgchecck.Longitude != null && wgchecck.latitude != null) {
                             if (confirm("该设备已有经纬度了，您确定更改吗?")) {  //该设备已有经纬度了，您确定更改吗?
-                                updatelnglat(e.point.lng, e.point.lat, wgchecck.comaddr);
+                                updatelnglat(e.point.lng, e.point.lat, wgchecck.identify);
                                 var allOver = map.getOverlays(); //获取全部标注
                                 for (var j = 0; j < allOver.length; j++) {
                                     if (allOver[j].toString() == "[object Marker]") {
@@ -1673,7 +1677,7 @@
                                 }
                             }
                         } else {
-                            updatelnglat(e.point.lng, e.point.lat, wgchecck.comaddr);
+                            updatelnglat(e.point.lng, e.point.lat, wgchecck.identify);
                         }
                         wgonedraw = false;
                         wgchecck = [];
@@ -2001,13 +2005,13 @@
                         var obj = arrlist[i];
                         var Longitude = obj.longitude;
                         var latitude = obj.latitude;
-                        var time1 = obj.onlinetime.substring(0, 16);
-                        var time2 = obj.dtime.substring(0, 16);
-                        var stime = TimeDifference(time1, time2);
+//                        var time1 = obj.onlinetime.substring(0, 16);
+//                        var time2 = obj.dtime.substring(0, 16);
+//                        var stime = TimeDifference(time1, time2);
                         var lx = "离线";
                         var isLx = 0;  //判断是否在线
                         var gobj = {};
-                        gobj.comaddr = obj.l_comaddr; //selects[0];
+                        gobj.identify = obj.s_identify; //selects[0];
                         $.ajax({url: "login.gateway.comaddrzx.action", async: false, type: "get", datatype: "JSON", data: gobj,
                             success: function (data) {
                                 var arrlist = data.rs;
@@ -2022,7 +2026,7 @@
                                 alert("提交添加失败！请刷新");
                             }
                         });
-                        var isred = 0; //判断是否为故障 0非故障
+                        //var isred = 0; //判断是否为故障 0非故障
 //                        var sobj = {};
 //                        sobj.f_comaddr = obj.l_comaddr;
 //                        sobj.f_setcode = obj.infonum;
@@ -2153,7 +2157,7 @@
                                                     if (arrlist.length == 1) {
                                                         alert("修改成功");  //修改成功
                                                     } else {
-                                                        alert(lans[281][lang]);  //修改失败
+                                                        alert("修改失败");  //修改失败
                                                     }
                                                 },
                                                 error: function () {
@@ -2169,13 +2173,13 @@
                                 //移除传感器
                                 $("#clean").click(function () {
                                     marker1.closeInfoWindow(infoWindow2);
-                                    layer.confirm("确认要移动该传感器吗？", {//确认要移动该灯具吗？
+                                    layer.confirm("确认要移除该传感器吗？", {//确认要移动该灯具吗？
                                         btn: ["确定", "取消"] //确定、取消按钮
                                     }, function (index) {
                                         var allOverlay = map.getOverlays();
                                         for (var i = 0; i < allOverlay.length; i++) {
                                             if (allOverlay[i].toString() == "[object Marker]") {
-                                                if (allOverlay[i].getPosition().lng == obj.Longitude && allOverlay[i].getPosition().lat == obj.latitude) {
+                                                if (allOverlay[i].getPosition().lng == obj.longitude && allOverlay[i].getPosition().lat == obj.latitude) {
                                                     map.removeOverlay(allOverlay[i]);
                                                     var obj3 = {};
                                                     obj3.Longitude = "";
@@ -2230,14 +2234,16 @@
                         if ((Longitude != "" && latitude != "") && (Longitude != null && latitude != null)) {
                             var point = new BMap.Point(Longitude, latitude);
                             var marker1;
-                            marker1 = new BMap.Marker(point, {
-                                icon: lgreen
-                            });
-//                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "回路信息" + '</span>'};//设置信息框、信息说明
-//                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
-//                            marker1.addEventListener("mouseover", function () {
-//                                this.openInfoWindow(infoWindow);
-//                            });
+
+                            if (obj.l_switch ==1){
+                                marker1 = new BMap.Marker(point, {
+                                    icon: hlbh
+                                });
+                            }else{
+                                 marker1 = new BMap.Marker(point, {
+                                    icon: hldk
+                                });
+                            }
                             marker1.setTitle(obj.l_name);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
                             //标注点点击事件
                             marker1.addEventListener("click", function () {
@@ -2304,7 +2310,7 @@
                                 //闭合
                                 $("#close").click(function () {
                                     var l_comaddr = obj.l_comaddr;
-                                    
+
                                     var ele = obj;
                                     addlogon(u_name, "设置", o_pid, "电子地图", "闭合回路【" + ele.l_name + "】", l_comaddr);
                                     var o = {};
@@ -2481,7 +2487,7 @@
                 h4.innerHTML = obj.name;
                 $("#textdiv2").append(h4);
                 var obj1 = {};
-                obj1.l_comaddr = obj.comaddr;
+                obj1.s_identify = obj.identify;
                 $.ajax({url: "homePage.sensormanage.getsensorBycomaddr.action", async: false, type: "get", datatype: "JSON", data: obj1,
                     success: function (data) {
                         var arrlist = data.rs;
@@ -2565,8 +2571,8 @@
                                     numvalue = "关";
                                 }
                             }
-                            var wgname = sensor.l_comaddr.replace(/\b(0+)/gi, "");
-                            $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: obj.l_comaddr},
+                            var wgname;
+                            $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: obj.s_identify},
                                 success: function (data) {
                                     var gay = data.rs;
                                     if (gay.length > 0) {
@@ -2684,8 +2690,8 @@
                                 }
                             }
 
-                            var wgname = loop.l_comaddr.replace(/\b(0+)/gi, "");
-                            $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: loop.l_comaddr},
+                            var wgname;
+                            $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: loop.l_identify},
                                 success: function (data) {
                                     var gay = data.rs;
                                     if (gay.length > 0) {

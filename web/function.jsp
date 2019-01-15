@@ -92,9 +92,11 @@
                         console.log(record);
                         var l_comaddr = record.id;
                         $("#sensorlist").combobox({
-                            url: "homePage.function.gesensroList.action?l_comaddr=" + l_comaddr,
+                            url: "homePage.function.gesensroList.action?s_identify=" + l_comaddr,
                             onLoadSuccess: function (data) {
-                                $(this).combobox('select', data[0].id);
+                                if(data.length>0){
+                                    $(this).combobox('select', data[0].id);
+                                }
                             }
                         });
                     }

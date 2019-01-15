@@ -261,7 +261,9 @@
                                 $.ajax({async: false, url: "homePage.gayway.getnamebycode.action", type: "get", datatype: "JSON", data: obj,
                                     success: function (data) {
                                         var rs = data.rs;
-                                        name = rs[0].name;
+                                        if(rs.length>0){
+                                           name = rs[0].name;
+                                        }
                                     }
                                 });
                                 return  name;
