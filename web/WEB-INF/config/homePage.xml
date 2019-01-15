@@ -93,7 +93,7 @@
     </xform>
     <xform desc="传感器管理" id="sensormanage">
         <xhandle desc="添加传感器" id="add" rtnype="JSON">
-            <xsql id="a1" para="model,dreg,name,sitenum,l_comaddr,type" tpe="DDL" tpl="insert into t_sensor(model,dreg,worktype,name,sitenum,l_comaddr,type,deplayment) values(':model',:dreg,0,':name',':sitenum',':l_comaddr',':type',0) " var="rs"></xsql> 
+            <xsql id="a1" para="model,dreg,name,sitenum,s_identify,type" tpe="DDL" tpl="insert into t_sensor(model,dreg,worktype,name,sitenum,s_identify,type,deplayment) values(':model',:dreg,0,':name',':sitenum',':s_identify',':type',0) " var="rs"></xsql> 
         </xhandle>   
         <xhandle desc="添加首页显示传感" id="addshow" rtnype="JSON">
             <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=1 where @CONDITION " var="rs">
@@ -111,8 +111,8 @@
         </xhandle>  
         <xhandle desc="查看传感是否同一网关下站号和数据位置相同" id="getIsSiten" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor WHERE   @CONDITION  " var="rs">
-                <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @sitenum AND @dreg">
-                    <xfltpara id="l_comaddr" nrp="1=1" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                <xflt id="CONDITION" nrp="" tpl="@s_identify AND @sitenum AND @dreg">
+                    <xfltpara id="s_identify" nrp="1=1" para="s_identify" sql="s_identify = ':s_identify'">
                     </xfltpara>
                     <xfltpara id="sitenum" nrp="1=1" para="sitenum" sql="sitenum = ':sitenum'">
                     </xfltpara>
@@ -120,13 +120,6 @@
                     </xfltpara>
                 </xflt>
             </xsql> 
-        </xhandle>  
-        <xhandle desc="修改传感器排列顺序" id="updesc" rtnype="JSON">
-            <xsql id="a1" para="s_index" tpe="DDL" tpl="update t_sensor set s_index=':s_index' where @CONDITION " var="rs">
-                <xflt id="CONDITION" tpl="@id ">
-                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
-                </xflt>
-            </xsql>
         </xhandle>  
         <xhandle desc="查看网关下的传感器信息" id="getsensorBycomaddr" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor WHERE   @CONDITION  " var="rs">
@@ -192,7 +185,7 @@
             </xsql> 
         </xhandle>  
         <xhandle desc="网关集合" id="getComaddr" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select comaddr as id,name as text,name  FROM t_baseinfo where @CONDITION " var="list">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select identify as id,name as text,name  FROM t_baseinfo where @CONDITION " var="list">
                 <xflt id="CONDITION" nrp="" tpl="@pid ">
                     <xfltpara id="pid" nrp="1=2" para="pid" sql=" pid = ':pid'">
                     </xfltpara>
