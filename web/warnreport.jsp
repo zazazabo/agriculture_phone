@@ -60,7 +60,7 @@
                     });
                 }
                 var obj = {};
-                obj.l_comaddr = fmobj.l_comaddr
+                obj.identify = fmobj.s_identify;
                 obj.pid = "${param.pid}";
                 obj.deplayment = 1;
                 var opt = {
@@ -99,7 +99,7 @@
 
                 }
                 var obj = {};
-                obj.l_comaddr = fmobj.l_comaddr
+                obj.identify = fmobj.s_identify;
                 obj.pid = "${param.pid}";
                 obj.deplayment = 1;
                 var opt = {
@@ -238,7 +238,7 @@
                             sortOrder: params.order,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr: $("#l_comaddr2").combobox('getValue')
+                            identify: $("#l_comaddr2").combobox('getValue')
 //                            l_comaddr: $("#l_comaddr2").val()
                         };   
                         return temp;  
@@ -246,7 +246,7 @@
                 });
 
                 $("#l_comaddr2").combobox({
-                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                     formatter: function (row) {
                         var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
                         var v = row.text + v1;
@@ -266,7 +266,7 @@
                     },
                     onSelect: function (record) {
                         var obj = {};
-                        obj.l_comaddr = record.id;
+                        obj.identify = record.id;
                         obj.pid = "${param.pid}";
                         obj.deplayment = 1;
                         var opt = {

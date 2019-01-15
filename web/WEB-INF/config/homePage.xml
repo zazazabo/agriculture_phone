@@ -188,7 +188,7 @@
         </xhandle>  
         
         <xhandle desc="网关集合" id="getComaddr" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select identify as id,name as text,name  FROM t_baseinfo where @CONDITION " var="list">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select identify as id,name as text,name,online FROM t_baseinfo where @CONDITION " var="list">
                 <xflt id="CONDITION" nrp="" tpl="@pid ">
                     <xfltpara id="pid" nrp="1=2" para="pid" sql=" pid = ':pid'">
                     </xfltpara>

@@ -534,7 +534,7 @@
                                     str = "<img  src='img/cgred.png'/>";
                                 } else {
                                     var obj = {};
-                                    obj.comaddr = row.s_identify; //selects[0];
+                                    obj.identify = row.s_identify; //selects[0];
                                     $.ajax({url: "login.gateway.comaddrzx.action", async: false, type: "get", datatype: "JSON", data: obj,
                                         success: function (data) {
                                             var arrlist = data.rs;
@@ -2235,12 +2235,12 @@
                             var point = new BMap.Point(Longitude, latitude);
                             var marker1;
 
-                            if (obj.l_switch ==1){
+                            if (obj.l_switch == 1) {
                                 marker1 = new BMap.Marker(point, {
                                     icon: hlbh
                                 });
-                            }else{
-                                 marker1 = new BMap.Marker(point, {
+                            } else {
+                                marker1 = new BMap.Marker(point, {
                                     icon: hldk
                                 });
                             }
@@ -2260,12 +2260,23 @@
                                 var opts2 = {title: '<span style="font-size:14px;color:#0A8021">' + "功能操作" + '</span>'};//设置信息框、功能操作
                                 var infoWindow2 = new BMap.InfoWindow(textvalue2, opts2); // 创建信息窗口对象，引号里可以书写任意的html语句。
                                 this.openInfoWindow(infoWindow2);
+                                var comaddr;
+                                $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "post", datatype: "JSON", data: {identify: obj.l_identify},
+                                    success: function (data) {
+                                        var rs = data.rs;
+                                        if (rs.length > 0) {
+                                            comaddr = rs[0].comaddr;
+                                        }
+                                    },
+                                    error: function () {
+                                        alert("提交失败！");
+                                    }
+                                });
 
                                 //断开
                                 $("#break").click(function () {
-                                    var l_comaddr = obj.l_comaddr;
                                     var ele = obj;
-                                    addlogon(u_name, "设置", o_pid, "电子地图", "断开回路【" + ele.l_name + "】", l_comaddr);
+                                    addlogon(u_name, "设置", o_pid, "电子地图", "断开回路【" + ele.l_name + "】", obj.l_identify);
                                     var o = {};
                                     o.l_comaddr = ele.l_comaddr;
                                     console.log(ele);
@@ -2298,7 +2309,7 @@
 
                                     var data = buicode2(vv);
                                     console.log(data);
-                                    dealsend2("10", data, "switchloopCB", ele.l_comaddr, 0, ele.id, info, "${param.action}");
+                                    dealsend2("10", data, "switchloopCB", comaddr, 0, ele.id, info, "${param.action}");
                                     $('#panemask').showLoading({
                                         'afterShow': function () {
                                             setTimeout("$('#panemask').hideLoading()", 10000);
@@ -2309,10 +2320,8 @@
 
                                 //闭合
                                 $("#close").click(function () {
-                                    var l_comaddr = obj.l_comaddr;
-
                                     var ele = obj;
-                                    addlogon(u_name, "设置", o_pid, "电子地图", "闭合回路【" + ele.l_name + "】", l_comaddr);
+                                    addlogon(u_name, "设置", o_pid, "电子地图", "闭合回路【" + ele.l_name + "】", obj.l_identify);
                                     var o = {};
                                     o.l_comaddr = ele.l_comaddr;
                                     console.log(ele);
@@ -2345,7 +2354,7 @@
 
                                     var data = buicode2(vv);
                                     console.log(data);
-                                    dealsend2("10", data, "switchloopCB", ele.l_comaddr, 1, ele.id, info, "${param.action}");
+                                    dealsend2("10", data, "switchloopCB", comaddr, 1, ele.id, info, "${param.action}");
                                     $('#panemask').showLoading({
                                         'afterShow': function () {
                                             setTimeout("$('#panemask').hideLoading()", 10000);
@@ -2620,6 +2629,33 @@
                             var str = "";     //工作方式
                             var infolist = {};
                             var infoscene = {};
+                            var obj2 = {};
+                            obj2.identify = obj.l_identify;
+                            obj2.pid = o_pid;
+                            $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj2,
+                                success: function (data) {
+                                    for (var i = 0; i < data.length; i++) {
+                                        var o = data[i];
+                                        infolist[o.id] = o.text;
+                                    }
+                                },
+                                error: function () {
+                                    alert("提交失败！");
+                                }
+                            });
+
+
+                            $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj2,
+                                success: function (data) {
+                                    for (var i = 0; i < data.length; i++) {
+                                        var o = data[i];
+                                        infoscene[o.id] = o.text;
+                                    }
+                                },
+                                error: function () {
+                                    alert("提交失败！");
+                                }
+                            });
                             if (type >> 1 & 0x1 == 1) {
                                 str = "时间";
                             } else if (type >> 2 & 0x1 == 1) {
@@ -2649,7 +2685,6 @@
                                 }
 
                             } else if (type >> 2 & 0x1 == 1) {
-
                                 // plan = "";
                                 for (var i = 0; i < 5; i++) {
                                     var index = "l_val" + (i + 1).toString();
@@ -2664,6 +2699,7 @@
                                         plandiv.append(pl);
                                     }
                                 }
+
                             } else if (type >> 3 & 0x1 == 1) {
 
                                 plan = "";

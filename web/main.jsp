@@ -176,6 +176,18 @@
                     return;
                 }
                 var ele = eles[0];
+                var comaddr;
+                var obj = {};
+                
+                obj.identify  = ele.f_identify; 
+                $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "get", datatype: "JSON", data:obj,
+                    success: function (data) {
+                        var rs = data.rs;
+                        if(rs.length>0){
+                            comaddr = rs[0].comaddr;
+                        }
+                    }
+                });
                 if (ele.f_Isfault != 1) {
                     var vv = [];
                     vv.push(1);
@@ -186,12 +198,12 @@
                     vv.push(infonum & 0xff);
                     vv.push(0);
                     vv.push(1); //寄存器数目 2字节     
-                    vv.push(2)
+                    vv.push(2);
                     vv.push(0);
                     vv.push(0);
                     var data = buicode2(vv);
                     console.log(data);
-                    dealsend2("10", data, "dealfaultCB", ele.f_comaddr, 0, ele.id, info, "main.jsp");
+                    dealsend2("10", data, "dealfaultCB", comaddr, 0, ele.id, info, "main.jsp");
                 }
             }
 
@@ -200,6 +212,7 @@
                 $.ajax({async: false, url: "homePage.fault.getfaultNumber.action", type: "get", datatype: "JSON", data: {pid: getpojectId()},
                     success: function (data) {
                         var rs = data.rs;
+                        console.log(rs[0].number);
                         if (rs[0].number > 0) {
                             $("#fnumber").html(rs[0].number);
                             $("#fnumber").show();
@@ -214,7 +227,7 @@
 
             function  imgM() {
                 $("#l_comaddr").combobox({
-                    url: "gayway.GaywayForm.getComaddr.action?pid=" + getpojectId()
+                    url: "homePage.gayway.getComaddr.action?pid=" + getpojectId()
 //                    formatter: function (row) {
 //                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
 //                        var v = row.text + v1;
@@ -248,8 +261,8 @@
                         },
                         {
 
-                            field: 'f_comaddr',
-                            title: '设备名称', //设备名称
+                            field: 'f_identify',
+                            title: '网关名称', //设备名称
                             width: 25,
                             align: 'center',
                             valign: 'middle',
@@ -261,8 +274,8 @@
                                 $.ajax({async: false, url: "homePage.gayway.getnamebycode.action", type: "get", datatype: "JSON", data: obj,
                                     success: function (data) {
                                         var rs = data.rs;
-                                        if(rs.length>0){
-                                           name = rs[0].name;
+                                        if (rs.length > 0) {
+                                            name = rs[0].name;
                                         }
                                     }
                                 });
