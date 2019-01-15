@@ -425,7 +425,7 @@
                 
                                 </table>-->
                 <span style=" margin-left:3%;">网关名称：</span>
-                <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
+                <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px" 
                        data-options="editable:true,valueField:'id', textField:'text' " />
 
                 <button type="button" id="btnswitch" onclick="tourSensor()" class="btn btn-success btn-sm">

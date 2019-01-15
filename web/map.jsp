@@ -605,13 +605,15 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle'
-                        }, {
-                            field: 'model',
-                            title: '型号', //型号
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle'
-                        }, {
+                        }, 
+//                        {
+//                            field: 'model',
+//                            title: '型号', //型号
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle'
+//                        }, 
+                        {
                             field: 'name',
                             title: '名称', //名称
                             width: 25,
