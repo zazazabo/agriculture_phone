@@ -29,7 +29,6 @@
         <script>
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
-            var comaddr;
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -66,6 +65,8 @@
                     layerAler("请勾选表格");
 
                 }
+                
+                var comaddr=$("#l_comaddr").combobox('getValue');
                 var ele = selects[0];
 
                 if (ele.errflag == "1") {
@@ -122,7 +123,7 @@
                                 + regpos + "<br>" + "工作模式:" + strw1 + "<br>" + "通信故障参数:"
                                 + strw3 + "<br>" + "探测值：" + dataval + "<br>" + "是否有故障:" + faulttip + "<br>"
                                 + "通信故障出错次数:" + faultnum);
-
+ 
                         var o = {errflag: fault, errcount: faultnum, numvalue: dataval, id: obj.param};
                         $.ajax({async: false, url: "sensor.sensorform.upvalue.action", type: "get", datatype: "JSON", data: o,
                             success: function (data) {
@@ -168,7 +169,7 @@
             }
 
             function tourSensor() {
-
+                var comaddr=$("#l_comaddr").combobox('getValue');
                 var vv = [];
                 dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
             }
@@ -249,16 +250,17 @@
                             valign: 'middle',
                             formatter: function (value, row, index, field) {
                                 var str = value;
-                                if (row.online1 == "1") {
+                                console.log(row);
+                                if (row.online == "1") {
                                     if (row.errflag == "1") {
-                                        var str = '<img   src="img/fault.png" onclick="readSensor(\'' + comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
+                                        var str = '<img   src="img/fault.png" onclick="readSensor(\'' + row.comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                         return  str;
                                     } else {
-                                        var str = '<img   src="img/online1.png" onclick="readSensor(\'' + comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
+                                        var str = '<img   src="img/online1.png" onclick="readSensor(\'' + row.comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                         return  str;
                                     }
                                 } else {
-                                    var str = '<img   src="img/off.png" onclick="readSensor(\'' + comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
+                                    var str = '<img   src="img/off.png" onclick="readSensor(\'' + row.comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                     return  str;
                                 }
                                 return  str;
@@ -283,27 +285,21 @@
                     },
                     //服务器url
                     queryParams: function (params)  {   //配置参数 
-
-                        var l_comaddr = $("#l_comaddr").combobox('getValue');
-//                        var selects = $('#gravidaTable').bootstrapTable('getSelections');
-//                        var comaddr = "";
-//                        if (selects.length > 0) {
-//                            comaddr = selects[0];
-//                        }
                         var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
                             search: params.search,
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
-                            pid: o_pid,
-                            l_comaddr: l_comaddr
+                            pid: "${param.pid}",
+                            identify: $("#identify").val()
 
                         };      
                         return temp;  
                     }
                 });
+
                 $("#l_comaddr").combobox({
-                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
+                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
                     formatter: function (row) {
                         var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
                         var v = row.text + v1;
@@ -319,35 +315,52 @@
                             }
                             $(this).combobox('select', data[0].id);
                         }
-
                     },
                     onSelect: function (record) {
                         var l_comaddr = record.id;
-                        var vv = [];
 
-
-
+                        $("#identify").val(record.identify);
                         var obj = {};
-                        obj.l_comaddr = record.id;
+                        obj.identify = record.identify;
                         obj.pid = "${param.pid}";
+                        obj.deplayment = 1;
                         var opt = {
                             url: "monitor.monitorForm.getSensorList.action",
-                            silent: true,
-                            query: obj
+                            query: obj,
+                            silent: false
                         };
-                        $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "get", datatype: "JSON", data: {identify: l_comaddr},
-                            success: function (data) {
-                                var arrlist = data.rs;
-                                if (arrlist.length > 0) {
-                                    comaddr = arrlist[0].comaddr;
-                                }
-                            },
-                            error: function () {
-                                alert("提交失败111！");
-                            }
-                        });
-                        dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
                         $("#gravidaTable").bootstrapTable('refresh', opt);
+
+
+
+
+
+
+
+
+
+//                        var vv = [];
+//                        var obj = {};
+//                        obj.l_comaddr = record.id;
+//                        obj.pid = "${param.pid}";
+//                        var opt = {
+//                            url: "monitor.monitorForm.getSensorList.action",
+//                            silent: true,
+//                            query: obj
+//                        };
+//                        $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "get", datatype: "JSON", data: {identify: l_comaddr},
+//                            success: function (data) {
+//                                var arrlist = data.rs;
+//                                if (arrlist.length > 0) {
+//                                    comaddr = arrlist[0].comaddr;
+//                                }
+//                            },
+//                            error: function () {
+//                                alert("提交失败111！");
+//                            }
+//                        });
+//                        dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
+//                        $("#gravidaTable").bootstrapTable('refresh', opt);                                                  
                     }
                 });
             });
@@ -418,23 +431,8 @@
     <body id="panemask">
         <div>
             <div  style=" width: 100% ; margin-top: 10px;" >
-                <!--                data-height="800"-->
-                <!--                <table id="gayway" style="width:100%;"    data-toggle="table" 
-                                       data-single-select="true"
-                                       data-striped="true"
-                                       data-click-to-select="true"
-                                       data-search="false"
-                                       data-checkbox-header="true"
-                                       data-url="gayway.GaywayForm.getComaddrList.action?pid=${param.pid}&page=ALL" >
-                                    <thead >
-                                        <tr >
-                                            <th data-width="25"    data-select="false" data-align="center" data-formatter='formartcomaddr'  data-checkbox="true"  ></th>
-                                            <th data-width="100" data-field="name" data-formatter='formartcomaddr1' data-align="center"     >网关名称</th>
-                                        </tr>
-                                    </thead>       
-                
-                                </table>-->
                 <span style=" margin-left:3%;">网关名称：</span>
+                <input type="hidden" name="identify" id="identify" value=""/>
                 <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px" 
                        data-options="editable:true,valueField:'id', textField:'text' " />
 
