@@ -339,134 +339,137 @@
 
             function checkSensorAdd() {
                 var o = $("#formadd").serializeObject();
-                var identify = o.s_identify;
+                console.log(o);
+                var l_comaddr = o.l_comaddr;
                 var sitenum = o.sitenum; //站号
                 var dreg = o.dreg;   //数据位置
                 var iobj = {};
-                iobj.s_identify = identify;
+                iobj.l_comaddr = l_comaddr;
                 iobj.sitenum = sitenum;
                 iobj.dreg = dreg;
-                $.ajax({async: false, url: "homePage.sensormanage.getIsSiten.action", type: "get", datatype: "JSON", data: iobj,
-                    success: function (data) {
-                        var rs = data.rs;
-                        if (rs.length > 0) {
-                            layerAler("该网关下已存在相同的站号和数据位置");
-                            return;
-                        } else {
-                            $.ajax({async: false, url: "homePage.sensormanage.add.action", type: "get", datatype: "JSON", data: o,
-                                success: function (data) {
-                                    var rs = data.rs;
-                                    if (rs.length > 0) {
-                                        layerAler("添加成功");
-                                        var obj = {};
-                                        obj.l_comaddr = $("#l_comaddr2").val();
-                                        obj.pid = "${param.pid}";
-                                        var opt = {
-                                            url: "sensor.sensorform.getSensorList.action",
-                                            query: obj,
-                                            silent: false
-                                        };
-                                        $("#gravidaTable").bootstrapTable('refresh', opt);
-                                        $("#dialog-add").dialog("close");
-                                    }
-                                },
-                                error: function () {
-                                    alert("提交失败！");
-                                }
-                            });
-
-                        }
-                    },
-                    error: function () {
-                        alert("提交失败！");
-                    }
-                });
+//                $.ajax({async: false, url: "homePage.sensormanage.getIsSiten.action", type: "get", datatype: "JSON", data: iobj,
+//                    success: function (data) {
+//                        var rs = data.rs;
+//                        if (rs.length > 0) {
+//                            layerAler("该网关下已存在相同的站号和数据位置");
+//                            return;
+//                        } else {
+//                            $.ajax({async: false, url: "homePage.sensormanage.add.action", type: "get", datatype: "JSON", data: o,
+//                                success: function (data) {
+//                                    var rs = data.rs;
+//                                    if (rs.length > 0) {
+//                                        layerAler("添加成功");
+//                                        var obj = {};
+//                                        obj.l_comaddr = $("#l_comaddr2").val();
+//                                        obj.pid = "${param.pid}";
+//                                        var opt = {
+//                                            url: "sensor.sensorform.getSensorList.action",
+//                                            query: obj,
+//                                            silent: false
+//                                        };
+//                                        $("#gravidaTable").bootstrapTable('refresh', opt);
+//                                        $("#dialog-add").dialog("close");
+//                                    }
+//                                },
+//                                error: function () {
+//                                    alert("提交失败！");
+//                                }
+//                            });
+//
+//                        }
+//                    },
+//                    error: function () {
+//                        alert("提交失败！");
+//                    }
+//                });
                 //addlogon(u_name, "添加", o_pid, "传感器管理", "添加传感器");
 
-//                if (o.model == "JXBS-3001-TH") {
-//                    for (var i = 0; i < 2; i++) {
-//                        o.dreg = i;
-//                        $.ajax({url: "sensor.sensorform.existsite.action", async: false, type: "get", datatype: "JSON", data: o,
-//                            success: function (data) {
-//                                var rs = data;
-//                                if (rs.total == 0) {
-//                                    $.ajax({url: "sensor.sensorform.addsensor1.action", async: false, type: "get", datatype: "JSON", data: o,
-//                                        success: function (data) {
-//                                            console.log(data);
-//                                            var rs = data.rs;
-//                                            if (rs.length > 0) {
-//                                                $("#dialog-add").dialog("close");
-//                                                layerAler("添加成功");
-//                                                $("#gravidaTable").bootstrapTable('refresh');
-//                                            }
-//                                        },
-//                                        error: function () {
-//                                            alert("提交添加失败！");
-//                                        }
-//                                    });
-//                                }
-//                            },
-//                            error: function () {
-//                                alert("提交添加失败！");
-//                            }
-//                        });
-//                    }
-//                } else if (o.model == "JXBS-3001-TR") {
-//                    for (var i = 0; i < 2; i++) {
-//                        o.dreg = i + 2;
-//                        $.ajax({url: "sensor.sensorform.existsite.action", async: false, type: "get", datatype: "JSON", data: o,
-//                            success: function (data) {
-//                                var rs = data;
-//                                if (rs.total == 0) {
-//                                    $.ajax({url: "sensor.sensorform.addsensor1.action", async: false, type: "get", datatype: "JSON", data: o,
-//                                        success: function (data) {
-//                                            if (rs.length > 0) {
-//                                                $("#dialog-add").dialog("close");
-//                                                layerAler("添加成功");
-//                                                $("#gravidaTable").bootstrapTable('refresh');
-//                                            }
-//                                        },
-//                                        error: function () {
-//                                            alert("提交添加失败！");
-//                                        }
-//                                    });
-//
-//
-//
-//                                }
-//                            },
-//                            error: function () {
-//                                alert("提交添加失败！");
-//                            }
-//                        });
-//                    }
-//                } else {
-//
-//                    $.ajax({url: "sensor.sensorform.existsite.action", async: false, type: "get", datatype: "JSON", data: o,
-//                        success: function (data) {
-//                            var rs = data;
-//                            if (rs.total == 0) {
-//                                o.pos = 2000;
-//                                $.ajax({url: "sensor.sensorform.addsensor1.action", async: false, type: "get", datatype: "JSON", data: o,
-//                                    success: function (data) {
-//                                        var rs = data.rs;
-//                                        if (rs.length > 0) {
-//                                            $("#dialog-add").dialog("close");
-//                                            layerAler("添加成功");
-//                                            $("#gravidaTable").bootstrapTable('refresh');
-//                                        }
-//                                    },
-//                                    error: function () {
-//                                        alert("提交添加失败！");
-//                                    }
-//                                });
-//                            }
-//                        },
-//                        error: function () {
-//                            alert("提交添加失败！");
-//                        }
-//                    });
-//                }
+                if (o.model == "JXBS-3001-TH") {
+                    for (var i = 0; i < 2; i++) {
+                        o.dreg = i;
+                        $.ajax({url: "sensor.sensorform.existsite.action", async: false, type: "get", datatype: "JSON", data: o,
+                            success: function (data) {
+                                var rs = data;
+                                if (rs.total == 0) {
+                                    $.ajax({url: "sensor.sensorform.addsensor1.action", async: false, type: "get", datatype: "JSON", data: o,
+                                        success: function (data) {
+                                            console.log(data);
+                                            var rs = data.rs;
+                                            if (rs.length > 0) {
+                                                $("#dialog-add").dialog("close");
+                                                layerAler("添加成功");
+                                                $("#gravidaTable").bootstrapTable('refresh');
+                                            }
+                                        },
+                                        error: function () {
+                                            alert("提交添加失败！");
+                                        }
+                                    });
+                                }
+                            },
+                            error: function () {
+                                alert("提交添加失败！");
+                            }
+                        });
+                    }
+                } else if (o.model == "JXBS-3001-TR") {
+                    for (var i = 0; i < 2; i++) {
+                        o.dreg = i + 2;
+                        $.ajax({url: "sensor.sensorform.existsite.action", async: false, type: "get", datatype: "JSON", data: o,
+                            success: function (data) {
+                                var rs = data;
+                                if (rs.total == 0) {
+                                    $.ajax({url: "sensor.sensorform.addsensor1.action", async: false, type: "get", datatype: "JSON", data: o,
+                                        success: function (data) {
+                                            if (rs.length > 0) {
+                                                $("#dialog-add").dialog("close");
+                                                layerAler("添加成功");
+                                                $("#gravidaTable").bootstrapTable('refresh');
+                                            }
+                                        },
+                                        error: function () {
+                                            alert("提交添加失败！");
+                                        }
+                                    });
+
+
+
+                                }
+                            },
+                            error: function () {
+                                alert("提交添加失败！");
+                            }
+                        });
+                    }
+                } else {
+
+                    $.ajax({url: "sensor.sensorform.existsite.action", async: false, type: "get", datatype: "JSON", data: o,
+                        success: function (data) {
+                            console.log(data);
+
+                            var rs = data;
+                            if (rs.total == 0) {
+                                o.pos = 2000;
+                                $.ajax({url: "sensor.sensorform.addsensor.action", async: false, type: "get", datatype: "JSON", data: o,
+                                    success: function (data) {
+                                        var rs = data.rs;
+                                        if (rs.length > 0) {
+                                            $("#dialog-add").dialog("close");
+                                            layerAler("添加成功");
+                                            $("#gravidaTable").bootstrapTable('refresh');
+                                        }
+                                    },
+                                    error: function () {
+                                        alert("提交添加失败！");
+                                    }
+                                });
+                            }
+                        },
+                        error: function () {
+                            alert("提交添加失败！");
+                        }
+                    });
+                }
             }
 
             //搜索
@@ -540,13 +543,10 @@
                     return;
                 }
                 var ele = selects[0];
-                o.l_comaddr = ele.l_comaddr;
-                console.log(ele);
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
                 var info = parseInt(ele.infonum);
-                console.log(info);
                 var infonum = (2000 + info * 10) | 0x1000;
                 vv.push(infonum >> 8 & 0xff); //起始地址
                 vv.push(infonum & 0xff);
@@ -589,19 +589,17 @@
             function removeSensor() {
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 var o = $("#form1").serializeObject();
+
                 var vv = new Array();
                 if (selects.length == 0) {
                     layerAler('请勾选表格数据'); //请勾选表格数据
                     return;
                 }
                 var ele = selects[0];
-                o.l_comaddr = ele.l_comaddr;
-                console.log(ele);
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
                 var info = parseInt(ele.infonum);
-                console.log(info);
                 var infonum = (2000 + info * 10) | 0x1000;
                 vv.push(infonum >> 8 & 0xff); //起始地址
                 vv.push(infonum & 0xff);
@@ -768,7 +766,7 @@
                             sortOrder: params.order,
                             type_id: "1",
                             pid: "${param.pid}",
-                            s_identify: $("#l_comaddr2").combobox('getValue')
+                            l_comaddr: $("#l_comaddr2").combobox('getValue')
 //                            l_comaddr: $("#l_comaddr2").val()
                         };   
                         return temp;  
@@ -857,8 +855,10 @@
 
                     },
                     onSelect: function (record) {
+                        console.log(record);
+                        $("#identify1").val(record.identify);
                         var obj = {};
-                        obj.l_comaddr = record.id;
+                        obj.identify = record.identify;
                         obj.pid = "${param.pid}";
                         var opt = {
                             url: "sensor.sensorform.getSensorList.action",
@@ -871,10 +871,28 @@
 
 
                 $('#l_comaddr').combobox({
-                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
+                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                    formatter: function (row) {
+                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                        var v = row.text + v1;
+                        row.id = row.id;
+                        row.text = v;
+                        var opts = $(this).combobox('options');
+                        return row[opts.textField];
+                    },
                     onLoadSuccess: function (data) {
-                        $(this).combobox('select', data[0].id);
+                        if (Array.isArray(data) && data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                data[i].text = data[i].name;
+                            }
+                            $(this).combobox('select', data[0].id);
+                        }
+
+                    },
+                    onSelect: function (record) {
+                        $("#identify").val(record.identify);
                     }
+
                 });
 
 
@@ -1015,344 +1033,326 @@
         <div id="content" class="row-fluid">
 
             <div class=" row " >
-                <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4  ">
-                    <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
-                        <tbody>
-                            <tr>
-                                <td > &emsp;网关名称:</td>
-                                <td >
-                                    <input id="l_comaddr2" class="easyui-combobox" name="l_comaddr" style="width:110px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
-                                </td>
-                                <td  >
-                                    &emsp;部署情况:
-                                </td>
-                                <td >
-                                    <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px; width: 80px;">
-                                        <option value ="-1">全部</option>
-                                        <option value="1">已部署</option>     
-                                        <option value="0">未部署</option> 
-                                    </select>
-                                </td>
-                                <td style=" padding-left: 2px;">
-                                    <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
-                                        筛选
-                                    </button>
-                                </td>
+                <form id="form1">
+                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4  ">
+                        <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+                                    <td > &emsp;网关名称:</td>
+                                    <td >
+                                        <input id="l_comaddr2" class="easyui-combobox" name="l_comaddr" style="width:110px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                        <input type="hidden" name="identify" id="identify" value=""/>
+                                    </td>
 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-7 col-lg-3" >
-
-                    <table  style="  margin-top: 15px;  ">
-                        <tbody>
-                            <tr>
-                                <td >
-                                    <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
-
-                                        <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
-                                            部署
+                                    <td  >
+                                        &emsp;部署情况:
+                                    </td>
+                                    <td >
+                                        <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px; width: 80px;">
+                                            <option value ="-1">全部</option>
+                                            <option value="1">已部署</option>     
+                                            <option value="0">未部署</option> 
+                                        </select>
+                                    </td>
+                                    <td style=" padding-left: 2px;">
+                                        <button class="btn btn-success btn-sm ctrol" type="button"     onclick="search()" >
+                                            筛选
                                         </button>
-                                        <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
-                                            移除
-                                        </button>    
-                                    </div> 
-                                </td>
+                                    </td>
 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-7 col-lg-3" >
 
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table  style="  margin-top: 15px;  ">
+                            <tbody>
+                                <tr>
+                                    <td >
+                                        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
 
-
-
-
-
-
-
-                    <!--                    <div style="  margin-top: 10px; align-content:  center;">
-                                            <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
-                                                <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
-                                                    <span class="glyphicon glyphicon-pencil"></span>筛选
-                                                </button>
-                                                <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
-                                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;部署
-                                                </button>
-                                                <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
-                                                    <span class="glyphicon glyphicon-pencil"></span>&nbsp;移除
-                                                </button>    
-                                            </div>  
-                                        </div>-->
-
-                </div>
-                <!--                                       <div id="cz">
-                                            <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
-                                                筛选
+                                            <button class="btn btn-primary btn-sm ctrol"  type="button" onclick="deploySensor()"   >
+                                                部署
                                             </button>
-                        
-                                            <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
-                        
-                                            <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
-                                        </div>-->
+                                            <button class="btn btn-danger btn-sm ctrol" type="button"  onclick="removeSensor()" >
+                                                移除
+                                            </button>    
+                                        </div> 
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                </form>
+
+
+
+
+
+                <!--                    <div style="  margin-top: 10px; align-content:  center;">
+                                        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
+                                            <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
+                                                <span class="glyphicon glyphicon-pencil"></span>筛选
+                                            </button>
+                                            <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
+                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;部署
+                                            </button>
+                                            <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
+                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;移除
+                                            </button>    
+                                        </div>  
+                                    </div>-->
 
             </div>
+            <!--                                       <div id="cz">
+                                        <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
+                                            筛选
+                                        </button>
+                    
+                                        <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
+                    
+                                        <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
+                                    </div>-->
 
         </div>
 
+    </div>
 
 
 
-        <!--        <form id="formsearch">
-                    <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
-                        <div id="selectlist">
-                            <span style="margin-left:10px;">
-                                网关名称
-                                &nbsp;</span>
-                            <span class="menuBox">
-                                <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
-                            </span>  
-        
-                            <span style="margin-left:5px;">
-                                部署情况
-                                &nbsp;</span>
-                            <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px">
-                                <option value ="-1">全部</option>
-                                <option value="1">已部署</option>     
-                                <option value="0">未部署</option> 
-                            </select>
-                        </div>
-                        <div id="cz">
-                            <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
-                                筛选
-                            </button>
-        
-                            <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
-        
-                            <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
-                        </div>
-        
+
+    <!--        <form id="formsearch">
+                <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
+                    <div id="selectlist">
+                        <span style="margin-left:10px;">
+                            网关名称
+                            &nbsp;</span>
+                        <span class="menuBox">
+                            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
+                        </span>  
+    
+                        <span style="margin-left:5px;">
+                            部署情况
+                            &nbsp;</span>
+                        <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px">
+                            <option value ="-1">全部</option>
+                            <option value="1">已部署</option>     
+                            <option value="0">未部署</option> 
+                        </select>
                     </div>
-                </form>-->
-        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-            <button class="btn btn-success  btn-sm  ctrol"  onclick="showDialog();" data-toggle="modal" data-target="#pjj33" id="add">
-                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
-            </button>
-            <button class="btn btn-primary  btn-sm ctrol" onclick="editlampInfo()"   id="xiugai1">
-                <span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑
-            </button>
-            <button class="btn btn-danger  btn-sm ctrol" onclick="deleteSensor();" id="shanchu">
-                <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
-            </button>    
-        </div>
-        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-            <button type="button" id="btn_download" class="btn  btn-primary  btn-sm" onClick ="$('#cgqmb').tableExport({type: 'excel', escape: 'false'})">
-                导出模板
-            </button>
-            <button class="btn btn-success  btn-sm ctrol" onclick="excel()" id="addexcel" >
-                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
-                导入Excel
-            </button>          
-            <button type="button" id="btn_download" class="btn btn-primary  btn-sm" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
-                导出Excel
-            </button>
-        </div>
-        <!--        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-                    <button class="btn btn-success ctrol"  onclick="addshow()">
-                        <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加到首页显示
-                    </button>
-                    <button class="btn btn-danger ctrol" onclick="removeshow();">
-                        <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
-                    </button>
-                </div>-->
+                    <div id="cz">
+                        <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
+                            筛选
+                        </button>
+    
+                        <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
+    
+                        <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
+                    </div>
+    
+                </div>
+            </form>-->
+    <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
+        <button class="btn btn-success  btn-sm  ctrol"  onclick="showDialog();" data-toggle="modal" data-target="#pjj33" id="add">
+            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
+        </button>
+        <button class="btn btn-primary  btn-sm ctrol" onclick="editlampInfo()"   id="xiugai1">
+            <span class="glyphicon glyphicon-pencil"></span>&nbsp;编辑
+        </button>
+        <button class="btn btn-danger  btn-sm ctrol" onclick="deleteSensor();" id="shanchu">
+            <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
+        </button>    
+    </div>
+    <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
+        <button type="button" id="btn_download" class="btn  btn-primary  btn-sm" onClick ="$('#cgqmb').tableExport({type: 'excel', escape: 'false'})">
+            导出模板
+        </button>
+        <button class="btn btn-success  btn-sm ctrol" onclick="excel()" id="addexcel" >
+            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+            导入Excel
+        </button>          
+        <button type="button" id="btn_download" class="btn btn-primary  btn-sm" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+            导出Excel
+        </button>
+    </div>
+    <!--        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
+                <button class="btn btn-success ctrol"  onclick="addshow()">
+                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加到首页显示
+                </button>
+                <button class="btn btn-danger ctrol" onclick="removeshow();">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
+                </button>
+            </div>-->
 
-        <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
-        </table>
-
-
-        <!-- 添加 -->
-
-        <!--        <div id="dialog_simple" title="Dialog Simple Title">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>-->
-
-        <div id="dialog-add"  class="bodycenter"  style=" display: none" title="传感器添加">
-
-            <form action="" method="POST" id="formadd">      
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >网关名称</span>&nbsp;
-                                <span class="menuBox">
-
-                                    <input id="l_comaddr"  class="easyui-combobox" name="s_identify" style="height: 30px" 
-                                           data-options='editable:false,valueField:"id", textField:"text"' />
-                                </span>  
-
-                            <td></td>
-                            <td>
-                                <span style="margin-left:20px;" >传感器名</span>
-                                <input id="name" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >&#8195;&#8195;站号</span>&nbsp;
-                                <input id="sitenum" class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
-                            </td>
-                            <td></td>
-                            <td>
-                                <!--                                <span style="margin-left:10px;" >工作模式</span>&nbsp;
-                                                                                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">
-                                                                <select class="easyui-combobox" id="worktype" name="worktype" style="width:150px; height: 30px">
-                                                                    <option value="0" >模拟量</option>
-                                                                    <option value="1" >开关量</option>  
-                                                                </select>-->
-                                <span style="margin-left:20px;" >&#8195;&#8195;类型</span>&nbsp;
-                                <select class="easyui-combobox" id="type" name="type" style=" height: 30px">
-                                    <option value="1" >温度</option>
-                                    <option value="2" >湿度</option>  
-                                    <option value="3" >开关</option>  
-                                </select>
-                            </td>
-
-                        </tr>    
+    <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
+    </table>
 
 
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >数据位置</span>&nbsp;
-                                <input id="dreg" class="form-control" name="dreg" style="display: inline;" placeholder="数据位置" type="text">
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:20px;" >&#8195;&#8195;备注</span>&nbsp;
-                                <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
-                                <input id="model" value="" class="form-control" name="model" style="display: inline;" placeholder="备注" type="text">
-                            </td>
-                        </tr>  
+    <!-- 添加 -->
 
-                        <tr>
-                            <td>
-                                <span style="margin-left:-15px;" >最小预警值</span>&nbsp;
-                                <input id="minValue" class="form-control" name="minValue" style="display: inline;" placeholder="最小预警值" type="text">
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:-20px;" >&#8195;&#8195;最大预警值</span>&nbsp;
-                                <input id="maxValue" value="" class="form-control" name="maxValue" style="display: inline;" placeholder="最大预警值" type="text">
-                            </td>
-                        </tr> 
+    <!--        <div id="dialog_simple" title="Dialog Simple Title">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>-->
 
-                    </tbody>
-                </table>
-            </form>                        
-        </div>
+    <div id="dialog-add"  class="bodycenter"  style=" display: none" title="传感器添加">
 
-        <div id="dialog-edit"  class="bodycenter" style=" display: none"  title="传感器编辑">
-            <form action="" method="POST" id="form2" onsubmit="return editlamp()">  
-                <input type="hidden" id="hide_id" name="id" />
-                <input type="hidden" id="deployment" name="deployment" />
-                <table>
-                    <tbody>
+        <form action="" method="POST" id="formadd">      
+            <input type="hidden" name="identify" id="identify1" value=""/>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span style="margin-left:0px;" >网关名称</span>&nbsp;
+                            <span class="menuBox">
 
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >&#8195;&#8195;站号</span>&nbsp;
-                                <input id="sitenum1"  class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:20px;" >传感器名</span>&nbsp;
-                                <input id="name1" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
+                                <input id="l_comaddr"  class="easyui-combobox" name="l_comaddr" style="height: 30px" 
+                                       data-options='editable:false,valueField:"id", textField:"text"' />
+                            </span>  
 
-                            </td>
-                        </tr>    
-                        <tr>
-                            <td>
-                                <span style="margin-left:0px;" >数据位置</span>&nbsp;
-                                <input id="dreg1" class="form-control" name="dreg" style="display: inline;" placeholder="数据位置" type="text">
-                            </td>
-                            <td></td>
-                            <!--                            <td>
-                                                            <span style="margin-left:10px;" >工作模式</span>&nbsp;
-                                                                                            <input id="worktype1" class="form-control"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">
-                                                            <select class="easyui-combobox" id="worktype1" name="worktype" style="width:150px; height: 30px">
+                        <td></td>
+                        <td>
+                            <span style="margin-left:20px;" >传感器名</span>
+                            <input id="name" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <span style="margin-left:0px;" >&#8195;&#8195;站号</span>&nbsp;
+                            <input id="sitenum" class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
+                        </td>
+                        <td></td>
+                        <td>
+                            <!--                                <span style="margin-left:10px;" >工作模式</span>&nbsp;
+                                                                                            <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">
+                                                            <select class="easyui-combobox" id="worktype" name="worktype" style="width:150px; height: 30px">
                                                                 <option value="0" >模拟量</option>
                                                                 <option value="1" >开关量</option>  
-                                                            </select>
-                                                        </td>-->
-                            <td>
-                                <span style="margin-left:20px;" >&#8195;&#8195;类型</span>&nbsp;
-                                <select class="easyui-combobox" id="type1" name="type" style="height: 30px">
-                                    <option value="1" >温度</option>
-                                    <option value="2" >湿度</option>  
-                                    <option value="3" >开关</option> 
-                                </select>
+                                                            </select>-->
+                            <span style="margin-left:20px;" >&#8195;&#8195;类型</span>&nbsp;
+                            <select class="easyui-combobox" id="type" name="type" style=" height: 30px">
+                                <option value="1" >温度</option>
+                                <option value="2" >湿度</option>  
+                                <option value="3" >开关</option>  
+                            </select>
+                        </td>
 
-                            </td>  
+                    </tr>    
 
-                        </tr>                  
 
-                        <tr>
-                            <td>
-                                <span style="margin-left:-15px;" >最小预警值</span>&nbsp;
-                                <input id="minValue1" class="form-control" name="minValue" style="display: inline;" placeholder="最小预警值" type="text">
-                            </td>
-                            <td></td>
-                            <td>
-                                <span style="margin-left:-20px;" >&#8195;&#8195;最大预警值</span>&nbsp;
-                                <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
-                                <input id="maxValue1" value="" class="form-control" name="maxValue" style="display: inline;" placeholder="最大预警值" type="text">
-                            </td>
-                        </tr> 
-                        <tr>
-
-                            <td>
-                                <span style="margin-left:0px;" >&#8195;&#8195;备注</span>&nbsp;
-                                <input id="model1"  class="form-control" name="model" style="display: inline;" placeholder="备注" type="text">
-                            </td>
-                            <td></td>
-                            <td></td>
+                    <tr>
+                        <td>
+                            <span style="margin-left:0px;" >数据位置</span>&nbsp;
+                            <input id="dreg" class="form-control" name="dreg" style="display: inline;" placeholder="数据位置" type="text">
+                        </td>
+                        <td></td>
+                        <td>
+                            <span style="margin-left:20px;" >&#8195;&#8195;备注</span>&nbsp;
+                            <!--                                <input id="worktype" class="form-control" value="0"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">-->
+                            <input id="model" value="" class="form-control" name="model" style="display: inline;" placeholder="备注" type="text">
+                        </td>
+                    </tr>  
 
 
 
-                        </tr> 
-                    </tbody>
-                </table>
-            </form>
-        </div>  
-
-        <div id="dialog-excel"  class="bodycenter"  style=" display: none" title="导入Excel">
-            <input type="file" id="excel-file" style=" height: 40px;">
-            <table id="warningtable"></table>
-
-        </div>
-
-        <div  style=" top:-60%;position:absolute; z-index:9999;background-color:#FFFFFF;">
-            <table id="cgqmb" style=" border: 1px">
-                <tr>
-                    <td>序号</td>
-                    <td>网关编号</td>
-                    <td>站号</td>
-                    <td>传感器名</td>
-                    <td>数据位置</td>
-                    <td>类型</td>
-                    <td>备注</td>
-                </tr>
-                <tr>
-                    <td>如1、2、3</td>
-                    <td>网关编号必须是已存在的</td>
-                    <td>网关下站号不可重复</td>
-                    <td>传感器名</td>
-                    <td>数据位置</td>
-                    <td>类型 1代表温度 2代表湿度 3代表开关 填入1或2或3即可</td>
-                    <td>备注</td>
-                </tr>
+                </tbody>
             </table>
-        </div>
-    </body>
+        </form>                        
+    </div>
+
+    <div id="dialog-edit"  class="bodycenter" style=" display: none"  title="传感器编辑">
+        <form action="" method="POST" id="form2" onsubmit="return editlamp()">  
+            <input type="hidden" id="hide_id" name="id" />
+            <input type="hidden" id="deployment" name="deployment" />
+            <table>
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <span style="margin-left:0px;" >&#8195;&#8195;站号</span>&nbsp;
+                            <input id="sitenum1"  class="form-control" name="sitenum" style="display: inline;" placeholder="站号" type="text">
+                        </td>
+                        <td></td>
+                        <td>
+                            <span style="margin-left:20px;" >传感器名</span>&nbsp;
+                            <input id="name1" class="form-control"  name="name" style="display: inline;" placeholder="传感器名" type="text">
+
+                        </td>
+                    </tr>    
+                    <tr>
+                        <td>
+                            <span style="margin-left:0px;" >数据位置</span>&nbsp;
+                            <input id="dreg1" class="form-control" name="dreg" style="display: inline;" placeholder="数据位置" type="text">
+                        </td>
+                        <td></td>
+                        <!--                            <td>
+                                                        <span style="margin-left:10px;" >工作模式</span>&nbsp;
+                                                                                        <input id="worktype1" class="form-control"  name="worktype" style="width:150px;display: inline;" placeholder="工作模式" type="text">
+                                                        <select class="easyui-combobox" id="worktype1" name="worktype" style="width:150px; height: 30px">
+                                                            <option value="0" >模拟量</option>
+                                                            <option value="1" >开关量</option>  
+                                                        </select>
+                                                    </td>-->
+                        <td>
+                            <span style="margin-left:20px;" >&#8195;&#8195;类型</span>&nbsp;
+                            <select class="easyui-combobox" id="type1" name="type" style="height: 30px">
+                                <option value="1" >温度</option>
+                                <option value="2" >湿度</option>  
+                                <option value="3" >开关</option> 
+                            </select>
+
+                        </td>  
+
+                    </tr>                  
+
+                    <tr>
+
+                        <td>
+                            <span style="margin-left:0px;" >&#8195;&#8195;备注</span>&nbsp;
+                            <input id="model1"  class="form-control" name="model" style="display: inline;" placeholder="备注" type="text">
+                        </td>
+                        <td></td>
+                        <td></td>
+
+
+
+                    </tr> 
+                </tbody>
+            </table>
+        </form>
+    </div>  
+
+    <div id="dialog-excel"  class="bodycenter"  style=" display: none" title="导入Excel">
+        <input type="file" id="excel-file" style=" height: 40px;">
+        <table id="warningtable"></table>
+
+    </div>
+
+    <div  style=" top:-60%;position:absolute; z-index:9999;background-color:#FFFFFF;">
+        <table id="cgqmb" style=" border: 1px">
+            <tr>
+                <td>序号</td>
+                <td>网关编号</td>
+                <td>站号</td>
+                <td>传感器名</td>
+                <td>数据位置</td>
+                <td>类型</td>
+                <td>备注</td>
+            </tr>
+            <tr>
+                <td>如1、2、3</td>
+                <td>网关编号必须是已存在的</td>
+                <td>网关下站号不可重复</td>
+                <td>传感器名</td>
+                <td>数据位置</td>
+                <td>类型 1代表温度 2代表湿度 3代表开关 填入1或2或3即可</td>
+                <td>备注</td>
+            </tr>
+        </table>
+    </div>
+</body>
 </html>

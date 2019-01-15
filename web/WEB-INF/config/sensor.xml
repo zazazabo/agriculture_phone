@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xforms>
-    <xform desc="" id="sensorform">
+    <xform desc="" id="sensorform">  
         <xhandle desc="查询传感表" id="getSensorList" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT tb.name AS commname,*FROM  t_sensor tl,t_baseinfo AS tb WHERE tl.s_identify = tb.identify AND  @CONDITION" var="bootstrap">
-                <xflt id="CONDITION" nrp="" tpl="@s_identify  AND @deplayment AND @pid AND @sort">
-                    <xfltpara id="s_identify" nrp="1=1" para="s_identify" sql="s_identify = ':s_identify'"></xfltpara>
+                <xflt id="CONDITION" nrp="" tpl="@identify  AND @deplayment AND @pid AND @sort">
+                    <xfltpara id="identify" nrp="1=1" para="identify" sql="s_identify = ':identify'"></xfltpara>
                     <xfltpara id="deplayment" nrp="1=1" para="deplayment" sql="deplayment = :deplayment"></xfltpara>
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify AS s_identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                     
                     <xfltpara id="sort" nrp="1=1" para="sort" sql=" 1=1 order by :sort "></xfltpara>
                 </xflt>
@@ -27,10 +27,9 @@
         
         <xhandle desc="查询传感器站号是否存在" id="existsite" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT * FROM  t_sensor tl WHERE    @CONDITION  " var="bootstrap">
-                <xflt id="CONDITION" nrp="" tpl="@sitenum AND @l_comaddr AND @dreg AND @pos">
+                <xflt id="CONDITION" nrp="" tpl="@sitenum AND @identify AND @dreg AND @pos">
                     <xfltpara id="sitenum" nrp="1=2" para="sitenum" sql="sitenum = :sitenum"></xfltpara>
-
-                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'"></xfltpara>
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="s_identify = ':identify'"></xfltpara>
                     <xfltpara id="dreg" nrp="1=2" para="dreg" sql="dreg = :dreg"></xfltpara>
                     <xfltpara id="pos" nrp="1=2" para="pos" sql="pos = :pos"></xfltpara>
                 </xflt>
@@ -65,12 +64,12 @@
             </xsql>
         </xhandle>
         <xhandle desc="添加传感器" id="addsensor" rtn="rs" rtnype="JSON">
-            <xsql id="a1" para="model,dreg,name,sitenum,l_comaddr,type" tpe="DDL" tpl="insert into t_sensor(model,dreg,name,sitenum,l_comaddr,type,deplayment) values(':model',:dreg,':name',':sitenum',':l_comaddr',:type,0) " var="rs"></xsql> 
+            <xsql id="a1" para="model,dreg,name,sitenum,identify,type" tpe="DDL" tpl="insert into t_sensor(model,dreg,name,sitenum,s_identify,type,deplayment) values(':model',:dreg,':name',':sitenum',':identify',:type,0) " var="rs"></xsql> 
         </xhandle>
 
 
         <xhandle desc="添加传感器不带类型" id="addsensor1" rtn="rs" rtnype="JSON">
-            <xsql id="a1" para="model,dreg,worktype,name,sitenum,l_comaddr" tpe="DDL" tpl="insert into t_sensor(model,dreg,worktype,name,sitenum,l_comaddr,deplayment) values(':model',:dreg,:worktype,':name',':sitenum',':l_comaddr',0) " var="rs"></xsql> 
+            <xsql id="a1" para="model,dreg,worktype,name,sitenum,identify" tpe="DDL" tpl="insert into t_sensor(model,dreg,worktype,name,sitenum,s_identify,deplayment) values(':model',:dreg,:worktype,':name',':sitenum',':identify',0) " var="rs"></xsql> 
         </xhandle>      
         
 
@@ -120,12 +119,12 @@
               
             </xsql>
         </xhandle>  
-
+  
 
         <xhandle desc="" id="getInfoNumList2" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl=" SELECT DISTINCT infonum as id,name as text FROM t_sensor where deplayment = 1 AND  @CONDITION" var="list">
-                <xflt id="CONDITION" tpl="@l_comaddr ">
-                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr=':l_comaddr'"></xfltpara>
+                <xflt id="CONDITION" nrp="" tpl="@identify ">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="s_identify=':identify'"></xfltpara>
                 </xflt>
 
             </xsql>

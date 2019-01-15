@@ -236,7 +236,6 @@
 
             }
 
-
             $(function () {
 
                 size();
@@ -447,6 +446,7 @@
                         var obj = {};
                         obj.l_comaddr = record.id;
                         obj.pid = "${param.pid}";
+                        obj.identify = record.identify;
                         obj.p_comaddr = record.id;
                         var opt = {
                             url: "plan.planForm.getSensorPlan.action",
@@ -454,6 +454,7 @@
                             silent: true
                         };
 
+                        $("#identify1").val(record.identify);
 //                        console.log();
 
                         $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
@@ -1057,6 +1058,7 @@
                     <input type="hidden" name="p_type" value="1"/>
                     <input type="hidden" id="p_scenenum" name="p_scenenum" value=""/>
                     <input type="hidden" id="p_show" name="p_show" value="1"/>
+                    <input type="hidden" name="identify" id="identify1" value=""/>
                     <!--console.log(scennum);-->
 
                     <table>
