@@ -292,7 +292,7 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#trsd_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#trsdsen").val() != "") {
@@ -320,7 +320,7 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#dqwd_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#dqwdsen").val() != "") {
@@ -344,7 +344,7 @@
                     var l_comaddr = record.id;
                     //风速传感器
                     $("#fs_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#fssen").val() != "") {
@@ -367,7 +367,7 @@
                     var l_comaddr = record.id;
                     //雨量传感器
                     $("#yl_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
@@ -388,7 +388,7 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#yllj_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
@@ -409,7 +409,7 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#trwd_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
@@ -430,7 +430,7 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#dqsd_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                // $(this).combobox('select', data[0].id);
@@ -451,7 +451,7 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#fx_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                // $(this).combobox('select', data[0].id);
@@ -472,7 +472,7 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#zd_sensor").combobox({
-                        url: "homePage.sign.gesensroList.action?l_comaddr=" + l_comaddr,
+                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
@@ -545,7 +545,7 @@
                     var trsdrs = data.trsdrs;
                     if (rs.length > 0) {
                         var sen = rs[0];
-                        $("#dqwdcom").val(sen.l_comaddr);
+                        $("#dqwdcom").val(sen.identify);
                         $("#dqwdsen").val(sen.id);
                         if (parseInt(sen.numvalue) > 0) {
                             var value = parseInt(sen.numvalue) / 10;
@@ -557,7 +557,7 @@
                     }
                     if (trsdrs.length > 0) {
                         var trsd = trsdrs[0];
-                        $("#trsdcom").val(trsd.l_comaddr);
+                        $("#trsdcom").val(trsd.identify);
                         $("#trsdsen").val(trsd.id);
                         if (parseInt(trsd.numvalue) > 0) {
                             var value = parseInt(trsd.numvalue) / 10;

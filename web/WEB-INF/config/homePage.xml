@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xforms>
-    <xform desc="首页" id="homePage">
-
-        <xhandle desc="首页显示传感" id="getSensorList" rtnype="JSON">
+<xforms>   
+    <xform desc="曲线图" id="homePage">
+        <xhandle desc="曲线显示传感" id="getSensorList" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where type !=3  and convert(char(10),collectime,120) = convert(char(10),GetDate(),120) and @CONDITION  " var="sdrs">
                 <xflt id="CONDITION" nrp="" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid') order by times asc"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by times asc"></xfltpara>
                 </xflt>
             </xsql>
             <xsql id="a2" list="true" page="true" tpe="SQL" tpl=" select distinct  CONVERT(varchar(16), collectime, 120) as collectime from t_sensorecord where  type !=3 and convert(char(10),collectime,120) = convert(char(10),GetDate(),120) and @CONDITION  " var="xdata">
                 <xflt id="CONDITION" nrp="" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
                 </xflt>
             </xsql>
         </xhandle>
@@ -29,7 +28,7 @@
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
@@ -39,7 +38,7 @@
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
@@ -52,7 +51,7 @@
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
@@ -62,7 +61,7 @@
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
@@ -74,7 +73,7 @@
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
@@ -84,7 +83,7 @@
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="comaddr =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
@@ -151,6 +150,7 @@
         </xhandle>
           
     </xform>
+    
     <xform desc="回路管理" id="loop">
         <xhandle desc="添加首页显示回路" id="addshow" rtnype="JSON">
             <xsql id="a1" para="" tpe="DDL" tpl="update t_loop set show=1 where @CONDITION " var="rs">
@@ -175,7 +175,9 @@
             </xsql> 
         </xhandle> 
     </xform>
+    
     <xform desc="网关管理" id="gayway">
+        
         <xhandle desc="查看网关下是否存在回路" id="gaywayinfo" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_sensor WHERE   @CONDITION  " var="rs">
                 <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
@@ -184,6 +186,7 @@
                 </xflt>
             </xsql> 
         </xhandle>  
+        
         <xhandle desc="网关集合" id="getComaddr" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select identify as id,name as text,name  FROM t_baseinfo where @CONDITION " var="list">
                 <xflt id="CONDITION" nrp="" tpl="@pid ">
@@ -192,10 +195,20 @@
                 </xflt>
             </xsql>
         </xhandle>
-        <xhandle desc="根据网关编号查询网关名称" id="getnamebycode" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select name  FROM t_baseinfo where @CONDITION " var="rs">
+        
+        <xhandle desc="根据网关地址查询网关名称和编号" id="getnamebycode" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select name,identify  FROM t_baseinfo where @CONDITION " var="rs">
                 <xflt id="CONDITION" nrp="" tpl="@comaddr ">
                     <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql=" comaddr = ':comaddr'">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        
+        <xhandle desc="根据网关编号查询网关地址" id="getcomaddrbyidentify" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select comaddr  FROM t_baseinfo where @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@identify ">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql=" identify = ':identify'">
                     </xfltpara>
                 </xflt>
             </xsql>
@@ -319,8 +332,8 @@
     <xform desc="气象站" id="sign">
         <xhandle desc="查询网关下土壤湿度传感器" id="gettr_sdsensroList" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and type =2 and  @CONDITION  " var="list">
-                <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
-                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                <xflt id="CONDITION" nrp="" tpl="@s_identify">
+                    <xfltpara id="s_identify" nrp="1=2" para="s_identify" sql="s_identify = ':s_identify'">
                     </xfltpara>
                 </xflt>
             </xsql> 
@@ -351,7 +364,7 @@
             <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where  type = 1 and @CONDITION " var="rs2">
                 <xflt id="CONDITION" tpl="@id AND @pid">
                     <xfltpara id="id" nrp="1=2" para="id" sql="id !=':id'"></xfltpara>
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
             </xsql>
         </xhandle>
@@ -365,7 +378,7 @@
             <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where  type = 2 and @CONDITION " var="rs">
                 <xflt id="CONDITION" tpl="@id AND @pid">
                     <xfltpara id="id" nrp="1=2" para="id" sql="id !=':id'"></xfltpara>
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
             </xsql>
         </xhandle>  
@@ -373,12 +386,12 @@
         <xhandle desc="查询气象台大气温度传感器数值" id="getdqwd_value" rtnype="JSON">
             <xsql id="a1" para="" tpe="SQL" tpl="select * from t_sensor WHERE deplayment =1 and type =1 and show = 1 and  @CONDITION " var="rs">
                 <xflt id="CONDITION" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
             </xsql>
             <xsql desce="土壤湿度" id="a1" para="" tpe="SQL" tpl="select * from t_sensor WHERE deplayment =1 and type =2 and show = 1 and  @CONDITION " var="trsdrs">
                 <xflt id="CONDITION" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="l_comaddr IN (SELECT comaddr AS l_comaddr FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
             </xsql>
         </xhandle> 
@@ -386,7 +399,7 @@
         <xhandle desc="查询网关下传感器" id="gesensroList" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and   @CONDITION  " var="list">
                 <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
-                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="s_identify = ':l_comaddr'">
                     </xfltpara>
                 </xflt>
             </xsql> 

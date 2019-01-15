@@ -261,7 +261,7 @@
 
         $(function () {
             $("#l_comaddr2").combobox({
-                url: "gayway.GaywayForm.getComaddr.action?pid=" + pid,
+                url: "homePage.gayway.getComaddr.action?pid=" + pid,
 //                formatter: function (row) {
 //                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
 //                    var v = row.text + v1;

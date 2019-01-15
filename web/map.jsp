@@ -326,7 +326,7 @@
                                 </td>
                                 <td>
                                     <span style="margin-left:30px;">                                     
-                                        <span id="25" name="xxxx">网关地址</span>
+                                        <span>网关名称</span>
                                         &nbsp;</span>
                                     <input id="comaddrlist" data-options='editable:false,valueField:"id", textField:"text"' class="easyui-combobox"/>
                                 </td>
@@ -594,13 +594,15 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle'
-                        }, {
-                            field: 'model',
-                            title: '型号', //型号
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle'
-                        }, {
+                        }, 
+//                        {
+//                            field: 'model',
+//                            title: '型号', //型号
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle'
+//                        }, 
+                        {
                             field: 'name',
                             title: '名称', //名称
                             width: 25,
@@ -1217,7 +1219,7 @@
                 if (wgcheck2.length > 1) {
                     wgdraw = true;
                     for (var i = 0; i < wgcheck2.length; i++) {
-                        wgidlist.push(wgcheck2[i].comaddr);
+                        wgidlist.push(wgcheck2[i].identify);
                     }
                     $("#wgtable input:checkbox").each(function () {
                         if ($(this).is(":checked")) {
@@ -2302,6 +2304,7 @@
                                 //闭合
                                 $("#close").click(function () {
                                     var l_comaddr = obj.l_comaddr;
+                                    
                                     var ele = obj;
                                     addlogon(u_name, "设置", o_pid, "电子地图", "闭合回路【" + ele.l_name + "】", l_comaddr);
                                     var o = {};
@@ -2445,16 +2448,6 @@
                                     var arrlist = data.rs;
                                     if (arrlist.length == 1) {
                                         layerAler(str);
-                                        var o = {};
-                                        o.l_comaddr = obj.comaddr;
-                                        o.pid = "${param.pid}";
-                                        o.l_deplayment = 1;
-                                        var opt = {
-                                            url: "loop.loopForm.getLoopList.action",
-                                            silent: false,
-                                            query: o
-                                        };
-                                        $("#gravidaTable").bootstrapTable('refresh', opt);
 
                                     }
                                 },
@@ -2473,7 +2466,7 @@
             //网关下拉框
             function combobox(id, pid) {
                 $(id).combobox({
-                    url: "login.map.getallcomaddr.action?pid=" + pid
+                    url: "homePage.gayway.getComaddr.action?pid=" + pid
 //                    onLoadSuccess: function (data) {
 //                        $(this).combobox("select", data[0].id);
 //                        $(this).val(data[0].text);

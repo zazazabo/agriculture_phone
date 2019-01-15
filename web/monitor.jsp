@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
+    <head>     
         <%@include  file="js.jspf" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
@@ -29,6 +29,7 @@
         <script>
             var u_name = "${param.name}";
             var o_pid = "${param.pid}";
+            var comaddr;
             function layerAler(str) {
                 layer.alert(str, {
                     icon: 6,
@@ -66,7 +67,6 @@
 
                 }
                 var ele = selects[0];
-                var comaddr = ele.l_comaddr;
 
                 if (ele.errflag == "1") {
                     var vv = [];
@@ -168,9 +168,9 @@
             }
 
             function tourSensor() {
-                var l_comaddr = $("#l_comaddr").combobox('getValue');
+
                 var vv = [];
-                dealsend2("sensor", "00", "sensorCB", l_comaddr, 0, 0, 0);
+                dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
             }
             $(function () {
                 $('#gravidaTable').bootstrapTable({
@@ -251,14 +251,14 @@
                                 var str = value;
                                 if (row.online1 == "1") {
                                     if (row.errflag == "1") {
-                                        var str = '<img   src="img/fault.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
+                                        var str = '<img   src="img/fault.png" onclick="readSensor(\'' + comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                         return  str;
                                     } else {
-                                        var str = '<img   src="img/online1.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
+                                        var str = '<img   src="img/online1.png" onclick="readSensor(\'' + comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                         return  str;
                                     }
                                 } else {
-                                    var str = '<img   src="img/off.png" onclick="readSensor(\'' + row.l_comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
+                                    var str = '<img   src="img/off.png" onclick="readSensor(\'' + comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
                                     return  str;
                                 }
                                 return  str;
@@ -295,7 +295,7 @@
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
-                            pid:o_pid,
+                            pid: o_pid,
                             l_comaddr: l_comaddr
 
                         };      
@@ -303,7 +303,7 @@
                     }
                 });
                 $("#l_comaddr").combobox({
-                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                    url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                     formatter: function (row) {
                         var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
                         var v = row.text + v1;
@@ -322,10 +322,8 @@
 
                     },
                     onSelect: function (record) {
-
                         var l_comaddr = record.id;
                         var vv = [];
-                        dealsend2("sensor", "00", "sensorCB", l_comaddr, 0, 0, 0);
 
 
 
@@ -337,6 +335,18 @@
                             silent: true,
                             query: obj
                         };
+                        $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "get", datatype: "JSON", data: {identify: l_comaddr},
+                            success: function (data) {
+                                var arrlist = data.rs;
+                                if (arrlist.length > 0) {
+                                    comaddr = arrlist[0].comaddr;
+                                }
+                            },
+                            error: function () {
+                                alert("提交失败111！");
+                            }
+                        });
+                        dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
                         $("#gravidaTable").bootstrapTable('refresh', opt);
                     }
                 });
@@ -425,7 +435,7 @@
                 
                                 </table>-->
                 <span style=" margin-left:3%;">网关名称：</span>
-                <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px" 
+                <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px" 
                        data-options="editable:true,valueField:'id', textField:'text' " />
 
                 <button type="button" id="btnswitch" onclick="tourSensor()" class="btn btn-success btn-sm">
