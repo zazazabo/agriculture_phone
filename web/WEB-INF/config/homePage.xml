@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xforms>
+<xforms>   
     <xform desc="曲线图" id="homePage">
         <xhandle desc="曲线显示传感" id="getSensorList" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where type !=3  and convert(char(10),collectime,120) = convert(char(10),GetDate(),120) and @CONDITION  " var="sdrs">
