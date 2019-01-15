@@ -257,25 +257,18 @@
                                 return value;
                             }
 
-                        }, {
-                            field: 'p_comaddr',
-                            title: '网关名称',
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle',
-                            colspan: 1,
-                            formatter: function (value) {
-                                var str = "";
-                                var obj = {};
-                                obj.comaddr = value;
-                                $.ajax({async: false, url: "homePage.gayway.getnamebycode.action", type: "get", datatype: "JSON", data: obj,
-                                    success: function (data) {
-                                        str = data.rs[0].name;
-                                    }
-                                });
-                                return str;
-                            }
-                        },
+                        }, 
+//                        {
+//                            field: 'p_comaddr',
+//                            title: '网关名称',
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle',
+//                            colspan: 1,
+//                            formatter: function (value, row, index, field) {
+//                                    console.log(row);
+//                            }
+//                        },
                         {
                             field: 'p_name',
                             title: '场景名', //信息点
@@ -454,16 +447,13 @@
                             silent: true
                         };
 
-                        $("#identify1").val(record.identify);
-//                        console.log();
-
+                        $("#identify").val(record.identify);
                         $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
                             success: function (data) {
                                 for (var i = 0; i < data.length; i++) {
                                     var o = data[i];
                                     infolist[o.id] = o.text;
                                 }
-//                                console.log(infolist);
                                 $("#table0").bootstrapTable('refresh', opt);
                             },
                             error: function () {
@@ -476,42 +466,6 @@
                     }
                 });
 
-                $('#l_plan').combobox({
-                    url: "loop.planForm.getPlanlist.action?attr=1&p_type=1&pid=${param.pid}",
-                    formatter: function (row) {
-                        var v = row.p_name;
-                        row.id = row.id;
-                        row.text = v;
-                        var opts = $(this).combobox('options');
-                        return row[opts.textField];
-                    },
-                    onLoadSuccess: function (data) {
-                        if (Array.isArray(data) && data.length > 0) {
-                            for (var i = 0; i < data.length; i++) {
-                                data[i].text = data[i].p_name;
-                            }
-                            $(this).combobox('select', data[0].id);
-
-                        }
-                    },
-                    onSelect: function (record) {
-                        console.log(record);
-                        $("#scenenum").val(record.p_scenenum);
-                        for (var i = 0; i < 5; i++) {
-                            var index = (i + 1).toString();
-                            var scene = "p_scene" + (i + 1).toString();
-                            var obj = eval('(' + record[scene] + ')');
-
-                            $("#info" + index).val(obj.info.toString());
-                            $("#up" + index).val(obj.up.toString());
-                            $("#down" + index).val(obj.down.toString());
-
-
-                        }
-                    }
-
-                });
-
                 $("#dialog-add").dialog({
                     autoOpen: false,
                     modal: true,
@@ -521,7 +475,6 @@
                     buttons: {
                         添加: function () {
                             var bclose = addshow(1);
-                            console.log("close", bclose);
                             if (bclose) {
                                 $(this).dialog("close");
                                 Search();
@@ -576,7 +529,8 @@
                 $("#hidden_id").val(select.id);
 
 
-                var o1 = {l_comaddr: select.p_comaddr, pid: select.pid};
+                var o1 = {pid: select.pid, identify: select.p_identify};
+                console.log(select);
                 $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: o1,
                     success: function (data) {
                         console.log(data);
@@ -590,22 +544,18 @@
                             var val = select[scene];
                             var obj = eval('(' + val + ')');
 
-
-
-
-
                             $("#info" + index + index).combobox('loadData', data);
                             var up = "#up" + index + index;
                             var down = "#down" + index + index;
                             $(up).numberspinner({
-                                min: 0,
+                                min: -500,
                                 max: 10000,
                                 icrement: 1,
                                 editable: true
                             })
                             $(up).numberspinner('setValue', obj.up);
                             $(down).numberspinner({
-                                min: 0,
+                                min: -500,
                                 max: 10000,
                                 icrement: 1,
                                 editable: true
@@ -623,9 +573,6 @@
                                 $(down).numberspinner('readonly', false);
                                 $(up).numberspinner('readonly', false);
                             }
-
-
-
 
                         }
 
@@ -681,8 +628,8 @@
 
             function showDialog() {
                 var o1 = $("#form1").serializeObject();
-                $("#p_comaddr").val(o1.l_comaddr);
-
+                $("#identify1").val(o1.identify);
+                console.log(o1);
                 for (var i = 0; i < 5; i++) {
                     var up = "#up" + (i + 1).toString();
                     var down = "#down" + (i + 1).toString();
@@ -722,12 +669,10 @@
                     scenearr[i.toString()] = i;
                 }
                 var o = {pid: "${param.pid}", p_comaddr: o1.l_comaddr};
-                console.log(o);
 
                 var open = false;
                 $.ajax({async: false, url: "plan.planForm.getAllScennum.action", type: "get", datatype: "JSON", data: o,
                     success: function (data) {
-                        console.log(data);
                         var arrlist = data.rs;
                         for (var i = 0; i < arrlist.length; i++) {
                             var scennum = arrlist[i].p_scenenum;
@@ -737,7 +682,6 @@
                         for (var ii in scenearr) {
                             arr.push(scenearr[ii]);
                         }
-                        console.log(arr[0]);
                         if (arr.length > 0) {
                             $("#p_scenenum").val(arr[0].toString());
                             open = true;
@@ -798,13 +742,11 @@
                     ooo[p_scene] = JSON.stringify(o3);
 
                 }
-                console.log(ooo);
+              
                 var ret = false;
                 $.ajax({async: false, url: "plan.planForm.addSensorScenePlan2.action", type: "get", datatype: "JSON", data: ooo,
                     success: function (data) {
-
                         var arrlist = data.rs;
-                        console.log(arrlist);
                         if (arrlist.length == 1) {
                             ret = true;
                         }
@@ -976,6 +918,7 @@
         <div id="content" class="row-fluid">
             <form id="form1">
                 <input type="hidden" name="pid" value="${param.pid}"/>
+                <input type="hidden" name="identify" id="identify" />
                 <div class=" row " >
                     <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4" >
                         <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
@@ -1219,21 +1162,7 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <!--                                 <span style="margin-left: 20px;"  >
-                                                                        场景号
-                                                                    </span>
-                                                                    <select class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="p_scenenum1" name="p_scenenum" style="width:70px; height: 30px">
-                                                                                <option value="0">0</option>
-                                                                                <option value="1">1</option>
-                                                                                <option value="2">2</option>
-                                                                                <option value="3">3</option>
-                                                                                <option value="4">4</option>
-                                                                                <option value="5">5</option>
-                                                                                <option value="6">6</option>
-                                                                                <option value="7">7</option>
-                                                                                <option value="8">8</option>
-                                                                                <option value="9">9</option>
-                                                                    </select> -->
+
                                 </td>
                             </tr>
 
