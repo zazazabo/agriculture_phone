@@ -35,8 +35,8 @@
 
         <xhandle desc="传感器场景方案3" id="getAllScennumName" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT p_scenenum as id,p_name as text FROM t_plan AS tp WHERE tp.p_attr=1 AND tp.p_type=1  AND  @CONDITION  " var="list">
-                <xflt id="CONDITION" nrp="" tpl="@l_comaddr AND @pid">
-                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="p_comaddr = ':l_comaddr'">
+                <xflt id="CONDITION" nrp="" tpl="@identify AND @pid">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="p_identify = ':identify'">
                     </xfltpara>
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="pid = ':pid'">
                     </xfltpara>  

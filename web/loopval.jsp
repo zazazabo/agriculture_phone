@@ -267,51 +267,8 @@
                         $("#gravidaTable").bootstrapTable('refresh', opt);
                     }
                 });
-
-//                $('#gayway').on('check.bs.table', function (row, element) {
-//                    var l_comaddr = element.comaddr;
-//                    var vv = [];
-//                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
-//
-//                    var obj = {};
-//                    obj.l_comaddr = l_comaddr;
-//                    obj.pid = "${param.pid}";
-//                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
-//                        success: function (data) {
-//                            for (var i = 0; i < data.length; i++) {
-//                                var o = data[i];
-//                                infolist[o.id] = o.text;
-//                            }
-//                        },
-//                        error: function () {
-//                            alert("提交失败！");
-//                        }
-//                    });
-//
-//
-//                    $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
-//                        success: function (data) {
-//                            for (var i = 0; i < data.length; i++) {
-//                                var o = data[i];
-//                                infoscene[o.id] = o.text;
-//                            }
-//                        },
-//                        error: function () {
-//                            alert("提交失败！");
-//                        }
-//                    });
-//
-//
-//
-//                    var opt = {
-//                        url: "loop.loopForm.getLoopList.action",
-//                        silent: false,
-//                        query: obj
-//                    };
-//                    $("#gravidaTable").bootstrapTable('refresh', opt);
-//                });
-
             });
+            
             function formartcomaddr(value, row, index) {
                 if (index == 0) {
                     var l_comaddr = row.comaddr;
