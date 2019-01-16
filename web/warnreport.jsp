@@ -48,6 +48,13 @@
                     var ele = selects[i];
                     fmobj.id = ele.id;
                     fmobj.enable=val;
+                    var str;
+                    if(val ==1){
+                        str = "启用";
+                    }else{
+                        str ="禁用";
+                    }
+                    addlogon(u_name, "设置传感器报警参数", o_pid, "报警参数设置", str+"回路【"+ele.name+"】报警参数设置",ele.s_identify);
                     $.ajax({async: false, url: "sensor.sensorform.uplimitenable.action", type: "get", datatype: "JSON", data: fmobj,
                         success: function (data) {
                             var arrlist = data.rs;
@@ -85,6 +92,7 @@
                 for (var i = 0; i < selects.length; i++) {
                     var ele = selects[i];
                     fmobj.id = ele.id;
+                    addlogon(u_name, "设置传感器报警参数", o_pid, "报警参数设置", "设置回路【"+ele.name+"】",ele.s_identify);
                     $.ajax({async: false, url: "sensor.sensorform.uplimitvalue.action", type: "get", datatype: "JSON", data: fmobj,
                         success: function (data) {
                             var arrlist = data.rs;

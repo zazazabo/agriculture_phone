@@ -214,6 +214,7 @@
                         var arrlist = data.rs;
                         if (arrlist.length == 1) {
                             Search();
+                            addlogon(u_name, "修改", o_pid, "场景配置", "修改场景【"+ooo.p_name+"】");
                         }
                     },
                     error: function () {
@@ -559,7 +560,7 @@
                                 max: 10000,
                                 icrement: 1,
                                 editable: true
-                            })
+                            });
                             $(down).numberspinner('setValue', obj.down);
 
                             $("#info" + index + index).combobox('setValue', obj.info);
@@ -575,6 +576,7 @@
                             }
 
                         }
+                        
 
 
                     },
@@ -749,6 +751,7 @@
                         var arrlist = data.rs;
                         if (arrlist.length == 1) {
                             ret = true;
+                            addlogon(u_name, "添加", o_pid, "场景配置", "添加场景【"+ooo.p_name+"】");
                         }
                     },
                     error: function () {
@@ -831,7 +834,7 @@
                         success: function (data) {
                             var arrlist = data.rs;
                             if (arrlist.length == 1) {
-
+                               addlogon(u_name, "删除", o_pid, "场景配置", "删除场景【"+ooo.p_name+"】",ooo.p_identify);
                             }
                         },
                         error: function () {
@@ -892,6 +895,11 @@
                 var ooo1 = {id: ele.id, index: ele.index};
                 var data = buicode2(vv);
                 console.log(data);
+                if(val ==1){
+                    addlogon(u_name, "部署", o_pid, "场景配置", "部署场景【"+ele.p_name+"】",ele.p_identify);
+                }else{
+                    addlogon(u_name, "移除", o_pid, "场景配置", "移除场景【"+ele.p_name+"】",ele.p_identify);
+                }
                 dealsend2("10", data, "deployscenPlanCB", ooo.l_comaddr, val, ooo1, scenenum, "${param.action}");
 
             }

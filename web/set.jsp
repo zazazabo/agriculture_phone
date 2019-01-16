@@ -85,6 +85,7 @@
                         console.log("find gayway");
                         console.log(data[i]);
                         if (data[i].online != "1") {
+                            addlogon(u_name, "强制清除网关", o_pid, "网关参数设置", "强制清除网关【" +$("#l_comaddr").combobox('getText') + "】信息");
                             $.ajax({async: false, url: "gayway.GaywayForm.EmptyGayWay.action", type: "get", datatype: "JSON", data: obj,
                                 success: function (data) {
                                     console.log(data);
@@ -233,6 +234,7 @@
                 vv.push(newsite & 0xff);
                 var data = buicode2(vv);
                 console.log(data);
+                addlogon(u_name, "修改", o_pid, "网关参数设置", "修改网关【" +$("#l_comaddr").combobox('getText') + "】传感器站号");
                 dealsend2("10", data, "editsiteCB", obj.l_comaddr, 0, 0, pos, "${param.action}");
             }
             function refreshControlCB(obj) {
@@ -277,6 +279,7 @@
                 vv.push(val >> 8 & 0xff);
                 vv.push(val & 0xff);
                 var data = buicode2(vv);
+                addlogon(u_name, "刷新控制", o_pid, "网关参数设置", "刷新网关【" +$("#l_comaddr").combobox('getText') + "】控制");
                 dealsend2("10", data, "refreshControlCB", obj.l_comaddr, 0, 0, 3901, "${param.action}");
             }
 
@@ -396,6 +399,7 @@
                 vv.push(t >> 8 & 0xff);
                 vv.push(t & 0xff);
                 var data = buicode2(vv);
+                addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" +$("#l_comaddr").combobox('getText') + "】巡测时间");
                 dealsend2("10", data, "setCheckTimeCB", obj.l_comaddr, 0, 0, 3900, "${param.action}");
             }
 
@@ -454,6 +458,7 @@
                 vv.push(0);
                 vv.push(1);
                 var data = buicode2(vv);
+                addlogon(u_name, "传感器复位", o_pid, "网关参数设置", "网关【" +$("#l_comaddr").combobox('getText') + "】");
                 dealsend2("10", data, "initDataCB", obj.l_comaddr, 0, 0, 3928, "${param.action}");
             }
 
@@ -584,6 +589,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
+                addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" +$("#l_comaddr").combobox('getText') + "】时间");
                 dealsend2("10", data, "setTimeNowCB", comaddr, 1, 0, 3920, "${param.action}");
 
             }
@@ -737,7 +743,7 @@
                     // alert("验证成功");
 
                     var data = "@DTU:0000:DSCADDR:0,TCP, " + $("#ip").val() + "," + $("#port").val() + "\r\n";
-                    var strtosend = ""
+                    var strtosend = "";
                     for (var i = 0; i < data.length; i++) {
                         var param1 = sprintf("%02x", data.charCodeAt(i));
                         strtosend = strtosend + param1 + " ";
@@ -745,19 +751,7 @@
                     }
 
 
-
-//                    var data1 = "@DTU:0000:DSCADDR:1,TCP,47.99.78.186,24228\r\n";
-//                    var strtosend1 = ""
-//                    for (var i = 0; i < data1.length; i++) {
-//                        var param1 = sprintf("%02x", data1.charCodeAt(i));
-//                        strtosend1 = strtosend1 + param1 + " ";
-//                        // hexCharCode.push((data.charCodeAt(i)).toString(16));
-//                    }
-//
-//                    dealsend2("@", strtosend1, "", obj.l_comaddr, 0, 0, 0, "${param.action}");
-
-
-                    //console.log(strtosend);
+                    addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" +$("#l_comaddr").combobox('getText') + "】主站信息");
                     dealsend2("@", strtosend, "setRemoteAddrCB", obj.l_comaddr, 0, 0, 0, "${param.action}");
 
                 } else if (obj2.sitetype == "0") {
@@ -1202,7 +1196,7 @@
                                                 <input id="newsite"  class="form-control" name="newsite" style="width:50px;"  placeholder="站号" type="text">
                                             </td>
                                             <td>
-                                                <button  type="button" onclick="editsite()"  class="btn btn-success btn-sm"><span >修改</sspan>
+                                                <button  type="button" onclick="editsite()"  class="btn btn-success btn-sm"><span >修改</span>
                                                 </button>
                                             </td>
                                             <td>

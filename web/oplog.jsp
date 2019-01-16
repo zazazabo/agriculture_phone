@@ -75,30 +75,30 @@
                             align: 'center',
                             valign: 'middle'
                         },
-//                        {
-//                            field: 'o_comaddr',
-//                            title: "网关名称",
-//                            width: 25,
-//                            align: 'center',
-//                            valign: 'middle',
-//                            formatter: function (value) {
-//                                var name;
-//                                if (value != "" && value != null) {
-//                                    var obj = {};
-//                                    obj.comaddr = value;
-//                                    $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: obj,
-//                                        success: function (data) {
-//                                            var rs = data.rs;
-//                                            name = rs[0].name;
-//                                        },
-//                                        error: function () {
-//                                            console.log("提交失败");
-//                                        }
-//                                    });
-//                                }
-//                                return  name;
-//                            }
-//                        }, 
+                        {
+                            field: 'o_identify',
+                            title: "网关名称",
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value) {
+                                var name;
+                                if (value != "" && value != null) {
+                                    var obj = {};
+                                    obj.comaddr = value;
+                                    $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: obj,
+                                        success: function (data) {
+                                            var rs = data.rs;
+                                            name = rs[0].name;
+                                        },
+                                        error: function () {
+                                            console.log("提交失败");
+                                        }
+                                    });
+                                }
+                                return  name;
+                            }
+                        }, 
                         {
                             field: 'o_name',
                             title: "操作人", //操作人
