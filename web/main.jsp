@@ -30,7 +30,6 @@
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
         <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
         <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-        <!--<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/bootstrap.min.css" />-->
         <script type="text/javascript"  src="js/getdate.js"></script>
         <script type="text/javascript"  src="js/genel.js"></script>
         <!--[if IE 6]>
@@ -188,6 +187,7 @@
                         }
                     }
                 });
+                addlogon($("#u_name").val(), "处理异常", getpojectId(), "首页", "处理异常",ele.f_identify);
                 if (ele.f_Isfault != 1) {
                     var vv = [];
                     vv.push(1);
@@ -321,7 +321,7 @@
                         }
                         , {
                             field: 'f_name',
-                            title: '传感器编号', //灯具编号
+                            title: '传感器名称',
                             width: 25,
                             align: 'center',
                             valign: 'middle'
@@ -352,7 +352,8 @@
 //                    showRefresh: true,
                     //showToggle: true,
                     // 设置默认分页为 50
-                    pageList: [5, 10, 15],
+                    pageList: [5, 10, 15,'ALL'],
+                    smartDisplay:false,
                     striped: true,
 
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态

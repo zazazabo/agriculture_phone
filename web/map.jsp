@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <script src="https://raw.github.com/jiazheng/EventWrapper/master/release/eventwrapper.min.js" type="text/javascript"></script>
         <style type="text/css">
             body, html {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
             .search>tr>td {
@@ -1933,7 +1934,7 @@
                                             var obj2 = {};
                                             obj2.Longitude = x;
                                             obj2.latitude = y;
-                                            obj2.comaddr = obj.comaddr;
+                                            obj2.comaddr = obj.identify;
                                             $.ajax({url: "login.map.updatelnglat.action", async: false, type: "get", datatype: "JSON", data: obj2,
                                                 success: function (data) {
                                                     var arrlist = data.rs;
@@ -1966,7 +1967,7 @@
                                                     var obj3 = {};
                                                     obj3.Longitude = "";
                                                     obj3.latitude = "";
-                                                    obj3.comaddr = obj.comaddr; //获取标注隐藏的值
+                                                    obj3.comaddr = obj.identify;
                                                     $.ajax({url: "login.map.updatelnglat.action", async: false, type: "get", datatype: "JSON", data: obj3,
                                                         success: function (data) {
                                                             var arrlist = data.rs;
@@ -2088,35 +2089,6 @@
                                     icon: lhui
                                 });
                             }
-
-
-//                            if (isfault2 == 1) {
-//                                marker1 = new BMap.Marker(point, {
-//                                    icon: lred
-//                                });
-//                            }else if(lxfault==1){
-//                                marker1 = new BMap.Marker(point, {
-//                                    icon: lred
-//                                });
-//                            } else if (obj.presence == 1 && obj.l_value > 0) {
-//                                marker1 = new BMap.Marker(point, {
-//                                    icon: lyello
-//                                });
-//                            } else if (obj.presence == 1) {
-//                                marker1 = new BMap.Marker(point, {
-//                                    icon: lgreen
-//                                });
-//                            } else {
-//                                marker1 = new BMap.Marker(point, {
-//                                    icon: lhui
-//                                });
-//                            }
-
-//                            var opts = {title: '<span style="font-size:14px;color:#0A8021">' + "传感器信息" + '</span>'};//设置信息框、信息说明
-//                            var infoWindow = new BMap.InfoWindow(textvalue, opts); // 创建信息窗口对象，引号里可以书写任意的html语句。
-//                            marker1.addEventListener("mouseover", function () {
-//                                this.openInfoWindow(infoWindow);
-//                            });
                             marker1.setTitle(obj.name);   //这里设置maker的title (鼠标放到marker点上,会出现它的title,所以我这里把name,放到title里)
                             //标注点点击事件
                             marker1.addEventListener("click", function () {
@@ -2133,10 +2105,7 @@
                                 var opts2 = {title: '<span style="font-size:14px;color:#0A8021">' + "功能操作" + '</span>'};//设置信息框、功能操作
                                 var infoWindow2 = new BMap.InfoWindow(textvalue2, opts2); // 创建信息窗口对象，引号里可以书写任意的html语句。
                                 this.openInfoWindow(infoWindow2);
-
-
-
-
+                                
                                 //移动
                                 $("#move").click(function () {
                                     marker1.closeInfoWindow(infoWindow2);
@@ -2272,7 +2241,7 @@
                                         alert("提交失败！");
                                     }
                                 });
-
+                               
                                 //断开
                                 $("#break").click(function () {
                                     var ele = obj;

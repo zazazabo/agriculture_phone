@@ -53,7 +53,6 @@
         <input id="trwdsen" type="hidden" value=""/>  
         <!--        大气温度网关-->
         <input id="dqwdcom" type="hidden" value=""/>
-        <!--        大气温度传感器-->
         <input id="dqwdsen" type="hidden" value=""/>  
         <!--        大气湿度-->
         <input id="dqsdcom" type="hidden" value=""/>
@@ -101,7 +100,7 @@
         </div>
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
-                 <img src="./img/yuliang.png">
+                <img src="./img/yuliang.png">
             </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;text-align: center;padding-top: 10%;font-size: 2em;position:relative">
@@ -114,7 +113,7 @@
         </div>
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
-                 <img src="./img/wd.png">
+                <img src="./img/wd.png">
             </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
@@ -179,7 +178,7 @@
         </div>
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
-                 <img src="./img/zd.png">
+                <img src="./img/zd.png">
             </div>
             <div style=" width: 65%; height: 100%;  float: left;">
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
@@ -200,48 +199,48 @@
                 </tr>
                 <tr>
                     <td>风速</td>
-                    <td><input id="fs_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px; width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="fs_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px; width: 120px;"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                     <td><input id="fs_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>雨量</td>
-                    <td><input id="yl_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px; width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                    <td><input id="yl_sensor" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="yl_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px; width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="yl_sensor" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>雨量累计</td>
                     <td><input id="yllj_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                    <td><input id="yllj_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="yllj_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>土壤温度</td>
-                    <td><input id="trwd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="trwd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                     <td><input id="trwd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>大气温度</td>
-                    <td><input id="dqwd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                    <td><input id="dqwd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="dqwd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="dqwd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>土壤湿度</td>
-                    <td><input id="trsd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                    <td><input id="trsd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="trsd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="trsd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>大气湿度</td>
-                    <td><input id="dqsd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                    <td><input id="dqsd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="dqsd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="dqsd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>风向</td>
-                    <td><input id="fx_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                    <td><input id="fx_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="fx_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="fx_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
                 <tr>
                     <td>照度</td>
-                    <td><input id="zd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                    <td><input id="zd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="zd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
+                    <td><input id="zd_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
 
 
@@ -280,6 +279,7 @@
         function  edit() {
             //土壤湿度
             $("#trsd_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=" + pid,
                 onLoadSuccess: function (data) {
                     if ($("#trsdcom").val() != "") {
@@ -292,13 +292,21 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#trsd_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#trsdsen").val() != "") {
                                     $(this).combobox('select', $("#trsdsen").val());
                                 } else {
-                                   // $(this).combobox('select', data[0].id);
+                                    // $(this).combobox('select', data[0].id);
                                 }
 
                             }
@@ -308,6 +316,7 @@
             });
             //大气温度
             $("#dqwd_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=" + pid,
                 onLoadSuccess: function (data) {
                     if ($("#dqwdcom").val() != "") {
@@ -320,7 +329,15 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#dqwd_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#dqwdsen").val() != "") {
@@ -336,6 +353,7 @@
             });
             //风速
             $("#fs_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
@@ -344,13 +362,21 @@
                     var l_comaddr = record.id;
                     //风速传感器
                     $("#fs_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 if ($("#fssen").val() != "") {
-                                    $(this).combobox('select',$("#fssen").val());
-                                } 
-                                
+                                    $(this).combobox('select', $("#fssen").val());
+                                }
+
                                 //$(this).combobox('select', data[0].id);
                             }
                         }
@@ -359,6 +385,7 @@
             });
             //雨量
             $("#yl_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
@@ -367,13 +394,21 @@
                     var l_comaddr = record.id;
                     //雨量传感器
                     $("#yl_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
                                 if ($("#ylsen").val() != "") {
-                                    $(this).combobox('select',$("#ylsen").val());
-                                } 
+                                    $(this).combobox('select', $("#ylsen").val());
+                                }
                             }
                         }
                     });
@@ -381,6 +416,7 @@
             });
             //雨量累计
             $("#yllj_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
@@ -388,13 +424,21 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#yllj_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
                                 if ($("#ylljsen").val() != "") {
-                                    $(this).combobox('select',$("#ylljsen").val());
-                                } 
+                                    $(this).combobox('select', $("#ylljsen").val());
+                                }
                             }
                         }
                     });
@@ -402,6 +446,7 @@
             });
             //土壤温度
             $("#trwd_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
@@ -409,13 +454,21 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#trwd_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
                                 if ($("#trwdsen").val() != "") {
-                                    $(this).combobox('select',$("#trwdsen").val());
-                                } 
+                                    $(this).combobox('select', $("#trwdsen").val());
+                                }
                             }
                         }
                     });
@@ -423,6 +476,7 @@
             });
             //大气湿度
             $("#dqsd_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
@@ -430,13 +484,26 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#dqsd_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
+//                            var obj = {};
+//                            obj.id = '';
+//                            obj.text = '-请选择-';
+//                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            console.log("d:" + data);
                             if (data.length > 0) {
-                               // $(this).combobox('select', data[0].id);
-                               if ($("#dqsdsen").val() != "") {
-                                    $(this).combobox('select',$("#dqsdsen").val());
-                                } 
+                                // $(this).combobox('select', data[0].id);
+                                if ($("#dqsdsen").val() != "") {
+                                    $(this).combobox('select', $("#dqsdsen").val());
+                                }
                             }
                         }
                     });
@@ -444,6 +511,7 @@
             });
             //风向
             $("#fx_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
@@ -451,13 +519,21 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#fx_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                               // $(this).combobox('select', data[0].id);
-                               if ($("#fxsen").val() != "") {
-                                    $(this).combobox('select',$("#fxsen").val());
-                                } 
+                                // $(this).combobox('select', data[0].id);
+                                if ($("#fxsen").val() != "") {
+                                    $(this).combobox('select', $("#fxsen").val());
+                                }
                             }
                         }
                     });
@@ -465,6 +541,7 @@
             });
             //照度
             $("#zd_l_comaddr").combobox({
+                editable:false ,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
                     $(this).combobox('select', data[0].id);
@@ -472,13 +549,21 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#zd_sensor").combobox({
+                        editable:false ,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '-请选择-';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
                                 if ($("#gdsen").val() != "") {
-                                    $(this).combobox('select',$("#gdsen").val());
-                                } 
+                                    $(this).combobox('select', $("#gdsen").val());
+                                }
                             }
                         }
                     });
@@ -519,7 +604,17 @@
                 });
             }
 
-            if (dqsd != "") {
+            if (dqsd =="") {
+                $.ajax({url: "homePage.sign.dqwd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败2！");
+                    }
+                });
+
+            } else {
                 obj.id = dqsd;
                 $.ajax({url: "homePage.sign.dqwd_show.action", async: false, type: "get", datatype: "JSON", data: obj,
                     success: function (data) {
@@ -527,15 +622,6 @@
                     },
                     error: function () {
                         alert("提交添加失败！");
-                    }
-                });
-            }else{
-                $.ajax({url: "homePage.sign.dqwd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
-                    success: function (data) {
-                        var rs1 = data.rs1;
-                    },
-                    error: function () {
-                        alert("提交添加失败2！");
                     }
                 });
             }
@@ -560,7 +646,7 @@
                             var value = parseInt(sen.numvalue) / 10;
                             $("#dqwd").html(value);
                         }
-                    }else{
+                    } else {
                         $("#dqwdcom").val("");
                         $("#dqwdsen").val("");
                     }
@@ -572,7 +658,7 @@
                             var value = parseInt(trsd.numvalue) / 10;
                             $("#trsd").html(value);
                         }
-                    }else{
+                    } else {
                         $("#trsdcom").val("");
                         $("#trsdsen").val("");
                     }
