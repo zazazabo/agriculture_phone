@@ -16,14 +16,14 @@
         $(function () {
             $('#upload').Huploadify({
                 auto: false,
-                fileTypeExts: '*.jpg;*.png;*.exe;*.jsp;*.xml',
+                fileTypeExts: '*.jpg;*.png;*.exe;*.jsp;*.xml;*.doc;*.txt',
                 multi: true,
                 formData: {fname: 'uu.txt', fpath: 'upload1', filedesc: 'aaaa'},
                 fileSizeLimit: 9999,
                 showUploadedPercent: true, //是否实时显示上传的百分比，如20%
                 showUploadedSize: true,
                 removeTimeout: 9999999,
-                uploader: 'test1.UPLOAD.h1.action',
+                uploader: 'gayway.UPLOAD.h1.action',
                 onUploadStart: function () {
                     //alert('开始上传');
                     var fpath = $("#path").val();
