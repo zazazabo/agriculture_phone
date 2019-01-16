@@ -23,7 +23,7 @@
             }
             
             
-            function  addlogon(name,type,pid,page,comment,l_comaddr){
+            function  addlogon(name,type,pid,page,comment,identify){
                 var nobj = {};
                                 nobj.name = name;
                                 nobj.time = getNowFormatDate2();
@@ -31,7 +31,7 @@
                                 nobj.comment = comment;
                                 nobj.page = page;
                                 nobj.pid = pid;
-                                nobj.l_comaddr=l_comaddr;
+                                nobj.o_identify=identify;
                                 $.ajax({async: false, url: "login.oplog.addoplog.action", type: "get", datatype: "JSON", data: nobj,
                                     success: function (data) {
                                         var arrlist = data.rs;
