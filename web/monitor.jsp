@@ -85,6 +85,7 @@
                     var data = buicode2(vv);
                     console.log(data);
                     dealsend2("10", data, "dealfaultCB", comaddr, 0, ele.id, info, "${param.action}");
+                    addlogon(u_name, "处理故障",o_pid, "传感器监视", "处理【"+ele.name+"】",ele.s_identify);
                 } else {
                     layerAler("请处理有故障的传感器");
                 }

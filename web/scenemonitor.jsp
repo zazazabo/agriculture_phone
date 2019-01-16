@@ -288,6 +288,9 @@
                     return;
                 }
                 var obj = $("#form1").serializeObject();
+                console.log(l_comaddr);
+                console.log(obj);
+                return ;
 
                 var o = {};
                 var vv = [];
@@ -320,6 +323,7 @@
                 var data = buicode2(vv);
                 console.log(data);
                 dealsend2("10", data, "switchloopCB", l_comaddr, 0, 0, 3800, "${param.action}");
+                addlogon(u_name, "设置",o_pid, "场景监控", "设置【"+$("#scenenum").combobox('getText')+"】",obj.identify);
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -384,6 +388,7 @@
                 var data = buicode2(vv);
                 console.log(data);
                 dealsend2("10", data, "restoreloopCB", l_comaddr, 0, 0, 3801, "${param.action}");
+                addlogon(u_name, "恢复自动运行",o_pid, "场景监控", "恢复自动运行",obj.identify);
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);

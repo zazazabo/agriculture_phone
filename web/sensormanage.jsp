@@ -148,18 +148,20 @@
                 }
                 for (var i = 0; i < selects.length; i++) {
                     var select = selects[i];
-                    var l_comaddr = select.网关编号;
-                    l_comaddr = l_comaddr.toString();
+                    var s_identify = select.网关编号;
+//                    l_comaddr = l_comaddr.toString();
+//                    var obj = {};
+//                    while (l_comaddr.length < 18) {
+//                        l_comaddr = "0" + l_comaddr;
+//                    }
                     var obj = {};
-                    while (l_comaddr.length < 18) {
-                        l_comaddr = "0" + l_comaddr;
-                    }
-                    obj.comaddr = l_comaddr;
-                    $.ajax({async: false, url: "homePage.gayway.getnamebycode.action", type: "get", datatype: "JSON", data: obj,
+                    obj.comaddr = s_identify;
+                    obj.pid = o_pid;
+                    $.ajax({async: false, url: "homePage.gayway.getwgbypid.action", type: "get", datatype: "JSON", data: obj,
                         success: function (data) {
                             var rs = data.rs;
                             if (rs.length > 0) {
-                                obj.l_comaddr = l_comaddr;
+                                obj.s_identify = s_identify;
                                 var sitenum = select.站号;
                                 var dreg = select.数据位置;
                                 obj.sitenum = sitenum;
@@ -184,7 +186,7 @@
                                                         var ids = [];//定义一个数组
                                                         var xh = selects[i].序号;
                                                         ids.push(xh);//将要删除的id存入数组
-                                                        addlogon(u_name, "添加", o_pid, "传感器管理", "添加传感器【" + name + "】");
+                                                        addlogon(u_name, "添加", o_pid, "传感器管理", "添加传感器【" + name + "】", s_identify);
                                                         $("#warningtable").bootstrapTable('remove', {field: '序号', values: ids});
                                                     }
                                                 },
@@ -209,7 +211,7 @@
 
                 }
                 var obj1 = {};
-                obj1.l_comaddr = $("#l_comaddr2").val();
+                obj1.identify = $("#identify1").val();
                 obj1.pid = "${param.pid}";
                 var opt = {
                     url: "sensor.sensorform.getSensorList.action",
@@ -217,6 +219,7 @@
                     silent: false
                 };
                 $("#gravidaTable").bootstrapTable('refresh', opt);
+
 
             }
             function showDialog() {
@@ -257,6 +260,7 @@
                         } else {
                             $.ajax({url: "sensor.sensorform.deleteSensor.action", type: "POST", datatype: "JSON", data: {id: ele.id},
                                 success: function (data) {
+                                    addlogon(u_name, "删除", o_pid, "传感器管理", "删除传感器【" + ele.name + "】", ele.s_identify);
                                 },
                                 error: function () {
                                     layerAler("提交失败");
@@ -266,7 +270,7 @@
                     }
                     layer.close(index);
                     var obj = {};
-                    obj.l_comaddr = $("#l_comaddr2").val();
+                    obj.identify = $("#identify1").val();
                     obj.pid = "${param.pid}";
                     var opt = {
                         url: "sensor.sensorform.getSensorList.action",
@@ -280,13 +284,13 @@
 
             function  editlamp() {
                 var o = $("#form2").serializeObject();
-                addlogon(u_name, "修改", o_pid, "传感器管理", "修改传感器");
+                addlogon(u_name, "修改", o_pid, "传感器管理", "修改传感器【" + o.name + "】");
                 $.ajax({async: false, url: "sensor.sensorform.modifySensor.action", type: "get", datatype: "JSON", data: o,
                     success: function (data) {
                         var a = data.rs;
                         if (a.length == 1) {
                             var obj = {};
-                            obj.l_comaddr = $("#l_comaddr2").val();
+                            obj.identify = $("#identify1").val();
                             obj.pid = "${param.pid}";
                             var opt = {
                                 url: "sensor.sensorform.getSensorList.action",
@@ -455,8 +459,15 @@
                                         var rs = data.rs;
                                         if (rs.length > 0) {
                                             $("#dialog-add").dialog("close");
-                                            layerAler("添加成功");
-                                            $("#gravidaTable").bootstrapTable('refresh');
+                                            var obj = {};
+                                            obj.identify = $("#identify1").val();
+                                            obj.pid = "${param.pid}";
+                                            var opt = {
+                                                url: "sensor.sensorform.getSensorList.action",
+                                                query: obj,
+                                                silent: false
+                                            };
+                                            $("#gravidaTable").bootstrapTable('refresh', opt);
                                         }
                                     },
                                     error: function () {
@@ -470,6 +481,7 @@
                         }
                     });
                 }
+                addlogon(u_name, "添加", o_pid, "传感器管理", "添加传感器【" + o.name + "】", o.l_comaddr);
             }
 
             //搜索
@@ -479,7 +491,7 @@
                 if (busu != "-1") {
                     obj.deplayment = busu;
                 }
-                obj.l_comaddr = $("#l_comaddr2").val();
+                obj.l_comaddr = $("#identify1").val();
                 var opt = {
                     url: "sensor.sensorform.getSensorList.action",
                     silent: false,
@@ -513,7 +525,7 @@
                                     var arrlist = data.rs;
                                     if (arrlist.length == 1) {
                                         var obj = {};
-                                        obj.l_comaddr = $("#l_comaddr2").val();
+                                        obj.identify = $("#identify1").val();
                                         obj.pid = "${param.pid}";
                                         var opt = {
                                             url: "sensor.sensorform.getSensorList.action",
@@ -578,6 +590,7 @@
 
                 var data = buicode2(vv);
                 dealsend2("10", data, "deploySensorCB", o.l_comaddr, 1, ele.id, info, "${param.action}");
+                addlogon(u_name, "部署", o_pid, "传感器管理", "部署传感器【" + ele.name + "】");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -625,6 +638,7 @@
 
                 var data = buicode2(vv);
                 dealsend2("10", data, "deploySensorCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
+                addlogon(u_name, "移除部署", o_pid, "传感器管理", "传感器【" + ele.name + "】");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);

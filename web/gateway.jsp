@@ -181,6 +181,7 @@
                                             if (arrlist.length == 1) {
                                                 //删除成功
                                                 layerAler("删除成功");
+                                                addlogon(u_name, "删除", o_pid, "网关管理", "删除网关【"+selects[0].name+"】");
                                                 $("#gravidaTable").bootstrapTable('refresh');
                                             }
 
@@ -260,7 +261,7 @@
                 obj.latitude = latitudemstr;
                 var longitudemstr = obj.longitudem26d + "." + obj.longitudem26m + "." + obj.longitudem26s;
                 obj.longitude = longitudemstr;
-                addlogon(u_name, "修改", o_pid, "网关管理", "修改网关");
+                addlogon(u_name, "修改", o_pid, "网关管理", "修改网关【"+obj.name+"】");
                 $.ajax({async: false, cache: false, url: "gayway.GaywayForm.modifyGateway.action", type: "GET", data: obj,
                     success: function (data) {
                         // namesss = true;
@@ -445,13 +446,15 @@
                             width: 25,
                             align: 'center',
                             valign: 'middle'
-                        }, {
-                            field: 'model',
-                            title: '型号', //型号
-                            width: 25,
-                            align: 'center',
-                            valign: 'middle'
-                        }, {
+                        }, 
+//                        {
+//                            field: 'model',
+//                            title: '型号', //型号
+//                            width: 25,
+//                            align: 'center',
+//                            valign: 'middle'
+//                        },
+                        {
                             field: 'comaddr',
                             title: '编号',
                             width: 25,
@@ -547,86 +550,7 @@
                                     success: function (data) {
                                         var arrlist = data.rs;
                                         if (arrlist.length == 0) {  //网关编号未使用
-                                            var model = selects[i].型号;
-                                            if (model == "L-30MT-ES2") {
-                                                for (var i = 0; i < 16; i++) {
-                                                    var z = i + 4100;
-                                                    var j = i >= 8 ? 10 + (i - 8) : i;
-                                                    var ooo = {};
-                                                    ooo.sitenum = 1;
-                                                    ooo.name = "X" + j.toString();
-                                                    ooo.worktype = 0;
-                                                    ooo.dreg = z;
-                                                    ooo.type = 3;
-                                                    ooo.model = obj.model;
-                                                    ooo.l_comaddr = obj.comaddr;
-                                                    $.ajax({url: "sensor.sensorform.addsensor.action", async: false, type: "get", datatype: "JSON", data: ooo,
-                                                        success: function (data) {
-                                                            var arrlist = data.rs;
-                                                            if (arrlist.length == 1) {
-                                                            }
-                                                        },
-                                                        error: function () {
-                                                            alert("提交添加失败！");
-                                                        }
-                                                    });
-                                                }
-
-
-                                                //添加回路
-                                                for (var i = 0; i < 14; i++) {
-                                                    var z = i + 4200;
-                                                    var j = i >= 8 ? 10 + (i - 8) : i;
-                                                    var ooo = {};
-                                                    ooo.l_site = 1;
-                                                    ooo.l_name = "Y" + j.toString();
-                                                    ooo.l_comaddr = comaddr;
-                                                    ooo.l_pos = z;
-                                                    ooo.l_port = i;
-
-                                                    //ooo.l_worktype = 2;
-//                                    ooo.l_plan = 1;
-                                                    ooo.l_val1 = 0;
-                                                    ooo.l_val2 = 0;
-                                                    ooo.l_val3 = 0;
-                                                    ooo.l_val4 = 0;
-                                                    ooo.l_val5 = 0;
-//                                    ooo.l_info = i
-                                                    console.log(ooo);
-                                                    $.ajax({url: "loop.loopForm.addLoop.action", async: false, type: "get", datatype: "JSON", data: ooo,
-                                                        success: function (data) {
-                                                            var arrlist = data.rs;
-                                                            if (arrlist.length == 1) {
-                                                            }
-                                                        },
-                                                        error: function () {
-                                                            alert("提交添加失败！");
-                                                        }
-                                                    });
-                                                }
-
-
-                                                $.ajax({async: false, cache: false, url: "gayway.GaywayForm.addGateway.action", type: "GET", data: obj,
-                                                    success: function (data) {
-                                                        var arrlist = data.rs;
-                                                        if (arrlist.length == 1) {
-                                                            var ids = [];//定义一个数组
-                                                            var xh = selects[i].序号;
-                                                            ids.push(xh);//将要删除的id存入数组
-                                                            addlogon(u_name, "添加", o_pid, "网关管理", "添加网关【" + selects[i].网关名称 + "】");
-                                                            $("#warningtable").bootstrapTable('remove', {field: '序号', values: ids});
-                                                        }
-                                                    },
-                                                    error: function () {
-                                                        layer.alert('系统错误，刷新后重试', {
-                                                            icon: 6,
-                                                            offset: 'center'
-                                                        });
-                                                    }
-                                                });
-
-                                            } else {
-                                                var adobj = {};
+                                             var adobj = {};
                                                 adobj.model = "";
                                                 adobj.comaddr = comaddr;
                                                 adobj.name = selects[i].网关名称;
@@ -648,7 +572,108 @@
                                                         alert("提交添加失败！");
                                                     }
                                                 });
-                                            }
+//                                            var model = selects[i].型号;
+//                                            if (model == "L-30MT-ES2") {
+//                                                for (var i = 0; i < 16; i++) {
+//                                                    var z = i + 4100;
+//                                                    var j = i >= 8 ? 10 + (i - 8) : i;
+//                                                    var ooo = {};
+//                                                    ooo.sitenum = 1;
+//                                                    ooo.name = "X" + j.toString();
+//                                                    ooo.worktype = 0;
+//                                                    ooo.dreg = z;
+//                                                    ooo.type = 3;
+//                                                    ooo.model = obj.model;
+//                                                    ooo.l_comaddr = obj.comaddr;
+//                                                    $.ajax({url: "sensor.sensorform.addsensor.action", async: false, type: "get", datatype: "JSON", data: ooo,
+//                                                        success: function (data) {
+//                                                            var arrlist = data.rs;
+//                                                            if (arrlist.length == 1) {
+//                                                            }
+//                                                        },
+//                                                        error: function () {
+//                                                            alert("提交添加失败！");
+//                                                        }
+//                                                    });
+//                                                }
+//
+//
+//                                                //添加回路
+//                                                for (var i = 0; i < 14; i++) {
+//                                                    var z = i + 4200;
+//                                                    var j = i >= 8 ? 10 + (i - 8) : i;
+//                                                    var ooo = {};
+//                                                    ooo.l_site = 1;
+//                                                    ooo.l_name = "Y" + j.toString();
+//                                                    ooo.l_comaddr = comaddr;
+//                                                    ooo.l_pos = z;
+//                                                    ooo.l_port = i;
+//
+//                                                    //ooo.l_worktype = 2;
+////                                    ooo.l_plan = 1;
+//                                                    ooo.l_val1 = 0;
+//                                                    ooo.l_val2 = 0;
+//                                                    ooo.l_val3 = 0;
+//                                                    ooo.l_val4 = 0;
+//                                                    ooo.l_val5 = 0;
+////                                    ooo.l_info = i
+//                                                    console.log(ooo);
+//                                                    $.ajax({url: "loop.loopForm.addLoop.action", async: false, type: "get", datatype: "JSON", data: ooo,
+//                                                        success: function (data) {
+//                                                            var arrlist = data.rs;
+//                                                            if (arrlist.length == 1) {
+//                                                            }
+//                                                        },
+//                                                        error: function () {
+//                                                            alert("提交添加失败！");
+//                                                        }
+//                                                    });
+//                                                }
+//
+//
+//                                                $.ajax({async: false, cache: false, url: "gayway.GaywayForm.addGateway.action", type: "GET", data: obj,
+//                                                    success: function (data) {
+//                                                        var arrlist = data.rs;
+//                                                        if (arrlist.length == 1) {
+//                                                            var ids = [];//定义一个数组
+//                                                            var xh = selects[i].序号;
+//                                                            ids.push(xh);//将要删除的id存入数组
+//                                                            addlogon(u_name, "添加", o_pid, "网关管理", "添加网关【" + selects[i].网关名称 + "】");
+//                                                            $("#warningtable").bootstrapTable('remove', {field: '序号', values: ids});
+//                                                        }
+//                                                    },
+//                                                    error: function () {
+//                                                        layer.alert('系统错误，刷新后重试', {
+//                                                            icon: 6,
+//                                                            offset: 'center'
+//                                                        });
+//                                                    }
+//                                                });
+//
+//                                            } else {
+//                                                var adobj = {};
+//                                                adobj.model = "";
+//                                                adobj.comaddr = comaddr;
+//                                                adobj.name = selects[i].网关名称;
+//                                                adobj.Longitude = selects[i].经度;
+//                                                adobj.latitude = selects[i].纬度;
+//                                                adobj.pid = pid;
+//                                                $.ajax({url: "login.gateway.addbase.action", async: false, type: "get", datatype: "JSON", data: adobj,
+//                                                    success: function (data) {
+//                                                        var arrlist = data.rs;
+//                                                        if (arrlist.length == 1) {
+//                                                            var ids = [];//定义一个数组
+//                                                            var xh = selects[i].序号;
+//                                                            ids.push(xh);//将要删除的id存入数组
+//                                                            addlogon(u_name, "添加", o_pid, "网关管理", "添加网关【" + selects[i].网关名称 + "】");
+//                                                            $("#warningtable").bootstrapTable('remove', {field: '序号', values: ids});
+//                                                        }
+//                                                    },
+//                                                    error: function () {
+//                                                        alert("提交添加失败！");
+//                                                    }
+//                                                });
+//                                            }
 
                                         }
                                     },
@@ -750,6 +775,7 @@
                                                     success: function (data) {
                                                         var arrlist = data.rs;
                                                         if (arrlist.length == 1) {
+                                                          
                                                         }
                                                     },
                                                     error: function () {
@@ -762,7 +788,9 @@
                                             $.ajax({async: false, cache: false, url: "gayway.GaywayForm.addGateway.action", type: "GET", data: obj,
                                                 success: function (data) {
                                                     namesss = true;
+                                                    addlogon(u_name, "添加", o_pid, "网关管理", "添加网关【" +obj.name + "】");
                                                     $("#gravidaTable").bootstrapTable('refresh');
+                                                 
                                                 },
                                                 error: function () {
                                                     layer.alert('系统错误，刷新后重试', {
@@ -778,6 +806,7 @@
                                             $.ajax({async: false, cache: false, url: "gayway.GaywayForm.addGateway.action", type: "GET", data: obj,
                                                 success: function (data) {
                                                     namesss = true;
+                                                    addlogon(u_name, "添加", o_pid, "网关管理", "添加网关【" +obj.name + "】");
                                                     $("#gravidaTable").bootstrapTable('refresh');
                                                 },
                                                 error: function () {

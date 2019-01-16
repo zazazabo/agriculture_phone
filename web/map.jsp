@@ -13,7 +13,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-        <script src="https://raw.github.com/jiazheng/EventWrapper/master/release/eventwrapper.min.js" type="text/javascript"></script>
         <style type="text/css">
             body, html {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
             .search>tr>td {
@@ -1710,22 +1709,23 @@
                                     updatelnglat(wgarray[i].x, wgarray[i].y, wgidlist[i]);
                                 }
                                 alert("配置经纬度成功"); //配置经纬度成功
-                                var nobj = {};
-                                nobj.name = u_name;
-                                var day = getNowFormatDate2();
-                                nobj.time = day;
-                                nobj.type = "修改";
-                                nobj.pid = porjectId;
-                                nobj.comment = "批量修改网关的经纬度";
-                                nobj.page = "地图导航";
-                                $.ajax({async: false, url: "login.oplog.addoplog.action", type: "get", datatype: "JSON", data: nobj,
-                                    success: function (data) {
-                                        var arrlist = data.rs;
-                                        if (arrlist.length > 0) {
-
-                                        }
-                                    }
-                                });
+//                                var nobj = {};
+//                                nobj.name = u_name;
+//                                var day = getNowFormatDate2();
+//                                nobj.time = day;
+//                                nobj.type = "修改";
+//                                nobj.pid = porjectId;
+//                                nobj.comment = "批量修改网关的经纬度";
+//                                nobj.page = "地图导航";
+//                                $.ajax({async: false, url: "login.oplog.addoplog.action", type: "get", datatype: "JSON", data: nobj,
+//                                    success: function (data) {
+//                                        var arrlist = data.rs;
+//                                        if (arrlist.length > 0) {
+//
+//                                        }
+//                                    }
+//                                });
+                                addlogon(u_name, "修改", o_pid, "电子地图", "批量修改网关的经纬度");
                                 //刷新，重置
                                 wgarray = [];
                                 wgdraw = false;
@@ -1751,6 +1751,7 @@
                         } else {
                             updateLamplnglat(e.point.lng, e.point.lat, lampchecck.id);
                         }
+                        addlogon(u_name, "修改", o_pid, "电子地图", "修改传感器【"+lampchecck.name+"】的经纬度",lampchecck.s_identify);
                         lampchecck = [];
                         onedraw = false;
                     }
@@ -1781,22 +1782,7 @@
                                     updateMayLamplnglat(array[i].x, array[i].y, idlist[i]);
                                 }
                                 alert("配置成功"); //配置经纬度成功
-                                var nobj = {};
-                                nobj.name = u_name;
-                                var day = getNowFormatDate2();
-                                nobj.time = day;
-                                nobj.type = "修改";
-                                nobj.pid = porjectId;
-                                nobj.comment = "批量修改传感器的经纬度";
-                                nobj.page = "地图导航";
-                                $.ajax({async: false, url: "login.oplog.addoplog.action", type: "get", datatype: "JSON", data: nobj,
-                                    success: function (data) {
-                                        var arrlist = data.rs;
-                                        if (arrlist.length > 0) {
-
-                                        }
-                                    }
-                                });
+                                addlogon(u_name, "修改", o_pid, "电子地图", "修改传感器的经纬度");
                                 //刷新，重置
                                 array = [];
                                 draw = false;
@@ -1823,6 +1809,7 @@
 
                             updateoneLoop(e.point.lng, e.point.lat, loopobj.id);
                         }
+                        addlogon(u_name, "修改", o_pid, "电子地图", "修改回路【"+loopobj.l_name+"】的经纬度",loopobj.l_identify);
                         loopobj = [];
                         looponedraw = false;
                     }
@@ -1852,7 +1839,8 @@
                                     //alert("id:" + idlist[i] + "lng:" + array[i].x + "lat:" + array[i].y);
                                     updateMayLoop(array[i].x, array[i].y, looplist[i]);
                                 }
-
+                                alert("成功");
+                                addlogon(u_name, "修改", o_pid, "电子地图", "修改回路【"+loopobj.l_name+"】的经纬度");
                                 //刷新，重置
                                 array = [];
                                 loopdraw = false;
@@ -1940,6 +1928,7 @@
                                                     var arrlist = data.rs;
                                                     if (arrlist.length == 1) {
                                                         alert("修改成功");  //修改成功
+                                                        addlogon(u_name, "修改", o_pid, "电子地图", "移动网关【"+obj.name+"】");
                                                     } else {
                                                         alert("修改失败");  //修改失败
                                                     }
@@ -1973,7 +1962,7 @@
                                                             var arrlist = data.rs;
                                                             if (arrlist.length == 1) {
                                                                 alert("移除成功!");  //移除成功
-
+                                                                addlogon(u_name, "移除", o_pid, "电子地图", "网关【"+obj.name+"】");
                                                             } else {
                                                                 alert("移除失败");  //移除失败
                                                             }
@@ -2125,6 +2114,7 @@
                                                     var arrlist = data.rs;
                                                     if (arrlist.length == 1) {
                                                         alert("修改成功");  //修改成功
+                                                        addlogon(u_name, "移动", o_pid, "电子地图", "移动传感器【"+obj.name+"】",obj.s_identify);
                                                     } else {
                                                         alert("修改失败");  //修改失败
                                                     }
@@ -2159,6 +2149,7 @@
                                                             var arrlist = data.rs;
                                                             if (arrlist.length == 1) {
                                                                 alert("移除成功");  //移除成功
+                                                                addlogon(u_name, "移除", o_pid, "电子地图", "移除传感器【"+obj.name+"】",obj.s_identify);
                                                             } else {
                                                                 alert("移除失败");  //移除失败
                                                             }
@@ -2352,6 +2343,7 @@
                                                     var arrlist = data.rs;
                                                     if (arrlist.length == 1) {
                                                         alert("修改成功");  //修改成功
+                                                        addlogon(u_name, "移动", o_pid, "电子地图", "移动回路【"+obj.l_name+"】",obj.l_identify);
                                                     } else {
                                                         alert("修改失败");  //修改失败
                                                     }
@@ -2386,6 +2378,7 @@
                                                             var arrlist = data.rs;
                                                             if (arrlist.length == 1) {
                                                                 alert("移除成功");  //移除成功
+                                                                addlogon(u_name, "移除", o_pid, "电子地图", "移除回路【"+obj.l_name+"】",obj.l_identify);
                                                             } else {
                                                                 alert("移除失败");  //移除失败
                                                             }

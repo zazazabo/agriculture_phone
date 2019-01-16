@@ -400,6 +400,7 @@
 
                             $.ajax({async: false, cache: false, url: "loop.loopForm.addLoop1.action", type: "GET", data: o,
                                 success: function (data) {
+                                    addlogon(u_name, "添加", o_pid, "回路管理", "添加回路【"+o.l_name+"】",o.identify);
                                     search(); 
 //                                    $("#gravidaTable").bootstrapTable('refresh');
 
@@ -447,7 +448,7 @@
                                 success: function (data) {
                                     var arrlist = data.rs;
                                     if (arrlist.length == 1) {
-                                        addlogon(u_name, "删除", o_pid, "回路管理", "删除回路【" + select.l_name + "】");
+                                        addlogon(u_name, "删除", o_pid, "回路管理", "删除回路【" + select.l_name + "】",select.l_identify);
                                         layer.open({
                                             content: '删除成功', //删除成功
                                             icon: 1,
@@ -592,6 +593,7 @@
                     return;
                 }
                 var ele = selects[0];
+                addlogon(u_name, "部署", o_pid, "回路管理", "部署回路【"+ele.l_name+"】",ele.l_identify);
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
@@ -716,7 +718,7 @@
                     return;
                 }
                 var ele = selects[0];
-      
+                addlogon(u_name, "移除部署", o_pid, "回路管理", "移除回路【"+ele.l_name+"】",ele.l_identify);
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
@@ -751,7 +753,7 @@
                 var o = $("#form2").serializeObject();
                 o.id = o.hide_id;
 
-                addlogon(u_name, "修改", o_pid, "回路管理", "修改回路");
+                addlogon(u_name, "修改", o_pid, "回路管理", "修改回路【"+o.l_name+"】");
 
                 if (o.l_worktype == 3) {
 
@@ -1342,46 +1344,6 @@
                     </div>
                 </form>
             </div>
-
-            <!--        <div>
-                        
-                        <form id="formsearch">
-                            <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
-                                <div id="selectlist">
-                                    <span style="margin-left:10px;">
-                                        网关名称
-                                        &nbsp;</span>
-                                    <span class="menuBox">
-                                        <input id="l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
-                                    </span>  
-            
-                                    <span style="margin-left:5px;">
-                                        部署情况
-                                        &nbsp;</span>
-                                    <select class="easyui-combobox" id="busu" name="l_deplayment" style="height: 30px">
-                                        <option value="-1">全部</option>   
-                                        <option value="1">已部署</option>   
-                                        <option value="0">未部署</option>
-            
-                                    </select> 
-                                </div>
-                                <div id="cz">
-                                    <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
-                                        筛选
-                                    </button>
-            
-                                    <button style="margin-left:10px;" id="btndeploySensor" onclick="deployLoop()" type="button" class="btn btn-success btn-sm">部署</button>
-            
-                                    <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeLoop()" class="btn btn-success btn-sm">移除</button>
-                                </div>
-            
-                            </div>
-                        </form>
-                    </div>-->
-
-
-
-
 
             <!-- 页面中的弹层代码 -->
             <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100;margin:12px 0 0 10px;">

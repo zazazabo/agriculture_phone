@@ -205,6 +205,17 @@
             </xsql>
         </xhandle>
         
+         <xhandle desc="查看项目下是否存在该网关" id="getwgbypid" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select name  FROM t_baseinfo where @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@comaddr AND @pid ">
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql=" identify = ':comaddr'">
+                    </xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql=" pid = ':pid'">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        
         <xhandle desc="根据网关编号查询网关地址" id="getcomaddrbyidentify" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select comaddr  FROM t_baseinfo where @CONDITION " var="rs">
                 <xflt id="CONDITION" nrp="" tpl="@identify ">

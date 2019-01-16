@@ -39,6 +39,7 @@
             }
 
         </style>
+        <script type="text/javascript" src="js/getdate.js"></script>
     </head>
 
     <body>
@@ -250,13 +251,15 @@
 
     <script>
         var withs;
+        var uname = parent.parent.getusername();
+        var pid = parent.parent.getpojectId();
         function layerAler(str) {
             layer.alert(str, {
                 icon: 6,
                 offset: 'center'
             });
         }
-        var pid = parent.parent.getpojectId();
+       
         $(function () {
             getrs();
             size();
@@ -625,7 +628,7 @@
                     }
                 });
             }
-
+            addlogon(uname, "修改",pid, "气象台", "修改气象台传感器");
             $('#faultDiv').dialog('close');
             layerAler("成功");
             getrs();
