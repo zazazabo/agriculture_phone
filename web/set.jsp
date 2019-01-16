@@ -414,7 +414,7 @@
                     var low = infonum & 0xff;
                     if (data[2] == high && data[3] == low) {
                         layerAler("初始化成功");
-                        var o2 = {pid: "${param.pid}", comaddr: obj.comaddr, l_deplayment: 0};
+                        var o2 = {pid: "${param.pid}", comaddr: obj.comaddr, l_deplayment: 0,identify:$("#identify").val()};
                         $.ajax({async: false, url: "gayway.GaywayForm.ClearData.action", type: "get", datatype: "JSON", data: o2,
                             success: function (data) {
                                 var arrlist = data.rs;
@@ -900,6 +900,7 @@
 
                     },
                     onSelect: function (record) {
+                        $("#identify").val(record.identify);
                         var obj = {};
                         obj.l_comaddr = record.id;
                         obj.pid = "${param.pid}";
@@ -952,6 +953,7 @@
                     <div class="row" style=" padding-bottom: 20px;" >
                         <div class="col-xs-12">
                             <form id="form1">
+                                 <input type="hidden" value="" name="identify" id="identify" />
                                 <table style="border-collapse:separate;  border-spacing:0px 10px;border: 1px solid #16645629;">
                                     <tbody>
                                         <tr>
@@ -960,6 +962,7 @@
                                                 <span style="margin-left:10px;" >网关</span>&nbsp;
 
                                                 <span class="menuBox">
+                                                   
                                                     <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style=" height: 30px" 
                                                            data-options="editable:true,valueField:'id', textField:'text' " />
                                                 </span>  

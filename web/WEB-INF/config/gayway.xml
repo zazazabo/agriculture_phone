@@ -43,25 +43,25 @@
             
             <xsql id="a1" para="l_deplayment" tpe="DDL" tpl="update t_sensor set deplayment=:l_deplayment where @CONDITION " var="rs4">
                 <xflt id="CONDITION" nrp="1=2" tpl="@comaddr">
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="l_comaddr=':comaddr'">
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="s_identify IN (select identify from t_baseinfo where  comaddr=':comaddr' )">
                     </xfltpara>
                 </xflt>
-            </xsql>
+            </xsql>  
             
             <xsql id="a1" para="l_deplayment" tpe="DDL" tpl="update t_loop set l_deplayment=:l_deplayment where @CONDITION " var="rs4">
                 <xflt id="CONDITION" nrp="1=2" tpl="@comaddr">
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="l_comaddr=':comaddr'">
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="l_identify IN (select identify from t_baseinfo where  comaddr=':comaddr' )">
                     </xfltpara>
                 </xflt>
             </xsql> 
 
             <xsql id="a1" para="l_deplayment" tpe="DDL" tpl="update t_plan set p_deployment=:l_deplayment where @CONDITION " var="rs">
                 <xflt id="CONDITION" nrp="1=2" tpl="@comaddr">
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="p_comaddr=':comaddr'">
+                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="p_identify IN (select identify from t_baseinfo where  comaddr=':comaddr' )">
                     </xfltpara>
                 </xflt>
             </xsql> 
-            
+              
         </xhandle>        
         
         

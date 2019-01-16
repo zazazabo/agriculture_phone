@@ -16,7 +16,7 @@
         $(function () {
             $('#upload').Huploadify({
                 auto: false,
-                fileTypeExts: '*.jpg;*.png;*.exe;*.jsp;*.xml;*.doc;*.txt',
+                fileTypeExts: '*.jpg;*.png;*.exe;*.jsp;*.xml;*.doc;*.txt;*.eXe',
                 multi: true,
                 formData: {fname: 'uu.txt', fpath: 'upload1', filedesc: 'aaaa'},
                 fileSizeLimit: 9999,
