@@ -87,7 +87,7 @@
                         if (data[i].online != "1") {
                             $.ajax({async: false, url: "gayway.GaywayForm.EmptyGayWay.action", type: "get", datatype: "JSON", data: obj,
                                 success: function (data) {
-                                        console.log(data);
+                                    console.log(data);
                                 },
                                 error: function () {
                                     alert("提交失败！");
@@ -974,7 +974,8 @@
                                                         <option value="3">数据初始化</option> 
                                                         <option value="4">设置巡测时间</option> 
                                                         <option value="5">刷新控制</option> 
-                                                        <option value="6">设置站号</option> 
+                                                        <option value="6">设置传感器站号</option> 
+                                                        <option value="7">设置控制器站号</option> 
                                                     </select>
                                                 </span>  
                                             </td>
@@ -1180,6 +1181,47 @@
                                 </table>
                             </div>
                         </div>  
+
+
+                        <div class="row" id="row7"  style=" display: none">
+                            <div class="col-xs-12">
+                                <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629;">
+                                    <tbody>
+                                        <tr>
+                                            <td> <span  style=" margin-left: 2px;"  >旧站号</span></td>
+                                            <td>
+                                                <input id="oldsite"  class="form-control" name="oldsite" style="width:50px;"  placeholder="站号" type="text"> 
+                                            </td>
+                                            <td>
+                                                <span  >&emsp;新站号:</span>
+                                            </td>
+                                            <td>
+                                                <input id="newsite"  class="form-control" name="newsite" style="width:50px;"  placeholder="站号" type="text">
+                                            </td>
+                                            <td>
+                                                <button  type="button" onclick="editsite()"  class="btn btn-success btn-sm"><span >修改</sspan>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button  type="button" onclick="readsite()"  class="btn btn-success btn-sm"><span >读取</sspan>
+                                                </button>
+                                                &emsp;
+                                            </td>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>                      
+
+
+
+
+
+
+
                     </form>
                 </div>
 
