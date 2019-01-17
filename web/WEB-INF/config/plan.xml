@@ -77,7 +77,15 @@
 
 
 
-
+        <xhandle desc="传感器场景方案" id="querysceninfo" rtnype="JSON">
+         <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT * FROM t_loop tl where    @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@identify ">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="l_identify = ':identify'">
+                    </xfltpara>
+                </xflt>  
+            </xsql>        
+          
+        </xhandle>
 
 
 

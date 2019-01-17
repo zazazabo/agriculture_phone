@@ -19,8 +19,6 @@
 
 
 
-
-
             /*            手机*/
 
             @media screen and (min-width:0px) and (max-width:767px) {  
@@ -609,6 +607,64 @@
                     return;
                 }
                 var ele = selects[0];
+                var info1 = parseInt(ele.infonum);
+                var obj = {identify: ele.identify, infonum: ele.infonum, pid: "${param.pid}"};
+                var bremove = true;
+                var bremov1 = true;
+                var bremov2 = true;
+                $.ajax({async: false, url: "sensor.planForm.querysceninfo.action", type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs = data.rs;
+                        var rs1 = data.rs1;
+                        for (var i = 0; i < rs.length; i++) {
+                            for (var j = 0; j < 5; j++) {
+                                var scene = "p_scene" + (i + 1).toString();
+                                var t = rs[i][scene];
+                                if (isJSON(t)) {
+                                    var o4 = eval('(' + t + ')');
+                                    if (o4.info == info1) {
+                                        bremove = false;
+                                        bremov1 = false;
+                                    }
+                                }
+
+                            }
+                        }
+
+                        for (var i = 0; i < rs1.length; i++) {
+                            var type = rs1[i].l_worktype;
+                            if (type == "9") {
+                                    var info = "l_val1";
+                                    var t = rs1[i][info];
+                                    console.log(t);
+                                    if (isJSON(t)) {
+                                        var o4 = eval('(' + t + ')');
+                                        if (o4.infonum == info1) {
+                                            bremove = false;
+                                            bremov2 = false;
+                                        }
+                                    }
+
+                                
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("提交失败！");
+                    }
+                });
+
+
+                console.log(bremove);
+                if (bremove == false) {
+                    if (bremov1 == false) {
+                        layerAler("请删除场景配置中的对应的信息点方案");
+                    }
+                    if (bremov2 == false) {
+                        layerAler("请删除回路中对应的信息点");
+                    }
+                    return;
+                }
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);

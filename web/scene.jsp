@@ -214,7 +214,7 @@
                         var arrlist = data.rs;
                         if (arrlist.length == 1) {
                             Search();
-                            addlogon(u_name, "修改", o_pid, "场景配置", "修改场景【"+ooo.p_name+"】");
+                            addlogon(u_name, "修改", o_pid, "场景配置", "修改场景【" + ooo.p_name + "】");
                         }
                     },
                     error: function () {
@@ -258,7 +258,7 @@
                                 return value;
                             }
 
-                        }, 
+                        },
 //                        {
 //                            field: 'p_comaddr',
 //                            title: '网关名称',
@@ -576,7 +576,7 @@
                             }
 
                         }
-                        
+
 
 
                     },
@@ -744,14 +744,14 @@
                     ooo[p_scene] = JSON.stringify(o3);
 
                 }
-              
+
                 var ret = false;
                 $.ajax({async: false, url: "plan.planForm.addSensorScenePlan2.action", type: "get", datatype: "JSON", data: ooo,
                     success: function (data) {
                         var arrlist = data.rs;
                         if (arrlist.length == 1) {
                             ret = true;
-                            addlogon(u_name, "添加", o_pid, "场景配置", "添加场景【"+ooo.p_name+"】");
+                            addlogon(u_name, "添加", o_pid, "场景配置", "添加场景【" + ooo.p_name + "】");
                         }
                     },
                     error: function () {
@@ -834,7 +834,7 @@
                         success: function (data) {
                             var arrlist = data.rs;
                             if (arrlist.length == 1) {
-                               addlogon(u_name, "删除", o_pid, "场景配置", "删除场景【"+ooo.p_name+"】",ooo.p_identify);
+                                addlogon(u_name, "删除", o_pid, "场景配置", "删除场景【" + ooo.p_name + "】", ooo.p_identify);
                             }
                         },
                         error: function () {
@@ -859,7 +859,42 @@
                     return;
                 }
                 var ele = selects[0];
+                
+                var scenenum=parseInt(ele.p_scenenum);
+                console.log(ele);
+                if (val == 0) {
+                    var obj = {identify: ele.p_identify};
+                    var bremove = true;
+                    $.ajax({async: false, url: "plan.planForm.querysceninfo.action", type: "get", datatype: "JSON", data: obj,
+                        success: function (data) {
+                            var rs = data.rs;
+                            for (var i = 0; i < rs.length; i++) {
+                                var type = parseInt(rs[i].l_worktype);
+                                if (type >> 2 == 1) {
+                                    for (var i = 0; i < rs.length; i++) {
+                                        for (var j = 0; j < 5; j++) {
+                                            var val = "l_val" + (i + 1).toString();
+                                            var t = rs[i][val];
+                                            if (isJSON(t)) {
+                                                var o4 = eval('(' + t + ')');
+                                                if (o4.scene == scenenum) {
+                                                    bremove = false;
+                                                }
+                                            }
 
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        error: function () {
+                            alert("提交失败！");
+                        }
+                    });
+                    if (bremove==false) {
+                        layerAler("请删除回路的场景方案");
+                    }
+                 }
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
@@ -895,10 +930,10 @@
                 var ooo1 = {id: ele.id, index: ele.index};
                 var data = buicode2(vv);
                 console.log(data);
-                if(val ==1){
-                    addlogon(u_name, "部署", o_pid, "场景配置", "部署场景【"+ele.p_name+"】",ele.p_identify);
-                }else{
-                    addlogon(u_name, "移除", o_pid, "场景配置", "移除场景【"+ele.p_name+"】",ele.p_identify);
+                if (val == 1) {
+                    addlogon(u_name, "部署", o_pid, "场景配置", "部署场景【" + ele.p_name + "】", ele.p_identify);
+                } else {
+                    addlogon(u_name, "移除", o_pid, "场景配置", "移除场景【" + ele.p_name + "】", ele.p_identify);
                 }
                 dealsend2("10", data, "deployscenPlanCB", ooo.l_comaddr, val, ooo1, scenenum, "${param.action}");
 

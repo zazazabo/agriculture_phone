@@ -213,9 +213,9 @@
             function excel() {
                 $('#dialog-excel').dialog('open');
                 return false;
-
+                
             }
-
+            
             //导入excel的添加按钮事件
             function addexcel() {
                 var selects = $('#warningtable').bootstrapTable('getSelections');
@@ -255,7 +255,7 @@
                                                 success: function (data) {
                                                     var arrlist = data.rs;
                                                     if (arrlist.length == 1) {
-
+                                                        
                                                         var ids = [];//定义一个数组
                                                         var xh = selects[i].序号;
                                                         ids.push(xh);//将要删除的id存入数组
@@ -272,19 +272,19 @@
                                         layerAler("提交失败");
                                     }
                                 });
-
+                                
                             }
                         },
                         error: function () {
                             layerAler("提交失败");
                         }
                     });
-
+                    
                 }
             }
-
+            
             function showDialog() {
-
+                
                 var data = $('#comaddr').combobox('getData');
                 var commain = $("#l_comaddr").combobox('getValue');
                 for (var i = 0; i < data.length; i++) {
@@ -292,26 +292,26 @@
                         $("#comaddr").combobox('select', data[i].id);
                     }
                 }
-
-
-
-
-
-
-
+                
+                
+                
+                
+                
+                
+                
                 var o1 = $("#formsearch").serializeObject();
                 o1.pid = "${param.pid}";
                 $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: o1,
                     success: function (data) {
                         $("#infonum").combobox('loadData', data);
-
+                        
                     },
                     error: function () {
                         alert("提交失败！");
                     }
                 });
-
-
+                
+                
                 $.ajax({async: false, url: "plan.planForm.getSensorPlanBynum1.action", type: "get", datatype: "JSON", data: o1,
                     success: function (data) {
                         for (var i = 0; i < 5; i++) {
@@ -322,38 +322,38 @@
                         alert("提交失败！");
                     }
                 });
-
-
-
-
-
-
+                
+                
+                
+                
+                
+                
                 $('#dialog-add').dialog('open');
                 return false;
             }
-
+            
             function checkLoopAdd() {
                 var o = $("#formadd").serializeObject();
-
+                
                 var objplan = {code: o.l_plan, name: o.planname};
                 o.l_plan = JSON.stringify(objplan);
-
+                
                 if (o.l_comaddr == "") {
                     layerAler("网关不能为空");  //网关不能为空
                     return  false;
                 }
-
+                
 //                var namesss = false;
 //                addlogon(u_name, "添加", o_pid, "回路管理", "添加回路【" + o.l_name + "】");
-
+                
                 if (isNumber(o.l_site) == false || isNumber(o.l_pos) == false) {
                     layerAler("数据位置站号是数字");
                     return false;
                 }
 //                o.identify = o.l_comaddr;
                 console.log(o);
-
-
+                
+                
                 $.ajax({async: false, cache: false, url: "loop.loopForm.ExistLoop.action", type: "GET", data: o,
                     success: function (data) {
                         console.log(data);
@@ -367,7 +367,7 @@
                                     var time = "time" + (i + 1).toString();
                                     var timeval = "timeval" + (i + 1).toString();
                                     var o1 = {time: o[time], value: parseInt(o[timeval])};
-
+                                    
                                     var valobj = JSON.stringify(o1);
                                     var val = "l_val" + (i + 1).toString();
                                     o[val] = valobj;
@@ -395,15 +395,15 @@
                                     o[val] = valobj;
                                 }
                                 console.log(o);
-
+                                
                             }
-
+                            
                             $.ajax({async: false, cache: false, url: "loop.loopForm.addLoop1.action", type: "GET", data: o,
                                 success: function (data) {
-                                    addlogon(u_name, "添加", o_pid, "回路管理", "添加回路【"+o.l_name+"】",o.identify);
+                                    addlogon(u_name, "添加", o_pid, "回路管理", "添加回路【" + o.l_name + "】", o.identify);
                                     search(); 
 //                                    $("#gravidaTable").bootstrapTable('refresh');
-
+                                    
                                 },
                                 error: function () {
                                     layerAler("系统错误，刷新后重试");
@@ -411,19 +411,19 @@
                             });
                             return  false;
                         }
-
+                        
                     },
                     error: function () {
                         layer.alert('系统错误，刷新后重试', {icon: 6, offset: 'center'
                         });
-
+                        
                     }
-
+                    
                 })
                 return  false;
                 return  namesss;
             }
-
+            
             function  deleteloop() {
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 if (selects.length == 0) {
@@ -443,12 +443,12 @@
                             layerAler('已部署不能删除');  //已部署不能删除
                             continue;
                         } else {
-
+                            
                             $.ajax({url: "loop.loopForm.deleteLoop.action", type: "POST", datatype: "JSON", data: {id: select.id},
                                 success: function (data) {
                                     var arrlist = data.rs;
                                     if (arrlist.length == 1) {
-                                        addlogon(u_name, "删除", o_pid, "回路管理", "删除回路【" + select.l_name + "】",select.l_identify);
+                                        addlogon(u_name, "删除", o_pid, "回路管理", "删除回路【" + select.l_name + "】", select.l_identify);
                                         layer.open({
                                             content: '删除成功', //删除成功
                                             icon: 1,
@@ -466,12 +466,12 @@
                             });
                         }
                     }
-
+                    
                     layer.close(index);
-
+                    
                 });
             }
-
+            
             function  readinfoCB(obj) {
                 var data = Str2BytesH(obj.data);
                 var v = "";
@@ -487,7 +487,7 @@
                     var regpos = data[7] * 256 + data[8];
                     var w1 = data[9];
                     var w2 = data[10];
-
+                    
                     var strw1 = w2 & 0x01 == 0x01 ? "自动" : "手动";
                     var strworktype = "";
                     if (w2 == 3) {
@@ -502,17 +502,17 @@
                     layerAler("控制点:" + info + "<br>" + "站号" + site + "<br>" + "数据位置"
                             + regpos + "<br>" + "工作模式:" + strw1 + "<br>" + "执行方式:"
                             + strworktype + "<br>" + "控制值：" + dataval);
-
+                    
                 }
-
-
-
+                
+                
+                
             }
-
+            
             function  readinfo() {
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 var o = $("#form1").serializeObject();
-
+                
                 var vv = new Array();
                 if (selects.length == 0) {
                     layerAler('请勾选表格数据'); //请勾选表格数据
@@ -527,14 +527,14 @@
                 var infonum = (3000 + info * 20) | 0x1000;
                 vv.push(infonum >> 8 & 0xff);
                 vv.push(infonum & 0xff);
-
+                
                 vv.push(0);
                 vv.push(20); //寄存器数目 2字节                         
                 var data = buicode2(vv);
                 console.log(data);
                 dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
             }
-
+            
             function deployLoopCB(obj) {
                 $('#panemask').hideLoading();
                 if (obj.status == "success") {
@@ -574,15 +574,15 @@
                                 }
                             });
                         }
-
+                        
                     }
-
+                    
                 }
-
+                
             }
-
+            
             function deployLoop() {
-
+                
                 var infoalldata = $("#formsearch").serializeObject();
                 console.log(infoalldata);
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
@@ -593,58 +593,58 @@
                     return;
                 }
                 var ele = selects[0];
-                addlogon(u_name, "部署", o_pid, "回路管理", "部署回路【"+ele.l_name+"】",ele.l_identify);
+                addlogon(u_name, "部署", o_pid, "回路管理", "部署回路【" + ele.l_name + "】", ele.l_identify);
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
                 var info = parseInt(ele.l_info);
-
+                
                 var infonum = (3000 + info * 20) | 0x1000;
                 vv.push(infonum >> 8 & 0xff); //起始地址
                 vv.push(infonum & 0xff);
-
+                
                 vv.push(0);           //寄存器数目 2字节  
                 vv.push(20);   //5
                 vv.push(40);           //字节数目长度  1字节 10
-
-
+                
+                
                 vv.push(info >> 8 & 0xff);  //信息点
                 vv.push(info & 0xff);
-
-
+                
+                
                 var site = parseInt(ele.l_site); //站点
                 vv.push(site >> 8 & 0xff);
                 vv.push(site & 0xff);
-
+                
                 var reg = parseInt(ele.l_pos);
                 vv.push(reg >> 8 & 0xff)   //寄存器变量值
                 vv.push(reg & 0xff);
-
+                
                 var worktype = parseInt(ele.l_worktype);
-
+                
                 if (ele.l_mutex == 1) {
                     worktype = worktype | 0x8000;
                 }
                 vv.push(worktype >> 8 & 0xff)   //工作模式
                 vv.push(worktype & 0xff);
-
-
-
+                
+                
+                
                 var val2 = parseInt(infoalldata.controlVal);
-
+                
                 vv.push(val2 >> 8 & 0xff);   //控制值
                 vv.push(val2 & 0xff);
-
+                
                 for (var i = 0; i < 5; i++) {
                     vv.push(0);
                     vv.push(0);
                 }
-
+                
                 for (var i = 0; i < 5; i++) {
                     var num = "l_val" + (i + 1).toString();
-
+                    
                     var val1 = "val" + (i + 1).toString();
-
+                    
                     if (ele.l_worktype == "3") {
                         var time = ele[num];
                         var o = eval('(' + time + ')');
@@ -652,18 +652,18 @@
                         var h = parseInt(timearr[0]);
                         var m = parseInt(timearr[1]);
                         var valuenum = parseInt(o.value);
-
+                        
                         vv.push(h);
                         vv.push(m);
                         vv.push(valuenum >> 8 & 0xff)   //寄存器变量值
                         vv.push(valuenum & 0xff);
-
+                        
                     } else if (ele.l_worktype == "5") {
                         var scene = ele[num];
                         var o = eval('(' + scene + ')');
-
+                        
                         var scenenum = o.scene;
-
+                        
                         vv.push(scenenum >> 8 & 0xff)   //寄存器变量值
                         vv.push(scenenum & 0xff);
                         var valuenum = o.value;
@@ -677,13 +677,13 @@
                             var offset = o.offset;
                             vv.push(num >> 8 & 0xff)   //寄存器变量值
                             vv.push(num & 0xff);
-
-
+                            
+                            
                             vv.push(offset >> 8 & 0xff)   //寄存器变量值
                             vv.push(offset & 0xff);
-
+                            
                         } else {
-
+                            
                             var infonum1 = parseInt(o.info);
                             vv.push(infonum1 >> 8 & 0xff)   //寄存器变量值
                             vv.push(infonum1 & 0xff);
@@ -691,12 +691,12 @@
                             vv.push(valuenum >> 8 & 0xff)   //寄存器变量值
                             vv.push(valuenum & 0xff);
                         }
-
-
+                        
+                        
                     }
                 }
-
-
+                
+                
                 var data = buicode2(vv);
                 console.log(data);
                 dealsend2("10", data, "deployLoopCB", infoalldata.l_comaddr, 1, ele.lid, ele.l_info, "${param.action}");
@@ -707,7 +707,7 @@
                 }
                 );
             }
-
+            
             function removeLoop() {
                 var infoalldata = $("#formsearch").serializeObject();
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
@@ -717,8 +717,17 @@
                     layerAler('请勾选表格数据'); //请勾选表格数据
                     return;
                 }
+                var bremove=true;
                 var ele = selects[0];
-                addlogon(u_name, "移除部署", o_pid, "回路管理", "移除回路【"+ele.l_name+"】",ele.l_identify);
+//                if (ele.l_worktype=="9") {
+//                     
+//                }
+//                console.log(ele);
+//                return false;
+                
+                
+                
+                addlogon(u_name, "移除部署", o_pid, "回路管理", "移除回路【" + ele.l_name + "】", ele.l_identify);
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
@@ -726,12 +735,12 @@
                 var infonum = (3000 + info * 20) | 0x1000;
                 vv.push(infonum >> 8 & 0xff); //起始地址
                 vv.push(infonum & 0xff);
-
+                
                 vv.push(0);           //寄存器数目 2字节  
                 vv.push(20);   //5
                 vv.push(40);           //字节数目长度  1字节 10
-
-
+                
+                
                 for (var i = 0; i < 20; i++) {
                     vv.push(0);
                     vv.push(0);
@@ -746,28 +755,28 @@
                 }
                 );
             }
-
-
-
+            
+            
+            
             function modifyLoopName() {
                 var o = $("#form2").serializeObject();
                 o.id = o.hide_id;
-
-                addlogon(u_name, "修改", o_pid, "回路管理", "修改回路【"+o.l_name+"】");
-
+                
+                addlogon(u_name, "修改", o_pid, "回路管理", "修改回路【" + o.l_name + "】");
+                
                 if (o.l_worktype == 3) {
-
+                    
                     for (var i = 0; i < 5; i++) {
                         var time = "time" + (i + 1).toString();
                         var timeval = "timeval" + (i + 1).toString();
                         var o1 = {time: o[time], value: parseInt(o[timeval])};
-
+                        
                         var valobj = JSON.stringify(o1);
                         var val = "l_val" + (i + 1).toString();
                         o[val] = valobj;
                     }
-
-
+                    
+                    
                 } else if (o.l_worktype == 5) {
                     for (var i = 0; i < 5; i++) {
                         var scene = "scen" + (i + 1).toString();
@@ -778,7 +787,7 @@
                         o[val] = valobj;
                     }
                 } else if (o.l_worktype == 9) {
-
+                    
                     var oo = {infonum: parseInt(o.infonum), offset: parseInt(o.offset)};
                     var oostr = JSON.stringify(oo);
                     o.l_val1 = oostr;
@@ -792,9 +801,9 @@
                     }
                     console.log(o);
                 }
-
-
-
+                
+                
+                
                 $.ajax({async: false, url: "loop.loopForm.modifyloop.action", type: "get", datatype: "JSON", data: o,
                     success: function (data) {
                         console.log(data);
@@ -806,10 +815,10 @@
                 });
                 return  false;
             }
-
+            
             function modifyModal() {
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
-
+                
                 if (selects.length == 0) {
                     //请勾选您要编辑的数据
                     layer.alert('请勾选您要编辑的数据', {
@@ -820,21 +829,21 @@
                 }
                 var select = selects[0];
                 console.log(select);
-
+                
                 var o1 = $("#formsearch").serializeObject();
                 o1.pid = "${param.pid}";
-
+                
                 $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: o1,
                     success: function (data) {
 //                        console.log(data);
                         $("#infonum1").combobox('loadData', data);
-
+                        
                     },
                     error: function () {
                         alert("提交失败！");
                     }
                 });
-
+                
                 $.ajax({async: false, url: "plan.planForm.getSensorPlanBynum1.action", type: "get", datatype: "JSON", data: o1,
                     success: function (data) {
                         console.log(data);
@@ -847,8 +856,8 @@
                         alert("提交失败！");
                     }
                 });
-
-
+                
+                
                 if (select.l_worktype == 3) {
                     for (var i = 0; i < 5; i++) {
                         var o1 = (i + 1).toString();
@@ -861,18 +870,18 @@
                             // $("#timeval" + o1 + o1).val(objtime.value);
                             $("#timeval" + o1 + o1).combobox('setValue', objtime.value);
                         }
-
+                        
                         if (select.l_deplayment == 1) {
                             $("#time" + o1 + o1).spinner('readonly', true);
                             $("#timeval" + o1 + o1).combobox('readonly', true);
-
-
+                            
+                            
                         } else {
                             $("#time" + o1 + o1).spinner('readonly', false);
                             $("#timeval" + o1 + o1).combobox('readonly', false);
                         }
-
-
+                        
+                        
                     }
                 } else if (select.l_worktype == 5) {
                     for (var i = 0; i < 5; i++) {
@@ -883,7 +892,7 @@
                         var objtime = eval('(' + timestr + ')');
                         $("#scen" + o1 + o1).combobox('setValue', objtime.scene.toString());
                         $("#scenval" + o1 + o1).val(objtime.value);
-
+                        
                         if (select.l_deplayment == 1) {
                             $("#scen" + o1 + o1).combobox('readonly', true);
                             $("#scenval" + o1 + o1).attr('readonly', true);
@@ -891,14 +900,14 @@
                             $("#scen" + o1 + o1).combobox('readonly', false);
                             $("#scenval" + o1 + o1).attr('readonly', false);
                         }
-
-
+                        
+                        
                     }
                 } else if (select.l_worktype == 9) {
                     var obj1 = eval('(' + select.l_val1 + ')');
                     $("#infonum1").combobox('setValue', obj1.infonum.toString());
                     $("#offset1").val(obj1.offset == null ? "0" : obj1.offset.toString());
-
+                    
                     if (select.l_deplayment == 1) {
                         $("#offset1").attr('readonly', true);
                         $("#infonum1").combobox('readonly', true)
@@ -906,10 +915,10 @@
                         $("#offset1").attr('readonly', false);
                         $("#infonum1").combobox('readonly', false)
                     }
-
-
-
-
+                    
+                    
+                    
+                    
                     for (var i = 0; i < 4; i++) {
                         var o1 = (i + 1 + 1).toString();
                         var o2 = (i + 1).toString();
@@ -919,7 +928,7 @@
                         console.log(timestr)
                         $("#info_" + o2 + o2).val(objtime.info.toString());
                         $("#infoval" + o2 + o2).combobox('setValue', objtime.value);
-
+                        
                         if (select.l_deplayment == 1) {
                             $("#info_" + o2 + o2).attr('readonly', true);
                             $("#infoval" + o2 + o2).combobox('readonly', true)
@@ -927,17 +936,17 @@
                             $("#info_" + o2 + o2).attr('readonly', false);
                             $("#infoval" + o2 + o2).combobox('readonly', false)
                         }
-
-
+                        
+                        
                     }
                 }
-
+                
                 $("#l_comaddr1").combobox('setValue', select.l_comaddr);
                 $("#l_mutex1").combobox('setValue', select.l_mutex);
                 $("#l_deployment").val(select.l_deplayment);
                 $("#comaddrname1").val(select.commname);
                 $("#l_name1").val(select.l_name);
-
+                
                 $("#hide_id").val(select.lid);
                 $("#l_site1").val(select.l_site);
                 $("#l_pos1").val(select.l_pos);
@@ -947,16 +956,16 @@
                 if (select.l_deplayment == "1") {
                     $('#l_worktype1').combobox('readonly', true);
                     $("#l_mutex1").combobox('readonly', true);
-
+                    
                 } else if (select.l_deplayment == "0") {
                     $('#l_worktype1').combobox('readonly', false);
                     $("#l_mutex1").combobox('readonly', false);
                 }
                 $('#l_worktype1').combobox('setValue', select.l_worktype);
                 $('#dialog-edit').dialog('open');
-
+                
             }
-
+            
             //搜索
             function  search() {
                 var obj = {};
@@ -972,7 +981,7 @@
                 };
                 $("#gravidaTable").bootstrapTable('refresh', opt);
             }
-
+            
             $(function () {
                 size();
                 $('#gravidaTable').bootstrapTable({
@@ -1090,7 +1099,7 @@
                         console.log(temp); 
                         return temp;  
                     }, });
-
+                
                 $('#comaddr').combobox({
                     url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
                     formatter: function (row) {
@@ -1107,7 +1116,7 @@
                             for (var i = 0; i < data.length; i++) {
                                 data[i].text = data[i].name;
                             }
-
+                            
                             $(this).combobox('select', data[0].id);
                         }
                     }, onSelect: function (record) {
@@ -1116,8 +1125,8 @@
                         $("#identify1").val(record.identify);
                     }
                 });
-
-
+                
+                
                 $("#l_comaddr").combobox({
                     url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
                     formatter: function (row) {
@@ -1135,7 +1144,7 @@
                             }
                             $(this).combobox('select', data[0].id);
                         }
-
+                        
                     },
                     onSelect: function (record) {
                         $("#identify").val(record.identify);
@@ -1150,7 +1159,7 @@
                         $("#gravidaTable").bootstrapTable('refresh', opt);
                     }
                 });
-
+                
                 $("#dialog-add").dialog({
                     autoOpen: false,
                     modal: true,
@@ -1165,7 +1174,7 @@
                         }
                     }
                 });
-
+                
                 $("#dialog-edit").dialog({
                     autoOpen: false,
                     modal: true,
@@ -1181,7 +1190,7 @@
                         }
                     }
                 });
-
+                
                 $("#dialog-excel").dialog({
                     autoOpen: false,
                     modal: true,
@@ -1196,7 +1205,7 @@
                         }
                     }
                 });
-
+                
                 $('#l_worktype').combobox({
                     onLoadSuccess: function (data) {
                         if (Array.isArray(data) && data.length > 0) {
@@ -1250,7 +1259,7 @@
                     }
                 });
             });
-
+            
             function size() {
                 var Wwidth = $(window).width();
                 if (Wwidth > 768) {
@@ -1260,14 +1269,14 @@
                 } else {
                     withs = 350;
                 }
-
+                
             }
             window.onresize = function () {
                 size();
             };
-
-
-
+            
+            
+            
         </script>
 
 
@@ -1299,7 +1308,7 @@
                                 <tr>
                                     <td > &emsp;网关名称:</td>
                                     <td >
-                                       
+
                                         <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:100px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
                                     </td>
                                     <td  >
@@ -1384,7 +1393,7 @@
                 <form action="" method="POST" id="formadd" onsubmit="return checkLoopAdd()">    
                     <input type="hidden" name="pid" value="${param.pid}"/>
                     <input type="hidden" name="identify" id="identify1" value=""/>
-                     
+
                     <table >
                         <tbody>
                             <tr>

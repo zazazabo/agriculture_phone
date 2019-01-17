@@ -167,9 +167,6 @@
             </xsql>
         </xhandle>
 
-
-
-
         <xhandle desc="传感器场景方案" id="getSensorPlan" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT * FROM t_plan tp where  @CONDITION  " var="bootstrap">
                 <xflt id="CONDITION" nrp="" tpl="@p_attr AND @p_type AND @p_show AND @pid">
@@ -186,14 +183,9 @@
             </xsql>
         </xhandle>
 
-
-
-
-
         <xhandle desc="传感器场景方案" id="getSensorPlanBynum" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT * FROM t_plan tp where p_deployment='1' and p_attr=1 and p_type=1 and  @CONDITION  " var="rs">
                 <xflt id="CONDITION" nrp="" tpl="@p_scenenum AND @pid">
-
                     <xfltpara id="p_scenenum" nrp="1=2" para="p_scenenum" sql="p_scenenum = :p_scenenum">
                     </xfltpara>
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="pid = ':pid'">
@@ -212,7 +204,25 @@
         </xhandle>
 
 
-
+        <xhandle desc="传感器场景方案" id="querysceninfo" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT * FROM t_plan tp where   @CONDITION  " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@identify AND @pid">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="p_identify = ':identify'">
+                    </xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="pid = ':pid'">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+            
+         <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT * FROM t_loop tl where l_worktype=9 AND   @CONDITION  " var="rs1">
+                <xflt id="CONDITION" nrp="" tpl="@identify ">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="l_identify = ':identify'">
+                    </xfltpara>
+                </xflt>  
+            </xsql>        
+            
+                      
+        </xhandle>
 
 
     </xform>
