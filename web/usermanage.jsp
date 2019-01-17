@@ -30,7 +30,7 @@
                     margin-left: -240px;
                 }
                 #updatetable{
-                   margin-left: -240px;
+                    margin-left: -240px;
                 }
                 #adddiv{
                     width: 350px;
@@ -44,7 +44,7 @@
                     width: 100px;
                 }
                 #sex_edit{
-                  width: 100px;  
+                    width: 100px;  
                 }
                 #sel_menu2{
                     width: 200px;
@@ -57,25 +57,25 @@
                     width: 350px;
                 }
 
-                
+
                 #name_edit{
                     width: 100px;
                 }
-                
+
                 #phone_edit{
-                     width: 100px;
+                    width: 100px;
                 }
-                
+
                 #email_edit{
                     width: 100px;
                 }
-                
+
                 #department_edit{
-                     width: 100px;
+                    width: 100px;
                 }
-                
+
                 #updaterole{
-                     width: 100px;
+                    width: 100px;
                 }
 
 
@@ -99,33 +99,33 @@
                 #updatediv{
                     width: 500px;
                 }
-                
-                 #sel_menu1{
+
+                #sel_menu1{
                     width: 250px;
                 }
-                
+
                 #name_edit{
                     width: 150px;
                 }
-                
+
                 #phone_edit{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #email_edit{
                     width: 150px;
                 }
-                
+
                 #department_edit{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #updaterole{
-                     width: 150px;
+                    width: 150px;
                 }
-                
-                 #sex_edit{
-                  width: 150px;  
+
+                #sex_edit{
+                    width: 150px;  
                 }
 
 
@@ -133,50 +133,50 @@
 
             /*           ipad竖屏*/
             @media screen and (min-width:767px) and (max-width:1023px) {  
-                 #adddiv{
+                #adddiv{
                     width: 500px;
                 }
                 #adddiv input{
                     width: 150px;
                 }
-                
+
                 #sex{
                     width: 150px;
                 }
                 #sel_menu2{
                     width: 250px;
                 }
-                
-                 #updatediv{
+
+                #updatediv{
                     width: 500px;
                 }
-                
-                 #sel_menu1{
+
+                #sel_menu1{
                     width: 250px;
                 }
-                
+
                 #name_edit{
                     width: 150px;
                 }
-                
+
                 #phone_edit{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #email_edit{
                     width: 150px;
                 }
-                
+
                 #department_edit{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #updaterole{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #sex_edit{
-                  width: 150px;  
+                    width: 150px;  
                 }
 
             }
@@ -191,46 +191,46 @@
                 #adddiv input{
                     width: 150px;
                 }
-                
-                 #sex{
+
+                #sex{
                     width: 150px;
                 }
                 #sel_menu2{
                     width: 350px;
                 }
-                
-                 #updatediv{
+
+                #updatediv{
                     width: 500px;
                 }
-                
-                 #sel_menu1{
+
+                #sel_menu1{
                     width: 350px;
                 }
-                
+
                 #name_edit{
                     width: 150px;
                 }
-                
+
                 #phone_edit{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #email_edit{
                     width: 150px;
                 }
-                
+
                 #department_edit{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #updaterole{
-                     width: 150px;
+                    width: 150px;
                 }
-                
+
                 #sex_edit{
-                  width: 150px;  
+                    width: 150px;  
                 }
-           
+
             } 
         </style>
 
@@ -475,13 +475,15 @@
             function editaction() {
                 var pid = $("#sel_menu1").val(); //项目
                 var pids = "";
-                for (var i = 0; i < pid.length; i++) {
-                    if (i == pid.length - 1) {
-                        pids += pid[i];
-                    } else {
-                        pids += pid[i] + ",";
-                    }
+                if (pid != null) {
+                    for (var i = 0; i < pid.length; i++) {
+                        if (i == pid.length - 1) {
+                            pids += pid[i];
+                        } else {
+                            pids += pid[i] + ",";
+                        }
 
+                    }
                 }
 
                 var formobj = $("#Form_Edit").serializeObject();
@@ -496,7 +498,7 @@
                     success: function (data) {
                         var arrlist = data.rs;
                         if (arrlist.length == 1) {
-                            layerAler('修改成功'); //修改成功
+                            layerAler("修改成功"); //修改成功
                             $("#gravidaTable").bootstrapTable('refresh');
                             $("#pjj2").modal('hide'); //手动关闭
                             addlogon(u_name, "修改", o_pid, "用户管理", "修改用户【" + formobj.name_edit + "】信息");
@@ -506,6 +508,96 @@
                         alert("提交添加失败！");
                     }
                 });
+                //查看是否存在子孙用户
+                var uid = formobj.id;
+                $.ajax({async: false, url: "login.usermanage.loopsunuser.action", type: "POST", datatype: "JSON", data: {id: uid},
+                    success: function (data) {
+                        var arrlist = data.rs;
+                        if (arrlist.length > 0) {
+                            for (var i = 0; i < arrlist.length; i++) {
+                                var id = arrlist[i].id;
+                                upsunmUserP(id, pid);
+                            }
+                        }
+                    },
+                    error: function () {
+                        layerAler("提交失败");
+                    }
+                });
+            }
+
+            //修改子孙用户权限
+            function upsunmUserP(id, pid) {
+                //pid 为父项目id
+                //查看子用户管理的项目
+                var sumpid = []; //子用户项目id
+                $.ajax({async: false, url: "login.project.getuserProject.action", type: "POST", datatype: "JSON", data: {id: id},
+                    success: function (data) {
+                        var rs = data.rs;
+                        console.log("p:" + rs[0].pid);
+                        if(pid == null || pid == ""){
+                            sumpid = [];
+                        }else if (rs[0].pid != "" && rs[0].pid != null) {
+                            sumpid = rs[0].pid.split(",");
+                            console.log("0" + sumpid);
+                            for (var i = 0; i < sumpid.length; i++) {
+                                for (var j = 0; j < pid.length; j++) {
+                                    if (pid[j] == sumpid[i]) {
+                                        continue;
+                                    } else if (j == pid.length - 1) {
+                                        sumpid.splice(i, 1);  //移除不相同的；
+                                    }
+                                }
+
+                            }
+                        }
+
+                        console.log("l:" + sumpid.length);
+                        console.log("list:" + sumpid);
+                        var sumpids = "";  //子用户管理项目字符串
+                        if (sumpid.length > 0) {
+                            for (var k = 0; k < sumpid.length; k++) {
+                                if (k == sumpid.length - 1) {
+                                    sumpids += pid[k];
+                                } else {
+                                    sumpids += sumpid[k] + ",";
+                                }
+                            }
+                        }
+                        //修改子用户项目
+                        var obj = {};
+                        obj.id = id;
+                        obj.pid = sumpids;
+                        $.ajax({async: false, url: "login.usermanage.editUpid.action", type: "POST", datatype: "JSON", data: obj,
+                            success: function (data) {
+
+                            },
+                            error: function () {
+                                layerAler("提交失败1");
+                            }
+                        });
+                    },
+                    error: function () {
+                        layerAler("提交失败2");
+                    }
+                });
+
+                //查看是否存在子用户
+                $.ajax({async: false, url: "login.usermanage.loopsunuser.action", type: "POST", datatype: "JSON", data: {id: id},
+                    success: function (data) {
+                        var arrlist = data.rs;
+                        if (arrlist.length > 0) {
+                            for (var i = 0; i < arrlist.length; i++) {
+                                var uid = arrlist[i].id;
+                                upsunmUserP(uid, pid);
+                            }
+                        }
+                    },
+                    error: function () {
+                        layerAler("提交失败");
+                    }
+                });
+
             }
 
             function deleteUser() {
@@ -515,28 +607,32 @@
                     layerAler('请勾选表格数据'); //请勾选表格数据
                     return;
                 }
-                layer.confirm('确定要删除吗', {//确定要删除吗？
-                    btn: ['确定', '取消']//确定、取消按钮
+                layer.confirm("确定要删除吗？", {//确定要删除吗？
+                    btn: ["确定", "取消"]//确定、取消按钮
                 }, function (index) {
                     var select = selects[0];
-                    $.ajax({async: false, url: "login.usermanage.loopsunuser.action", type: "POST", datatype: "JSON", data: {id: select.id},
+                    var uid = select.id;
+                    $.ajax({async: false, url: "login.usermanage.deleteUser.action", type: "POST", datatype: "JSON", data: {id: select.id},
+                        success: function (data) {
+                            var arrlist = data.rs;
+                            if (arrlist.length == 1) {
+                                $("#gravidaTable").bootstrapTable('refresh');
+                                addlogon(u_name, "删除", o_pid, "用户管理", "删除用户【" + select.name + "】");
+                            }
+                        },
+                        error: function () {
+                            layerAler("提交失败");
+                        }
+                    });
+
+                    $.ajax({async: false, url: "login.usermanage.loopsunuser.action", type: "POST", datatype: "JSON", data: {id: uid},
                         success: function (data) {
                             var arrlist = data.rs;
                             if (arrlist.length > 0) {
-                                layerAler('该用户存在子用户不可删除');  //该用户存在子用户不可删除
-                            } else {
-                                $.ajax({async: false, url: "login.usermanage.deleteUser.action", type: "POST", datatype: "JSON", data: {id: select.id},
-                                    success: function (data) {
-                                        var arrlist = data.rs;
-                                        if (arrlist.length == 1) {
-                                            $("#gravidaTable").bootstrapTable('refresh');
-                                            addlogon(u_name, "删除", o_pid, "用户管理", "删除用户");
-                                        }
-                                    },
-                                    error: function () {
-                                        layerAler("提交失败");
-                                    }
-                                });
+                                for (var i = 0; i < arrlist.length; i++) {
+                                    var id = arrlist[i].id;
+                                    deletesumUser(id);
+                                }
                             }
                         },
                         error: function () {
@@ -556,7 +652,7 @@
                         var uid = id;
                         if (arrlist.length > 0) {
                             for (var i = 0; i < arrlist.length; i++) {
-                                uid = arrlist.id;
+                                uid = arrlist[i].id;
                                 deletesumUser(uid);
                             }
                         }
@@ -571,7 +667,7 @@
                         var arrlist = data.rs;
                         if (arrlist.length == 1) {
                             $("#gravidaTable").bootstrapTable('refresh');
-                            addlogon(u_name, "删除", o_pid, "用户管理", "删除用户");
+                           // addlogon(u_name, "删除", o_pid, "用户管理", "删除用户");
                         }
                     },
                     error: function () {
