@@ -34,10 +34,7 @@
                                 nobj.o_identify=identify;
                                 $.ajax({async: false, url: "login.oplog.addoplog.action", type: "get", datatype: "JSON", data: nobj,
                                     success: function (data) {
-                                        var arrlist = data.rs;
-                                        if (arrlist.length > 0) {
-                                            
-                                        }
+                                      
                                     }
                                 });
                 

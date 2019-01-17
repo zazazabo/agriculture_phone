@@ -347,6 +347,14 @@
                 </xflt>
             </xsql>
         </xhandle> 
+        <xhandle desc="修改用户管理项目" id="editUpid" rtn="rs" rtnype="JSON">
+            <xsql id="a1" para="pid" tpe="DDL" tpl="update t_user set pid=':pid' where @CONDITION " var="rs">
+                <xflt id="CONDITION" nrp="" tpl="@id ">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=:id">
+                    </xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle> 
         <xhandle desc="修改密码" id="updatePwd" rtn="rs" rtnype="JSON">
             <xsql id="a1" para="password" tpe="DDL" tpl="update t_user set password=':password' where @CONDITION " var="rs">
                 <xflt id="CONDITION" nrp="" tpl="@id ">
