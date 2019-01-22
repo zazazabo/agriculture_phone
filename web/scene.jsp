@@ -57,10 +57,10 @@
                     width: 100px;
                 }
                 html{
-                    font-size: 4px;
+                    font-size: 14px;
                 }
                 body{
-                    font-size: 4px; 
+                    font-size: 14px; 
                 }
                 #l_comaddr {
                     width: 140px;
@@ -1028,7 +1028,7 @@
                 <button class="btn btn-danger btn-sm ctrol" onclick="removeshow()"  id="shanchu">
                     <span class="glyphicon glyphicon-trash"></span>&nbsp;删除
                 </button>
-                <button type="button" id="btn_download" class="btn btn-sm btn-primary" onClick ="$('#gravidaTable').tableExport({type: 'excel', escape: 'false'})">
+                <button type="button" id="btn_download" class="btn btn-sm btn-primary" onClick ="$('#table0').tableExport({type: 'excel', escape: 'false'})">
                     <span >导出Excel</span>
                 </button>
             </div>

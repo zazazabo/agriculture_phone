@@ -29,10 +29,10 @@
                     font-size: 4px;
                 }
                 html{
-                    font-size: 4px;
+                    font-size: 14px;
                 }
                 body{
-                    font-size: 4px; 
+                    font-size: 14px; 
                 }
                 #dialog-add input {
                     width: 100px;
@@ -166,13 +166,13 @@
                     layer.confirm('确认要删除吗？', {//确认要删除吗？
                         btn: ['确定', '取消'] //确定、取消按钮
                     }, function (index) {
-                        var o = {l_comaddr: selects[0].comaddr, id: selects[0].id};
+                        var o = {identify: selects[0].identify, id: selects[0].id};
                         $.ajax({url: "gayway.GaywayForm.existcomaddr.action", type: "POST", datatype: "JSON", data: o,
                             success: function (data) {
                                 console.log(data);
                                 var arrlist = data.rs;
                                 if (arrlist.length > 0) {
-                                    layerAler("该网关下存在回路不能删除");
+                                    layerAler("该网关下存在回路或传感器不能删除");
                                 } else {
                                     $.ajax({url: "gayway.GaywayForm.deleteGateway.action", type: "POST", datatype: "JSON", data: o,
                                         success: function (data) {

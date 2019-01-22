@@ -55,8 +55,8 @@
         <script type="text/javascript" src="js/genel.js"></script>
         <script type="text/javascript" src="js/getdate.js"></script>
         <script>
-            var u_name = "${param.name}";
-            var o_pid = "${param.pid}";
+            var u_name = parent.parent.getusername();
+            var o_pid = parent.parent.getpojectId();
             var lang = '${param.lang}';//'zh_CN';
 
             function isValidIP(ip) {

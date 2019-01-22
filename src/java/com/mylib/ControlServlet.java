@@ -530,6 +530,8 @@ public class ControlServlet extends HttpServlet {
                     String fcontent = item.getString("utf-8");
                     if (tagName.equals("fpath") == true) {
                         filePath = webPath + "\\" + fcontent;
+                        System.out.println("web:"+webPath);
+                        System.out.println("fcontent:"+fcontent);
 
                     }
                     System.out.println(filePath);
@@ -663,7 +665,7 @@ public class ControlServlet extends HttpServlet {
                 mapbig.put("rs", "error");
             }
             filehName = aa.fpara.get("filename_").toString();
-            String path1 = webPath + "\\" + filePath + "\\" + filehName;
+            String path1 = webPath + "\\" + filePath + "\\" + filehName;          
             File serverFile = new File(path1);
 
             String fileNameString = null;
@@ -697,7 +699,7 @@ public class ControlServlet extends HttpServlet {
             XsqlInfo aa = (XsqlInfo) li.get(i);
             if (aa.id.equals("get")) {
                 String string1[] = aa.sql.split(":");
-                for (int j = 0; j < string1.length; j++) {
+                for(int j = 0; j < string1.length; j++) {
                     String aaString = string1[j].trim();
                     String str1 = (String) request.getSession().getAttribute(aaString);
                     mapbig.put(string1[j], str1);

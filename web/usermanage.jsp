@@ -383,7 +383,7 @@
                 });
                 //添加用户
                 $("#tianjia1").click(function () {
-                    var userid = "${param.id}";  //调用首页的getuserId方法
+                    var userid = "${param.userId}";  //调用首页的getuserId方法
                     //alert( $("#userid").val());
                     var obj = $("#Form_User").serializeObject();
                     if (obj.name == "") {
