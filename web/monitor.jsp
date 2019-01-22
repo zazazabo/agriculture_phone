@@ -241,6 +241,8 @@
                                     return  "%RH";
                                 } else if (row.type == 3) {
                                     return  "开/关";
+                                }else if (row.type == 4) {
+                                    return  "m/s";
                                 }
                             }
                         }, {

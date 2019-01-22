@@ -1117,7 +1117,7 @@
                                             <td>
                                                 <span  style="  margin-right: 2px;" >巡测时间:</span>
                                                 <input id="checktime"  class="form-control" name="checktime" style="width:150px;"  placeholder="时间" type="text">
-
+                                                <span  style="  margin-right: 2px;" >(秒)</span>
                                                 <button  type="button" onclick="setCheckTime()"  class="btn btn-success btn-sm"><span >设置</sspan>
                                                 </button>&nbsp; 
                                             </td>

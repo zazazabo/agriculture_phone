@@ -634,18 +634,18 @@
                         for (var i = 0; i < rs1.length; i++) {
                             var type = rs1[i].l_worktype;
                             if (type == "9") {
-                                    var info = "l_val1";
-                                    var t = rs1[i][info];
-                                    console.log(t);
-                                    if (isJSON(t)) {
-                                        var o4 = eval('(' + t + ')');
-                                        if (o4.infonum == info1) {
-                                            bremove = false;
-                                            bremov2 = false;
-                                        }
+                                var info = "l_val1";
+                                var t = rs1[i][info];
+                                console.log(t);
+                                if (isJSON(t)) {
+                                    var o4 = eval('(' + t + ')');
+                                    if (o4.infonum == info1) {
+                                        bremove = false;
+                                        bremov2 = false;
                                     }
+                                }
 
-                                
+
                             }
                         }
                     },
@@ -772,6 +772,10 @@
                                     return  '湿度';
                                 } else if (value == "3") {
                                     return  '开关';
+                                }else if (value == "4") {
+                                    return  '风速';
+                                }else if (value == "5") {
+                                    return  '风向';
                                 }
                             }
                         }, {
@@ -1308,6 +1312,8 @@
                                 <option value="1" >温度</option>
                                 <option value="2" >湿度</option>  
                                 <option value="3" >开关</option>  
+                                <option value="4" >风速</option>  
+                                <option value="5" >风向</option>  
                             </select>
                         </td>
 
@@ -1373,6 +1379,8 @@
                                 <option value="1" >温度</option>
                                 <option value="2" >湿度</option>  
                                 <option value="3" >开关</option> 
+                                <option value="4" >风速</option>  
+                                <option value="5" >风向</option>  
                             </select>
 
                         </td>  
