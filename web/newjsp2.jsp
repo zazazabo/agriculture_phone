@@ -181,44 +181,44 @@
 
         }
         //温度
-        function wd(id, qxbs, xdata, data, unit) {
-            wdChart = echarts.init(document.getElementById(id));
-            option = {
-                title: {
-                    text: '温度曲线图'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {
-                    data: qxbs
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                toolbox: {
-                    feature: {
-                        saveAsImage: {}
-                    }
-                },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: xdata
-                },
-                yAxis: {
-                    type: 'value',
-                    axisLabel: {
-                        formatter: '{value} ' + unit
-                    }
-                },
-                series: functionNodname(data)
-            };
-            wdChart.setOption(option);
-        }
+//        function wd(id, qxbs, xdata, data, unit) {
+//            wdChart = echarts.init(document.getElementById(id));
+//            option = {
+//                title: {
+//                    text: '温度曲线图'
+//                },
+//                tooltip: {
+//                    trigger: 'axis'
+//                },
+//                legend: {
+//                    data: qxbs
+//                },
+//                grid: {
+//                    left: '3%',
+//                    right: '4%',
+//                    bottom: '3%',
+//                    containLabel: true
+//                },
+//                toolbox: {
+//                    feature: {
+//                        saveAsImage: {}
+//                    }
+//                },
+//                xAxis: {
+//                    type: 'category',
+//                    boundaryGap: false,
+//                    data: xdata
+//                },
+//                yAxis: {
+//                    type: 'value',
+//                    axisLabel: {
+//                        formatter: '{value} ' + unit
+//                    }
+//                },
+//                series: functionNodname(data)
+//            };
+//            wdChart.setOption(option,true);
+//        }
         //湿度
         function echarts3(id, qxbs, xdata, data) {
             myChart3 = echarts.init(document.getElementById(id));
@@ -256,7 +256,7 @@
                 },
                 series: functionNodname(data)
             };
-            myChart3.setOption(option);
+            myChart3.setOption(option,true);
         }
 
         $(function () {
@@ -347,7 +347,7 @@
 //                }
                 for (var i = 0; i < xdata.length; i++) {
                     // sdxdata.push(xdata[i].collectime);
-                    sdxdata.push(xdata[i].times.substring(0, 5));
+                    sdxdata.push(xdata[i].collectime.substring(10, 16));
 
                 }
             }
