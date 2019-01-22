@@ -38,10 +38,10 @@
                     width: 100px;
                 }
                 html{
-                    font-size: 4px;
+                    font-size: 14px;
                 }
                 body{
-                    font-size: 4px; 
+                    font-size: 14px; 
                 }
                 #l_comaddr2 {
                     width: 140px;
@@ -128,7 +128,7 @@
         </style>
         <script>
             var withs;
-            var u_name = "${param.name}";
+            var u_name = parent.parent.getusername();
             var o_pid = "${param.pid}";
             function excel() {
                 $('#dialog-excel').dialog('open');

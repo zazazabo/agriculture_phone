@@ -113,6 +113,39 @@
         <script>
             var projectId = "${fn:split(param.pid,',')[0]}";
             var withs;
+            
+             //获取项目
+            function  porject(pid) {
+                var pids = {};
+                var pname = [];   //项目名称
+                if (pid != "" && pid != null) {
+                    pids = pid.split(",");   //项目编号
+                    // $("#pojects").val(pids[0]);
+                    for (var i = 0; i < pids.length; i++) {
+                        var obj = {};
+                        obj.code = pids[i];
+                        $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
+                            success: function (data) {
+                                if (data.rs.length > 0) {
+                                    pname.push(data.rs[0].name);
+                                }
+                            },
+                            error: function () {
+                                alert("出现异常！");
+                            }
+                        });
+                    }
+                    for (var i = 0; i < pids.length; i++) {
+                        var options;
+                        options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
+                        $("#pojects").html(options);
+                    }
+
+                }else{
+                     $("#pojects").html("");
+                }
+            }
+            
             function getpojectId() {
                 projectId = $("#pojects").val();
                 return  projectId;
@@ -174,20 +207,26 @@
                     alert("请勾选表格");
                     return;
                 }
+                $('#panemask').showLoading({
+                    'afterShow': function () {
+                        setTimeout("$('#panemask').hideLoading()", 2000);
+                    }
+
+                });
                 var ele = eles[0];
                 var comaddr;
                 var obj = {};
-                
-                obj.identify  = ele.f_identify; 
-                $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "get", datatype: "JSON", data:obj,
+
+                obj.identify = ele.f_identify;
+                $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "get", datatype: "JSON", data: obj,
                     success: function (data) {
                         var rs = data.rs;
-                        if(rs.length>0){
+                        if (rs.length > 0) {
                             comaddr = rs[0].comaddr;
                         }
                     }
                 });
-                addlogon($("#u_name").val(), "处理异常", getpojectId(), "首页", "处理异常",ele.f_identify);
+                addlogon($("#u_name").val(), "处理异常", getpojectId(), "首页", "处理异常", ele.f_identify);
                 if (ele.f_Isfault != 1) {
                     var vv = [];
                     vv.push(1);
@@ -352,8 +391,8 @@
 //                    showRefresh: true,
                     //showToggle: true,
                     // 设置默认分页为 50
-                    pageList: [5, 10, 15,'ALL'],
-                    smartDisplay:false,
+                    pageList: [5, 10, 15, 'ALL'],
+                    smartDisplay: false,
                     striped: true,
 
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
@@ -452,7 +491,7 @@
                 return;
             </c:if>
                 size();
-
+               
 
                 $("dd").delegate("ul li", "click", function () {
                     var childli = $(this).children();
@@ -545,31 +584,33 @@
             }
             $(function () {
                 var pid = '${rs[0].pid}';
-                var pids = [];
-                if (pid != null && pid != "") {
-                    pids = pid.split(",");   //项目编号
-                }
-
-                // $("#pojects").val(pids[0]);
-                var pname = [];   //项目名称
-                for (var i = 0; i < pids.length; i++) {
-                    var obj = {};
-                    obj.code = pids[i];
-                    $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
-                            pname.push(data.rs[0].name);
-                        },
-                        error: function () {
-                            alert("出现异常！");
-                        }
-                    });
-                }
-
-                for (var i = 0; i < pids.length; i++) {
-                    var options;
-                    options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
-                    $("#pojects").html(options);
-                }
+                 porject(pid);
+                
+//                var pids = [];
+//                if (pid != null && pid != "") {
+//                    pids = pid.split(",");   //项目编号
+//                }
+//
+//                // $("#pojects").val(pids[0]);
+//                var pname = [];   //项目名称
+//                for (var i = 0; i < pids.length; i++) {
+//                    var obj = {};
+//                    obj.code = pids[i];
+//                    $.ajax({url: "login.main.getpojcetname.action", async: false, type: "get", datatype: "JSON", data: obj,
+//                        success: function (data) {
+//                            pname.push(data.rs[0].name);
+//                        },
+//                        error: function () {
+//                            alert("出现异常！");
+//                        }
+//                    });
+//                }
+//
+//                for (var i = 0; i < pids.length; i++) {
+//                    var options;
+//                    options += "<option value=\"" + pids[i] + "\">" + pname[i] + "</option>";
+//                    $("#pojects").html(options);
+//                }
 
                 $("#dialog-add").dialog({
                     autoOpen: false,

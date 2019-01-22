@@ -22,7 +22,7 @@ var option;
             onUploadError: null, //上传失败的动作
             onInit: null, //初始化时的动作
             onCancel: null//删除掉某个文件后的回调函数，可传入参数file
-        }
+        };
 
         option = $.extend(defaults, opts);
 
@@ -34,7 +34,7 @@ var option;
                 size = (Math.round(size * 100 / 1024) / 100).toString() + 'KB';
             }
             return size;
-        }
+        };
         //根据文件序号获取文件
         var getFile = function (index, files) {
             for (var i = 0; i < files.length; i++) {
@@ -43,7 +43,7 @@ var option;
                 }
             }
             return false;
-        }
+        };
 
         //将输入的文件类型字符串转化为数组,原格式为*.jpg;*.png
         var getFileTypes = function (str) {
@@ -53,7 +53,7 @@ var option;
                 result.push(arr1[i].split(".").pop());
             }
             return result;
-        }
+        };
 
         this.each(function () {
             var _this = $(this);
@@ -134,7 +134,7 @@ var option;
                         $html.find('.delfilebtn').on('click', (function (file) {
                             return function () {
                                 fileObj.funDeleteFile(file.index);
-                            }
+                            };
                         })(file));
                     }
 
@@ -272,6 +272,6 @@ var option;
             //初始化文件对象
             fileObj.init();
         });
-    }
+    };
 
-})(jQuery)
+})(jQuery);

@@ -67,10 +67,10 @@
                 }
 
                 html{
-                    font-size: 2px;
+                    font-size: 14px;
                 }
                 body{
-                    font-size: 2px; 
+                    font-size: 14px; 
                 }
                 #l_comaddr {
                     width: 140px;

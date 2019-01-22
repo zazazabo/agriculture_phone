@@ -501,7 +501,6 @@
 //                            obj.id = '';
 //                            obj.text = '-请选择-';
 //                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
-                            console.log("d:" + data);
                             if (data.length > 0) {
                                 // $(this).combobox('select', data[0].id);
                                 if ($("#dqsdsen").val() != "") {
@@ -643,7 +642,9 @@
                     var trsdrs = data.trsdrs;
                     if (rs.length > 0) {
                         var sen = rs[0];
-                        $("#dqwdcom").val(sen.identify);
+                        $("#dqwdcom").val(sen.s_identify);
+                        console.log("dqwdcom:"+sen.s_identify);
+                        console.log("dqsen:"+sen.id);
                         $("#dqwdsen").val(sen.id);
                         if (parseInt(sen.numvalue) > 0) {
                             var value = parseInt(sen.numvalue) / 10;
@@ -655,7 +656,7 @@
                     }
                     if (trsdrs.length > 0) {
                         var trsd = trsdrs[0];
-                        $("#trsdcom").val(trsd.identify);
+                        $("#trsdcom").val(trsd.s_identify);
                         $("#trsdsen").val(trsd.id);
                         if (parseInt(trsd.numvalue) > 0) {
                             var value = parseInt(trsd.numvalue) / 10;

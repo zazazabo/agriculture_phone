@@ -64,8 +64,9 @@
 
         <script>
             var lang = '${param.lang}';//'zh_CN';
-            var u_name = "${param.name}";
+            var u_name = parent.parent.getusername();
             var o_pid = "${param.pid}";
+            var uid = "${param.userId}";
             $(function () {
                 $('#gravidaTable').bootstrapTable({
                     //url: 'login.project.queryProject.action?pid=' + userporject,
