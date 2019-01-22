@@ -484,16 +484,23 @@
 
             //搜索
             function  search() {
-                var obj = {};
-                var busu = $("#busu").val();
-                if (busu != "-1") {
-                    obj.deplayment = busu;
-                }
-                obj.l_comaddr = $("#identify1").val();
+
+
+                var fmobj = $("#form1").serializeObject();
+                console.log(fmobj);
+
+//                var obj = {};
+//
+//                return false;
+//                var busu = $("#busu").val();
+//                if (busu != "-1") {
+//                    obj.deplayment = busu;
+//                }
+//                obj.l_comaddr = $("#identify1").val();
                 var opt = {
                     url: "sensor.sensorform.getSensorList.action",
                     silent: false,
-                    query: obj
+                    query: fmobj
                 };
                 $("#gravidaTable").bootstrapTable('refresh', opt);
             }
@@ -772,10 +779,12 @@
                                     return  '湿度';
                                 } else if (value == "3") {
                                     return  '开关';
-                                }else if (value == "4") {
+                                } else if (value == "4") {
                                     return  '风速';
-                                }else if (value == "5") {
+                                } else if (value == "5") {
                                     return  '风向';
+                                }else if (value == "6") {
+                                    return  '光';
                                 }
                             }
                         }, {
@@ -840,7 +849,7 @@
                             sortOrder: params.order,
                             type_id: "1",
                             pid: "${param.pid}",
-                            l_comaddr: $("#l_comaddr2").combobox('getValue')
+                            identify: $("#identify").val()
 //                            l_comaddr: $("#l_comaddr2").val()
                         };   
                         return temp;  
@@ -931,6 +940,7 @@
                     onSelect: function (record) {
                         console.log(record);
                         $("#identify1").val(record.identify);
+                        $("#identify").val(record.identify);
                         var obj = {};
                         obj.identify = record.identify;
                         obj.pid = "${param.pid}";
@@ -1123,7 +1133,7 @@
                                     </td>
                                     <td >
                                         <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px; width: 80px;">
-                                            <option value ="-1">全部</option>
+                                            <option value ="">全部</option>
                                             <option value="1">已部署</option>     
                                             <option value="0">未部署</option> 
                                         </select>
@@ -1164,71 +1174,12 @@
 
 
 
-
-
-                <!--                    <div style="  margin-top: 10px; align-content:  center;">
-                                        <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px;">
-                                            <button class="btn btn-success btn-sm ctrol"   onclick="search()" data-toggle="modal" data-target="#pjj33" id="add">
-                                                <span class="glyphicon glyphicon-pencil"></span>筛选
-                                            </button>
-                                            <button class="btn btn-primary btn-sm ctrol" onclick="deploySensor()"   id="xiugai1">
-                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;部署
-                                            </button>
-                                            <button class="btn btn-danger btn-sm ctrol" onclick="removeSensor()" id="shanchu">
-                                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;移除
-                                            </button>    
-                                        </div>  
-                                    </div>-->
-
             </div>
-            <!--                                       <div id="cz">
-                                        <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
-                                            筛选
-                                        </button>
-                    
-                                        <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
-                    
-                                        <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
-                                    </div>-->
 
         </div>
 
     </div>
 
-
-
-
-    <!--        <form id="formsearch">
-                <div style=" margin-left: 10px; margin-top: 10px; align-content:  center">
-                    <div id="selectlist">
-                        <span style="margin-left:10px;">
-                            网关名称
-                            &nbsp;</span>
-                        <span class="menuBox">
-                            <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" data-options="editable:true,valueField:'id', textField:'text' " />
-                        </span>  
-    
-                        <span style="margin-left:5px;">
-                            部署情况
-                            &nbsp;</span>
-                        <select class="easyui-combobox" name="deplayment"  id="busu" style=" height: 30px">
-                            <option value ="-1">全部</option>
-                            <option value="1">已部署</option>     
-                            <option value="0">未部署</option> 
-                        </select>
-                    </div>
-                    <div id="cz">
-                        <button  type="button" style="margin-left:20px;" onclick="search()" class="btn btn-success btn-sm">
-                            筛选
-                        </button>
-    
-                        <button style="margin-left:10px;" id="btndeploySensor" onclick="deploySensor()" type="button" class="btn btn-success btn-sm">部署</button>
-    
-                        <button style="margin-left:10px;" id="btnremoveSensor" type="button" onclick="removeSensor()" class="btn btn-success btn-sm">移除</button>
-                    </div>
-    
-                </div>
-            </form>-->
     <div class="btn-group zuheanniu" id="zuheanniu" style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
         <button class="btn btn-success  btn-sm  ctrol"  onclick="showDialog();" data-toggle="modal" data-target="#pjj33" id="add">
             <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加
@@ -1252,14 +1203,7 @@
             导出Excel
         </button>
     </div>
-    <!--        <div class="btn-group"  style="float:left;position:relative;z-index:100; margin-left: 10px; margin-top: 10px;">
-                <button class="btn btn-success ctrol"  onclick="addshow()">
-                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;添加到首页显示
-                </button>
-                <button class="btn btn-danger ctrol" onclick="removeshow();">
-                    <span class="glyphicon glyphicon-trash"></span>&nbsp;移除首页显示
-                </button>
-            </div>-->
+
 
     <table id="gravidaTable" style="width:100%;" class="text-nowrap table table-hover table-striped">
     </table>
@@ -1314,6 +1258,7 @@
                                 <option value="3" >开关</option>  
                                 <option value="4" >风速</option>  
                                 <option value="5" >风向</option>  
+                                <option value="6" >光照度</option>  
                             </select>
                         </td>
 
@@ -1381,6 +1326,7 @@
                                 <option value="3" >开关</option> 
                                 <option value="4" >风速</option>  
                                 <option value="5" >风向</option>  
+                                <option value="6" >光照度</option>  
                             </select>
 
                         </td>  

@@ -65,8 +65,8 @@
                     layerAler("请勾选表格");
 
                 }
-                
-                var comaddr=$("#l_comaddr").combobox('getValue');
+
+                var comaddr = $("#l_comaddr").combobox('getValue');
                 var ele = selects[0];
 
                 if (ele.errflag == "1") {
@@ -85,7 +85,7 @@
                     var data = buicode2(vv);
                     console.log(data);
                     dealsend2("10", data, "dealfaultCB", comaddr, 0, ele.id, info, "${param.action}");
-                    addlogon(u_name, "处理故障",o_pid, "传感器监视", "处理【"+ele.name+"】",ele.s_identify);
+                    addlogon(u_name, "处理故障", o_pid, "传感器监视", "处理【" + ele.name + "】", ele.s_identify);
                 } else {
                     layerAler("请处理有故障的传感器");
                 }
@@ -124,7 +124,7 @@
                                 + regpos + "<br>" + "工作模式:" + strw1 + "<br>" + "通信故障参数:"
                                 + strw3 + "<br>" + "探测值：" + dataval + "<br>" + "是否有故障:" + faulttip + "<br>"
                                 + "通信故障出错次数:" + faultnum);
- 
+
                         var o = {errflag: fault, errcount: faultnum, numvalue: dataval, id: obj.param};
                         $.ajax({async: false, url: "sensor.sensorform.upvalue.action", type: "get", datatype: "JSON", data: o,
                             success: function (data) {
@@ -170,11 +170,73 @@
             }
 
             function tourSensor() {
-                var comaddr=$("#l_comaddr").combobox('getValue');
+                var comaddr = $("#l_comaddr").combobox('getValue');
                 var vv = [];
                 dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
             }
+
+            function getDirection(val)
+            {
+                console.log(val);
+                var str = "";
+                switch (val) {
+                    case  0:
+                        str = "北"
+                        break;
+                    case 45:
+                        str = "东北"
+                        break;
+                    case 90:
+                        str = "东"
+                        break;
+                    case 135:
+                        str = "东南"
+                        break;
+                    case 180:
+                        str = "南"
+                        break;
+                    case 225:
+                        str = "西南"
+                        break;
+                    case 270:
+                        str = "西"
+                        break;
+                    case 315:
+                        str = "西北"
+                        break;
+                        defaul:
+                                break;
+                }
+
+                if (str == "") {
+                    if (val > 0 && val < 45) {
+                        str = "东北偏北";
+                    } else if (val > 45 && val < 90) {
+                        str = "东北偏东";
+                    } else if (val > 90 && val < 135) {
+                        str = "东南偏东";
+                    } else if (val > 135 && val < 180) {
+                        str = "东南偏南";
+                    } else if (val > 180 && val < 225) {
+                        str = "西南偏南";
+                    } else if (val > 225 && val < 270) {
+                        str = "西南偏西";
+                    } else if (val > 270 && val < 315) {
+                        str = "西北偏西";
+                    } else if (val > 315 && val < 360) {
+                        str = "西北偏北";
+                    }
+
+                }
+                console.log(str);
+
+                return  str;
+            }
+
+
             $(function () {
+
+
                 $('#gravidaTable').bootstrapTable({
                     // showExport: true, //是否显示导出
                     exportDataType: "basic", //basic', 'a
@@ -220,6 +282,13 @@
                                     } else {
                                         return "开";
                                     }
+                                } else if (row.type == 5) {
+
+
+                                    var v1 = parseFloat(value);
+                                    var fx = getDirection(v1);
+                                    //if(v1>=337.5&&v1<=360)
+                                    return fx + ":" + value / 10 + "";
                                 } else {
                                     return value / 10;
                                 }
@@ -241,8 +310,12 @@
                                     return  "%RH";
                                 } else if (row.type == 3) {
                                     return  "开/关";
-                                }else if (row.type == 4) {
+                                } else if (row.type == 4) {
                                     return  "m/s";
+                                } else if (row.type == 5) {
+                                    return  "方位";
+                                } else if (row.type == 6) {
+                                    return  "Lux";
                                 }
                             }
                         }, {
@@ -253,7 +326,6 @@
                             valign: 'middle',
                             formatter: function (value, row, index, field) {
                                 var str = value;
-                                console.log(row);
                                 if (row.online == "1") {
                                     if (row.errflag == "1") {
                                         var str = '<img   src="img/fault.png" onclick="readSensor(\'' + row.comaddr + '\',\'' + row.infonum + '\',\'' + row.id + '\'' + ')"/>';
@@ -269,7 +341,7 @@
                                 return  str;
                             }
                         }],
-                    clickToSelect: true,
+                    clickToSelect: false,
                     singleSelect: true,
                     search: true,
                     locale: 'zh-CN', //中文支持,
@@ -288,8 +360,9 @@
                     },
                     //服务器url
                     queryParams: function (params)  {   //配置参数 
+                        var search=encodeURI(params.search);
                         var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
-                            search: params.search,
+                            search: search,
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
@@ -332,38 +405,7 @@
                             query: obj,
                             silent: false
                         };
-                        $("#gravidaTable").bootstrapTable('refresh', opt);
-
-
-
-
-
-
-
-
-
-//                        var vv = [];
-//                        var obj = {};
-//                        obj.l_comaddr = record.id;
-//                        obj.pid = "${param.pid}";
-//                        var opt = {
-//                            url: "monitor.monitorForm.getSensorList.action",
-//                            silent: true,
-//                            query: obj
-//                        };
-//                        $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "get", datatype: "JSON", data: {identify: l_comaddr},
-//                            success: function (data) {
-//                                var arrlist = data.rs;
-//                                if (arrlist.length > 0) {
-//                                    comaddr = arrlist[0].comaddr;
-//                                }
-//                            },
-//                            error: function () {
-//                                alert("提交失败111！");
-//                            }
-//                        });
-//                        dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
-//                        $("#gravidaTable").bootstrapTable('refresh', opt);                                                  
+                        $("#gravidaTable").bootstrapTable('refresh', opt);                     
                     }
                 });
             });
@@ -434,7 +476,7 @@
     <body id="panemask">
         <div>
             <div  style=" width: 100% ; margin-top: 10px;" >
-                <span style=" margin-left:3%;">网关名称：</span>
+                <span style=" margin-left:1%;">网关名称:</span>
                 <input type="hidden" name="identify" id="identify" value=""/>
                 <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px" 
                        data-options="editable:true,valueField:'id', textField:'text' " />

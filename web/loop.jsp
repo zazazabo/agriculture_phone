@@ -478,7 +478,6 @@
                 for (var i = 0; i < data.length; i++) {
                     v = v + sprintf("%02x", data[i]) + " ";
                 }
-                console.log(v);
                 if (data[1] == 0x03) {
                     layerAler("读取成功");
                     var len = data[2];
@@ -828,7 +827,6 @@
                     return;
                 }
                 var select = selects[0];
-                console.log(select);
                 
                 var o1 = $("#formsearch").serializeObject();
                 o1.pid = "${param.pid}";
@@ -1108,7 +1106,6 @@
                         row.id = row.id;
                         row.text = v;
                         var opts = $(this).combobox('options');
-                        console.log(row[opts.textField]);
                         return row[opts.textField];
                     },
                     onLoadSuccess: function (data) {

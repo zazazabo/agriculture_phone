@@ -636,15 +636,15 @@
                     var up = "#up" + (i + 1).toString();
                     var down = "#down" + (i + 1).toString();
                     $(up).numberspinner({
-                        min: 0,
+                        min: -10000,
                         max: 10000,
                         icrement: 1,
                         editable: true
                     })
 
                     $(down).numberspinner({
-                        min: 0,
-                        max: 10000,
+                        min: -1000,
+                        max: 9000,
                         icrement: 1,
                         editable: true
                     })
@@ -918,10 +918,10 @@
                     } else if (val == 1) {
                         vv.push(obj.info >> 8 & 0xff)   //寄存器变量值
                         vv.push(obj.info & 0xff);
-                        vv.push(obj.down >> 8 & 0xff);   //下限
-                        vv.push(obj.down & 0xff);
-                        vv.push(obj.up >> 8 & 0xff);//上限
-                        vv.push(obj.up & 0xff);
+                        vv.push(obj.down*10 >> 8 & 0xff);   //下限
+                        vv.push(obj.down*10 & 0xff);
+                        vv.push(obj.up*10 >> 8 & 0xff);//上限
+                        vv.push(obj.up*10 & 0xff);
                     }
 
                     vv.push(0);
