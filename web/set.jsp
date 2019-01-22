@@ -85,7 +85,7 @@
                         console.log("find gayway");
                         console.log(data[i]);
                         if (data[i].online != "1") {
-                            addlogon(u_name, "强制清除网关", o_pid, "网关参数设置", "强制清除网关【" +$("#l_comaddr").combobox('getText') + "】信息");
+                            addlogon(u_name, "强制清除网关", o_pid, "网关参数设置", "强制清除网关【" + $("#l_comaddr").combobox('getText') + "】信息");
                             $.ajax({async: false, url: "gayway.GaywayForm.EmptyGayWay.action", type: "get", datatype: "JSON", data: obj,
                                 success: function (data) {
                                     console.log(data);
@@ -151,6 +151,7 @@
 
                         v = v + sprintf("%02x", data[i]) + " ";
                     }
+                    console.log(v);
                     var site = data[3] * 256 + data[4];
                     console.log(site, obj.val);
                     if (site == obj.val) {
@@ -158,6 +159,7 @@
                     }
                 }
             }
+
             function  readsite() {
                 var obj = $("#form1").serializeObject();
                 if (obj.l_comaddr == "") {
@@ -172,7 +174,8 @@
                 }
                 var oldsite = parseInt(obj1.oldsite);
                 var newsite = parseInt(obj1.newsite);
-                var pos = 0x3e;
+                var pos = 0x100;
+//                var pos = 0x3e;
                 if (oldsite > 256) {
                     layerAler("站号最大是256");
                 }
@@ -183,7 +186,7 @@
                 vv.push(0);
                 vv.push(1);
                 var data = buicode2(vv);
-                dealsend2("10", data, "readsiteCB", obj.l_comaddr, 0, 0, oldsite, "${param.action}");
+                dealsend2("03", data, "readsiteCB", obj.l_comaddr, 0, 0, oldsite, "${param.action}");
             }
 
 
@@ -219,19 +222,29 @@
                 }
                 var oldsite = parseInt(obj1.oldsite);
                 var newsite = parseInt(obj1.newsite);
-                var pos = 0x3e;
+                var pos = 0x100;
                 if (oldsite > 256 || newsite > 256) {
                     layerAler("站号最大是256");
                 }
-                vv.push(oldsite);
-                vv.push(0x10);
+
+
+                vv.push(0xFD);
+                vv.push(0x6);
                 vv.push(pos >> 8 & 0xff);
                 vv.push(pos & 0xff);
                 vv.push(0);
                 vv.push(1);
-                vv.push(2);
-                vv.push(newsite >> 8 & 0xff);
-                vv.push(newsite & 0xff);
+    
+
+//                vv.push(oldsite);
+//                vv.push(0x10);
+//                vv.push(pos >> 8 & 0xff);
+//                vv.push(pos & 0xff);
+//                vv.push(0);
+//                vv.push(1);
+//                vv.push(2);
+//                vv.push(newsite >> 8 & 0xff);
+//                vv.push(newsite & 0xff);
                 var data = buicode2(vv);
                 console.log(data);
                 addlogon(u_name, "修改", o_pid, "网关参数设置", "修改网关【" +$("#l_comaddr").combobox('getText') + "】传感器站号");
@@ -279,7 +292,7 @@
                 vv.push(val >> 8 & 0xff);
                 vv.push(val & 0xff);
                 var data = buicode2(vv);
-                addlogon(u_name, "刷新控制", o_pid, "网关参数设置", "刷新网关【" +$("#l_comaddr").combobox('getText') + "】控制");
+                addlogon(u_name, "刷新控制", o_pid, "网关参数设置", "刷新网关【" + $("#l_comaddr").combobox('getText') + "】控制");
                 dealsend2("10", data, "refreshControlCB", obj.l_comaddr, 0, 0, 3901, "${param.action}");
             }
 
@@ -399,7 +412,7 @@
                 vv.push(t >> 8 & 0xff);
                 vv.push(t & 0xff);
                 var data = buicode2(vv);
-                addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" +$("#l_comaddr").combobox('getText') + "】巡测时间");
+                addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" + $("#l_comaddr").combobox('getText') + "】巡测时间");
                 dealsend2("10", data, "setCheckTimeCB", obj.l_comaddr, 0, 0, 3900, "${param.action}");
             }
 
@@ -418,7 +431,7 @@
                     var low = infonum & 0xff;
                     if (data[2] == high && data[3] == low) {
                         layerAler("初始化成功");
-                        var o2 = {pid: "${param.pid}", comaddr: obj.comaddr, l_deplayment: 0,identify:$("#identify").val()};
+                        var o2 = {pid: "${param.pid}", comaddr: obj.comaddr, l_deplayment: 0, identify: $("#identify").val()};
                         $.ajax({async: false, url: "gayway.GaywayForm.ClearData.action", type: "get", datatype: "JSON", data: o2,
                             success: function (data) {
                                 var arrlist = data.rs;
@@ -458,7 +471,7 @@
                 vv.push(0);
                 vv.push(1);
                 var data = buicode2(vv);
-                addlogon(u_name, "传感器复位", o_pid, "网关参数设置", "网关【" +$("#l_comaddr").combobox('getText') + "】");
+                addlogon(u_name, "传感器复位", o_pid, "网关参数设置", "网关【" + $("#l_comaddr").combobox('getText') + "】");
                 dealsend2("10", data, "initDataCB", obj.l_comaddr, 0, 0, 3928, "${param.action}");
             }
 
@@ -589,7 +602,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" +$("#l_comaddr").combobox('getText') + "】时间");
+                addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" + $("#l_comaddr").combobox('getText') + "】时间");
                 dealsend2("10", data, "setTimeNowCB", comaddr, 1, 0, 3920, "${param.action}");
 
             }
@@ -751,7 +764,7 @@
                     }
 
 
-                    addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" +$("#l_comaddr").combobox('getText') + "】主站信息");
+                    addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" + $("#l_comaddr").combobox('getText') + "】主站信息");
                     dealsend2("@", strtosend, "setRemoteAddrCB", obj.l_comaddr, 0, 0, 0, "${param.action}");
 
                 } else if (obj2.sitetype == "0") {
@@ -947,7 +960,7 @@
                     <div class="row" style=" padding-bottom: 20px;" >
                         <div class="col-xs-12">
                             <form id="form1">
-                                 <input type="hidden" value="" name="identify" id="identify" />
+                                <input type="hidden" value="" name="identify" id="identify" />
                                 <table style="border-collapse:separate;  border-spacing:0px 10px;border: 1px solid #16645629;">
                                     <tbody>
                                         <tr>
@@ -956,7 +969,7 @@
                                                 <span style="margin-left:10px;" >网关</span>&nbsp;
 
                                                 <span class="menuBox">
-                                                   
+
                                                     <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style=" height: 30px" 
                                                            data-options="editable:true,valueField:'id', textField:'text' " />
                                                 </span>  
@@ -1185,27 +1198,7 @@
                                 <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629;">
                                     <tbody>
                                         <tr>
-                                            <td> <span  style=" margin-left: 2px;"  >旧站号</span></td>
-                                            <td>
-                                                <input id="oldsite"  class="form-control" name="oldsite" style="width:50px;"  placeholder="站号" type="text"> 
-                                            </td>
-                                            <td>
-                                                <span  >&emsp;新站号:</span>
-                                            </td>
-                                            <td>
-                                                <input id="newsite"  class="form-control" name="newsite" style="width:50px;"  placeholder="站号" type="text">
-                                            </td>
-                                            <td>
-                                                <button  type="button" onclick="editsite()"  class="btn btn-success btn-sm"><span >修改</span>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button  type="button" onclick="readsite()"  class="btn btn-success btn-sm"><span >读取</sspan>
-                                                </button>
-                                                &emsp;
-                                            </td>
 
-                                            </td>
                                         </tr>
 
                                     </tbody>
