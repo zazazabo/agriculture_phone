@@ -168,25 +168,21 @@
                 }
                 var obj1 = $("#form2").serializeObject();
                 var vv = [];
-                if (isNumber(obj1.oldsite) == false) {
+                if (isNumber(obj1.newsite) == false) {
                     layerAler("站号必须是数字");
                     return;
                 }
-                var oldsite = parseInt(obj1.oldsite);
+
                 var newsite = parseInt(obj1.newsite);
                 var pos = 0x100;
-//                var pos = 0x3e;
-                if (oldsite > 256) {
-                    layerAler("站号最大是256");
-                }
-                vv.push(oldsite);
+                vv.push(newsite);
                 vv.push(0x03);
                 vv.push(pos >> 8 & 0xff);
                 vv.push(pos & 0xff);
                 vv.push(0);
                 vv.push(1);
                 var data = buicode2(vv);
-                dealsend2("03", data, "readsiteCB", obj.l_comaddr, 0, 0, oldsite, "${param.action}");
+                dealsend2("03", data, "readsiteCB", obj.l_comaddr, 0, 0, newsite, "${param.action}");
             }
 
 
@@ -216,14 +212,14 @@
                 }
                 var obj1 = $("#form2").serializeObject();
                 var vv = [];
-                if (isNumber(obj1.oldsite) == false || isNumber(obj1.newsite) == false) {
+                if (isNumber(obj1.newsite) == false) {
                     layerAler("站号必须是数字");
                     return;
                 }
-                var oldsite = parseInt(obj1.oldsite);
+
                 var newsite = parseInt(obj1.newsite);
                 var pos = 0x100;
-                if (oldsite > 256 || newsite > 256) {
+                if (newsite > 256) {
                     layerAler("站号最大是256");
                 }
 
@@ -232,9 +228,9 @@
                 vv.push(0x6);
                 vv.push(pos >> 8 & 0xff);
                 vv.push(pos & 0xff);
-                vv.push(0);
-                vv.push(1);
-    
+                vv.push(newsite >> 8 & 0xff);
+                vv.push(newsite & 0xff);
+
 
 //                vv.push(oldsite);
 //                vv.push(0x10);
@@ -247,7 +243,7 @@
 //                vv.push(newsite & 0xff);
                 var data = buicode2(vv);
                 console.log(data);
-                addlogon(u_name, "修改", o_pid, "网关参数设置", "修改网关【" +$("#l_comaddr").combobox('getText') + "】传感器站号");
+                addlogon(u_name, "修改", o_pid, "网关参数设置", "修改网关【" + $("#l_comaddr").combobox('getText') + "】传感器站号");
                 dealsend2("10", data, "editsiteCB", obj.l_comaddr, 0, 0, pos, "${param.action}");
             }
             function refreshControlCB(obj) {
@@ -1164,22 +1160,22 @@
                                 <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629;">
                                     <tbody>
                                         <tr>
-                                            <td> <span  style=" margin-left: 2px;"  >旧站号</span></td>
+<!--                                            <td> <span  style=" margin-left: 2px;"  >旧站号</span></td>
                                             <td>
                                                 <input id="oldsite"  class="form-control" name="oldsite" style="width:50px;"  placeholder="站号" type="text"> 
-                                            </td>
+                                            </td>-->
                                             <td>
-                                                <span  >&emsp;新站号:</span>
+                                                <span  >&emsp;站号:</span>
                                             </td>
                                             <td>
                                                 <input id="newsite"  class="form-control" name="newsite" style="width:50px;"  placeholder="站号" type="text">
                                             </td>
                                             <td>
                                                 <button  type="button" onclick="editsite()"  class="btn btn-success btn-sm"><span >修改</sspan>
-                                                </button>
+                                                </button> 
                                             </td>
                                             <td>
-                                                <button  type="button" onclick="readsite()"  class="btn btn-success btn-sm"><span >读取</sspan>
+                                                <button  type="button" onclick="readsite()"  class="btn btn-success btn-sm"><span >测试站号</sspan>
                                                 </button>
                                                 &emsp;
                                             </td>
