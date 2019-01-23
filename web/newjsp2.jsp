@@ -121,7 +121,7 @@
                 &nbsp;
             </div>
 
-            <div id="Day"  class="col-xs-12 col-sm-6 col-md-5 col-lg-4 ">
+            <div id="Day"  class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
                 <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
                     <label for="dtp_input2" class="control-label" style="float: left;"></label>
                     <input id="dtp_input2" value="" type="hidden">
@@ -265,6 +265,13 @@
         $(function () {
             $("#l_comaddr2").combobox({
                 url: "homePage.gayway.getComaddr.action?pid=" + pid,
+                loadFilter: function (data) {
+                            var obj = {};
+                            obj.id = '';
+                            obj.text = '--全部--';
+                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                            return  data;
+                        },
 //                formatter: function (row) {
 //                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
 //                    var v = row.text + v1;
@@ -280,7 +287,7 @@
 //                        }
 //                        $(this).combobox('select', data[0].id);
 //                    }
-                    $(this).combobox('select', data[0].id);
+                   // $(this).combobox('select', data[0].id);
 
 
                 },
@@ -532,7 +539,10 @@
         function  select() {
             var type = $("#sensorlist").val();
             var obj2 = {};
-            obj2.comaddr = $("#l_comaddr2").val();
+            obj2.pid = pid;
+            if($("#l_comaddr2").val() !=""){
+               obj2.comaddr = $("#l_comaddr2").val();
+            }
             var statr = $("#sday").val();
             var end = $("#eday").val();
             if (statr != "") {

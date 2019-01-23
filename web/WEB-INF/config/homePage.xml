@@ -23,22 +23,24 @@
         
         <xhandle desc="根据条件查询传感器15分钟" id="getSensorListBytj" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where name in (select name from t_sensor where deplayment = 1) and type !=3 and @CONDITION  " var="sdrs">
-                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
+                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr AND @pid">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="identify =':comaddr'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
             <xsql id="a2" list="true" page="true" tpe="SQL" tpl=" select distinct  CONVERT(varchar(16), collectime, 120) as collectime from t_sensorecord where  type !=3 and @CONDITION  " var="xdata">
-                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
+                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr AND @pid">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="identify =':comaddr'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
@@ -46,44 +48,48 @@
         </xhandle>
         <xhandle desc="根据条件查询传感器30分钟" id="getSensorListBy30" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where name in (select name from t_sensor where deplayment = 1) and (DATEPART(mi,collectime) =00  or DATEPART(mi,collectime) =30) and type !=3  and @CONDITION  " var="sdrs">
-                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
+                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr AND @pid">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="identify =':comaddr'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
             <xsql id="a2" list="true" page="true" tpe="SQL" tpl=" select distinct CONVERT(varchar(16), collectime, 120) as collectime from t_sensorecord where (DATEPART(mi,collectime) =00  or DATEPART(mi,collectime) =30) and type !=3 and @CONDITION  " var="xdata">
-                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
+                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr AND @pid">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="identify =':comaddr'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
         </xhandle>
         <xhandle desc="根据条件查询传感器1小时" id="getSensorListBy00" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type,collectime from t_sensorecord where name in (select name from t_sensor where deplayment = 1) and DATEPART(mi,collectime) =00  and type !=3  and @CONDITION  " var="sdrs">
-                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
+                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr AND @pid">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="identify =':comaddr'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>
             <xsql id="a2" list="true" page="true" tpe="SQL" tpl=" select distinct  CONVERT(varchar(16), collectime, 120) as collectime from t_sensorecord where DATEPART(mi,collectime) =00   and type !=3 and @CONDITION  " var="xdata">
-                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
+                <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr AND @pid">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
                     <xfltpara id="end" nrp="1=1" para="end" sql="collectime &lt;=  ':end 23:59:59' ">
                     </xfltpara>
-                    <xfltpara id="comaddr" nrp="1=2" para="comaddr" sql="identify =':comaddr'order by collectime asc"></xfltpara>
+                    <xfltpara id="comaddr" nrp="1=1" para="comaddr" sql="identify =':comaddr'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by collectime asc"></xfltpara>
                 </xflt>
                
             </xsql>

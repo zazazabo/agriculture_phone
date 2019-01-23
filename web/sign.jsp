@@ -175,7 +175,7 @@
                     风向
                 </div>
                 <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    <span id="fxvalue">0</span>º
+                    <span id="fxvalue"></span>
                 </div>
             </div>
         </div>
@@ -855,7 +855,7 @@
                                 $("#fxcom").val(rsv.s_identify);
                                 $("#fxsen").val(rsv.id);
                                 var v1 = parseFloat(rsv.numvalue);
-                                getDirection(v1);
+                                 $("#fxvalue").html(getDirection(v1));
 //                                if (parseInt(rsv.numvalue) > 0) {
 //                                    var value = parseInt(rsv.numvalue);
 //                                    $("#fxvalue").html(value);
@@ -934,8 +934,7 @@
 
             }
             console.log(str);
-
-            $("#fxvalue").html(str+":"+val);
+            return  str;
         }
 
         function size() {

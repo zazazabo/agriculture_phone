@@ -181,28 +181,28 @@
                 var str = "";
                 switch (val) {
                     case  0:
-                        str = "北"
+                        str = "北";
                         break;
                     case 45:
-                        str = "东北"
+                        str = "东北";
                         break;
                     case 90:
-                        str = "东"
+                        str = "东";
                         break;
                     case 135:
-                        str = "东南"
+                        str = "东南";
                         break;
                     case 180:
-                        str = "南"
+                        str = "南";
                         break;
                     case 225:
-                        str = "西南"
+                        str = "西南";
                         break;
                     case 270:
-                        str = "西"
+                        str = "西";
                         break;
                     case 315:
-                        str = "西北"
+                        str = "西北";
                         break;
                         defaul:
                                 break;

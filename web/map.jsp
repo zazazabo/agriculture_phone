@@ -2491,6 +2491,24 @@
                                     } else {
                                         val = "断开";
                                     }
+                                }else if( sensor.type =="4"){
+                                    var num;
+                                    if (sensor.numvalue > 0) {
+                                        num = sensor.numvalue / 10;
+                                    } else {
+                                        num = sensor.numvalue;
+                                    }
+                                    val = num.toString() + "m/s";
+                                }else if(sensor.type =="5"){
+                                    val = getDirection(sensor.numvalue)+":"+sensor.numvalue+"°";;
+                                }else if( sensor.type =="6"){
+                                    var num;
+                                    if (sensor.numvalue > 0) {
+                                        num = sensor.numvalue / 10;
+                                    } else {
+                                        num = sensor.numvalue;
+                                    }
+                                    val = num.toString() + "    lux";
                                 }
                                 p.innerHTML = name + ":      " + val;
                                 $("#textdiv2").append(p);
@@ -2534,14 +2552,32 @@
                                 } else {
                                     numvalue = sensor.numvalue + "%RH";
                                 }
-                            } else {
+                            } else if(sensor.type == 3) {
                                 type = "开关";
                                 if (sensor.numvalue != null && sensor.numvalue != 0) {
                                     numvalue = "开";
                                 } else {
                                     numvalue = "关";
                                 }
-                            }
+                            } else if (sensor.type == 4) {
+                                type = "风速";
+                                if (sensor.numvalue > 0) {
+                                    numvalue = sensor.numvalue / 10 + "m/s";
+                                } else {
+                                    numvalue = sensor.numvalue + "m/s";
+                                }
+                            } else if (sensor.type == 5) {
+                                type = "风向";
+                                numvalue = getDirection(sensor.numvalue)+":"+sensor.numvalue+"°";
+                                
+                            } else if (sensor.type == 6) {
+                                type = "照度";
+                                if (sensor.numvalue > 0) {
+                                    numvalue = sensor.numvalue / 10 + "lux";
+                                } else {
+                                    numvalue = sensor.numvalue + "lux";
+                                }
+                            }   
                             var wgname;
                             $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: obj.s_identify},
                                 success: function (data) {
@@ -2570,6 +2606,63 @@
 
 
 
+            }
+            
+            //计算风向
+            function getDirection(val)
+            {
+                var str = "";
+                switch (val) {
+                    case  0:
+                        str = "北";
+                        break;
+                    case 45:
+                        str = "东北";
+                        break;
+                    case 90:
+                        str = "东";
+                        break;
+                    case 135:
+                        str = "东南";
+                        break;
+                    case 180:
+                        str = "南";
+                        break;
+                    case 225:
+                        str = "西南";
+                        break;
+                    case 270:
+                        str = "西";
+                        break;
+                    case 315:
+                        str = "西北";
+                        break;
+                        defaul:
+                                break;
+                }
+
+                if (str == "") {
+                    if (val > 0 && val < 45) {
+                        str = "东北偏北";
+                    } else if (val > 45 && val < 90) {
+                        str = "东北偏东";
+                    } else if (val > 90 && val < 135) {
+                        str = "东南偏东";
+                    } else if (val > 135 && val < 180) {
+                        str = "东南偏南";
+                    } else if (val > 180 && val < 225) {
+                        str = "西南偏南";
+                    } else if (val > 225 && val < 270) {
+                        str = "西南偏西";
+                    } else if (val > 270 && val < 315) {
+                        str = "西北偏西";
+                    } else if (val > 315 && val < 360) {
+                        str = "西北偏北";
+                    }
+
+                }
+
+                return  str;
             }
 
             //回路标注点击事件

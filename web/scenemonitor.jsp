@@ -411,58 +411,53 @@
 
 
 
-        <div id="content" class="row-fluid">
-            <div >
+        <div id="content" class="row-fluid"  style=" margin-left: 30px;">
 
-                <div id="content" class="row-fluid">
-
-                    <div class="row">
-                        <form id="form1" >
-                            <input type="hidden" name="identify" id="identify" value=""/>
-                            <div class="col-xs-12 col-sm-4 col-md-3" style=" ">
-                                <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
-                                    <tbody>
-                                        <tr>
-                                            <td>网关名称：</td>
-                                            <td style=" padding-left: 3px;">
-                                                <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
-                                    <tbody>
-                                        <tr>
-                                            <td>&nbsp;场景控制</td>
-                                            <td style=" padding-left: 3px;">
-
-                                                <select id="scenenum" class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="scenenum" style="width:100px;  height: 30px">
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
-                                                    设置
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
-                                                    恢复自动运行
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table> 
-                            </div>
-                        </form>
-                        <div style=" width: 100%;">
-                            <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
-                            </table>
-                        </div>
+            <div class="row">
+                <form id="form1" >
+                    <input type="hidden" name="identify" id="identify" value=""/>
+                    <div class="col-xs-12 col-sm-4 col-md-3" style=" ">
+                        <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+                                    <td>网关名称：</td>
+                                    <td style=" padding-left: 3px;">
+                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+                                    <td>&nbsp;场景控制</td>
+                                    <td style=" padding-left: 3px;">
 
+                                        <select id="scenenum" class="easyui-combobox" data-options="editable:false,valueField:'id', textField:'text'" id="info11" name="scenenum" style="width:100px;  height: 30px">
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm">
+                                            设置
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
+                                            恢复自动运行
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
+                </form>
+                <div style=" width: 100%;">
+                    <table id="table0" style="width:100%; " class="text-nowrap table table-hover table-striped">
+                    </table>
                 </div>
             </div>
+        </div>
     </body>
 </html>
