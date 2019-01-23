@@ -259,17 +259,6 @@
                             }
 
                         },
-//                        {
-//                            field: 'p_comaddr',
-//                            title: '网关名称',
-//                            width: 25,
-//                            align: 'center',
-//                            valign: 'middle',
-//                            colspan: 1,
-//                            formatter: function (value, row, index, field) {
-//                                    console.log(row);
-//                            }
-//                        },
                         {
                             field: 'p_name',
                             title: '场景名', //信息点
@@ -410,6 +399,7 @@
                             p_type: 1,
                             p_show: 1,
                             type_id: "1",
+                            identify:$("#identify").val(),
                             pid: "${param.pid}"  
                         };      
                         return temp;  

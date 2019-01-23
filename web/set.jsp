@@ -1132,9 +1132,9 @@
                                             <td>
                                                 <span  style=" margin-right: 2px;">刷新控制</span>
                                                 <select class="easyui-combobox" id="controlval" name="controlval" style="width:150px; height: 30px">
-                                                    <option value="0">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>   
+                                                    <option value="0">互斥模式禁用</option>
+                                                    <option value="1">互斥模式启用</option>
+                                                    <option value="2">互斥模式恢复原始值</option>   
                                                 </select>    
 
                                                 <!--<input id="checktime"  class="form-control" name="checktime" style="width:150px;"  placeholder="时间" type="text">-->
