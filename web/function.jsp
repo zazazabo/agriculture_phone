@@ -151,6 +151,20 @@
                                     } else {
                                         return "断开";
                                     }
+                                }else if(row.type == "4"){
+                                    if (parseInt(value) > 0) {
+                                        return (parseInt(value) / 10).toString() + "m/s";
+                                    } else {
+                                        return value + "m/s";
+                                    }
+                                }else if(row.type == "5"){     
+                                    return value + "°";
+                                }else if(row.type == "6"){
+                                    if (parseInt(value) > 0) {
+                                        return (parseInt(value) / 10).toString() + "lux";
+                                    } else {
+                                        return value + "lux";
+                                    }
                                 }
                             }
                         }

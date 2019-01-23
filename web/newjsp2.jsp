@@ -221,6 +221,7 @@
 //        }
         //湿度
         function echarts3(id, qxbs, xdata, data) {
+
             myChart3 = echarts.init(document.getElementById(id));
             option = {
                 title: {
@@ -230,10 +231,12 @@
                     trigger: 'axis'
                 },
                 legend: {
+                    x: 'center', // 'center' | 'left' | {number},
+                    y: 'top', // 'center' | 'bottom' | {number}
                     data: qxbs
                 },
                 grid: {
-                    left: '3%',
+                    left: '1%',
                     right: '4%',
                     bottom: '3%',
                     containLabel: true
@@ -256,7 +259,7 @@
                 },
                 series: functionNodname(data)
             };
-            myChart3.setOption(option,true);
+            myChart3.setOption(option, true);
         }
 
         $(function () {
@@ -277,7 +280,7 @@
 //                        }
 //                        $(this).combobox('select', data[0].id);
 //                    }
-                     $(this).combobox('select', data[0].id);
+                    $(this).combobox('select', data[0].id);
 
 
                 },
@@ -322,6 +325,10 @@
                             qxbstype.push(1);
                         } else if (sdrs[i].type == "2") {
                             qxbstype.push(2);
+                        } else if (sdrs[i].type == "4") {
+                            qxbstype.push(4);
+                        } else if (sdrs[i].type == "5") {
+                            qxbstype.push(5);
                         }
                     } else {
                         for (var j = 0; j < sdqxbs.length; j++) {
@@ -333,6 +340,12 @@
                                     qxbstype.push(1);
                                 } else if (sdrs[i].type == "2") {
                                     qxbstype.push(2);
+                                } else if (sdrs[i].type == "4") {
+                                    qxbstype.push(4);
+                                } else if (sdrs[i].type == "5") {
+                                    qxbstype.push(5);
+                                } else if (sdrs[i].type == "6") {
+                                    qxbstype.push(6);
                                 }
                             }
 
@@ -340,14 +353,15 @@
                     }
                 }
 
-//                for (var i = 0; i < sdrs.length; i = i + sdqxbs.length) {
-//
-//                   sdxdata.push(sdrs[i].times.substring(0, 5));
-//
-//                }
                 for (var i = 0; i < xdata.length; i++) {
                     // sdxdata.push(xdata[i].collectime);
-                    sdxdata.push(xdata[i].collectime.substring(10, 16));
+                    console.log(xdata[i].collectime.substring(11, 16).length);
+                    if(xdata[i].collectime.substring(11, 16) =="00:00"){
+                        sdxdata.push(xdata[i].collectime.substring(0, 10));
+                    }else{
+                        sdxdata.push(xdata[i].collectime.substring(11, 16)); 
+                    }
+                   
 
                 }
             }
@@ -357,7 +371,11 @@
                     var obj = {};
                     var wdvals = []; //温度数值数组
                     var sdvals = []; //温度数值数组
+                    var fsvals = []; //风速数值数组
+                    var fxvals = []; //风向数值数组
+                    var zdvals = []; //照度数值数组
                     for (var j = 0; j < sdrs.length; j++) {
+                        //温度
                         if (sdqxbs[i] == sdrs[j].name && sdrs[j].type == 1) {
                             var value = parseInt(sdrs[j].value);
                             if (value > 0) {
@@ -365,6 +383,7 @@
                             }
                             wdvals.push(value);
                         }
+                        //湿度
                         if (sdqxbs[i] == sdrs[j].name && sdrs[j].type == 2) {
                             var value = parseInt(sdrs[j].value);
                             if (value > 0) {
@@ -372,19 +391,43 @@
                             }
                             sdvals.push(value);
                         }
+                        //风速
+                        if (sdqxbs[i] == sdrs[j].name && sdrs[j].type == 4) {
+                            var value = parseInt(sdrs[j].value);
+                            if (value > 0) {
+                                value = (value / 10).toFixed(1);
+                            }
+                            fsvals.push(value);
+                        }
+                        //风向
+                        if (sdqxbs[i] == sdrs[j].name && sdrs[j].type == 5) {
+                            var value = parseInt(sdrs[j].value);
+                            if (value > 0) {
+                                value = (value / 10).toFixed(1);
+                            }
+                            fxvals.push(value);
+                        }
+                        
+                        //照度
+                        if (sdqxbs[i] == sdrs[j].name && sdrs[j].type == 6) {
+                            var value = parseInt(sdrs[j].value);
+                            if (value > 0) {
+                                value = (value / 10).toFixed(1);
+                            }
+                            zdvals.push(value);
+                        }
                     }
                     obj.name = sdqxbs[i];
                     if (qxbstype[i] == 1) {
                         var wdvals2 = [];
                         if (wdvals.length < sdxdata.length) {
-                            for (var m = 0; m < wdvals.length; m++) {
-                                for (var k = 0; k < sdxdata.length; k++) {
-                                    if (k >= (sdxdata.length - wdvals.length)) {
-                                        wdvals2.push(wdvals[m]);
-                                    } else {
-                                        wdvals2.push(0);
-                                    }
-
+                            var index = 0;
+                            for (var k = 0; k < sdxdata.length; k++) {
+                                if (k >= (sdxdata.length - wdvals.length)) {
+                                    wdvals2.push(wdvals[index]);
+                                    index++;
+                                } else {
+                                    wdvals2.push(0);
                                 }
 
                             }
@@ -393,17 +436,16 @@
                             wdvals2 = wdvals;
                         }
                         obj.data = wdvals2;
-                    } else {
+                    } else if (qxbstype[i] == 2) {
                         var sdvals2 = [];
                         if (sdvals.length < sdxdata.length) {
-                            for (var l = 0; l < sdvals.length; l++) {
-                                for (var k = 0; k < sdxdata.length; k++) {
-                                    if (k >= (sdxdata.length - sdvals.length)) {
-                                        sdvals2.push(sdvals[l]);
-                                    } else {
-                                        sdvals2.push(0);
-                                    }
-
+                            var index = 0;
+                            for (var k = 0; k < sdxdata.length; k++) {
+                                if (k >= (sdxdata.length - sdvals.length)) {
+                                    sdvals2.push(sdvals[index]);
+                                    index++;
+                                } else {
+                                    sdvals2.push(0);
                                 }
 
                             }
@@ -411,6 +453,60 @@
                             sdvals2 = sdvals;
                         }
                         obj.data = sdvals2;
+                    } else if (qxbstype[i] == 4) {
+                        var fsvals2 = [];
+                        if (fsvals.length < sdxdata.length) {
+                            var index = 0;
+                            for (var k = 0; k < sdxdata.length; k++) {
+                                if (k >= (sdxdata.length - fsvals.length)) {
+                                    fsvals2.push(fsvals[index]);
+                                    index++;
+                                } else {
+                                    fsvals2.push(0);
+                                }
+
+                            }
+                        } else {
+                            fsvals2 = fsvals;
+                        }
+                        //console.log("f2:"+fsvals2);
+                        obj.data = fsvals2;
+                    } else if (qxbstype[i] == 5) {
+                        var fxvals2 = [];
+                        if (fxvals.length < sdxdata.length) {
+                            var index = 0;
+                            for (var k = 0; k < sdxdata.length; k++) {
+                                if (k >= (sdxdata.length - fxvals.length)) {
+                                    fxvals2.push(fxvals[index]);
+                                    index++;
+                                } else {
+                                    fxvals2.push(0);
+                                }
+
+                            }
+                        } else {
+                            fxvals2 = fxvals;
+                        }
+                        //console.log("f2:"+fsvals2);
+                        obj.data = fxvals2;
+                    }else if (qxbstype[i] == 6) {
+                        var zdvals2 = [];
+                        if (zdvals.length < sdxdata.length) {
+                            var index = 0;
+                            for (var k = 0; k < sdxdata.length; k++) {
+                                if (k >= (sdxdata.length - zdvals.length)) {
+                                    zdvals2.push(zdvals[index]);
+                                    index++;
+                                } else {
+                                    zdvals2.push(0);
+                                }
+
+                            }
+                        } else {
+                            zdvals2 = zdvals;
+                        }
+                        //console.log("f2:"+fsvals2);
+                        obj.data = zdvals2;
                     }
 
                     sddata.push(obj);
@@ -420,7 +516,6 @@
                 sdqxbs = ['虚拟数据'];
                 sddata = [{name: "虚拟数据", data: [1, 3, 2, 5, 4, 7, 6]}];
             }
-
             echarts3("echarts1", sdqxbs, sdxdata, sddata);
         }
         //浏览器大小改变时重置大小

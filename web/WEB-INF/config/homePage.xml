@@ -2,7 +2,7 @@
 <xforms>   
     <xform desc="曲线图" id="homePage">
         <xhandle desc="曲线显示传感" id="getSensorList" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where type !=3  and convert(char(10),collectime,120) = convert(char(10),GetDate(),120) and @CONDITION  " var="sdrs">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where name in (select name from t_sensor where deplayment = 1) and type !=3  and convert(char(10),collectime,120) = convert(char(10),GetDate(),120) and @CONDITION  " var="sdrs">
                 <xflt id="CONDITION" nrp="" tpl="@pid">
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid') order by times asc"></xfltpara>
                 </xflt>
@@ -22,7 +22,7 @@
         </xhandle>
         
         <xhandle desc="根据条件查询传感器15分钟" id="getSensorListBytj" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where type !=3 and @CONDITION  " var="sdrs">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where name in (select name from t_sensor where deplayment = 1) and type !=3 and @CONDITION  " var="sdrs">
                 <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
@@ -45,7 +45,7 @@
            
         </xhandle>
         <xhandle desc="根据条件查询传感器30分钟" id="getSensorListBy30" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where (DATEPART(mi,collectime) =00  or DATEPART(mi,collectime) =30) and type !=3  and @CONDITION  " var="sdrs">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type from t_sensorecord where name in (select name from t_sensor where deplayment = 1) and (DATEPART(mi,collectime) =00  or DATEPART(mi,collectime) =30) and type !=3  and @CONDITION  " var="sdrs">
                 <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
@@ -67,7 +67,7 @@
             </xsql>
         </xhandle>
         <xhandle desc="根据条件查询传感器1小时" id="getSensorListBy00" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type,collectime from t_sensorecord where DATEPART(mi,collectime) =00  and type !=3  and @CONDITION  " var="sdrs">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select convert(char(10),collectime,108) as times,value,name,type,collectime from t_sensorecord where name in (select name from t_sensor where deplayment = 1) and DATEPART(mi,collectime) =00  and type !=3  and @CONDITION  " var="sdrs">
                 <xflt id="CONDITION" nrp="" tpl="@statr AND @end AND @comaddr">
                     <xfltpara id="statr" nrp="1=1" para="statr" sql="collectime &gt;=  ':statr 00:00:00'  ">
                     </xfltpara>
@@ -341,7 +341,7 @@
     
     
     <xform desc="气象站" id="sign">
-        <xhandle desc="查询网关下土壤湿度传感器" id="gettr_sdsensroList" rtnype="JSON">
+        <xhandle desc="查询网关下湿度传感器" id="gettr_sdsensroList" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and type =2 and  @CONDITION  " var="list">
                 <xflt id="CONDITION" nrp="" tpl="@s_identify">
                     <xfltpara id="s_identify" nrp="1=2" para="s_identify" sql="s_identify = ':s_identify'">
@@ -349,60 +349,174 @@
                 </xflt>
             </xsql> 
         </xhandle> 
-        <xhandle desc="查询网关下大气温度传感器" id="getdq_wdsensroList" rtnype="JSON">
+        <xhandle desc="查询网关下温度传感器" id="get_wdsensroList" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and type =1 and  @CONDITION  " var="list">
-                <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
-                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+                <xflt id="CONDITION" nrp="" tpl="@s_identify">
+                    <xfltpara id="s_identify" nrp="1=2" para="s_identify" sql="s_identify = ':s_identify'">
                     </xfltpara>
                 </xflt>
             </xsql> 
         </xhandle> 
-        <xhandle desc="查询网关下大气温度传感器" id="getfs_sensroList" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and type =3 and  @CONDITION  " var="list">
-                <xflt id="CONDITION" nrp="" tpl="@l_comaddr">
-                    <xfltpara id="l_comaddr" nrp="1=2" para="l_comaddr" sql="l_comaddr = ':l_comaddr'">
+        <xhandle desc="查询网关下风速传感器" id="get_fssensroList" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and type =4 and  @CONDITION  " var="list">
+                <xflt id="CONDITION" nrp="" tpl="@s_identify">
+                    <xfltpara id="s_identify" nrp="1=2" para="s_identify" sql="s_identify = ':s_identify'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle> 
+        <xhandle desc="查询网关下风向传感器" id="get_fxsensroList" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and type =5 and  @CONDITION  " var="list">
+                <xflt id="CONDITION" nrp="" tpl="@s_identify">
+                    <xfltpara id="s_identify" nrp="1=2" para="s_identify" sql="s_identify = ':s_identify'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>
+        <xhandle desc="查询网关下照度传感器" id="get_zdsensroList" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select id,name as text from t_sensor WHERE deplayment =1 and type =6 and  @CONDITION  " var="list">
+                <xflt id="CONDITION" nrp="" tpl="@s_identify">
+                    <xfltpara id="s_identify" nrp="1=2" para="s_identify" sql="s_identify = ':s_identify'">
                     </xfltpara>
                 </xflt>
             </xsql> 
         </xhandle>  
         
-        <xhandle desc="气象站显示空气温度传感器" id="dqwd_show" rtnype="JSON">
+        <xhandle desc="气象站显示风速感器1" id="fs_show" rtnype="JSON">
+            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=1 and type = 4 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
             <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=1 where @CONDITION " var="rs1">
                 <xflt id="CONDITION" tpl="@id">
                     <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
                 </xflt>
             </xsql>
-            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where  type = 1 and @CONDITION " var="rs2">
-                <xflt id="CONDITION" tpl="@id AND @pid">
-                    <xfltpara id="id" nrp="1=2" para="id" sql="id !=':id'"></xfltpara>
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
-                </xflt>
-            </xsql>
         </xhandle>
-        
-        <xhandle desc="气象站移除空气温度传感器" id="dqwd_noshow" rtnype="JSON">
-            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where  type = 1 and @CONDITION " var="rs2">
+        <xhandle desc="气象站移除风速传感器" id="fs_noshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=1 AND  type = 4 and @CONDITION " var="rs2">
                 <xflt id="CONDITION" tpl="@pid">
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
             </xsql>
         </xhandle>
         
-        <xhandle desc="气象站显示土壤湿度传感器" id="trsd_show" rtnype="JSON">
-            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=1 where @CONDITION " var="rs">
+        <xhandle desc="气象站显示土壤温度传感器4" id="trwd_show" rtnype="JSON">
+            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=4 and type = 1 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=4 where @CONDITION " var="rs1">
                 <xflt id="CONDITION" tpl="@id">
                     <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
                 </xflt>
             </xsql>
-            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where  type = 2 and @CONDITION " var="rs">
-                <xflt id="CONDITION" tpl="@id AND @pid">
-                    <xfltpara id="id" nrp="1=2" para="id" sql="id !=':id'"></xfltpara>
+        </xhandle>
+        <xhandle desc="气象站移除风速传感器" id="trwd_noshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=4 AND  type = 1 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
             </xsql>
+        </xhandle>
+        
+        <xhandle desc="气象站显示空气温度传感器6" id="dqwd_show" rtnype="JSON">
+            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=6 and type = 1 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=6 where @CONDITION " var="rs1">
+                <xflt id="CONDITION" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        <xhandle desc="气象站移除空气温度传感器" id="dqwd_noshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=6 AND  type = 1 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        
+        <xhandle desc="气象站显示空气湿度传感器7" id="dqsd_show" rtnype="JSON">
+            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=7 and type = 2 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=7 where @CONDITION " var="rs1">
+                <xflt id="CONDITION" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        <xhandle desc="气象站移除空气湿度度传感器" id="dqsd_noshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=7 AND  type = 2 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        
+         <xhandle desc="气象站显示风向传感器8" id="fx_show" rtnype="JSON">
+            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=8 and type = 5 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=8 where @CONDITION " var="rs1">
+                <xflt id="CONDITION" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        <xhandle desc="气象站移除空气湿度度传感器" id="fx_noshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=8 AND  type = 5 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        
+         <xhandle desc="气象站显示照度传感器9" id="zd_show" rtnype="JSON">
+            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=9 and type = 6 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=9 where @CONDITION " var="rs1">
+                <xflt id="CONDITION" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        <xhandle desc="气象站移除空气湿度度传感器" id="zd_noshow" rtnype="JSON">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=9 AND  type = 6 and @CONDITION " var="rs2">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+        
+        <xhandle desc="气象站显示土壤湿度传感器5" id="trsd_show" rtnype="JSON">
+            <xsql id="a2" para="" tpe="DDL" tpl="update t_sensor set show=0 where show=5 and type = 2 and @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
+                </xflt>
+            </xsql>
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=5 where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@id">
+                    <xfltpara id="id" nrp="1=2" para="id" sql="id=':id'"></xfltpara>
+                </xflt>
+            </xsql>
+            
         </xhandle> 
         <xhandle desc="气象站移除土壤湿度传感器" id="trsd_noshow" rtnype="JSON">
-            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where  type = 2 and @CONDITION " var="rs">
+            <xsql id="a1" para="" tpe="DDL" tpl="update t_sensor set show=0 where show = 5 and type = 2 and @CONDITION " var="rs">
                 <xflt id="CONDITION" tpl="@pid">
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
@@ -410,12 +524,7 @@
         </xhandle> 
         
         <xhandle desc="查询气象台大气温度传感器数值" id="getdqwd_value" rtnype="JSON">
-            <xsql id="a1" para="" tpe="SQL" tpl="select * from t_sensor WHERE deplayment =1 and type =1 and show = 1 and  @CONDITION " var="rs">
-                <xflt id="CONDITION" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
-                </xflt>
-            </xsql>
-            <xsql desce="土壤湿度" id="a1" para="" tpe="SQL" tpl="select * from t_sensor WHERE deplayment =1 and type =2 and show = 1 and  @CONDITION " var="trsdrs">
+            <xsql id="a1" para="" tpe="SQL" tpl="select * from t_sensor WHERE deplayment =1 and show &gt;0 and  @CONDITION " var="rs">
                 <xflt id="CONDITION" tpl="@pid">
                     <xfltpara id="pid" nrp="1=2" para="pid" sql="s_identify IN (SELECT identify FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>

@@ -45,8 +45,10 @@
     <body>
         <input id="fscom" type="hidden" value=""/>
         <input id="fssen" type="hidden" value=""/>  
+
         <input id="ylcom" type="hidden" value=""/>
         <input id="ylsen" type="hidden" value=""/>  
+
         <input id="ylljcom" type="hidden" value=""/>
         <input id="ylljsen" type="hidden" value=""/>  
         <!--        土壤温度-->
@@ -82,7 +84,7 @@
                     风速
                 </div>
                 <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    <span id="fsvalue">3.6m/s</span> 
+                    <span id="fsvalue">0.0</span>m/s
                 </div>
             </div>
         </div>
@@ -127,6 +129,19 @@
         </div>
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
+                <img src="./img/sd.png">
+            </div>
+            <div style=" width: 65%; height: 100%;  float: left;">
+                <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                    土壤湿度
+                </div>
+                <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                    <span id="trsd">0</span>%
+                </div>
+            </div>
+        </div>
+        <div class="sd" style=" width: 160px;">
+            <div style=" width: 35%; height: 100%;  float: left;">
                 <img src="./img/wd.png">
             </div>
             <div style=" width: 65%; height: 100%;  float: left;">
@@ -147,20 +162,7 @@
                     大气湿度
                 </div>
                 <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    <span id="dqsd">0</span>%
-                </div>
-            </div>
-        </div>
-        <div class="sd" style=" width: 160px;">
-            <div style=" width: 35%; height: 100%;  float: left;">
-                <img src="./img/sd.png">
-            </div>
-            <div style=" width: 65%; height: 100%;  float: left;">
-                <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
-                    土壤湿度
-                </div>
-                <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
-                    <span id="trsd">0</span>%
+                    <span id="dqsdvalue">0</span>%
                 </div>
             </div>
         </div>
@@ -259,7 +261,7 @@
                 offset: 'center'
             });
         }
-       
+
         $(function () {
             getrs();
             size();
@@ -282,7 +284,7 @@
         function  edit() {
             //土壤湿度
             $("#trsd_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=" + pid,
                 onLoadSuccess: function (data) {
                     if ($("#trsdcom").val() != "") {
@@ -295,8 +297,8 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#trsd_sensor").combobox({
-                        editable:false ,
-                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        editable: false,
+                        url: "homePage.sign.gettr_sdsensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
                             obj.id = '';
@@ -306,7 +308,7 @@
                         },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                if ($("#trsdsen").val() != "") {
+                                if ($("#trsdsen").val() != "" && $("#trsdcom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#trsdsen").val());
                                 } else {
                                     // $(this).combobox('select', data[0].id);
@@ -319,7 +321,7 @@
             });
             //大气温度
             $("#dqwd_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=" + pid,
                 onLoadSuccess: function (data) {
                     if ($("#dqwdcom").val() != "") {
@@ -332,8 +334,8 @@
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#dqwd_sensor").combobox({
-                        editable:false ,
-                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        editable: false,
+                        url: "homePage.sign.get_wdsensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
                             obj.id = '';
@@ -343,10 +345,8 @@
                         },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                if ($("#dqwdsen").val() != "") {
+                                if ($("#dqwdsen").val() != "" && $("#dqwdcom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#dqwdsen").val());
-                                } else {
-                                    // $(this).combobox('select', data[0].id);
                                 }
 
                             }
@@ -356,17 +356,22 @@
             });
             //风速
             $("#fs_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                    $(this).combobox('select', data[0].id);
+                    //$(this).combobox('select', data[0].id);
+                    if ($("#fscom").val() != "") {
+                        $(this).combobox('select', $("#fscom").val());
+                    } else {
+                        $(this).combobox('select', data[0].id);
+                    }
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     //风速传感器
                     $("#fs_sensor").combobox({
-                        editable:false ,
-                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        editable: false,
+                        url: "homePage.sign.get_fssensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
                             obj.id = '';
@@ -376,7 +381,7 @@
                         },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                if ($("#fssen").val() != "") {
+                                if ($("#fssen").val() != "" && $("#fscom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#fssen").val());
                                 }
 
@@ -388,16 +393,21 @@
             });
             //雨量
             $("#yl_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                    $(this).combobox('select', data[0].id);
+                    //$(this).combobox('select', data[0].id);
+                    if ($("#ylcom").val() != "") {
+                        $(this).combobox('select', $("#ylcom").val());
+                    } else {
+                        $(this).combobox('select', data[0].id);
+                    }
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     //雨量传感器
                     $("#yl_sensor").combobox({
-                        editable:false ,
+                        editable: false,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
@@ -409,7 +419,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
-                                if ($("#ylsen").val() != "") {
+                                if ($("#ylsen").val() != "" && $("#ylcom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#ylsen").val());
                                 }
                             }
@@ -419,15 +429,20 @@
             });
             //雨量累计
             $("#yllj_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                    $(this).combobox('select', data[0].id);
+                    // $(this).combobox('select', data[0].id);
+                    if ($("#ylljcom").val() != "") {
+                        $(this).combobox('select', $("#ylljcom").val());
+                    } else {
+                        $(this).combobox('select', data[0].id);
+                    }
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#yllj_sensor").combobox({
-                        editable:false ,
+                        editable: false,
                         url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
@@ -439,7 +454,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
-                                if ($("#ylljsen").val() != "") {
+                                if ($("#ylljsen").val() != "" && $("#ylljcom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#ylljsen").val());
                                 }
                             }
@@ -449,16 +464,21 @@
             });
             //土壤温度
             $("#trwd_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                    $(this).combobox('select', data[0].id);
+                    // $(this).combobox('select', data[0].id);
+                    if ($("#trwdcom").val() != "") {
+                        $(this).combobox('select', $("#trwdcom").val());
+                    } else {
+                        $(this).combobox('select', data[0].id);
+                    }
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#trwd_sensor").combobox({
-                        editable:false ,
-                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        editable: false,
+                        url: "homePage.sign.get_wdsensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
                             obj.id = '';
@@ -469,7 +489,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
-                                if ($("#trwdsen").val() != "") {
+                                if ($("#trwdsen").val() != "" && $("#trwdcom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#trwdsen").val());
                                 }
                             }
@@ -479,16 +499,21 @@
             });
             //大气湿度
             $("#dqsd_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                    $(this).combobox('select', data[0].id);
+                    //$(this).combobox('select', data[0].id);
+                    if ($("#dqsdcom").val() != "") {
+                        $(this).combobox('select', $("#dqsdcom").val());
+                    } else {
+                        $(this).combobox('select', data[0].id);
+                    }
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#dqsd_sensor").combobox({
-                        editable:false ,
-                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        editable: false,
+                        url: "homePage.sign.gettr_sdsensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
                             obj.id = '';
@@ -503,7 +528,7 @@
 //                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
                             if (data.length > 0) {
                                 // $(this).combobox('select', data[0].id);
-                                if ($("#dqsdsen").val() != "") {
+                                if ($("#dqsdsen").val() != "" && $("#dqsdcom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#dqsdsen").val());
                                 }
                             }
@@ -513,16 +538,21 @@
             });
             //风向
             $("#fx_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                    $(this).combobox('select', data[0].id);
+                   // $(this).combobox('select', data[0].id);
+                    if ($("#fxcom").val() != "") {
+                        $(this).combobox('select', $("#fxcom").val());
+                    } else {
+                        $(this).combobox('select', data[0].id);
+                    }
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#fx_sensor").combobox({
-                        editable:false ,
-                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        editable: false,
+                        url: "homePage.sign.get_fxsensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
                             obj.id = '';
@@ -533,7 +563,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 // $(this).combobox('select', data[0].id);
-                                if ($("#fxsen").val() != "") {
+                                if ($("#fxsen").val() != "" && $("#fxcom").val()== l_comaddr) {
                                     $(this).combobox('select', $("#fxsen").val());
                                 }
                             }
@@ -543,16 +573,21 @@
             });
             //照度
             $("#zd_l_comaddr").combobox({
-                editable:false ,
+                editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                    $(this).combobox('select', data[0].id);
+                   // $(this).combobox('select', data[0].id);
+                    if ($("#zdcom").val() != "") {
+                        $(this).combobox('select', $("#zdcom").val());
+                    } else {
+                        $(this).combobox('select', data[0].id);
+                    }
                 },
                 onSelect: function (record) {
                     var l_comaddr = record.id;
                     $("#zd_sensor").combobox({
-                        editable:false ,
-                        url: "homePage.sign.gesensroList.action?s_identify=" + l_comaddr,
+                        editable: false,
+                        url: "homePage.sign.get_zdsensroList.action?s_identify=" + l_comaddr,
                         loadFilter: function (data) {
                             var obj = {};
                             obj.id = '';
@@ -562,9 +597,9 @@
                         },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                //$(this).combobox('select', data[0].id);
-                                if ($("#gdsen").val() != "") {
-                                    $(this).combobox('select', $("#gdsen").val());
+                                // $(this).combobox('select', data[0].id);
+                                if ($("#zdsen").val() != "" && $("#zdcom").val()== l_comaddr) {
+                                    $(this).combobox('select', $("#zdsen").val());
                                 }
                             }
                         }
@@ -573,18 +608,63 @@
             });
             $('#faultDiv').dialog('open');
         }
-
+        //修改气象站
         function update() {
 
             var fsid = $("#fs_sensor").val();  //风速传感器id
+            var yl = $("#yl_sensor").val();   //雨量id;
+            var yllj = $("#yllj_sensor").val(); //雨量累计
+            var trwd = $("#trwd_sensor").val(); //土壤温度id;
             var trsd = $("#trsd_sensor").val(); //土壤湿度id
-            var dqsd = $("#dqwd_sensor").val();  //大气湿度
+            var dqwd = $("#dqwd_sensor").val();  //大气温度
+            var dqsd = $("#dqsd_sensor").val();  //大气湿度
+            var fx = $("#fx_sensor").val();  //风向
+            var zd = $("#zd_sensor").val(); //照度
             var obj = {};
             obj.pid = pid;
 
             if (fsid != "") {
-                console.log("null");
+                obj.id = fsid;
+                $.ajax({url: "homePage.sign.fs_show.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败1！");
+                    }
+                });
+            } else {
+                $.ajax({url: "homePage.sign.fs_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败2！");
+                    }
+                });
             }
+            //土壤温度
+            if (trwd != "") {
+                obj.id = trwd;
+                $.ajax({url: "homePage.sign.trwd_show.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败1！");
+                    }
+                });
+            } else {
+                $.ajax({url: "homePage.sign.trwd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败2！");
+                    }
+                });
+            }
+            //土壤湿度
             if (trsd != "") {
                 obj.id = trsd;
                 $.ajax({url: "homePage.sign.trsd_show.action", async: false, type: "get", datatype: "JSON", data: obj,
@@ -605,8 +685,8 @@
                     }
                 });
             }
-
-            if (dqsd =="") {
+            //大气温度
+            if (dqwd == "") {
                 $.ajax({url: "homePage.sign.dqwd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
                     success: function (data) {
                         var rs1 = data.rs1;
@@ -617,7 +697,7 @@
                 });
 
             } else {
-                obj.id = dqsd;
+                obj.id = dqwd;
                 $.ajax({url: "homePage.sign.dqwd_show.action", async: false, type: "get", datatype: "JSON", data: obj,
                     success: function (data) {
                         var rs1 = data.rs1;
@@ -627,7 +707,73 @@
                     }
                 });
             }
-            addlogon(uname, "修改",pid, "气象台", "修改气象台传感器");
+            //大气湿度
+            if (dqsd == "") {
+                $.ajax({url: "homePage.sign.dqsd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败2！");
+                    }
+                });
+
+            } else {
+                obj.id = dqsd;
+                $.ajax({url: "homePage.sign.dqsd_show.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败！");
+                    }
+                });
+            }
+            //风向
+             if (fx == "") {
+                $.ajax({url: "homePage.sign.fx_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败2！");
+                    }
+                });
+
+            } else {
+                obj.id = fx;
+                $.ajax({url: "homePage.sign.fx_show.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败！");
+                    }
+                });
+            }
+            //照度
+             if (zd == "") {
+                $.ajax({url: "homePage.sign.zd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败2！");
+                    }
+                });
+
+            } else {
+                obj.id = zd;
+                $.ajax({url: "homePage.sign.zd_show.action", async: false, type: "get", datatype: "JSON", data: obj,
+                    success: function (data) {
+                        var rs1 = data.rs1;
+                    },
+                    error: function () {
+                        alert("提交添加失败！");
+                    }
+                });
+            }
+            addlogon(uname, "修改", pid, "气象台", "修改气象台传感器");
             $('#faultDiv').dialog('close');
             layerAler("成功");
             getrs();
@@ -639,32 +785,91 @@
             $.ajax({url: "homePage.sign.getdqwd_value.action", async: false, type: "get", datatype: "JSON", data: obj,
                 success: function (data) {
                     var rs = data.rs;
-                    var trsdrs = data.trsdrs;
                     if (rs.length > 0) {
-                        var sen = rs[0];
-                        $("#dqwdcom").val(sen.s_identify);
-                        console.log("dqwdcom:"+sen.s_identify);
-                        console.log("dqsen:"+sen.id);
-                        $("#dqwdsen").val(sen.id);
-                        if (parseInt(sen.numvalue) > 0) {
-                            var value = parseInt(sen.numvalue) / 10;
-                            $("#dqwd").html(value);
+                        for (var i = 0; i < rs.length; i++) {
+                            var rsv = rs[i];
+                            if (rsv.show == 1) {
+                                //风速
+                                $("#fscom").val(rsv.s_identify);
+                                $("#fssen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#fsvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 2) {
+                                //雨量
+                                $("#ylcom").val(rsv.s_identify);
+                                $("#ylsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#ylvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 3) {
+                                //雨量累计
+                                $("#ylljcom").val(rsv.s_identify);
+                                $("#ylljsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#ylljvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 4) {
+                                //土壤温度
+                                $("#trwdcom").val(rsv.s_identify);
+                                $("#trwdsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#trwdvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 5) {
+                                //土壤湿度
+                                $("#trsdcom").val(rsv.s_identify);
+                                $("#trsdsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#trsd").html(value);
+                                }
+                            } else if (rsv.show == 6) {
+                                //大气温度
+                                $("#dqwdcom").val(rsv.s_identify);
+                                $("#dqwdsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#dqwd").html(value);
+                                }
+
+                            } else if (rsv.show == 7) {
+                                //大气湿度
+                                $("#dqsdcom").val(rsv.s_identify);
+                                $("#dqsdsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#dqsdvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 8) {
+                                //风向
+                                $("#fxcom").val(rsv.s_identify);
+                                $("#fxsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue);
+                                    $("#fxvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 9) {
+                                //照度
+                                $("#zdcom").val(rsv.s_identify);
+                                $("#zdsen").val(rsv.id);
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#zdvalue").html(value);
+                                }
+
+                            }
                         }
-                    } else {
-                        $("#dqwdcom").val("");
-                        $("#dqwdsen").val("");
-                    }
-                    if (trsdrs.length > 0) {
-                        var trsd = trsdrs[0];
-                        $("#trsdcom").val(trsd.s_identify);
-                        $("#trsdsen").val(trsd.id);
-                        if (parseInt(trsd.numvalue) > 0) {
-                            var value = parseInt(trsd.numvalue) / 10;
-                            $("#trsd").html(value);
-                        }
-                    } else {
-                        $("#trsdcom").val("");
-                        $("#trsdsen").val("");
                     }
                 },
                 error: function () {
