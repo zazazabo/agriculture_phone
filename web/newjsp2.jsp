@@ -224,9 +224,9 @@
 
             myChart3 = echarts.init(document.getElementById(id));
             option = {
-                title: {
-                    text: '曲线示意图'
-                },
+//                title: {
+//                    text: '曲线示意图'
+//                },
                 tooltip: {
                     trigger: 'axis'
                 },
