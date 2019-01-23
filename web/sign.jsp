@@ -308,7 +308,7 @@
                         },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                if ($("#trsdsen").val() != "" && $("#trsdcom").val()== l_comaddr) {
+                                if ($("#trsdsen").val() != "" && $("#trsdcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#trsdsen").val());
                                 } else {
                                     // $(this).combobox('select', data[0].id);
@@ -345,7 +345,7 @@
                         },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                if ($("#dqwdsen").val() != "" && $("#dqwdcom").val()== l_comaddr) {
+                                if ($("#dqwdsen").val() != "" && $("#dqwdcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#dqwdsen").val());
                                 }
 
@@ -381,7 +381,7 @@
                         },
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
-                                if ($("#fssen").val() != "" && $("#fscom").val()== l_comaddr) {
+                                if ($("#fssen").val() != "" && $("#fscom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#fssen").val());
                                 }
 
@@ -419,7 +419,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
-                                if ($("#ylsen").val() != "" && $("#ylcom").val()== l_comaddr) {
+                                if ($("#ylsen").val() != "" && $("#ylcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#ylsen").val());
                                 }
                             }
@@ -454,7 +454,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
-                                if ($("#ylljsen").val() != "" && $("#ylljcom").val()== l_comaddr) {
+                                if ($("#ylljsen").val() != "" && $("#ylljcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#ylljsen").val());
                                 }
                             }
@@ -489,7 +489,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 //$(this).combobox('select', data[0].id);
-                                if ($("#trwdsen").val() != "" && $("#trwdcom").val()== l_comaddr) {
+                                if ($("#trwdsen").val() != "" && $("#trwdcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#trwdsen").val());
                                 }
                             }
@@ -528,7 +528,7 @@
 //                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
                             if (data.length > 0) {
                                 // $(this).combobox('select', data[0].id);
-                                if ($("#dqsdsen").val() != "" && $("#dqsdcom").val()== l_comaddr) {
+                                if ($("#dqsdsen").val() != "" && $("#dqsdcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#dqsdsen").val());
                                 }
                             }
@@ -541,7 +541,7 @@
                 editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                   // $(this).combobox('select', data[0].id);
+                    // $(this).combobox('select', data[0].id);
                     if ($("#fxcom").val() != "") {
                         $(this).combobox('select', $("#fxcom").val());
                     } else {
@@ -563,7 +563,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 // $(this).combobox('select', data[0].id);
-                                if ($("#fxsen").val() != "" && $("#fxcom").val()== l_comaddr) {
+                                if ($("#fxsen").val() != "" && $("#fxcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#fxsen").val());
                                 }
                             }
@@ -576,7 +576,7 @@
                 editable: false,
                 url: "homePage.gayway.getComaddr.action?pid=${param.pid}",
                 onLoadSuccess: function (data) {
-                   // $(this).combobox('select', data[0].id);
+                    // $(this).combobox('select', data[0].id);
                     if ($("#zdcom").val() != "") {
                         $(this).combobox('select', $("#zdcom").val());
                     } else {
@@ -598,7 +598,7 @@
                         onLoadSuccess: function (data) {
                             if (data.length > 0) {
                                 // $(this).combobox('select', data[0].id);
-                                if ($("#zdsen").val() != "" && $("#zdcom").val()== l_comaddr) {
+                                if ($("#zdsen").val() != "" && $("#zdcom").val() == l_comaddr) {
                                     $(this).combobox('select', $("#zdsen").val());
                                 }
                             }
@@ -730,7 +730,7 @@
                 });
             }
             //风向
-             if (fx == "") {
+            if (fx == "") {
                 $.ajax({url: "homePage.sign.fx_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
                     success: function (data) {
                         var rs1 = data.rs1;
@@ -752,7 +752,7 @@
                 });
             }
             //照度
-             if (zd == "") {
+            if (zd == "") {
                 $.ajax({url: "homePage.sign.zd_noshow.action", async: false, type: "get", datatype: "JSON", data: obj,
                     success: function (data) {
                         var rs1 = data.rs1;
@@ -854,10 +854,12 @@
                                 //风向
                                 $("#fxcom").val(rsv.s_identify);
                                 $("#fxsen").val(rsv.id);
-                                if (parseInt(rsv.numvalue) > 0) {
-                                    var value = parseInt(rsv.numvalue);
-                                    $("#fxvalue").html(value);
-                                }
+                                var v1 = parseFloat(rsv.numvalue);
+                                getDirection(v1);
+//                                if (parseInt(rsv.numvalue) > 0) {
+//                                    var value = parseInt(rsv.numvalue);
+//                                    $("#fxvalue").html(value);
+//                                }
 
                             } else if (rsv.show == 9) {
                                 //照度
@@ -876,6 +878,64 @@
                     alert("提交添加失败！");
                 }
             });
+        }
+
+        function getDirection(val)
+        {
+            console.log(val);
+            var str = "";
+            switch (val) {
+                case  0:
+                    str = "北";
+                    break;
+                case 45:
+                    str = "东北";
+                    break;
+                case 90:
+                    str = "东";
+                    break;
+                case 135:
+                    str = "东南";
+                    break;
+                case 180:
+                    str = "南";
+                    break;
+                case 225:
+                    str = "西南";
+                    break;
+                case 270:
+                    str = "西";
+                    break;
+                case 315:
+                    str = "西北";
+                    break;
+                    defaul:
+                            break;
+            }
+
+            if (str == "") {
+                if (val > 0 && val < 45) {
+                    str = "东北偏北";
+                } else if (val > 45 && val < 90) {
+                    str = "东北偏东";
+                } else if (val > 90 && val < 135) {
+                    str = "东南偏东";
+                } else if (val > 135 && val < 180) {
+                    str = "东南偏南";
+                } else if (val > 180 && val < 225) {
+                    str = "西南偏南";
+                } else if (val > 225 && val < 270) {
+                    str = "西南偏西";
+                } else if (val > 270 && val < 315) {
+                    str = "西北偏西";
+                } else if (val > 315 && val < 360) {
+                    str = "西北偏北";
+                }
+
+            }
+            console.log(str);
+
+            $("#fxvalue").html(str+":"+val);
         }
 
         function size() {

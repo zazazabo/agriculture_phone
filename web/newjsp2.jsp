@@ -329,6 +329,8 @@
                             qxbstype.push(4);
                         } else if (sdrs[i].type == "5") {
                             qxbstype.push(5);
+                        } else if (sdrs[i].type == "6") {
+                            qxbstype.push(6);
                         }
                     } else {
                         for (var j = 0; j < sdqxbs.length; j++) {
@@ -356,12 +358,12 @@
                 for (var i = 0; i < xdata.length; i++) {
                     // sdxdata.push(xdata[i].collectime);
                     console.log(xdata[i].collectime.substring(11, 16).length);
-                    if(xdata[i].collectime.substring(11, 16) =="00:00"){
+                    if (xdata[i].collectime.substring(11, 16) == "00:00") {
                         sdxdata.push(xdata[i].collectime.substring(0, 10));
-                    }else{
-                        sdxdata.push(xdata[i].collectime.substring(11, 16)); 
+                    } else {
+                        sdxdata.push(xdata[i].collectime.substring(11, 16));
                     }
-                   
+
 
                 }
             }
@@ -402,12 +404,12 @@
                         //风向
                         if (sdqxbs[i] == sdrs[j].name && sdrs[j].type == 5) {
                             var value = parseInt(sdrs[j].value);
-                            if (value > 0) {
-                                value = (value / 10).toFixed(1);
-                            }
+//                            if (value > 0) {
+//                                value = (value / 10).toFixed(1);
+//                            }
                             fxvals.push(value);
                         }
-                        
+
                         //照度
                         if (sdqxbs[i] == sdrs[j].name && sdrs[j].type == 6) {
                             var value = parseInt(sdrs[j].value);
@@ -489,7 +491,7 @@
                         }
                         //console.log("f2:"+fsvals2);
                         obj.data = fxvals2;
-                    }else if (qxbstype[i] == 6) {
+                    } else if (qxbstype[i] == 6) {
                         var zdvals2 = [];
                         if (zdvals.length < sdxdata.length) {
                             var index = 0;

@@ -175,9 +175,10 @@
 //                        console.info("加载成功");
                     },
                     //服务器url
-                    queryParams: function (params)  {   //配置参数     
+                    queryParams: function (params)  {   //配置参数  
+                        var search=encodeURI(params.search);   
                         var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
-                            search: params.search,
+                            search: search,
                             skip: params.offset,
                             limit: params.limit,
                             type_id: "1",
