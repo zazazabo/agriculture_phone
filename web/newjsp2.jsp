@@ -224,16 +224,19 @@
 
             myChart3 = echarts.init(document.getElementById(id));
             option = {
-//                title: {
-//                    text: '曲线示意图'
-//                },
+                title: {
+                    text: '曲线示意图'
+                },
                 tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    x: 'center', // 'center' | 'left' | {number},
-                    y: 'top', // 'center' | 'bottom' | {number}
+//                    orient: 'vertical', //垂直显示
+//                    y: 'center', //延Y轴居中
+//                    x: 'left', //居右显示
+                    y: 'top', 
                     data: qxbs
+                    
                 },
                 grid: {
                     left: '1%',
@@ -266,12 +269,12 @@
             $("#l_comaddr2").combobox({
                 url: "homePage.gayway.getComaddr.action?pid=" + pid,
                 loadFilter: function (data) {
-                            var obj = {};
-                            obj.id = '';
-                            obj.text = '--全部--';
-                            data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
-                            return  data;
-                        },
+                    var obj = {};
+                    obj.id = '';
+                    obj.text = '--全部--';
+                    data.splice(0, 0, obj);//在数组0位置插入obj,不删除原来的元素
+                    return  data;
+                },
 //                formatter: function (row) {
 //                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
 //                    var v = row.text + v1;
@@ -287,7 +290,7 @@
 //                        }
 //                        $(this).combobox('select', data[0].id);
 //                    }
-                   // $(this).combobox('select', data[0].id);
+                    // $(this).combobox('select', data[0].id);
 
 
                 },
@@ -540,8 +543,8 @@
             var type = $("#sensorlist").val();
             var obj2 = {};
             obj2.pid = pid;
-            if($("#l_comaddr2").val() !=""){
-               obj2.comaddr = $("#l_comaddr2").val();
+            if ($("#l_comaddr2").val() != "") {
+                obj2.comaddr = $("#l_comaddr2").val();
             }
             var statr = $("#sday").val();
             var end = $("#eday").val();
