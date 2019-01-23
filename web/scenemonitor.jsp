@@ -295,7 +295,6 @@
                 var obj = $("#form1").serializeObject();
                 console.log(l_comaddr);
                 console.log(obj);
-                return;
 
                 var o = {};
                 var vv = [];

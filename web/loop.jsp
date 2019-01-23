@@ -1001,13 +1001,6 @@
                             align: 'center',
                             valign: 'middle'
                         },
-//                        {
-//                            field: 'l_comaddr',
-//                            title: '网关地址',
-//                            width: 25,
-//                            align: 'center',
-//                            valign: 'middle'
-//                        }, 
                         {
                             field: 'l_name',
                             title: "回路名称",
@@ -1120,6 +1113,7 @@
                         var id1 = record.id.replace(/\b(0+)/gi, "")
                         $("#comaddrname").val(id1);
                         $("#identify1").val(record.identify);
+                        $("#identify").val(record.identify);
                     }
                 });
                 
@@ -1148,6 +1142,7 @@
                         var obj = {};
                         obj.identify = record.identify;
                         obj.pid = "${param.pid}";
+             
                         var opt = {
                             url: "loop.loopForm.getLoopList.action",
                             query: obj,

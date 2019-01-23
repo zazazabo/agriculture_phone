@@ -935,6 +935,7 @@
                         var obj = {};
                         obj.identify = record.identify;
                         obj.pid = "${param.pid}";
+                        obj.deplayment="";
                         var opt = {
                             url: "sensor.sensorform.getSensorList.action",
                             query: obj,
@@ -969,11 +970,6 @@
                     }
 
                 });
-
-
-
-
-
 
 
                 $('#excel-file').change(function (e) {
