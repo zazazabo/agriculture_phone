@@ -714,8 +714,8 @@
                     }
                     console.log(str);
                     //var s1 = str.split("\r\n");
-                    var substr = str.match(/\S*\r\n\r\n(\S*)\r\n/);
-                    console.log(substr);
+                    var substr = str.match(/\S*\r\n(\S*)\r\n/);
+                   console.log(substr);
                     ;
                     if (typeof substr == "object") {
                         if (substr[1] == "OK") {
@@ -807,11 +807,6 @@
             }
 
             function readRemoteAddr() {
-//                                var str="000201809043930675\J@DTU:0000:DSCADDR?\r\n+DSCADDR: 0,\"TCP\",\"47.99.78.186\",24228\r\n +DSCADDR: 1,\"TCP\",\"www.cdebyte.com\",8000";
-//                                console.log(str);
-                //  var str=""
-                //  var str2 = 'erwab999999d789eeff';
-
                 var obj = $("#form1").serializeObject();
                 if (obj.l_comaddr == "") {
                     layerAler('网关不能为空'); //
