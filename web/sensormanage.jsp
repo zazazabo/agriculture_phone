@@ -488,15 +488,6 @@
 
                 var fmobj = $("#form1").serializeObject();
                 console.log(fmobj);
-
-//                var obj = {};
-//
-//                return false;
-//                var busu = $("#busu").val();
-//                if (busu != "-1") {
-//                    obj.deplayment = busu;
-//                }
-//                obj.l_comaddr = $("#identify1").val();
                 var opt = {
                     url: "sensor.sensorform.getSensorList.action",
                     silent: false,

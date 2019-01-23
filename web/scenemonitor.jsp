@@ -154,7 +154,8 @@
                             p_type: 1,
                             p_show: 1,
                             type_id: "1",
-                            pid: "${param.pid}"  
+                            pid: "${param.pid}",
+                            identify: $("#identify").val() 
                         };     
                         return temp;  
                     },
@@ -202,7 +203,9 @@
                             }
                         });
 
-                         getSceneNum(l_comaddr);
+                        var data = $("#table0").bootstrapTable('getData');
+                        console.log(data.length)
+                        getSceneNum(l_comaddr);
                     }
                 });
 
@@ -227,13 +230,15 @@
                     v = v + sprintf("%02x", data[i]) + " ";
                 }
                 console.log(v);
-
-
                 var sceneval = data[3] * 256 + data[4];
                 console.log(scenenum, sceneval);
-                if (scenenum != sceneval) {
-                    scenenum = sceneval;
-                    $("#table0").bootstrapTable('refresh');
+                var data = $("#table0").bootstrapTable('getData');
+
+                if (data.length > 0) {
+                    if (scenenum != sceneval) {
+                        scenenum = sceneval;
+                        $("#table0").bootstrapTable('refresh');
+                    }
                 }
             }
 
@@ -290,7 +295,7 @@
                 var obj = $("#form1").serializeObject();
                 console.log(l_comaddr);
                 console.log(obj);
-                return ;
+                return;
 
                 var o = {};
                 var vv = [];
@@ -323,7 +328,7 @@
                 var data = buicode2(vv);
                 console.log(data);
                 dealsend2("10", data, "switchloopCB", l_comaddr, 0, 0, 3800, "${param.action}");
-                addlogon(u_name, "设置",o_pid, "场景监控", "设置【"+$("#scenenum").combobox('getText')+"】",obj.identify);
+                addlogon(u_name, "设置", o_pid, "场景监控", "设置【" + $("#scenenum").combobox('getText') + "】", obj.identify);
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -388,7 +393,7 @@
                 var data = buicode2(vv);
                 console.log(data);
                 dealsend2("10", data, "restoreloopCB", l_comaddr, 0, 0, 3801, "${param.action}");
-                addlogon(u_name, "恢复自动运行",o_pid, "场景监控", "恢复自动运行",obj.identify);
+                addlogon(u_name, "恢复自动运行", o_pid, "场景监控", "恢复自动运行", obj.identify);
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
