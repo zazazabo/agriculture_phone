@@ -883,6 +883,7 @@
                     });
                     if (bremove==false) {
                         layerAler("请删除回路的场景方案");
+                        return false;
                     }
                  }
                 var vv = [];
