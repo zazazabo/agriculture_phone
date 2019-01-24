@@ -1751,7 +1751,7 @@
                         } else {
                             updateLamplnglat(e.point.lng, e.point.lat, lampchecck.id);
                         }
-                        addlogon(u_name, "修改", o_pid, "电子地图", "修改传感器【"+lampchecck.name+"】的经纬度",lampchecck.s_identify);
+                        addlogon(u_name, "修改", o_pid, "电子地图", "修改传感器【" + lampchecck.name + "】的经纬度", lampchecck.s_identify);
                         lampchecck = [];
                         onedraw = false;
                     }
@@ -1809,7 +1809,7 @@
 
                             updateoneLoop(e.point.lng, e.point.lat, loopobj.id);
                         }
-                        addlogon(u_name, "修改", o_pid, "电子地图", "修改回路【"+loopobj.l_name+"】的经纬度",loopobj.l_identify);
+                        addlogon(u_name, "修改", o_pid, "电子地图", "修改回路【" + loopobj.l_name + "】的经纬度", loopobj.l_identify);
                         loopobj = [];
                         looponedraw = false;
                     }
@@ -1840,7 +1840,7 @@
                                     updateMayLoop(array[i].x, array[i].y, looplist[i]);
                                 }
                                 alert("成功");
-                                addlogon(u_name, "修改", o_pid, "电子地图", "修改回路【"+loopobj.l_name+"】的经纬度");
+                                addlogon(u_name, "修改", o_pid, "电子地图", "修改回路【" + loopobj.l_name + "】的经纬度");
                                 //刷新，重置
                                 array = [];
                                 loopdraw = false;
@@ -1928,7 +1928,7 @@
                                                     var arrlist = data.rs;
                                                     if (arrlist.length == 1) {
                                                         alert("修改成功");  //修改成功
-                                                        addlogon(u_name, "修改", o_pid, "电子地图", "移动网关【"+obj.name+"】");
+                                                        addlogon(u_name, "修改", o_pid, "电子地图", "移动网关【" + obj.name + "】");
                                                     } else {
                                                         alert("修改失败");  //修改失败
                                                     }
@@ -1962,7 +1962,7 @@
                                                             var arrlist = data.rs;
                                                             if (arrlist.length == 1) {
                                                                 alert("移除成功!");  //移除成功
-                                                                addlogon(u_name, "移除", o_pid, "电子地图", "网关【"+obj.name+"】");
+                                                                addlogon(u_name, "移除", o_pid, "电子地图", "网关【" + obj.name + "】");
                                                             } else {
                                                                 alert("移除失败");  //移除失败
                                                             }
@@ -2094,7 +2094,7 @@
                                 var opts2 = {title: '<span style="font-size:14px;color:#0A8021">' + "功能操作" + '</span>'};//设置信息框、功能操作
                                 var infoWindow2 = new BMap.InfoWindow(textvalue2, opts2); // 创建信息窗口对象，引号里可以书写任意的html语句。
                                 this.openInfoWindow(infoWindow2);
-                                
+
                                 //移动
                                 $("#move").click(function () {
                                     marker1.closeInfoWindow(infoWindow2);
@@ -2114,7 +2114,7 @@
                                                     var arrlist = data.rs;
                                                     if (arrlist.length == 1) {
                                                         alert("修改成功");  //修改成功
-                                                        addlogon(u_name, "移动", o_pid, "电子地图", "移动传感器【"+obj.name+"】",obj.s_identify);
+                                                        addlogon(u_name, "移动", o_pid, "电子地图", "移动传感器【" + obj.name + "】", obj.s_identify);
                                                     } else {
                                                         alert("修改失败");  //修改失败
                                                     }
@@ -2149,7 +2149,7 @@
                                                             var arrlist = data.rs;
                                                             if (arrlist.length == 1) {
                                                                 alert("移除成功");  //移除成功
-                                                                addlogon(u_name, "移除", o_pid, "电子地图", "移除传感器【"+obj.name+"】",obj.s_identify);
+                                                                addlogon(u_name, "移除", o_pid, "电子地图", "移除传感器【" + obj.name + "】", obj.s_identify);
                                                             } else {
                                                                 alert("移除失败");  //移除失败
                                                             }
@@ -2232,7 +2232,7 @@
                                         alert("提交失败！");
                                     }
                                 });
-                               
+
                                 //断开
                                 $("#break").click(function () {
                                     var ele = obj;
@@ -2343,7 +2343,7 @@
                                                     var arrlist = data.rs;
                                                     if (arrlist.length == 1) {
                                                         alert("修改成功");  //修改成功
-                                                        addlogon(u_name, "移动", o_pid, "电子地图", "移动回路【"+obj.l_name+"】",obj.l_identify);
+                                                        addlogon(u_name, "移动", o_pid, "电子地图", "移动回路【" + obj.l_name + "】", obj.l_identify);
                                                     } else {
                                                         alert("修改失败");  //修改失败
                                                     }
@@ -2378,7 +2378,7 @@
                                                             var arrlist = data.rs;
                                                             if (arrlist.length == 1) {
                                                                 alert("移除成功");  //移除成功
-                                                                addlogon(u_name, "移除", o_pid, "电子地图", "移除回路【"+obj.l_name+"】",obj.l_identify);
+                                                                addlogon(u_name, "移除", o_pid, "电子地图", "移除回路【" + obj.l_name + "】", obj.l_identify);
                                                             } else {
                                                                 alert("移除失败");  //移除失败
                                                             }
@@ -2467,6 +2467,8 @@
                                 // div11.innerHTML = "状态";
                                 var sensor = arrlist[i];
                                 var p = document.createElement("p");
+                                var span1 = document.createElement("span");
+                                var span2 = document.createElement("span");
                                 var name = sensor.name;
                                 var val = "";
                                 if (sensor.type == "1") {
@@ -2491,7 +2493,7 @@
                                     } else {
                                         val = "断开";
                                     }
-                                }else if( sensor.type =="4"){
+                                } else if (sensor.type == "4") {
                                     var num;
                                     if (sensor.numvalue > 0) {
                                         num = sensor.numvalue / 10;
@@ -2499,9 +2501,9 @@
                                         num = sensor.numvalue;
                                     }
                                     val = num.toString() + "m/s";
-                                }else if(sensor.type =="5"){
-                                    val = getDirection(sensor.numvalue)+":"+sensor.numvalue+"°";;
-                                }else if( sensor.type =="6"){
+                                } else if (sensor.type == "5") {
+                                    val = getDirection(sensor.numvalue);
+                                } else if (sensor.type == "6") {
                                     var num;
                                     if (sensor.numvalue > 0) {
                                         num = sensor.numvalue / 10;
@@ -2510,7 +2512,12 @@
                                     }
                                     val = num.toString() + "    lux";
                                 }
-                                p.innerHTML = name + ":      " + val;
+                                span1.innerHTML = name + ":&nbsp ";
+                                span2.innerHTML = val;
+                                span2.setAttribute("style", "color: green;");
+                                p.appendChild(span1);
+                                p.appendChild(span2);
+                                // p.innerHTML = name + ":      " + val;
                                 $("#textdiv2").append(p);
                             }
                         }
@@ -2552,7 +2559,7 @@
                                 } else {
                                     numvalue = sensor.numvalue + "%RH";
                                 }
-                            } else if(sensor.type == 3) {
+                            } else if (sensor.type == 3) {
                                 type = "开关";
                                 if (sensor.numvalue != null && sensor.numvalue != 0) {
                                     numvalue = "开";
@@ -2568,8 +2575,8 @@
                                 }
                             } else if (sensor.type == 5) {
                                 type = "风向";
-                                numvalue = getDirection(sensor.numvalue)+":"+sensor.numvalue+"°";
-                                
+                                numvalue = getDirection(sensor.numvalue);
+
                             } else if (sensor.type == 6) {
                                 type = "照度";
                                 if (sensor.numvalue > 0) {
@@ -2577,7 +2584,7 @@
                                 } else {
                                     numvalue = sensor.numvalue + "lux";
                                 }
-                            }   
+                            }
                             var wgname;
                             $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: {comaddr: obj.s_identify},
                                 success: function (data) {
@@ -2586,11 +2593,51 @@
                                         wgname = gay[0].name;
                                     }
                                 }});
-                            p.innerHTML = "名称" + "：      " + sensor.name;
-                            p1.innerHTML = "所属网关" + "：      " + wgname;
-                            p2.innerHTML = "类型" + "：      " + type;
-                            p3.innerHTML = "数值" + "：      " + numvalue;
-                            p4.innerHTML = "状态" + "：      " + obj.lx;
+                            var span1 = document.createElement("span");
+                            var span11 = document.createElement("span");
+                            var span2 = document.createElement("span");
+                            var span22 = document.createElement("span");
+                            var span3 = document.createElement("span");
+                            var span33 = document.createElement("span");
+                            var span4 = document.createElement("span");
+                            var span44 = document.createElement("span");
+                            var span5 = document.createElement("span");
+                            var span55 = document.createElement("span");
+                            span1.innerHTML = "名称" + "：&nbsp";
+                            span2.innerHTML = "所属网关" + "：&nbsp";
+                            span3.innerHTML = "类型" + "：&nbsp";
+                            span4.innerHTML = "数值" + "：&nbsp";
+                            span5.innerHTML = "状态" + "：&nbsp";
+                            span11.innerHTML = sensor.name;
+                            span22.innerHTML = wgname;
+                            span33.innerHTML = type;
+                            span44.innerHTML = numvalue;
+                            span55.innerHTML = obj.lx;
+                            span11.setAttribute("style", "color: green;");
+                            span22.setAttribute("style", "color: green;");
+                            span33.setAttribute("style", "color: green;");
+                            span44.setAttribute("style", "color: green;");
+                            span55.setAttribute("style", "color: green;");
+
+                            p.appendChild(span1);
+                            p.appendChild(span11);
+                            
+                            p1.appendChild(span2);
+                            p1.appendChild(span22);
+                            
+                            p2.appendChild(span3);
+                            p2.appendChild(span33);
+                            
+                            p3.appendChild(span4);
+                            p3.appendChild(span44);
+                            
+                            p4.appendChild(span5);
+                            p4.appendChild(span55);
+//                            p.innerHTML = "名称" + "：      " + sensor.name;
+//                            p1.innerHTML = "所属网关" + "：      " + wgname;
+//                            p2.innerHTML = "类型" + "：      " + type;
+//                            p3.innerHTML = "数值" + "：      " + numvalue;
+//                            p4.innerHTML = "状态" + "：      " + obj.lx;
                             $("#textdiv2").append(p);
                             $("#textdiv2").append(p1);
                             $("#textdiv2").append(p2);
@@ -2607,7 +2654,7 @@
 
 
             }
-            
+
             //计算风向
             function getDirection(val)
             {
@@ -2794,11 +2841,50 @@
                             var p2 = document.createElement("p");
                             var p3 = document.createElement("p");
                             var p4 = document.createElement("p");
-                            p.innerHTML = "名称" + "：      " + loop.l_name;
-                            p1.innerHTML = "所属网关" + "：      " + wgname;
-                            p2.innerHTML = "工作模式" + "：      " + str;
-                            p3.innerHTML = "状态" + "：      " + l_switch;
-                            p4.innerHTML = "工作方案" + "：      ";
+                             var span1 = document.createElement("span");
+                            var span11 = document.createElement("span");
+                            var span2 = document.createElement("span");
+                            var span22 = document.createElement("span");
+                            var span3 = document.createElement("span");
+                            var span33 = document.createElement("span");
+                            var span4 = document.createElement("span");
+                            var span44 = document.createElement("span");
+                            //var span5 = document.createElement("span");
+                            //var span55 = document.createElement("span");
+                            span1.innerHTML = "名称" + "：      ";
+                            span2.innerHTML = "所属网关" + "：      ";
+                            span3.innerHTML = "工作模式" + "：      ";
+                            span4.innerHTML = "状态" + "：      ";
+                           
+                            span11.innerHTML = loop.l_name;
+                            span22.innerHTML = wgname;
+                            span33.innerHTML = str;
+                            span44.innerHTML = l_switch;
+                            //span55.innerHTML = obj.lx;
+                            span11.setAttribute("style", "color: green;");
+                            span22.setAttribute("style", "color: green;");
+                            span33.setAttribute("style", "color: green;");
+                            span44.setAttribute("style", "color: green;");
+                           // span55.setAttribute("style", "color: green;");
+
+                            p.appendChild(span1);
+                            p.appendChild(span11);
+                            
+                            p1.appendChild(span2);
+                            p1.appendChild(span22);
+                            
+                            p2.appendChild(span3);
+                            p2.appendChild(span33);
+                            
+                            p3.appendChild(span4);
+                            p3.appendChild(span44);
+                            
+                           
+//                            p.innerHTML = "名称" + "：      " + loop.l_name;
+//                            p1.innerHTML = "所属网关" + "：      " + wgname;
+//                            p2.innerHTML = "工作模式" + "：      " + str;
+//                            p3.innerHTML = "状态" + "：      " + l_switch;
+                           p4.innerHTML = "工作方案" + "：      ";
                             $("#textdiv2").append(p);
                             $("#textdiv2").append(p1);
                             $("#textdiv2").append(p2);
