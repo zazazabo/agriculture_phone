@@ -84,6 +84,14 @@
                     vv.push(0);
                     var data = buicode2(vv);
                     console.log(data);
+
+                    $('#panemask').showLoading({
+                        'afterShow': function () {
+                            setTimeout("$('#panemask').hideLoading()", 60000);
+                        }
+                    }
+                    );
+
                     dealsend2("10", data, "dealfaultCB", comaddr, 0, ele.id, info, "${param.action}");
                     addlogon(u_name, "处理故障", o_pid, "传感器监视", "处理【" + ele.name + "】", ele.s_identify);
                 } else {
@@ -166,6 +174,12 @@
                 vv.push(0);
                 vv.push(8); //寄存器数目 2字节                         
                 var data = buicode2(vv);
+                $('#panemask').showLoading({
+                    'afterShow': function () {
+                        setTimeout("$('#panemask').hideLoading()", 10000);
+                    }
+                }
+                );
                 dealsend2("03", data, "readSensorCB", comaddr, 0, id, infonum, "${param.action}");
             }
 
@@ -175,9 +189,7 @@
                 dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
             }
 
-            function getDirection(val)
-            {
-                console.log(val);
+            function getDirection(val) {
                 var str = "";
                 switch (val) {
                     case  0:
@@ -235,8 +247,6 @@
 
 
             $(function () {
-
-
                 $('#gravidaTable').bootstrapTable({
                     // showExport: true, //是否显示导出
                     exportDataType: "basic", //basic', 'a
@@ -288,7 +298,7 @@
                                     var v1 = parseFloat(value);
                                     var fx = getDirection(v1);
                                     //if(v1>=337.5&&v1<=360)
-                                    return fx + ":" + value  + "";
+                                    return fx + ":" + value + "";
                                 } else {
                                     return value / 10;
                                 }
@@ -360,7 +370,7 @@
                     },
                     //服务器url
                     queryParams: function (params)  {   //配置参数 
-                        var search=encodeURI(params.search);
+                        var search = encodeURI(params.search);
                         var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
                             search: search,
                             skip: params.offset,
@@ -405,7 +415,7 @@
                             query: obj,
                             silent: false
                         };
-                        $("#gravidaTable").bootstrapTable('refresh', opt);                     
+                        $("#gravidaTable").bootstrapTable('refresh', opt);
                     }
                 });
             });
@@ -425,52 +435,7 @@
                 $("#gravidaTable").bootstrapTable('refresh', opt);
             }
 
-            //计算时间差
-            function TimeDifference(time1, time2)
-            {
 
-                time1 = new Date(time1.replace(/-/g, '/'));
-                time2 = new Date(time2.replace(/-/g, '/'));
-                var ms = Math.abs(time1.getTime() - time2.getTime());
-                return ms / 1000 / 60;
-
-            }
-
-
-            function formartcomaddr(value, row, index) {
-                if (index == 0) {
-
-                    var l_comaddr = row.comaddr;
-
-                    var vv = [];
-                    dealsend2("sensor", "00", "sensorCB", l_comaddr, 0, 0, 0);
-
-                    var l_comaddr = row.comaddr;
-                    var obj = {};
-                    obj.l_comaddr = l_comaddr;
-                    obj.pid = "${param.pid}";
-                    var opt = {
-                        url: "monitor.monitorForm.getSensorList.action",
-                        silent: true,
-                        query: obj
-                    };
-                    $("#gravidaTable").bootstrapTable('refresh', opt);
-
-                    return {disabled: false, //设置是否可用
-                        checked: true//设置选中
-                    };
-
-                } else {
-                    return {checked: false//设置选中
-                    };
-
-                }
-            }
-            function formartcomaddr1(value, row, index) {
-                var val = value;
-                var v1 = row.online == 1 ? "&nbsp;<img style='float:right' src='img/online1.png'>" : "&nbsp;<img style='float:right' src='img/off.png'>";
-                return  val + v1;
-            }
         </script>
     </head>
     <body id="panemask">
