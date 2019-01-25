@@ -547,4 +547,21 @@
         </xhandle>  
     </xform>
     
+    <xform desc="自控界面" id="masterhome">
+        <xhandle desc="查看网关下回路和传感器" id="getCSlist" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_loop where  @CONDITION  " var="looprs">
+                <xflt id="CONDITION" nrp="" tpl="@l_identify">
+                    <xfltpara id="l_identify" nrp="1=2" para="identify" sql="l_identify=':identify'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+            <xsql id="a2" list="true" page="true" tpe="SQL" tpl="select * from t_sensor where deplayment = 1 and @CONDITION  " var="sensorrs">
+                <xflt id="CONDITION" nrp="" tpl="@s_identify">
+                    <xfltpara id="s_identify" nrp="1=2" para="identify" sql="s_identify=':identify'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
+    </xform>
+    
 </xforms>
