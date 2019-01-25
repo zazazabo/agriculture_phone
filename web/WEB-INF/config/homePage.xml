@@ -548,6 +548,14 @@
     </xform>
     
     <xform desc="自控界面" id="masterhome">
+        <xhandle desc="查看项目下所有网关" id="getcomaddrSlist" rtnype="JSON">
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_baseinfo where  @CONDITION  " var="comaddrrs">
+                <xflt id="CONDITION" nrp="" tpl="@pid">
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="pid=':pid'">
+                    </xfltpara>
+                </xflt>
+            </xsql> 
+        </xhandle>  
         <xhandle desc="查看网关下回路和传感器" id="getCSlist" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="select * from t_loop where  @CONDITION  " var="looprs">
                 <xflt id="CONDITION" nrp="" tpl="@l_identify">

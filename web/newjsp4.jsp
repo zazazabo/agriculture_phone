@@ -189,7 +189,7 @@
                 var x = e.clientX;
                 var y = e.clientY;
                 console.log(x, y);
-                console.log(X1, Y1);
+                //console.log(X1, Y1);
                 drag(x, y);
             };
             //拖拽函数
