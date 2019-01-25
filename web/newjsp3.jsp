@@ -44,13 +44,13 @@
             img1.src = "img/wzx.png";
             img.onload = function () {
                 draw(this, img, 0, 0);
-            }
+            };
             img1.onload = function () {
                 console.log(img1.width);
                 console.log(img1.height);
                 draw(this, img1, 180, 400);
 
-            }
+            };
 
             oC.addEventListener('click', function (e) {
                 var x = e.offsetX;
@@ -58,8 +58,8 @@
                 console.log(x, y);
                 if (isInPos(x, y, 180, 400, img1)) {
                     alert("点击网关");
-                }
-            }, false)
+                };
+            }, false);
             function draw(obj, img, x, y) {
                 oGC.drawImage(img, x, y);
             }

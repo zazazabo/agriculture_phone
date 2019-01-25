@@ -225,7 +225,6 @@ function isNumber(val) {
     }
 
 }
-
 function dealsend2(msg, data, func, comaddr, type, param, val,page) {
     var user = new Object();
     user.res = 1;
