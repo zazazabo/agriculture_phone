@@ -570,6 +570,13 @@
                 </xflt>
             </xsql> 
         </xhandle>  
-    </xform>
-    
+        
+        <xhandle desc="修改网关在自控界面的位置" id="upXY" rtnype="JSON">
+            <xsql id="a1" para="posX,posY" tpe="DDL" tpl="update t_baseinfo set posX=':posX',posY=':posY' where @CONDITION " var="rs">
+                <xflt id="CONDITION" tpl="@identify">
+                    <xfltpara id="identify" nrp="1=2" para="identify" sql="identify = ':identify'"></xfltpara>
+                </xflt>
+            </xsql>
+        </xhandle>
+    </xform>  
 </xforms>

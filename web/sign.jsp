@@ -795,6 +795,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#fsvalue").html(value);
+                                }else{
+                                    $("#fsvalue").html("0");
                                 }
 
                             } else if (rsv.show == 2) {
@@ -804,6 +806,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#ylvalue").html(value);
+                                }else{
+                                    $("#ylvalue").html("0");
                                 }
 
                             } else if (rsv.show == 3) {
@@ -813,6 +817,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#ylljvalue").html(value);
+                                }else{
+                                    $("#ylljvalue").html("0"); 
                                 }
 
                             } else if (rsv.show == 4) {
@@ -822,6 +828,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#trwdvalue").html(value);
+                                }else{
+                                    $("#trwdvalue").html("0");
                                 }
 
                             } else if (rsv.show == 5) {
@@ -831,6 +839,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#trsd").html(value);
+                                }else{
+                                    $("#trsd").html("0");
                                 }
                             } else if (rsv.show == 6) {
                                 //大气温度
@@ -839,6 +849,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#dqwd").html(value);
+                                }else{
+                                    $("#dqwd").html("0"); 
                                 }
 
                             } else if (rsv.show == 7) {
@@ -848,6 +860,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#dqsdvalue").html(value);
+                                }else{
+                                    $("#dqsdvalue").html("0");
                                 }
 
                             } else if (rsv.show == 8) {
@@ -868,6 +882,8 @@
                                 if (parseInt(rsv.numvalue) > 0) {
                                     var value = parseInt(rsv.numvalue) / 10;
                                     $("#zdvalue").html(value);
+                                }else{
+                                    $("#zdvalue").html("0");
                                 }
 
                             }

@@ -203,22 +203,24 @@
                             }
                         });
 
+                        $('#scenenum').combobox({
+                            url: "sensor.planForm.getSensorPlanBynum1.action?p_identify="+record.identify,
+                            onLoadSuccess: function (data) {
+                                if (Array.isArray(data) && data.length > 0) {
+                                    $(this).combobox('select', data[0].id);
+                                }
+                            }, onSelect: function (record) {
+                                $("#scennum").val(record.text);
+                            }
+                        });
+
                         var data = $("#table0").bootstrapTable('getData');
                         console.log(data.length)
                         getSceneNum(l_comaddr);
                     }
                 });
 
-                $('#scenenum').combobox({
-                    url: "sensor.planForm.getSensorPlanBynum1.action?pid=${param.pid}",
-                    onLoadSuccess: function (data) {
-                        if (Array.isArray(data) && data.length > 0) {
-                            $(this).combobox('select', data[0].id);
-                        }
-                    }, onSelect: function (record) {
-                        $("#scennum").val(record.text);
-                    }
-                });
+
 
             })
 

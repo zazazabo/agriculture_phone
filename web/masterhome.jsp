@@ -42,15 +42,21 @@
                 align-items:Center;
                 width: 50%; height: 50%; float: left; text-align: center;}
             #c1{
-                cursor: pointer;
+                /*                cursor: pointer;*/
             }
+            .sd{
+                border: 1px solid black; width: 160px; float: left; height: 200px;margin-left: 3%; margin-top: 2% ; 
+                background:rgba(144, 238 ,144,0.4); filter:alpha(opacity=40);
+            }
+            img{ width:100%;height:70%; margin-top: 30px;}
         </style>
     </head>
     <body id="panemask">
         <canvas id="c1" width="1200" height="800">
         </canvas>
         <div id="faultDiv"  class="bodycenter"  style=" display: none" title="网关信息">
-            <div style=" width: 70%; height: 100%; float: left; border: 1px solid #e8e8e8;overflow-y: scroll;" id="loopinfo">
+            <div id="wgname" style=" width: 100%; height: 10%; font-size: 24px;"></div>
+            <div style=" width: 70%; height: 90%; float: left; border: 1px solid #e8e8e8;overflow-y: scroll;" id="loopinfo">
                 <!--                <div style=" width: 150px; border: 1px solid red; height: 200px;">
                                     <div style=" width:70%; height: 50%; border: 1px solid green; float: left;"></div>
                                     <div style=" width:30%; height: 50%; border: 1px solid gray; float: left;"></div>
@@ -58,10 +64,130 @@
                                     <div style=" width:50%; height: 50%; border: 1px solid gray; float: left;"></div>
                                 </div>-->
             </div>
-            <div style=" width: 30%;height: 100%; float: left; border: 1px solid #e8e8e8;" id="sensorinfo">
+            <div style=" width: 30%;height: 90%; float: left; border: 1px solid #e8e8e8;" id="sensorinfo">
 
             </div>
-        </div>   
+        </div>
+
+        <div id="signDiv"  class="bodycenter"  style=" display: none" title="气象站">
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/fs.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        风速
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="fsvalue">0.0</span>m/s
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/yuliang.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        雨量
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="ylvalue">0</span>ml
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/yuliang.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%;text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        雨量累计
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="ylljvalue">0</span>ml
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/wd.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        土壤温度
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="trwdvalue">0</span>℃
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/sd.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        土壤湿度
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="trsd">0</span>%
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/wd.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        大气温度
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="dqwd">0</span>℃
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/sd.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%;  text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        大气湿度
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="dqsdvalue">0</span>%
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/fx.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        风向
+                    </div>
+                    <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="fxvalue"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="sd" style=" width: 150px;">
+                <div style=" width: 35%; height: 100%;  float: left;">
+                    <img src="./img/zd.png">
+                </div>
+                <div style=" width: 65%; height: 100%;  float: left;">
+                    <div style=" height: 50%; width: 100%; text-align: center;padding-top: 10%;font-size: 2em;position:relative">
+                        照度
+                    </div>
+                    <div style=" height: 50%; text-align: center;padding-top: 10%;font-size: 1.6em;position:relative">
+                        <span id="zdvalue">0</span> lux
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </body>
@@ -95,50 +221,30 @@
                         imgtemp.onload = function () {
                             var m1 = "imgimg";
                             var name = this.name;
+
                             var id = this.alt;
                             var o1 = wg[id];
                             wg[id].img = this;
                             var index = name.substring(m1.length, name.length);
                             var index = parseInt(index);
-                            wg[id].posX = index * 40;
-                            wg[id].posY = 0;
-                            this.posX = index * 40;
-                            this.posY = 0;
+                            if (o1.posX != null && o1.posY != null) {
+                                this.posX = o1.posX;
+                                this.posY = o1.posY;
+                            } else {
+                                wg[id].posX = index * 40;
+                                wg[id].posY = 0;
+                                this.posX = index * 40;
+                                this.posY = 0;
+
+                            }
                             this.model = 2;
                             this.ooo = o1;
                             movObject.push(this);
-                            draw(this, index * 40, 0);
+                            draw(this, this.posX, this.posY);
+
 
                         };
                     }
-
-//                    for (var j = 0; j < data.total; j++) {
-//                        var oo = data.comaddrrs[j];
-//                        wg[oo.id] = oo;
-//                        var imgtemp = new Image();
-//                        imgtemp.src = "img/wzx.png"
-//                        imgtemp.name = "gayway" + j.toString();
-//                        imgtemp.alt = oo.id;
-//                        imgtemp.onload = function () {
-//
-//                            var m1 = "gayway";
-//                            var name = this.name;
-//                            var id = this.alt;
-//                            var o1 = wg[id];
-//                            wg[id].img = this;
-//                            var index = name.substring(m1.length, name.length);
-//                            var index = parseInt(index);
-//                            wg[id].posX = index * 40;
-//                            wg[id].posY = 0;
-//
-//                            this.posX = index * 60;
-//                            this.posY = 120;
-//                            this.model = 2;
-//                            this.ooo = o1;
-//                            movObject.push(this);
-//                            draw(this, index * 60, 120);
-//                        }
-//                    }
 
                 },
                 error: function () {
@@ -158,6 +264,19 @@
                     }
                 }
             });
+
+            $("#signDiv").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 550,
+                height: 580,
+                position: ["top", "top"],
+                buttons: {
+                    关闭: function () {
+                        $("#signDiv").dialog("close");
+                    }
+                }
+            });
         });
 
         var oC = document.getElementById("c1");
@@ -170,14 +289,8 @@
         };
 
         oC.addEventListener('click', function (e) {
-
-        }, false);
-
-        oC.addEventListener('click', function (e) {
             var x = e.offsetX;
             var y = e.offsetY;
-
-
             var o = isHitImg(x, y);
             if (o != null) {
                 if (isok) {
@@ -194,6 +307,8 @@
                                 var sensorrs = data.sensorrs;
                                 $("#sensorinfo").html("");
                                 $("#loopinfo").html("");
+                                $("#wgname").html("");
+                                $("#wgname").html(s.name);
                                 var sen = document.createElement("h3");
                                 sen.innerHTML = "传感器信息";
                                 var loop = document.createElement("h3");
@@ -231,15 +346,16 @@
                                             var div4 = document.createElement("div");
                                             var bhbtn = document.createElement("button");
                                             var dkbtn = document.createElement("button");
+                                            div2.setAttribute("id", "bh" + i);
                                             bhbtn.innerHTML = '闭合';
                                             dkbtn.innerHTML = '断开';
                                             //闭合
                                             bhbtn.onclick = function () {                          //绑定点击事件
-                                                close(obj, comaddr);
+                                                close(obj, comaddr, $(div2).attr('id'));
                                             };
                                             //断开
                                             dkbtn.onclick = function () {
-                                                discon(obj, comaddr);
+                                                discon(obj, comaddr, $(div2).attr('id'));
                                             };
                                             divbordy.setAttribute("class", "divbody");
                                             div1.setAttribute("class", "div1");
@@ -275,7 +391,7 @@
                                             if (sensor.numvalue > 0) {
                                                 num = sensor.numvalue / 10;
                                             } else {
-                                                num = sensor.numvalue;
+                                                num = 0;
                                             }
                                             val = num.toString() + "℃";
                                         } else if (sensor.type == "2") {
@@ -283,7 +399,7 @@
                                             if (sensor.numvalue > 0) {
                                                 num = sensor.numvalue / 10;
                                             } else {
-                                                num = sensor.numvalue;
+                                                num = 0;
                                             }
                                             val = num.toString() + "%RH";
                                         } else if (sensor.type == "3") {
@@ -297,7 +413,7 @@
                                             if (sensor.numvalue > 0) {
                                                 num = sensor.numvalue / 10;
                                             } else {
-                                                num = sensor.numvalue;
+                                                num = 0;
                                             }
                                             val = num.toString() + "m/s";
                                         } else if (sensor.type == "5") {
@@ -307,7 +423,7 @@
                                             if (sensor.numvalue > 0) {
                                                 num = sensor.numvalue / 10;
                                             } else {
-                                                num = sensor.numvalue;
+                                                num = 0;
                                             }
                                             val = num.toString() + "    lux";
                                         }
@@ -332,6 +448,11 @@
                 }
 
 
+            } else {
+                if (x >= 390 && x <= 425 && y >= 115 && y <= 180) {
+                    getrs();
+                    $("#signDiv").dialog("open");
+                }
             }
 
         }, false);
@@ -354,13 +475,31 @@
                     var e = ev || event;
                     var ax = e.clientX;
                     var ay = e.clientY;
+                    if(ax>=1100){
+                        ax = 1100;
+                    }
+                    if(ay>=700){
+                        ay =700;
+                    }
                     drawAll(o);
                     o.posX = ax;
                     o.posY = ay;
+                   
                     ctx.drawImage(o, ax, ay);
-                     isok = false;
-                    
+                    isok = false;
+                    var obj = {};
+                    obj.posX = ax;
+                    obj.posY = ay;
+                    obj.identify = o.ooo.identify;
 
+                    $.ajax({async: false, url: "homePage.masterhome.upXY.action", type: "post", datatype: "JSON", data: obj,
+                        success: function (data) {
+
+                        },
+                        error: function () {
+                            alert("提交失败！");
+                        }
+                    });
 
                 };
                 //鼠标移开事件
@@ -377,7 +516,7 @@
         }
 
         //闭合
-        function close(obj, comaddr) {
+        function close(obj, comaddr, divid) {
             var ele = obj;
             addlogon(u_name, "设置", o_pid, "实图主页", "闭合回路【" + ele.l_name + "】", obj.l_identify);
             var o = {};
@@ -409,7 +548,7 @@
             vv.push(val2 & 0xff);
 
             var data = buicode2(vv);
-            dealsend2("10", data, "switchloopCB", comaddr, 1, ele.id, info, "${param.action}");
+            dealsend3("10", data, "switchloopCB", comaddr, 1, ele.id, info, "${param.action}", divid);
             $('#panemask').showLoading({
                 'afterShow': function () {
                     setTimeout("$('#panemask').hideLoading()", 10000);
@@ -419,7 +558,7 @@
         }
 
         //断开
-        function discon(obj, comaddr) {
+        function discon(obj, comaddr, divid) {
             var ele = obj;
             addlogon(u_name, "设置", o_pid, "实图主页", "断开回路【" + ele.l_name + "】", obj.l_identify);
             var o = {};
@@ -451,7 +590,7 @@
             vv.push(val2 & 0xff);
 
             var data = buicode2(vv);
-            dealsend2("10", data, "switchloopCB", comaddr, 0, ele.id, info, "${param.action}");
+            dealsend3("10", data, "switchloopCB", comaddr, 0, ele.id, info, "${param.action}", divid);
             $('#panemask').showLoading({
                 'afterShow': function () {
                     setTimeout("$('#panemask').hideLoading()", 10000);
@@ -475,6 +614,11 @@
                     var low = infonum & 0xff;
                     if (data[2] == high && data[3] == low) {
                         var str = obj.type == 0 ? "断开成功" : "闭合成功";
+                        if (obj.type == 0) {
+                            document.getElementById(obj.divid).innerHTML = "断开";
+                        } else {
+                            document.getElementById(obj.divid).innerHTML = "闭合";
+                        }
                         var param = {id: obj.param, l_switch: obj.type};
                         $.ajax({async: false, url: "loop.loopForm.modifySwitch.action", type: "get", datatype: "JSON", data: param,
                             success: function (data) {
@@ -583,6 +727,96 @@
             }
 
             return  str;
+        }
+
+        //获取数值
+        function getrs() {
+            var obj = {};
+            obj.pid = o_pid;
+            $.ajax({url: "homePage.sign.getdqwd_value.action", async: false, type: "get", datatype: "JSON", data: obj,
+                success: function (data) {
+                    var rs = data.rs;
+                    if (rs.length > 0) {
+                        for (var i = 0; i < rs.length; i++) {
+                            var rsv = rs[i];
+                            if (rsv.show == 1) {
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#fsvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 2) {
+                                //雨量
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#ylvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 3) {
+                                //雨量累计
+
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#ylljvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 4) {
+                                //土壤温度
+
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#trwdvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 5) {
+                                //土壤湿度
+
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#trsd").html(value);
+                                }
+                            } else if (rsv.show == 6) {
+                                //大气温度
+
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#dqwd").html(value);
+                                }
+
+                            } else if (rsv.show == 7) {
+                                //大气湿度
+
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#dqsdvalue").html(value);
+                                }
+
+                            } else if (rsv.show == 8) {
+                                //风向
+
+                                var v1 = parseFloat(rsv.numvalue);
+                                $("#fxvalue").html(getDirection(v1));
+//                                if (parseInt(rsv.numvalue) > 0) {
+//                                    var value = parseInt(rsv.numvalue);
+//                                    $("#fxvalue").html(value);
+//                                }
+
+                            } else if (rsv.show == 9) {
+                                //照度
+
+                                if (parseInt(rsv.numvalue) > 0) {
+                                    var value = parseInt(rsv.numvalue) / 10;
+                                    $("#zdvalue").html(value);
+                                }
+
+                            }
+                        }
+                    }
+                },
+                error: function () {
+                    alert("提交添加失败！");
+                }
+            });
         }
 
     </script> 

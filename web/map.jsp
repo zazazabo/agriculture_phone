@@ -2471,12 +2471,13 @@
                                 var span2 = document.createElement("span");
                                 var name = sensor.name;
                                 var val = "";
+                                console.log(sensor);
                                 if (sensor.type == "1") {
                                     var num;
                                     if (sensor.numvalue > 0) {
                                         num = sensor.numvalue / 10;
                                     } else {
-                                        num = sensor.numvalue;
+                                        num = 0;
                                     }
                                     val = num.toString() + "℃";
                                 } else if (sensor.type == "2") {
@@ -2484,7 +2485,7 @@
                                     if (sensor.numvalue > 0) {
                                         num = sensor.numvalue / 10;
                                     } else {
-                                        num = sensor.numvalue;
+                                        num = 0;
                                     }
                                     val = num.toString() + "%RH";
                                 } else if (sensor.type == "3") {
@@ -2498,9 +2499,9 @@
                                     if (sensor.numvalue > 0) {
                                         num = sensor.numvalue / 10;
                                     } else {
-                                        num = sensor.numvalue;
+                                        num = 0;
                                     }
-                                    val = num.toString() + "m/s";
+                                    val = num + "m/s";
                                 } else if (sensor.type == "5") {
                                     val = getDirection(sensor.numvalue);
                                 } else if (sensor.type == "6") {
@@ -2508,7 +2509,7 @@
                                     if (sensor.numvalue > 0) {
                                         num = sensor.numvalue / 10;
                                     } else {
-                                        num = sensor.numvalue;
+                                        num = 0;
                                     }
                                     val = num.toString() + "    lux";
                                 }
@@ -2571,7 +2572,7 @@
                                 if (sensor.numvalue > 0) {
                                     numvalue = sensor.numvalue / 10 + "m/s";
                                 } else {
-                                    numvalue = sensor.numvalue + "m/s";
+                                    numvalue = 0 + "m/s";
                                 }
                             } else if (sensor.type == 5) {
                                 type = "风向";

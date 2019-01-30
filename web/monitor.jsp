@@ -298,7 +298,7 @@
                                     var v1 = parseFloat(value);
                                     var fx = getDirection(v1);
                                     //if(v1>=337.5&&v1<=360)
-                                    return fx + ":" + value + "";
+                                    return fx;
                                 } else {
                                     return value / 10;
                                 }

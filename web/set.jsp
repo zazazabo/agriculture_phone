@@ -386,9 +386,12 @@
                     layerAler('网关不能为空'); //
                     return;
                 }
-
+                
                 var ooo = $("#form2").serializeObject();
-
+                if(!(/(^[1-9]\d*$)/.test(ooo.checktime))){
+                    layerAler("请输入合法数值");
+                    return ;
+                }
 
                 console.log(ooo);
 

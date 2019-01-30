@@ -101,7 +101,6 @@
                         });
                     }
                 });
-                console.log();
                 $('#reordtabel').bootstrapTable({
                     url: 'homePage.function.getdayinfo.action',
                     columns: [

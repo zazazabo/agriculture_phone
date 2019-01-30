@@ -169,12 +169,22 @@
 //                obj.l_comaddr = ooo.l_comaddr;
 //                obj.p_comaddr = ooo.l_comaddr;
 //                obj.p_deployment = ooo.deplayment;
-                var opt = {
-                    url: "plan.planForm.getSensorPlan.action",
-                    query: ooo,
-                    silent: false
-                };
-                $("#table0").bootstrapTable('refresh', opt);
+                if (ooo.deplayment == "0") {
+                    var opt = {
+                        url: "plan.planForm.getSensorPlan2.action",
+                        query: ooo,
+                        silent: false
+                    };
+                    $("#table0").bootstrapTable('refresh', opt);
+                } else {
+                    var opt = {
+                        url: "plan.planForm.getSensorPlan.action",
+                        query: ooo,
+                        silent: false
+                    };
+                    $("#table0").bootstrapTable('refresh', opt);
+                }
+
             }
 
             function editfinish() {
@@ -399,7 +409,7 @@
                             p_type: 1,
                             p_show: 1,
                             type_id: "1",
-                            identify:$("#identify").val(),
+                            identify: $("#identify").val(),
                             pid: "${param.pid}"  
                         };      
                         return temp;  
@@ -849,8 +859,8 @@
                     return;
                 }
                 var ele = selects[0];
-                
-                var scenenum=parseInt(ele.p_scenenum);
+
+                var scenenum = parseInt(ele.p_scenenum);
                 console.log(ele);
                 if (val == 0) {
                     var obj = {identify: ele.p_identify};
@@ -881,11 +891,11 @@
                             alert("提交失败！");
                         }
                     });
-                    if (bremove==false) {
+                    if (bremove == false) {
                         layerAler("请删除回路的场景方案");
                         return false;
                     }
-                 }
+                }
                 var vv = [];
                 vv.push(1);
                 vv.push(0x10);
@@ -909,10 +919,10 @@
                     } else if (val == 1) {
                         vv.push(obj.info >> 8 & 0xff)   //寄存器变量值
                         vv.push(obj.info & 0xff);
-                        vv.push(obj.down*10 >> 8 & 0xff);   //下限
-                        vv.push(obj.down*10 & 0xff);
-                        vv.push(obj.up*10 >> 8 & 0xff);//上限
-                        vv.push(obj.up*10 & 0xff);
+                        vv.push(obj.down * 10 >> 8 & 0xff);   //下限
+                        vv.push(obj.down * 10 & 0xff);
+                        vv.push(obj.up * 10 >> 8 & 0xff);//上限
+                        vv.push(obj.up * 10 & 0xff);
                     }
 
                     vv.push(0);

@@ -775,7 +775,7 @@
                                 } else if (value == "5") {
                                     return  '风向';
                                 }else if (value == "6") {
-                                    return  '光';
+                                    return  '光照度';
                                 }
                             }
                         }, {
