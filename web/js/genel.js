@@ -241,3 +241,21 @@ function dealsend2(msg, data, func, comaddr, type, param, val,page) {
     console.log(user);
     parent.sendData(user);
 }
+
+function dealsend3(msg, data, func, comaddr, type, param, val,page,divid) {
+    var user = new Object();
+    user.res = 1;
+    user.status = "";
+    user.comaddr = comaddr;
+    user.function = func;
+    user.param = param;
+    user.page = page;
+    user.msg = msg;
+    user.val = val;
+    user.type = type;
+    user.data = data;
+    user.len = data.length;
+    user.divid = divid;
+    console.log(user);
+    parent.sendData(user);
+}

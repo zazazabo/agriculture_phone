@@ -83,13 +83,15 @@
                             valign: 'middle',
                             formatter: function (value) {
                                 var name;
-                                if (value != "" && value != null) {
+                                if (value != "" || value != null) {
                                     var obj = {};
                                     obj.comaddr = value;
                                     $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: obj,
                                         success: function (data) {
                                             var rs = data.rs;
-                                            name = rs[0].name;
+                                            if(rs.length>0){
+                                               name = rs[0].name;
+                                            }
                                         },
                                         error: function () {
                                             console.log("提交失败");
@@ -121,7 +123,7 @@
                     showRefresh: true,
                     showToggle: true,
                     // 设置默认分页为 50
-                    pageList: [5, 10, 15, 20, 25],
+                    pageList: [5, 10, 15,"ALL"],
                     striped: true,
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
 //                        console.info("加载成功");

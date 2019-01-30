@@ -195,8 +195,8 @@
 
         <xhandle desc="传感器场景方案2" id="getSensorPlanBynum1" rtnype="JSON">
             <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT p_scenenum as id,p_name as text,* FROM t_plan tp where p_deployment='1' and p_attr=1 and p_type=1 and  @CONDITION  " var="list">
-                <xflt id="CONDITION" nrp="" tpl="@pid">
-                    <xfltpara id="pid" nrp="1=2" para="pid" sql="pid = ':pid'">
+                <xflt id="CONDITION" nrp="" tpl="@p_identify">
+                    <xfltpara id="p_identify" nrp="1=2" para="p_identify" sql="p_identify = ':p_identify'">
                     </xfltpara>
                 </xflt>
             </xsql>
