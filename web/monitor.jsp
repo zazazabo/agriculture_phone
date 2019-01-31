@@ -272,6 +272,14 @@
                                 return index + 1;
                             }
                         },
+                        {
+                            field: 'commname',
+                            title: '网关名称',
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle'
+                        },
+
 
                         {
                             field: 'name',
@@ -384,40 +392,63 @@
                     }
                 });
 
-                $("#l_comaddr").combobox({
-                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
-                    formatter: function (row) {
-                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
-                        var v = row.text + v1;
-                        row.id = row.id;
-                        row.text = v;
-                        var opts = $(this).combobox('options');
-                        return row[opts.textField];
-                    },
-                    onLoadSuccess: function (data) {
-                        if (Array.isArray(data) && data.length > 0) {
-                            for (var i = 0; i < data.length; i++) {
-                                data[i].text = data[i].name;
-                            }
-                            $(this).combobox('select', data[0].id);
+                $.ajax({async: false, url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}", type: "get", datatype: "JSON", data: {},
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length > 0) {
+                            var ooo = {id: "", text: "--全部--", name: "--全部--"};
+                            data.splice(0, 0, ooo);
+
+                            $("#l_comaddr").combobox({
+                                // url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                                data: data,
+                                formatter: function (row) {
+                                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                                    var v = row.text.indexOf("全部") >= 0 ? row.text : row.text + v1;
+
+                                    row.id = row.id;
+                                    row.text = v;
+                                    var opts = $(this).combobox('options');
+                                    return row[opts.textField];
+                                },
+                                onLoadSuccess: function (data) {
+
+                                    if (Array.isArray(data) && data.length > 0) {
+                                        for (var i = 0; i < data.length; i++) {
+                                            data[i].text = data[i].name;
+                                        }
+                                        $(this).combobox('select', data[0].id);
+                                    }
+                                },
+                                onSelect: function (record) {
+                                    var l_comaddr = record.id;
+
+                                    $("#identify").val(record.identify);
+                                    var obj = {};
+                                    obj.identify = record.identify;
+                                    obj.pid = "${param.pid}";
+                                    obj.deplayment = 1;
+                                    var opt = {
+                                        url: "monitor.monitorForm.getSensorList.action",
+                                        query: obj,
+                                        silent: false
+                                    };
+                                    $("#gravidaTable").bootstrapTable('refresh', opt);
+                                }
+                            });
+
                         }
                     },
-                    onSelect: function (record) {
-                        var l_comaddr = record.id;
-
-                        $("#identify").val(record.identify);
-                        var obj = {};
-                        obj.identify = record.identify;
-                        obj.pid = "${param.pid}";
-                        obj.deplayment = 1;
-                        var opt = {
-                            url: "monitor.monitorForm.getSensorList.action",
-                            query: obj,
-                            silent: false
-                        };
-                        $("#gravidaTable").bootstrapTable('refresh', opt);
+                    error: function () {
+                        alert("提交失败！");
                     }
                 });
+
+
+
+
+
+
             });
             //定时刷新数据
             //setInterval('getcominfo()', 6000);
@@ -444,7 +475,9 @@
                 <span style=" margin-left:1%;">网关名称:</span>
                 <input type="hidden" name="identify" id="identify" value=""/>
                 <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:120px; height: 30px" 
-                       data-options="editable:true,valueField:'id', textField:'text' " />
+                       data-options="editable:true,valueField:'id', textField:'text' ">
+
+
 
                 <button type="button" id="btnswitch" onclick="tourSensor()" class="btn btn-success btn-sm">
                     巡测数据

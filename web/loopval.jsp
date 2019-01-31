@@ -176,7 +176,7 @@
                     },
                     //服务器url
                     queryParams: function (params)  {   //配置参数  
-                        var search=encodeURI(params.search);   
+                        var search = encodeURI(params.search);   
                         var temp  =   {    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的 
                             search: search,
                             skip: params.offset,
@@ -189,134 +189,163 @@
                     },
                 });
 
-                $("#l_comaddr").combobox({
-                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
-                    formatter: function (row) {
-                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
-                        var v = row.text + v1;
-                        row.id = row.id;
-                        row.text = v;
-                        var opts = $(this).combobox('options');
-                        return row[opts.textField];
-                    },
-                    onLoadSuccess: function (data) {
-                        if (Array.isArray(data) && data.length > 0) {
-                            for (var i = 0; i < data.length; i++) {
-                                data[i].text = data[i].name;
-                            }
-                            $(this).combobox('select', data[0].id);
+
+
+                $.ajax({async: false, url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}", type: "get", datatype: "JSON", data: {},
+                    success: function (data) {
+                        if (data.length > 0) {
+                            var ooo = {id: "", text: "--全部--", name: "--全部--"};
+                            data.splice(0, 0, ooo);
+
+                            $("#l_comaddr").combobox({
+                                // url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                                data: data,
+                                formatter: function (row) {
+                                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                                    var v = row.text.indexOf("全部") >= 0 ? row.text : row.text + v1;
+
+                                    row.id = row.id;
+                                    row.text = v;
+                                    var opts = $(this).combobox('options');
+                                    return row[opts.textField];
+                                },
+                                onLoadSuccess: function (data) {
+
+                                    if (Array.isArray(data) && data.length > 0) {
+                                        for (var i = 0; i < data.length; i++) {
+                                            data[i].text = data[i].name;
+                                        }
+                                        $(this).combobox('select', data[0].id);
+                                    }
+                                },
+                                onSelect: function (record) {
+                                    $("#identify").val(record.identify);
+                                    var l_comaddr = record.id;
+                                    var vv = [];
+                                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
+
+                                    var obj = {};
+                                    obj.identify = record.identify;
+                                    obj.pid = "${param.pid}";
+                                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+                                        success: function (data) {
+                                            for (var i = 0; i < data.length; i++) {
+                                                var o = data[i];
+                                                infolist[o.id] = o.text;
+                                            }
+                                        },
+                                        error: function () {
+                                            alert("提交失败！");
+                                        }
+                                    });
+
+
+                                    $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
+                                        success: function (data) {
+                                            for (var i = 0; i < data.length; i++) {
+                                                var o = data[i];
+                                                infoscene[o.id] = o.text;
+                                            }
+                                        },
+                                        error: function () {
+                                            alert("提交失败！");
+                                        }
+                                    });
+                                    var opt = {
+                                        url: "loop.loopForm.getLoopList.action",
+                                        silent: false,
+                                        query: obj
+                                    };
+                                    $("#gravidaTable").bootstrapTable('refresh', opt);
+                                    
+                                    
+                                }
+                            });
+
                         }
-
                     },
-                    onSelect: function (record) {
-                        $("#identify").val(record.identify);
-                        var l_comaddr = record.id;
-                        var vv = [];
-                        dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
-
-                        var obj = {};
-                        obj.identify = record.identify;
-                        obj.pid = "${param.pid}";
-                        $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
-                            success: function (data) {
-                                for (var i = 0; i < data.length; i++) {
-                                    var o = data[i];
-                                    infolist[o.id] = o.text;
-                                }
-                            },
-                            error: function () {
-                                alert("提交失败！");
-                            }
-                        });
-
-
-                        $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
-                            success: function (data) {
-                                for (var i = 0; i < data.length; i++) {
-                                    var o = data[i];
-                                    infoscene[o.id] = o.text;
-                                }
-                            },
-                            error: function () {
-                                alert("提交失败！");
-                            }
-                        });
-
-
-
-                        var opt = {
-                            url: "loop.loopForm.getLoopList.action",
-                            silent: false,
-                            query: obj
-                        };
-                        $("#gravidaTable").bootstrapTable('refresh', opt);
+                    error: function () {
+                        alert("提交失败！");
                     }
                 });
+
+
+
+
+//
+//                $("#l_comaddr").combobox({
+//                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+//                    formatter: function (row) {
+//                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+//                        var v = row.text + v1;
+//                        row.id = row.id;
+//                        row.text = v;
+//                        var opts = $(this).combobox('options');
+//                        return row[opts.textField];
+//                    },
+//                    onLoadSuccess: function (data) {
+//                        if (Array.isArray(data) && data.length > 0) {
+//                            for (var i = 0; i < data.length; i++) {
+//                                data[i].text = data[i].name;
+//                            }
+//                            $(this).combobox('select', data[0].id);
+//                        }
+//
+//                    },
+//                    onSelect: function (record) {
+//                        $("#identify").val(record.identify);
+//                        var l_comaddr = record.id;
+//                        var vv = [];
+//                        dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
+//
+//                        var obj = {};
+//                        obj.identify = record.identify;
+//                        obj.pid = "${param.pid}";
+//                        $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+//                            success: function (data) {
+//                                for (var i = 0; i < data.length; i++) {
+//                                    var o = data[i];
+//                                    infolist[o.id] = o.text;
+//                                }
+//                            },
+//                            error: function () {
+//                                alert("提交失败！");
+//                            }
+//                        });
+//
+//
+//                        $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
+//                            success: function (data) {
+//                                for (var i = 0; i < data.length; i++) {
+//                                    var o = data[i];
+//                                    infoscene[o.id] = o.text;
+//                                }
+//                            },
+//                            error: function () {
+//                                alert("提交失败！");
+//                            }
+//                        });
+//
+//
+//
+//                        var opt = {
+//                            url: "loop.loopForm.getLoopList.action",
+//                            silent: false,
+//                            query: obj
+//                        };
+//                        $("#gravidaTable").bootstrapTable('refresh', opt);
+//                    }
+//                });
+//                
+//                
+
+
+
+
+
+
             });
 
-            function formartcomaddr(value, row, index) {
-                if (index == 0) {
-                    var l_comaddr = row.comaddr;
-                    var obj = {};
-                    obj.l_comaddr = l_comaddr;
-                    obj.pid = "${param.pid}";
-                    obj.identify = row.s_identify;
-                    obj.l_deplayment = 1;
-                    var opt = {
-                        url: "loop.loopForm.getLoopList.action",
-                        silent: true,
-                        query: obj
-                    };
-                    var vv = [];
-                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
-
-                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                var o = data[i];
-                                infolist[o.id] = o.text;
-
-                            }
-
-                        },
-                        error: function () {
-                            alert("提交失败！");
-                        }
-                    });
-
-                    $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
-                        success: function (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                var o = data[i];
-                                infoscene[o.id] = o.text;
-                            }
-                            console.log(infoscene);
-                        },
-                        error: function () {
-                            alert("提交失败！");
-                        }
-                    });
-
-                    $("#gravidaTable").bootstrapTable('refresh', opt);
-
-
-
-
-
-                    return {disabled: false, checked: true//设置选中
-                    };
-
-                } else {
-                    return {checked: false//设置选中
-                    };
-
-                }
-            }
-            function formartcomaddr1(value, row, index) {
-                var val = value;
-                var v1 = row.online == 1 ? "&nbsp;<img style='float:right' src='img/online1.png'>" : "&nbsp;<img style='float:right' src='img/off.png'>";
-                return  val + v1;
-            }
 
             function switchloopCB(obj) {
                 $('#panemask').hideLoading();
