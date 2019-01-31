@@ -40,21 +40,21 @@
                     return;
                 }
                 var fmobj = $("#form1").serializeObject();
-                
-                fmobj.enable=1;
-                
+
+                fmobj.enable = 1;
+
                 console.log(fmobj);
                 for (var i = 0; i < selects.length; i++) {
                     var ele = selects[i];
                     fmobj.id = ele.id;
-                    fmobj.enable=val;
+                    fmobj.enable = val;
                     var str;
-                    if(val ==1){
+                    if (val == 1) {
                         str = "启用";
-                    }else{
-                        str ="禁用";
+                    } else {
+                        str = "禁用";
                     }
-                    addlogon(u_name, "设置传感器报警参数", o_pid, "报警参数设置", str+"回路【"+ele.name+"】报警参数设置",ele.s_identify);
+                    addlogon(u_name, "设置传感器报警参数", o_pid, "报警参数设置", str + "回路【" + ele.name + "】报警参数设置", ele.s_identify);
                     $.ajax({async: false, url: "sensor.sensorform.uplimitenable.action", type: "get", datatype: "JSON", data: fmobj,
                         success: function (data) {
                             var arrlist = data.rs;
@@ -92,7 +92,7 @@
                 for (var i = 0; i < selects.length; i++) {
                     var ele = selects[i];
                     fmobj.id = ele.id;
-                    addlogon(u_name, "设置传感器报警参数", o_pid, "报警参数设置", "设置回路【"+ele.name+"】",ele.s_identify);
+                    addlogon(u_name, "设置传感器报警参数", o_pid, "报警参数设置", "设置回路【" + ele.name + "】", ele.s_identify);
                     $.ajax({async: false, url: "sensor.sensorform.uplimitvalue.action", type: "get", datatype: "JSON", data: fmobj,
                         success: function (data) {
                             var arrlist = data.rs;
@@ -155,7 +155,7 @@
 
                             }
                         }
-                        ,  {
+                        , {
                             field: 'infonum',
                             title: '信息点',
                             width: 25,
@@ -331,7 +331,7 @@
         <div id="content" class="row-fluid">
             <form id="form1">
                 <div class=" row " >
-                    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-12  ">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4  " >
                         <table class="text-nowrap" style="  margin-top: 10px; align-content:  center;">
                             <tbody>
                                 <tr>
@@ -350,29 +350,29 @@
                                     <td style=" padding-left: 5px">
                                         <input id="maxValue"  class="form-control" name="maxValue" style="display: inline; width: 50px;" placeholder="最大值" type="text">
                                     </td>
-                                    <td style=" padding-left: 10px;">
-                                        <button class="btn btn-success btn-sm ctrol"  type="button"  onclick="setWarning()" data-toggle="modal" data-target="#pjj33" id="add">
-                                            设置
-                                        </button>
-
-
-                                        <button class="btn btn-success btn-sm ctrol"  type="button"  onclick="enablewarning(1)" data-toggle="modal" data-target="#pjj33" id="add">
-                                            启用
-                                        </button>
-
-
-
-                                        <button class="btn btn-success btn-sm ctrol" type="button"   onclick="enablewarning(0)" data-toggle="modal" data-target="#pjj33" id="add">
-                                            禁用
-                                        </button>
-
-
-
-                                    </td>
 
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div style=" padding-left: 10px;  margin-top: 10px; margin-left: 10px;" class="col-xs-12 col-sm-4 col-md-6 col-lg-4">
+                        <button class="btn btn-success btn-sm ctrol"  type="button"  onclick="setWarning()" data-toggle="modal" data-target="#pjj33" id="add">
+                            设置
+                        </button>
+
+
+                        <button class="btn btn-success btn-sm ctrol"  type="button"  onclick="enablewarning(1)" data-toggle="modal" data-target="#pjj33" id="add">
+                            启用
+                        </button>
+
+
+
+                        <button class="btn btn-success btn-sm ctrol" type="button"   onclick="enablewarning(0)" data-toggle="modal" data-target="#pjj33" id="add">
+                            禁用
+                        </button>
+
+
+
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-5 col-lg-3" >
 
