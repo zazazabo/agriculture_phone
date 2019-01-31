@@ -1951,7 +1951,9 @@
                                         var allOverlay = map.getOverlays();
                                         for (var i = 0; i < allOverlay.length; i++) {
                                             if (allOverlay[i].toString() == "[object Marker]") {
-                                                if (allOverlay[i].getPosition().lng == obj.Longitude && allOverlay[i].getPosition().lat == obj.latitude) {
+                                                console.log(allOverlay[i].getPosition().lng,allOverlay[i].getPosition().lng);
+                                                console.log(obj.Longitude,obj.Longitude);
+                                                if (allOverlay[i].getPosition().lng == obj.Longitude && allOverlay[i].getPosition().lng == obj.Longitude) {
                                                     map.removeOverlay(allOverlay[i]);
                                                     var obj3 = {};
                                                     obj3.Longitude = "";

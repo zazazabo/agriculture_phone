@@ -204,6 +204,14 @@
         var isok = true;
         var wg = {};
         var movObject = [];
+        var oC = document.getElementById("c1");
+        var ctx = oC.getContext("2d");
+        var img = new Image();
+        img.src = 'img/masterhome.png';
+        // img1.src = "img/wzx.png";
+        img.onload = function () {
+            draw(this, 0, 0);
+        };
         $(function () {
 
             var obj = {pid: o_pid, page: "ALL"};
@@ -279,14 +287,6 @@
             });
         });
 
-        var oC = document.getElementById("c1");
-        var ctx = oC.getContext("2d");
-        var img = new Image();
-        img.src = 'img/masterhome.png';
-        // img1.src = "img/wzx.png";
-        img.onload = function () {
-            draw(this, 0, 0);
-        };
 
         oC.addEventListener('click', function (e) {
             var x = e.offsetX;
@@ -475,16 +475,16 @@
                     var e = ev || event;
                     var ax = e.clientX;
                     var ay = e.clientY;
-                    if(ax>=1100){
+                    if (ax >= 1100) {
                         ax = 1100;
                     }
-                    if(ay>=700){
-                        ay =700;
+                    if (ay >= 700) {
+                        ay = 700;
                     }
                     drawAll(o);
                     o.posX = ax;
                     o.posY = ay;
-                   
+
                     ctx.drawImage(o, ax, ay);
                     isok = false;
                     var obj = {};
