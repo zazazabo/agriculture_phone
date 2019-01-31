@@ -240,7 +240,7 @@
     </head>
     <body>
         <div style=" margin-top: 10px;"> 
-            <span style=" margin-left: 10px;">网关名称：</span>
+            <span style=" margin-left: 0px;">网关名称：</span>
             <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox"  style=" height: 30px" 
                    data-options="editable:true,valueField:'id', textField:'text' " />
             <span style=" margin-left: 10px;">传感器：</span>
@@ -248,7 +248,7 @@
                    data-options="editable:true,valueField:'id', textField:'text' " />
         </div>
 
-        <div style="margin-top:15px;margin-left: 10px;" id="Day">
+        <div style="margin-top:15px;margin-left: 0px;" id="Day">
             <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
                 <label for="dtp_input2" class="control-label" style="float: left;"></label>
                 <input id="dtp_input2" value="" type="hidden">

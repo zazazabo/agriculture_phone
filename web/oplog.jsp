@@ -19,9 +19,9 @@
             /*            手机*/
             @media screen and (min-width:0px) and (max-width:666px) {  
 
-/*                #selectdiv{
-                    position:relative; top: 10px;
-                }*/
+                /*                #selectdiv{
+                                    position:relative; top: 10px;
+                                }*/
 
 
             }
@@ -89,8 +89,8 @@
                                     $.ajax({url: "homePage.gayway.getnamebycode.action", async: false, type: "get", datatype: "JSON", data: obj,
                                         success: function (data) {
                                             var rs = data.rs;
-                                            if(rs.length>0){
-                                               name = rs[0].name;
+                                            if (rs.length > 0) {
+                                                name = rs[0].name;
                                             }
                                         },
                                         error: function () {
@@ -100,7 +100,7 @@
                                 }
                                 return  name;
                             }
-                        }, 
+                        },
                         {
                             field: 'o_name',
                             title: "操作人", //操作人
@@ -123,7 +123,7 @@
                     showRefresh: true,
                     showToggle: true,
                     // 设置默认分页为 50
-                    pageList: [5, 10, 15,"ALL"],
+                    pageList: [5, 10, 15, "ALL"],
                     striped: true,
                     onLoadSuccess: function () {  //加载成功时执行  表格加载完成时 获取集中器在线状态
 //                        console.info("加载成功");
@@ -190,29 +190,30 @@
                     <span style="margin-left: 10px">至：<input type="date" id="endtime"/></span>
                     <span><input type="button" class="btn btn-sm btn-success" value="查询" id="select"></span>
                 </div>-->
-        <div style="margin-top:15px;margin-left: 10px; " id="Day">
-            <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px;">
-                <label for="dtp_input2" class="control-label" style="float: left;"></label>
-                <input id="dtp_input2" value="" type="hidden">
-                <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
-                    <input id="sday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </span>
-            </form>
-            <span style="  float: left; margin-top: 4px; ">&nbsp;
-                <span name="xxx" id="119">至</span>
-                &nbsp;</span>
-            <form action="" id="day2" class="form-horizontal" role="form" style="float:left; width: 166px; ">
-                <label for="dtp_input2" class="control-label" style="float: left;"></label>
-                <input id="dtp_input2" value="" type="hidden">
-                <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
-                    <input id="eday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </span>
-            </form>
-            <div id="selectdiv">
+        <div style="margin-left: 0px;" id="Day">
+                        <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px;margin-top: 10px;">
+                            <label for="dtp_input2" class="control-label" style="float: left;"></label>
+                            <input id="dtp_input2" value="" type="hidden">
+                            <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
+                                <input id="sday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </span>
+                        </form>
+                        <span style="  float: left; margin-top: 14px; ">&nbsp;
+                            <span name="xxx" id="119">至</span>
+                            &nbsp;</span>
+                        <form action="" id="day2" class="form-horizontal" role="form" style="float:left; width: 166px;margin-top: 10px; ">
+                            <label for="dtp_input2" class="control-label" style="float: left;"></label>
+                            <input id="dtp_input2" value="" type="hidden">
+                            <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
+                                <input id="eday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </span>
+                        </form>
+
+            <div id="selectdiv" style=" float: left; margin-top: 10px;">
                 <span style="font-size: 18px; margin-left: 10px;">
                     <button type="button" class="btn btn-sm btn-success" id="select" >
                         <span id="34" name="xxx">搜索</span>
@@ -224,7 +225,7 @@
             </div>
 
         </div>
-        
+
         <div>
             <table id="oplogtabel">
 
