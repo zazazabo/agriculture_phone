@@ -51,7 +51,6 @@
         function isInPos(x, y, posx, posy, obj) {
             var height = obj.height;
             var width = obj.width;
-//                console.log(height, width);
             if (x >= posx && x <= posx + width && y >= posy && y <= posy + obj.height) {
                 return true;
             } else {
@@ -121,7 +120,6 @@
         var gaywayArr = {};
         var movObject = [];
         $(function () {
-
             $(document).contextmenu(function (e) {
                 e.preventDefault();
                 var x = e.offsetX;
@@ -131,8 +129,7 @@
                 if (o != null) {
                     var s = o.ooo;
                     if (o.model == 1) {
-
-                        
+  
 //                        var o = {};
 //                        var vv = [];
 //                        vv.push(1);
@@ -170,19 +167,7 @@
 //                        }
 //                        );
 
-
-
-
-
-
-
-
-
-
-
-
-
-//                        o.src="img/loopoff.png"
+                        o.src="img/loopoff.png"
                     } else if (o.model == 0) {
 
 
