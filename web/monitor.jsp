@@ -396,7 +396,7 @@
                     success: function (data) {
                         console.log(data);
                         if (data.length > 0) {
-                            var ooo = {id: "", text: "--全部--", name: "--全部--"};
+                            var ooo = {id: "", text: "----全部----", name: "--全部--"};
                             data.splice(0, 0, ooo);
 
                             $("#l_comaddr").combobox({

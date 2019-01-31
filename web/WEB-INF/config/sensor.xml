@@ -121,10 +121,14 @@
   
 
         <xhandle desc="" id="getInfoNumList2" rtnype="JSON">
-            <xsql id="a1" list="true" page="true" tpe="SQL" tpl=" SELECT DISTINCT infonum as id,name as text FROM t_sensor where deplayment = 1 AND  @CONDITION" var="list">
-                <xflt id="CONDITION" nrp="" tpl="@identify ">
-                    <xfltpara id="identify" nrp="1=2" para="identify" sql="s_identify=':identify'"></xfltpara>
+            <xsql id="a1" list="true" page="true" tpe="SQL" tpl="SELECT  ts.infonum as id,ts.name as text,tb.identify FROM t_sensor ts,t_baseinfo AS tb WHERE ts.s_identify=tb.identify and  deplayment = 1  and  @CONDITION" var="list">
+                <xflt id="CONDITION" nrp="" tpl="@identify AND @pid ">
+                    <xfltpara id="identify" nrp="1=1" para="identify" sql="s_identify=':identify'"></xfltpara>
+                    <xfltpara id="pid" nrp="1=2" para="pid" sql="identify IN (SELECT identify  FROM t_baseinfo   WHERE  pid = ':pid')"></xfltpara>
                 </xflt>
+                
+                
+
 
             </xsql>
         </xhandle>  

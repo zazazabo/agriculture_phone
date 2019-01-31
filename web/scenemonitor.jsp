@@ -29,7 +29,6 @@
             }
 
             $(function () {
-
                 $('#table0').bootstrapTable({
 //                    url: 'sensor.planForm.getSensorPlan.action',
                     clickToSelect: true,
@@ -160,70 +159,210 @@
                         return temp;  
                     },
                 });
-                $("#l_comaddr").combobox({
-                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
-                    formatter: function (row) {
-                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
-                        var v = row.text + v1;
-                        row.id = row.id;
-                        row.text = v;
-                        var opts = $(this).combobox('options');
-                        return row[opts.textField];
-                    },
-                    onLoadSuccess: function (data) {
-                        if (Array.isArray(data) && data.length > 0) {
-                            for (var i = 0; i < data.length; i++) {
-                                data[i].text = data[i].name;
-                            }
-                            $(this).combobox('select', data[0].id);
+
+
+                $.ajax({async: false, url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}", type: "get", datatype: "JSON", data: {},
+                    success: function (data) {
+                        if (data.length > 0) {
+                            var ooo = {id: "", text: "--全部--", name: "--全部--"};
+                            data.splice(0, 0, ooo);
+                            $("#l_comaddr").combobox({
+                                // url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+                                data: data,
+                                formatter: function (row) {
+                                    var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+                                    var v = row.text.indexOf("全部") >= 0 ? row.text : row.text + v1;
+
+                                    row.id = row.id;
+                                    row.text = v;
+                                    var opts = $(this).combobox('options');
+                                    return row[opts.textField];
+                                },
+                                onLoadSuccess: function (data) {
+
+                                    if (Array.isArray(data) && data.length > 0) {
+                                        for (var i = 0; i < data.length; i++) {
+                                            data[i].text = data[i].name;
+                                        }
+                                        $(this).combobox('select', data[0].id);
+                                    }
+                                },
+                                onSelect: function (record) {
+
+                                    $("#identify").val(record.identify);
+                                    var l_comaddr = record.id;
+                                    var obj = {};
+                                    obj.identify = record.identify;
+                                    obj.pid = "${param.pid}";
+                                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+                                        success: function (data) {
+                                            for (var i = 0; i < data.length; i++) {
+                                                var o = data[i];
+                                                infolist[o.id] = o.text;
+                                            }
+                                            var ooo = {};
+                                            ooo.pid = "${param.pid}";
+                                            ooo.identify = record.identify;
+                                            console.log(ooo);
+                                            var opt = {url: "plan.planForm.getSensorPlan.action", query: ooo, silent: true};
+                                            $("#table0").bootstrapTable('refresh', opt);
+                                        },
+                                        error: function () {
+                                            alert("提交失败！");
+                                        }
+                                    });
+
+                                    $('#scenenum').combobox({
+                                        url: "sensor.planForm.getSensorPlanBynum1.action?p_identify=" + record.identify,
+                                        onLoadSuccess: function (data) {
+                                            if (Array.isArray(data) && data.length > 0) {
+                                                $(this).combobox('select', data[0].id);
+                                            }
+                                        }, onSelect: function (record) {
+                                            $("#scennum").val(record.text);
+                                        }
+                                    });
+
+//                                    var data = $("#table0").bootstrapTable('getData');
+//                                    console.log(data.length)
+//                                    getSceneNum(l_comaddr);
+
+
+
+
+
+
+
+
+
+
+//                                    $("#identify").val(record.identify);
+//                                    var l_comaddr = record.id;
+//                                    var vv = [];
+//                                    dealsend2("loop", "00", "loopcb", l_comaddr, 0, 0, 0, "${param.action}");
+//
+//                                    var obj = {};
+//                                    obj.identify = record.identify;
+//                                    obj.pid = "${param.pid}";
+//                                    $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+//                                        success: function (data) {
+//                                            for (var i = 0; i < data.length; i++) {
+//                                                var o = data[i];
+//                                                var str=o.identify + "_" + o.id;
+//                                                infolist[str] = o.text;
+//                                            }
+//                                            console.log(infolist);
+//                                        },
+//                                        error: function () {
+//                                            alert("提交失败！");
+//                                        }
+//                                    });
+//                                    $.ajax({async: false, url: "plan.planForm.getAllScennumName.action", type: "get", datatype: "JSON", data: obj,
+//                                        success: function (data) {
+//                                            for (var i = 0; i < data.length; i++) {
+//                                                var o = data[i];
+//                                                infoscene[o.id] = o.text;
+//                                            }
+//                                        },
+//                                        error: function () {
+//                                            alert("提交失败！");
+//                                        }
+//                                    });
+//                                    var opt = {
+//                                        url: "loop.loopForm.getLoopList.action",
+//                                        silent: false,
+//                                        query: obj
+//                                    };
+//                                    $("#gravidaTable").bootstrapTable('refresh', opt);
+
+
+                                }
+                            });
+
                         }
-
                     },
-                    onSelect: function (record) {
-                        $("#identify").val(record.identify);
-                        var l_comaddr = record.id;
-                        var obj = {};
-                        obj.identify = record.identify;
-                        obj.pid = "${param.pid}";
-                        $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
-                            success: function (data) {
-                                for (var i = 0; i < data.length; i++) {
-                                    var o = data[i];
-                                    infolist[o.id] = o.text;
-                                }
-                                var ooo = {};
-                                ooo.pid = "${param.pid}";
-                                ooo.identify = record.identify;
-                                console.log(ooo);
-                                var opt = {url: "plan.planForm.getSensorPlan.action", query: ooo, silent: true};
-                                $("#table0").bootstrapTable('refresh', opt);
-                            },
-                            error: function () {
-                                alert("提交失败！");
-                            }
-                        });
-
-                        $('#scenenum').combobox({
-                            url: "sensor.planForm.getSensorPlanBynum1.action?p_identify="+record.identify,
-                            onLoadSuccess: function (data) {
-                                if (Array.isArray(data) && data.length > 0) {
-                                    $(this).combobox('select', data[0].id);
-                                }
-                            }, onSelect: function (record) {
-                                $("#scennum").val(record.text);
-                            }
-                        });
-
-                        var data = $("#table0").bootstrapTable('getData');
-                        console.log(data.length)
-                        getSceneNum(l_comaddr);
+                    error: function () {
+                        alert("提交失败！");
                     }
                 });
 
 
 
-            })
 
+
+
+
+//                $("#l_comaddr").combobox({
+//                    url: "gayway.GaywayForm.getComaddr.action?pid=${param.pid}",
+//                    formatter: function (row) {
+//                        var v1 = row.online == 1 ? "&nbsp;<img src='img/online1.png'>" : "&nbsp;<img src='img/off.png'>";
+//                        var v = row.text + v1;
+//                        row.id = row.id;
+//                        row.text = v;
+//                        var opts = $(this).combobox('options');
+//                        return row[opts.textField];
+//                    },
+//                    onLoadSuccess: function (data) {
+//                        if (Array.isArray(data) && data.length > 0) {
+//                            for (var i = 0; i < data.length; i++) {
+//                                data[i].text = data[i].name;
+//                            }
+//                            $(this).combobox('select', data[0].id);
+//                        }
+//
+//                    },
+//                    onSelect: function (record) {
+//                        $("#identify").val(record.identify);
+//                        var l_comaddr = record.id;
+//                        var obj = {};
+//                        obj.identify = record.identify;
+//                        obj.pid = "${param.pid}";
+//                        $.ajax({async: false, url: "sensor.sensorform.getInfoNumList2.action", type: "get", datatype: "JSON", data: obj,
+//                            success: function (data) {
+//                                for (var i = 0; i < data.length; i++) {
+//                                    var o = data[i];
+//                                    infolist[o.id] = o.text;
+//                                }
+//                                var ooo = {};
+//                                ooo.pid = "${param.pid}";
+//                                ooo.identify = record.identify;
+//                                console.log(ooo);
+//                                var opt = {url: "plan.planForm.getSensorPlan.action", query: ooo, silent: true};
+//                                $("#table0").bootstrapTable('refresh', opt);
+//                            },
+//                            error: function () {
+//                                alert("提交失败！");
+//                            }
+//                        });
+//
+//                        $('#scenenum').combobox({
+//                            url: "sensor.planForm.getSensorPlanBynum1.action?p_identify=" + record.identify,
+//                            onLoadSuccess: function (data) {
+//                                if (Array.isArray(data) && data.length > 0) {
+//                                    $(this).combobox('select', data[0].id);
+//                                }
+//                            }, onSelect: function (record) {
+//                                $("#scennum").val(record.text);
+//                            }
+//                        });
+//
+//                        var data = $("#table0").bootstrapTable('getData');
+//                        console.log(data.length)
+//                        getSceneNum(l_comaddr);
+//                    }
+//                });
+
+
+
+
+
+
+
+
+
+
+
+            })
 
             function getSceneNumCB(obj) {
                 var data = Str2BytesH(obj.data);
@@ -284,11 +423,7 @@
                 }
 
             }
-
             function switchloop() {
-
-
-
                 var l_comaddr = $("#l_comaddr").val();
                 if (l_comaddr == "") {
                     layerAler('请勾选网关');  //请勾选网关
@@ -297,7 +432,6 @@
                 var obj = $("#form1").serializeObject();
                 console.log(l_comaddr);
                 console.log(obj);
-
                 var o = {};
                 var vv = [];
                 vv.push(1);

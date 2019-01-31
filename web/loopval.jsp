@@ -54,6 +54,13 @@
                             valign: 'middle'
                         },
                         {
+                            field: 'commname',
+                            title: '网关名称', //
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle'
+                        },
+                        {
                             field: 'l_name',
                             title: '回路名称', //
                             width: 25,
@@ -125,8 +132,12 @@
                                         var strobj = row[index];
                                         if (isJSON(strobj)) {
                                             var obj = eval('(' + strobj + ')');
+                                            
                                             if (i == 0) {
-                                                strret = strret + infolist[obj.infonum.toString()] + "&emsp;偏差值:" + obj.offset + "&emsp;";
+                                                
+                                                var iii=row.identify + "_" + obj.infonum.toString();
+                                                
+                                                strret = strret + infolist[iii] + "&emsp;偏差值:" + obj.offset + "&emsp;";
                                             } else
                                             {
                                                 var s1 = obj.value == 1 ? "闭合" : "断开";
@@ -231,8 +242,10 @@
                                         success: function (data) {
                                             for (var i = 0; i < data.length; i++) {
                                                 var o = data[i];
-                                                infolist[o.id] = o.text;
+                                                var str=o.identify + "_" + o.id;
+                                                infolist[str] = o.text;
                                             }
+                                            console.log(infolist);
                                         },
                                         error: function () {
                                             alert("提交失败！");
