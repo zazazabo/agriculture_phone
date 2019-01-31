@@ -347,7 +347,7 @@
     </head>
     <body>
 
-        <div style="margin-top:15px; margin-left: 10px;" id="Day">
+        <div style="margin-top:15px; margin-left:0px;" id="Day">
             <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px;">
                 <label for="dtp_input2" class="control-label" style="float: left;"></label>
                 <input id="dtp_input2" value="" type="hidden">
