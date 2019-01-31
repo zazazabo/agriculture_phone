@@ -590,13 +590,9 @@
         </script>
     </head>
     <body id="panemask">
-
-
-
-        <div id="content" class="row-fluid">
             <div id="content" class="row-fluid">
 
-                <div class=" row" >
+                <div class=" row" style=" margin-left: 2px;" >
                     <form id="form1">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
