@@ -150,6 +150,7 @@
                 projectId = $("#pojects").val();
                 return  projectId;
             }
+            
             function callchild(obj) {
                 console.log(obj);
                 if (obj.page == "main.jsp") {

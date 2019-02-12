@@ -559,9 +559,9 @@
                         addCookie("username", "", -1);
                         addCookie("password", "", -1);
                         //记住新密码
-                        addCookie("rmbUser", "true", 7);
-                        addCookie("username", username, 7);
-                        addCookie("password", pwd, 7);
+                        addCookie("rmbUser", "true", 30);
+                        addCookie("username", username, 30);
+                        addCookie("password", pwd, 30);
 
                     } else {
                         addCookie("rmbUser", "false", -1);

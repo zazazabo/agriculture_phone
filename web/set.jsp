@@ -22,7 +22,7 @@
                 }
 
                 #type{
-                    width: 100px;
+                    width: 120px;
                 }
 
                 #nowtime{
@@ -1066,9 +1066,9 @@
                                                            data-options="formatter:dateFormatter,showSeconds:true" value="" style="">
                                                 </span> 
                                                 <button  type="button" onclick="setNowtime()"  class="btn btn-success btn-sm"><span >获取当前时间</sspan>
-                                                </button>&nbsp; 
+                                                </button> 
 
-                                                <button  style="float:right; margin-right: 5px;" type="button" onclick="setTimeNow()" class="btn btn-success btn-sm"><span >设置</span></button>
+                                                <button  style="float:right; margin-right: 0px;" type="button" onclick="setTimeNow()" class="btn btn-success btn-sm"><span >设置</span></button>
                                             </td>
                                         </tr>
 
