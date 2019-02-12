@@ -34,7 +34,8 @@
                     clickToSelect: true,
                     rowStyle: function (row, index) {
                         if (scenenum == row.p_scenenum) {
-                            return {css: {"color": "green"}}
+                           
+                            return {css: {"color": "green"}};
                         }
 
                         return row;

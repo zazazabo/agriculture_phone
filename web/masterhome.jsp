@@ -221,6 +221,7 @@
                     var rs = data.comaddrrs;
                     for (var i = 0; i < rs.length; i++) {
                         var cmd = rs[i];
+                        console.log(cmd);
                         wg[cmd.id] = cmd;
                         var imgtemp = new Image();
                         imgtemp.src = "img/wzx.png";
