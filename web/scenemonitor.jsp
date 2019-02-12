@@ -41,6 +41,17 @@
                     },
                     columns: [
                         {
+                            field: 'commname',
+                            title: '网关名称', //信息点
+                            width: 25,
+                            align: 'center',
+                            valign: 'middle',
+                            colspan: 1,
+                            formatter: function (value, row, index, field) {
+                                return value;
+                            }
+                        },
+                        {
                             field: 'p_name',
                             title: '场景名', //信息点
                             width: 25,
