@@ -583,7 +583,6 @@
             function deployLoop() {
                 
                 var infoalldata = $("#formsearch").serializeObject();
-                console.log(infoalldata);
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 var o = $("#form1").serializeObject();
                 var vv = new Array();

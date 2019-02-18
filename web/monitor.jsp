@@ -79,9 +79,9 @@
                     vv.push(infonum & 0xff);
                     vv.push(0);
                     vv.push(1); //寄存器数目 2字节     
-                    vv.push(2)
-                    vv.push(0);
-                    vv.push(0);
+                    vv.push(2); //字节数目（寄存器数目*2）
+                    vv.push(0); //控制数据值高字节
+                    vv.push(0); //控制数据值低字节
                     var data = buicode2(vv);
                     console.log(data);
 
@@ -109,6 +109,7 @@
                         v = v + sprintf("%02x", data[i]) + " ";
                     }
                     console.log(v);
+                    
                     if (data[1] == 0x03) {
                         layerAler("读取成功");
                         var len = data[2];
@@ -185,6 +186,11 @@
 
             function tourSensor() {
                 var comaddr = $("#l_comaddr").combobox('getValue');
+                if(comaddr == ""){
+                    layerAler("请选择网关");
+                    return ;
+                }
+               
                 var vv = [];
                 dealsend2("sensor", "00", "sensorCB", comaddr, 0, 0, 0);
             }
