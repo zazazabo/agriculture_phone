@@ -132,11 +132,11 @@
                                         var strobj = row[index];
                                         if (isJSON(strobj)) {
                                             var obj = eval('(' + strobj + ')');
-                                            
+
                                             if (i == 0) {
-                                                
-                                                var iii=row.identify + "_" + obj.infonum.toString();
-                                                
+
+                                                var iii = row.identify + "_" + obj.infonum.toString();
+
                                                 strret = strret + infolist[iii] + "&emsp;偏差值:" + obj.offset + "&emsp;";
                                             } else
                                             {
@@ -242,7 +242,7 @@
                                         success: function (data) {
                                             for (var i = 0; i < data.length; i++) {
                                                 var o = data[i];
-                                                var str=o.identify + "_" + o.id;
+                                                var str = o.identify + "_" + o.id;
                                                 infolist[str] = o.text;
                                             }
                                             console.log(infolist);
@@ -270,8 +270,8 @@
                                         query: obj
                                     };
                                     $("#gravidaTable").bootstrapTable('refresh', opt);
-                                    
-                                    
+
+
                                 }
                             });
 
@@ -532,7 +532,7 @@
 
                 var data = buicode2(vv);
                 console.log(data);
-                dealsend2("10", data, "restoreloopCB", ele.l_comaddr, 0, 0, info, "${param.action}");
+                dealsend2("10", data, "restoreloopCB", l_comaddr, 0, 0, info, "${param.action}");
                 $('#panemask').showLoading({
                     'afterShow': function () {
                         setTimeout("$('#panemask').hideLoading()", 10000);
@@ -564,7 +564,7 @@
                         strworktype = "时间模式";
                     } else if (w2 >> 2 & 1 == 1) {
                         strworktype = "场景模式";
-                    } else if (w2 >> 2 & 0x1 == 1) {
+                    } else if (w2 >> 3 & 0x1 == 1) {
                         strworktype = "信息点模式";
                     }
                     ; //                        var worktype = data[9] * 256 + data[10];
@@ -573,9 +573,56 @@
                     layerAler("控制点:" + info + "<br>" + "站号" + site + "<br>" + "数据位置"
                             + regpos + "<br>" + "工作模式:" + strw1 + "<br>" + "执行方式:"
                             + strworktype + "<br>" + "闭合状态：" + isclose);
+
+                    var param = {id: obj.param, l_switch: dataval};
+                    $.ajax({async: false, url: "loop.loopForm.modifySwitch.action", type: "get", datatype: "JSON", data: param,
+                        success: function (data) {
+                            var arrlist = data.rs;
+                            if (arrlist.length == 1) {
+                                var o = {};
+                                o.l_comaddr = obj.comaddr;
+                                o.pid = "${param.pid}";
+                                o.l_deplayment = 1;
+                                var opt = {
+                                    url: "loop.loopForm.getLoopList.action",
+                                    silent: false,
+                                    query: o
+                                };
+                                $("#gravidaTable").bootstrapTable('refresh', opt);
+
+                            }
+                        },
+                        error: function () {
+                            alert("提交失败！");
+                        }
+                    });
                 }
             }
 
+//            function readinfo() {
+//                var selects = $('#gravidaTable').bootstrapTable('getSelections');
+//                var o = $("#form1").serializeObject();
+//
+//                var vv = new Array();
+//                if (selects.length == 0) {
+//                    layerAler('请勾选表格数据'); //请勾选表格数据
+//                    return;
+//                }
+//                var ele = selects[0];
+//                var vv = [];
+//                vv.push(1);
+//                vv.push(3);
+//                var info = parseInt(ele.l_info);
+//                var infonum = (3000 + info * 20) | 0x1000;
+//                vv.push(infonum >> 8 & 0xff);
+//                vv.push(infonum & 0xff);
+//
+//                vv.push(0);
+//                vv.push(20); //寄存器数目 2字节                         
+//                var data = buicode2(vv);
+//                console.log(data);
+//                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
+//            }
             function readinfo() {
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 var o = $("#form1").serializeObject();
@@ -586,85 +633,83 @@
                     return;
                 }
                 var ele = selects[0];
-                var vv = [];
+                var vv  = [];
                 vv.push(1);
                 vv.push(3);
                 var info = parseInt(ele.l_info);
                 var infonum = (3000 + info * 20) | 0x1000;
-                vv.push(infonum >> 8 & 0xff);
+                vv.push(infonum >>8 & 0xff);  //& oxff 是为了去掉高位
                 vv.push(infonum & 0xff);
-
                 vv.push(0);
-                vv.push(20); //寄存器数目 2字节                         
+                vv.push(20);
                 var data = buicode2(vv);
-                console.log(data);
-                dealsend2("03", data, "readinfoCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
+                dealsend2("03",data,"readinfoCB",o.l_comaddr,0,ele.id,info,"${param.action}");  //功能码（3：读，10：写）、传递到服务器的数据、回调函数、网关、操作类型、id、信息点、回调路径
             }
         </script>
     </head>
     <body id="panemask">
-            <div id="content" class="row-fluid">
+        <div id="content" class="row-fluid">
 
-                <div class=" row" style=" margin-left: 2px;" >
-                    <form id="form1">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
-                                <tbody>
-                                    <tr>
-                                        <td>网关名称：</td>
-                                        <td style=" padding-left: 3px;">
-                                            <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div  class="col-xs-12 col-sm-6 col-md-6">
-                            <input type="hidden" name="identify" id="identify" value=""/>
-                            <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
-                                <tbody>
-                                    <tr>
-
-                                        <td style=" padding-left: 10px;" >
-                                            <span  >
-                                                回路控制
-                                            </span>
-
-                                        </td>
-                                        <td style=" padding-left: 3px;">
-                                            <select class="easyui-combobox" id="switch" name="switch" style=" width: 100px; margin-left: 3px;  height: 30px">
-                                                <option value="0">断开</option>
-                                                <option value="1">闭合</option>           
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm  ">
-                                                设置
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
-                                                读取
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
-                                                恢复自动运行
-                                            </button>
-
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </form>
-                    <div style=" width: 100%;" >
-                        <table id="gravidaTable"  class="text-nowrap table table-hover table-striped">
+            <div class=" row" style=" margin-left: 2px;" >
+                <form id="form1">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+                                    <td>网关名称：</td>
+                                    <td style=" padding-left: 3px;">
+                                        <input id="l_comaddr" class="easyui-combobox" name="l_comaddr" style="width:150px; height: 30px;" data-options="editable:true,valueField:'id', textField:'text' " />
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
+                    <div  class="col-xs-12 col-sm-6 col-md-6">
+                        <input type="hidden" name="identify" id="identify" value=""/>
+                        <table style="border-collapse:separate; border-spacing:0px 10px;border: 1px solid #16645629; margin-top: 10px; align-content:  center;">
+                            <tbody>
+                                <tr>
+
+                                    <td style=" padding-left: 10px;" >
+                                        <span  >
+                                            回路控制
+                                        </span>
+
+                                    </td>
+                                    <td style=" padding-left: 3px;">
+                                        <select class="easyui-combobox" id="switch" name="switch" style=" width: 100px; margin-left: 3px;  height: 30px">
+                                            <option value="0">断开</option>
+                                            <option value="1">闭合</option>           
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="switchloop()" class="btn btn-success btn-sm  ">
+                                            设置
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="readinfo()" class="btn btn-success btn-sm">
+                                            读取
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
+                                            恢复自动运行
+                                        </button>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </form>
+                <div style=" width: 100%;" >
+                    <table id="gravidaTable"  class="text-nowrap table table-hover table-striped">
+                    </table>
                 </div>
             </div>
+        </div>
     </body>
 </html>

@@ -460,6 +460,7 @@
 
             function onopen(e) {
             }
+            //服务程序接收数据后事件
             function onmessage(e) {
                 var info = eval('(' + e.data + ')');
                 console.log("main onmessage");
@@ -473,15 +474,18 @@
                     callchild(info);
                 }
             }
-
+            //关闭websocket
             function onclose(e) {
                 console.log(e);
                 console.log("websocket close");
                 websocket.close();
             }
+            
+            //Webscoket连接发生错误
             function  onerror(e) {
                 console.log("Webscoket连接发生错误");
             }
+            
             function onbeforeunload(e) {
                 websocket.close();
             }

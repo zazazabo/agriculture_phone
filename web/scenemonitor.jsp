@@ -514,9 +514,9 @@
                 vv.push(infonum >> 8 & 0xff); //起始地址
                 vv.push(infonum & 0xff);
 
-                vv.push(0);           //寄存器数目 2字节  
-                vv.push(1);   //5
-                vv.push(2);           //字节数目长度  1字节 10
+                vv.push(0);           //寄存器数目 高字节  
+                vv.push(1);   //寄存器数目,低字节
+                vv.push(2);           //字节数目长度  1字节 
 
 
                 var val2 = parseInt(1);

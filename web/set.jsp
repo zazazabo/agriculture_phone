@@ -221,6 +221,7 @@
                 var pos = 0x100;
                 if (newsite > 256) {
                     layerAler("站号最大是256");
+                    return ;
                 }
 
 
@@ -755,14 +756,14 @@
                     // alert("验证成功");
 
                     var data = "@DTU:0000:DSCADDR:0,TCP, " + $("#ip").val() + "," + $("#port").val() + "\r\n";
+                    console.log("data");
+                    console.log(data);
                     var strtosend = "";
                     for (var i = 0; i < data.length; i++) {
                         var param1 = sprintf("%02x", data.charCodeAt(i));
                         strtosend = strtosend + param1 + " ";
                         // hexCharCode.push((data.charCodeAt(i)).toString(16));
                     }
-
-
                     addlogon(u_name, "设置", o_pid, "网关参数设置", "设置网关【" + $("#l_comaddr").combobox('getText') + "】主站信息");
                     dealsend2("@", strtosend, "setRemoteAddrCB", obj.l_comaddr, 0, 0, 0, "${param.action}");
 

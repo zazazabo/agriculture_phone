@@ -530,9 +530,9 @@
             vv.push(infonum >> 8 & 0xff); //起始地址
             vv.push(infonum & 0xff);
 
-            vv.push(0);           //寄存器数目 2字节  
-            vv.push(2);   //5
-            vv.push(4);           //字节数目长度  1字节 10
+            vv.push(0);          
+            vv.push(2);   //寄存器数目
+            vv.push(4);           //字节数目长度 
 
 
 
@@ -584,13 +584,15 @@
             vv.push(worktype >> 8 & 0xff);   //工作模式
             vv.push(worktype & 0xff);
 
-
-
             var val2 = parseInt(0);
             vv.push(val2 >> 8 & 0xff);   //控制值
             vv.push(val2 & 0xff);
-
+            console.log("vvv");
+            console.log(vv);
             var data = buicode2(vv);
+            console.log("data");
+            console.log(data);
+            return ;
             dealsend3("10", data, "switchloopCB", comaddr, 0, ele.id, info, "${param.action}", divid);
             $('#panemask').showLoading({
                 'afterShow': function () {

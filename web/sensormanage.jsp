@@ -689,8 +689,10 @@
 
                 vv.push(0);  //寄存器变量值
                 vv.push(0);
+                console.log(vv);
 
-                var data = buicode2(vv);
+                var data = buicode2(vv); //转换成16进制
+               
                 dealsend2("10", data, "deploySensorCB", o.l_comaddr, 0, ele.id, info, "${param.action}");
                 addlogon(u_name, "移除部署", o_pid, "传感器管理", "传感器【" + ele.name + "】");
                 $('#panemask').showLoading({
