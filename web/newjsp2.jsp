@@ -108,50 +108,7 @@
     </head>
     <body id="activity_pane">
 
-        <!--        <div class="row"  style=" margin-top: 10px;">
-                    <div id="selectdiv2"  class="col-xs-12 col-sm-6 col-md-5 col-lg-4 "> 
-                        <span style=" margin-left: 10px;">查询条件</span>
-                        <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox" 
-                               data-options="editable:true,valueField:'id', textField:'text' " />
-                        <select class="easyui-combobox" id="sensorlist" style=" margin-left: 3px;  height: 30px">
-                            <option value="0">15分钟</option>
-                            <option value="1">30分钟</option>   
-                            <option value="2">1小时</option> 
-                        </select>
-                        &nbsp;
-                    </div>
-        
-                    <div id="Day"  class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
-                        <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
-                            <label for="dtp_input2" class="control-label" style="float: left;"></label>
-                            <input id="dtp_input2" value="" type="hidden">
-                            <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
-                                <input id="sday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </span>
-                        </form>
-                        <span style="float: left; margin-top: 4px;">&nbsp;
-                            <span>至</span>
-                            &nbsp;</span>
-                        <form action="" id="day2" class="form-horizontal" role="form" style="float:left;width: 166px">
-                            <label for="dtp_input2" class="control-label" style="float: left;"></label>
-                            <input id="dtp_input2" value="" type="hidden">
-                            <span class="input-group date col-md-2 day" style="float:initial;" data-date=""  data-link-field="dtp_input2">
-                                <input id="eday" name="day"  class="form-control" style="width:90px;" size="16" readonly="readonly" type="text">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </span>
-                        </form>
-                        <div id="selectdiv" style=" text-align:right;margin:0px 10px 0px auto;">
-                            <button type="button" class="btn btn-xm btn-success" onclick="select()" >
-                                <span>搜索</span>
-                            </button>
-                        </div>
-                    </div>
-        
-                </div>-->
-        <div style="margin-top:10px;margin-left: 0px;" id="Day">
+<!--        <div style="margin-top:10px;margin-left: 0px;" id="Day">
             <form action="" id="day1" class="form-horizontal" role="form" style="float:left; width: 166px">
                 <label for="dtp_input2" class="control-label" style="float: left;"></label>
                 <input id="dtp_input2" value="" type="hidden">
@@ -173,9 +130,9 @@
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </span>
             </form>
-        </div>
+        </div>-->
         
-        <div style=" margin-top: 10px; "> 
+<!--        <div style=" margin-top: 10px; "> 
             &nbsp;
             <input id="l_comaddr2" name="l_comaddr" class="easyui-combobox" 
                    data-options="editable:true,valueField:'id', textField:'text' " style=" height: 34px" />
@@ -188,11 +145,11 @@
                 <span>搜索</span>
             </button>
             &nbsp;
-        </div>
+        </div>-->
 
         
         <!--        <h5 style=" margin-left: 20px; color: #FFB800; width: 100%;clear:both; margin-top: 80px; ">温度单位：℃ &nbsp; &nbsp;湿度单位：%RH</h5>-->
-        <div class="topCenter1" id="echarts1" style="width: 95%; height: 80%;">
+        <div class="topCenter1" id="echarts1" style="width: 95%; height: 90%;">
 
         </div>
         <!--        <div style=" width:70%; height:40%; margin-left: 15%; margin-top:80px; overflow-y: scroll;">

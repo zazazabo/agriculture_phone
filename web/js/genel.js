@@ -259,3 +259,4 @@ function dealsend3(msg, data, func, comaddr, type, param, val,page,divid) {
     console.log(user);
     parent.sendData(user);
 }
+

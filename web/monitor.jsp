@@ -100,7 +100,6 @@
             }
 
             function  readSensorCB(obj) {
-
                 $('#panemask').hideLoading();
                 if (obj.status == "success") {
                     var data = Str2BytesH(obj.data);

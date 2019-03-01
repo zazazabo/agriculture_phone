@@ -418,7 +418,7 @@
 
 
             var websocket = null;
-            var conectstr = "ws://47.99.78.186:24228/";
+            var conectstr = "ws://47.106.68.76:9004/";
             var timestamp = 0;
             function sendData(obj) {
                 console.log("通信状态:", websocket.readyState);

@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <div class="sd" style=" width: 160px;">
+<!--        <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
                 <img src="./img/yuliang.png">
             </div>
@@ -113,7 +113,7 @@
                     <span id="ylljvalue">0</span>ml
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="sd" style=" width: 160px;">
             <div style=" width: 35%; height: 100%;  float: left;">
                 <img src="./img/wd.png">
@@ -205,7 +205,7 @@
                     <td><input id="fs_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px; width: 120px;"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                     <td><input id="fs_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
                 </tr>
-                <tr>
+<!--                <tr>
                     <td>雨量</td>
                     <td><input id="yl_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px; width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
                     <td><input id="yl_sensor" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
@@ -214,7 +214,7 @@
                     <td>雨量累计</td>
                     <td><input id="yllj_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px" data-options="editable:true,valueField:'id', textField:'text' " /></td>
                     <td><input id="yllj_sensor"  class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td>土壤温度</td>
                     <td><input id="trwd_l_comaddr" name="l_comaddr" class="easyui-combobox"  style=" height: 30px;width: 120px"  data-options="editable:true,valueField:'id', textField:'text' " /></td>

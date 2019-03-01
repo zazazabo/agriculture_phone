@@ -200,7 +200,7 @@
                         success: function (data) {
                             var arrlist = data.rs;
                             if (arrlist.length == 1) {
-                                alert(langs1[143][lang]);  //修改成功
+                                alert("修改成功");  //修改成功
                                 $("#gravidaTable").bootstrapTable('refresh');
                                 $("#updatetable").modal('hide');  //手动关闭
                                 addlogon(u_name, "修改", o_pid, "报警设置", "修改报警管理人员");
@@ -217,7 +217,7 @@
             function updatepeople() {
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 if (selects.length < 1) {
-                    alert(langs1[73][lang]); //请勾选表格数据
+                    alert("请勾选表格数据"); //请勾选表格数据
                     return;
                 }
                 var select = selects[0];
@@ -276,7 +276,7 @@
             function deletepeople() {
                 var selects = $('#gravidaTable').bootstrapTable('getSelections');
                 if (selects.length < 1) {
-                    alert(langs1[73][lang]);  //请勾选数据
+                    alert("请勾选表格数据");  //请勾选数据
                     return;
                 }
                 layer.confirm('确定要删除吗?', {//确定要删除吗？

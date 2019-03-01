@@ -49,6 +49,18 @@
                 background:rgba(144, 238 ,144,0.4); filter:alpha(opacity=40);
             }
             img{ width:100%;height:70%; margin-top: 30px;}
+            #k{
+                border-radius:50%;
+                background-color:  palegreen;
+                width: 50px;
+                height: 50px;
+            }
+            #g{
+                border-radius:50%;
+                background-color:  #e8e8e8;
+                width: 50px;
+                height: 50px;
+            }
         </style>
     </head>
     <body id="panemask">
@@ -83,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sd" style=" width: 150px;">
+<!--            <div class="sd" style=" width: 150px;">
                 <div style=" width: 35%; height: 100%;  float: left;">
                     <img src="./img/yuliang.png">
                 </div>
@@ -108,7 +120,7 @@
                         <span id="ylljvalue">0</span>ml
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="sd" style=" width: 150px;">
                 <div style=" width: 35%; height: 100%;  float: left;">
                     <img src="./img/wd.png">
@@ -189,6 +201,11 @@
             </div>
         </div>
 
+        <div id="loopdiv"  class="bodycenter"  style=" display: none" title="回路控制">
+
+
+        </div>
+
 
     </body>
     <script type="text/javascript">
@@ -204,6 +221,7 @@
         var isok = true;
         var wg = {};
         var movObject = [];
+        var loopArr = {};
         var oC = document.getElementById("c1");
         var ctx = oC.getContext("2d");
         var img = new Image();
@@ -213,54 +231,7 @@
             draw(this, 0, 0);
         };
         $(function () {
-
-            var obj = {pid: o_pid, page: "ALL"};
-            $.ajax({async: false, url: "homePage.masterhome.getcomaddrSlist.action", type: "get", datatype: "JSON", data: obj,
-                success: function (data) {
-
-                    var rs = data.comaddrrs;
-                    for (var i = 0; i < rs.length; i++) {
-                        var cmd = rs[i];
-                        console.log(cmd);
-                        wg[cmd.id] = cmd;
-                        var imgtemp = new Image();
-                        imgtemp.src = "img/wzx.png";
-                        imgtemp.name = "imgimg" + i.toString();
-                        imgtemp.alt = cmd.id;
-                        imgtemp.onload = function () {
-                            var m1 = "imgimg";
-                            var name = this.name;
-
-                            var id = this.alt;
-                            var o1 = wg[id];
-                            wg[id].img = this;
-                            var index = name.substring(m1.length, name.length);
-                            var index = parseInt(index);
-                            if (o1.posX != null && o1.posY != null) {
-                                this.posX = o1.posX;
-                                this.posY = o1.posY;
-                            } else {
-                                wg[id].posX = index * 40;
-                                wg[id].posY = 0;
-                                this.posX = index * 40;
-                                this.posY = 0;
-
-                            }
-                            this.model = 2;
-                            this.ooo = o1;
-                            movObject.push(this);
-                            draw(this, this.posX, this.posY);
-
-
-                        };
-                    }
-
-                },
-                error: function () {
-                    alert("提交失败！");
-                }
-            });
-
+            reft();
             $("#faultDiv").dialog({
                 autoOpen: false,
                 modal: true,
@@ -286,166 +257,247 @@
                     }
                 }
             });
+
+            $("#loopdiv").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 200,
+                height: 380,
+                position: ["top", "top"],
+                buttons: {
+                    关闭: function () {
+                        $("#loopdiv").dialog("close");
+                    }
+                }
+            });
         });
 
 
         oC.addEventListener('click', function (e) {
+            var o = null;
             var x = e.offsetX;
             var y = e.offsetY;
-            var o = isHitImg(x, y);
+            o = isHitImg(x, y);
             if (o != null) {
-                if (isok) {
-                    var s = o.ooo;
-                    if (isInPos(x, y, o.posX, o.posY, s.img)) {
+                if (o.model == 1) {
+                    if (isok) {
+                        var s = o.ooo;
+                        if (isInPos(x, y, o.posX, o.posY, s.img)) {
 
-                        // alert(wg[s].name);
-                        var identify = s.identify;
-                        var obj = {};
-                        obj.identify = identify;
-                        $.ajax({url: "homePage.masterhome.getCSlist.action", async: false, type: "get", datatype: "JSON", data: obj,
-                            success: function (data) {
-                                var looprs = data.looprs;
-                                var sensorrs = data.sensorrs;
-                                $("#sensorinfo").html("");
-                                $("#loopinfo").html("");
-                                $("#wgname").html("");
-                                $("#wgname").html(s.name);
-                                var sen = document.createElement("h3");
-                                sen.innerHTML = "传感器信息";
-                                var loop = document.createElement("h3");
-                                loop.innerHTML = "回路信息";
-                                $("#sensorinfo").append(sen);
-                                $("#loopinfo").append(loop);
-                                //回路
-                                if (looprs.length > 0) {
-                                    var comaddr;
-                                    $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "post", datatype: "JSON", data: {identify: identify},
-                                        success: function (data) {
-                                            var rs = data.rs;
-                                            if (rs.length > 0) {
-                                                comaddr = rs[0].comaddr;
+                            // alert(wg[s].name);
+                            var identify = s.identify;
+                            var obj = {};
+                            obj.identify = identify;
+                            $.ajax({url: "homePage.masterhome.getCSlist.action", async: false, type: "get", datatype: "JSON", data: obj,
+                                success: function (data) {
+                                    var looprs = data.looprs;
+                                    var sensorrs = data.sensorrs;
+                                    $("#sensorinfo").html("");
+                                    $("#loopinfo").html("");
+                                    $("#wgname").html("");
+                                    $("#wgname").html(s.name);
+                                    var sen = document.createElement("h3");
+                                    sen.innerHTML = "传感器信息";
+                                    var loop = document.createElement("h3");
+                                    loop.innerHTML = "回路信息";
+                                    $("#sensorinfo").append(sen);
+                                    $("#loopinfo").append(loop);
+                                    //回路
+                                    if (looprs.length > 0) {
+                                        var comaddr;
+                                        $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "post", datatype: "JSON", data: {identify: identify},
+                                            success: function (data) {
+                                                var rs = data.rs;
+                                                if (rs.length > 0) {
+                                                    comaddr = rs[0].comaddr;
+                                                }
+                                            },
+                                            error: function () {
+                                                alert("提交失败！");
                                             }
-                                        },
-                                        error: function () {
-                                            alert("提交失败！");
+                                        });
+                                        for (var i = 0; i < looprs.length; i++) {
+                                            (function (x) {
+                                                var loop = looprs[i];
+                                                var obj = loop;
+                                                var str = "";
+                                                if (loop.l_switch == 1) {
+                                                    str = "开";
+                                                } else {
+                                                    str = "关";
+                                                }
+                                                var divbordy = document.createElement("div");
+                                                var div1 = document.createElement("div");
+                                                var div2 = document.createElement("div");
+                                                var div3 = document.createElement("div");
+                                                var div4 = document.createElement("div");
+                                                var bhbtn = document.createElement("button");
+                                                var dkbtn = document.createElement("button");
+                                                bhbtn.setAttribute("id", "k");
+                                                dkbtn.setAttribute("id", "g");
+                                                div2.setAttribute("id", "bh" + i);
+                                                bhbtn.innerHTML = '开';
+                                                dkbtn.innerHTML = '关';
+                                                //闭合
+                                                bhbtn.onclick = function () {                          //绑定点击事件
+                                                    close(obj, comaddr, $(div2).attr('id'));
+                                                };
+                                                //断开
+                                                dkbtn.onclick = function () {
+                                                    discon(obj, comaddr, $(div2).attr('id'));
+                                                };
+                                                divbordy.setAttribute("class", "divbody");
+                                                div1.setAttribute("class", "div1");
+                                                div2.setAttribute("class", "div2");
+                                                div3.setAttribute("class", "div3");
+                                                div4.setAttribute("class", "div3");
+                                                div1.innerHTML = loop.l_name;
+                                                div2.innerHTML = str;
+                                                div3.appendChild(bhbtn);
+                                                div4.appendChild(dkbtn);
+                                                divbordy.appendChild(div1);
+                                                divbordy.appendChild(div2);
+                                                divbordy.appendChild(div3);
+                                                divbordy.appendChild(div4);
+                                                $("#loopinfo").append(divbordy);
+
+                                            })(i);
+
                                         }
-                                    });
-                                    for (var i = 0; i < looprs.length; i++) {
-                                        (function (x) {
-                                            var loop = looprs[i];
-                                            var obj = loop;
-                                            var str = "";
-                                            if (loop.l_switch == 1) {
-                                                str = "闭合";
-                                            } else {
-                                                str = "断开";
+                                    }
+                                    ;
+                                    //传感器
+                                    if (sensorrs.length > 0) {
+                                        for (var i = 0; i < sensorrs.length; i++) {
+                                            var sensor = sensorrs[i];
+                                            var p = document.createElement("p");
+                                            var span1 = document.createElement("span");
+                                            var span2 = document.createElement("span");
+                                            var name = sensor.name;
+                                            var val = "";
+                                            if (sensor.type == "1") {
+                                                var num;
+                                                if (sensor.numvalue > 0) {
+                                                    num = sensor.numvalue / 10;
+                                                } else {
+                                                    num = 0;
+                                                }
+                                                val = num.toString() + "℃";
+                                            } else if (sensor.type == "2") {
+                                                var num;
+                                                if (sensor.numvalue > 0) {
+                                                    num = sensor.numvalue / 10;
+                                                } else {
+                                                    num = 0;
+                                                }
+                                                val = num.toString() + "%RH";
+                                            } else if (sensor.type == "3") {
+                                                if (sensor.numvalue == "1") {
+                                                    val = "闭合";
+                                                } else {
+                                                    val = "断开";
+                                                }
+                                            } else if (sensor.type == "4") {
+                                                var num;
+                                                if (sensor.numvalue > 0) {
+                                                    num = sensor.numvalue / 10;
+                                                } else {
+                                                    num = 0;
+                                                }
+                                                val = num.toString() + "m/s";
+                                            } else if (sensor.type == "5") {
+                                                val = getDirection(sensor.numvalue);
+                                            } else if (sensor.type == "6") {
+                                                var num;
+                                                if (sensor.numvalue > 0) {
+                                                    num = sensor.numvalue / 10;
+                                                } else {
+                                                    num = 0;
+                                                }
+                                                val = num.toString() + "    lux";
                                             }
-                                            var divbordy = document.createElement("div");
-                                            var div1 = document.createElement("div");
-                                            var div2 = document.createElement("div");
-                                            var div3 = document.createElement("div");
-                                            var div4 = document.createElement("div");
-                                            var bhbtn = document.createElement("button");
-                                            var dkbtn = document.createElement("button");
-                                            div2.setAttribute("id", "bh" + i);
-                                            bhbtn.innerHTML = '闭合';
-                                            dkbtn.innerHTML = '断开';
-                                            //闭合
-                                            bhbtn.onclick = function () {                          //绑定点击事件
-                                                close(obj, comaddr, $(div2).attr('id'));
-                                            };
-                                            //断开
-                                            dkbtn.onclick = function () {
-                                                discon(obj, comaddr, $(div2).attr('id'));
-                                            };
-                                            divbordy.setAttribute("class", "divbody");
-                                            div1.setAttribute("class", "div1");
-                                            div2.setAttribute("class", "div2");
-                                            div3.setAttribute("class", "div3");
-                                            div4.setAttribute("class", "div3");
-                                            div1.innerHTML = loop.l_name;
-                                            div2.innerHTML = str;
-                                            div3.appendChild(bhbtn);
-                                            div4.appendChild(dkbtn);
-                                            divbordy.appendChild(div1);
-                                            divbordy.appendChild(div2);
-                                            divbordy.appendChild(div3);
-                                            divbordy.appendChild(div4);
-                                            $("#loopinfo").append(divbordy);
-
-                                        })(i);
+                                            span1.innerHTML = name + ":&nbsp ";
+                                            span2.innerHTML = val;
+                                            span2.setAttribute("style", "color: green;");
+                                            p.appendChild(span1);
+                                            p.appendChild(span2);
+                                            // p.innerHTML = name + ":      " + val;
+                                            $("#sensorinfo").append(p);
+                                        }
 
                                     }
+                                    ;
+                                },
+                                error: function () {
+                                    alert("提交添加失败！");
                                 }
-                                ;
-                                //传感器
-                                if (sensorrs.length > 0) {
-                                    for (var i = 0; i < sensorrs.length; i++) {
-                                        var sensor = sensorrs[i];
-                                        var p = document.createElement("p");
-                                        var span1 = document.createElement("span");
-                                        var span2 = document.createElement("span");
-                                        var name = sensor.name;
-                                        var val = "";
-                                        if (sensor.type == "1") {
-                                            var num;
-                                            if (sensor.numvalue > 0) {
-                                                num = sensor.numvalue / 10;
-                                            } else {
-                                                num = 0;
-                                            }
-                                            val = num.toString() + "℃";
-                                        } else if (sensor.type == "2") {
-                                            var num;
-                                            if (sensor.numvalue > 0) {
-                                                num = sensor.numvalue / 10;
-                                            } else {
-                                                num = 0;
-                                            }
-                                            val = num.toString() + "%RH";
-                                        } else if (sensor.type == "3") {
-                                            if (sensor.numvalue == "1") {
-                                                val = "闭合";
-                                            } else {
-                                                val = "断开";
-                                            }
-                                        } else if (sensor.type == "4") {
-                                            var num;
-                                            if (sensor.numvalue > 0) {
-                                                num = sensor.numvalue / 10;
-                                            } else {
-                                                num = 0;
-                                            }
-                                            val = num.toString() + "m/s";
-                                        } else if (sensor.type == "5") {
-                                            val = getDirection(sensor.numvalue);
-                                        } else if (sensor.type == "6") {
-                                            var num;
-                                            if (sensor.numvalue > 0) {
-                                                num = sensor.numvalue / 10;
-                                            } else {
-                                                num = 0;
-                                            }
-                                            val = num.toString() + "    lux";
-                                        }
-                                        span1.innerHTML = name + ":&nbsp ";
-                                        span2.innerHTML = val;
-                                        span2.setAttribute("style", "color: green;");
-                                        p.appendChild(span1);
-                                        p.appendChild(span2);
-                                        // p.innerHTML = name + ":      " + val;
-                                        $("#sensorinfo").append(p);
-                                    }
-
-                                }
-                                ;
-                            },
-                            error: function () {
-                                alert("提交添加失败！");
-                            }
-                        });
-                        $('#faultDiv').dialog('open');
+                            });
+                            $('#faultDiv').dialog('open');
+                        }
                     }
+                } else if (o.model == 2) {
+                    console.log("o");
+                    console.log(o);
+                    $("#loopdiv").html("");
+                    var loop = o.ooo;
+                    var obj = loop;
+                    var comaddr2;
+                    $.ajax({async: false, url: "homePage.gayway.getcomaddrbyidentify.action", type: "post", datatype: "JSON", data: {identify: obj.identify},
+                        success: function (data) {
+                            var rs = data.rs;
+                            if (rs.length > 0) {
+                                comaddr2 = rs[0].comaddr;
+                            }
+                        },
+                        error: function () {
+                            alert("提交失败！");
+                        }
+                    });
+                    var str = "";
+                    if (loop.l_switch == 1) {
+                        str = "开";
+                    } else {
+                        str = "关";
+                    }
+                    var divbordy = document.createElement("div");
+                    var div1 = document.createElement("div");
+                    var div2 = document.createElement("div");
+                    var div3 = document.createElement("div");
+                    var div4 = document.createElement("div");
+                    var bhbtn = document.createElement("button");
+                    var dkbtn = document.createElement("button");
+                    bhbtn.setAttribute("id", "k");
+                    dkbtn.setAttribute("id", "g");
+                    div2.setAttribute("id", "bh");
+                    bhbtn.innerHTML = '开';
+                    dkbtn.innerHTML = '关';
+                    //闭合
+                    bhbtn.onclick = function () {                          //绑定点击事件
+                        close(obj, comaddr2, $(div2).attr('id'));
+                    };
+                    //断开
+                    dkbtn.onclick = function () {
+                        discon(obj, comaddr2, $(div2).attr('id'));
+                        //o.src="img/lllh.png";
+                    };
+                    divbordy.setAttribute("class", "divbody");
+                    div1.setAttribute("class", "div1");
+                    div2.setAttribute("class", "div2");
+                    div3.setAttribute("class", "div3");
+                    div4.setAttribute("class", "div3");
+                    div1.innerHTML = loop.l_name;
+                    div2.innerHTML = str;
+                    div3.appendChild(bhbtn);
+                    div4.appendChild(dkbtn);
+                    divbordy.appendChild(div1);
+                    divbordy.appendChild(div2);
+                    divbordy.appendChild(div3);
+                    divbordy.appendChild(div4);
+                    var h5 = document.createElement("h5");
+                    h5.innerHTML = "所属网关："+loop.name;
+                    $("#loopdiv").append(h5);
+                    $("#loopdiv").append(divbordy);
+                    $('#loopdiv').dialog('open');
                 }
 
 
@@ -464,7 +516,7 @@
             var e = ev || event;
             var x = e.clientX;
             var y = e.clientY;
-            drag(x, y);
+            // drag(x, y);
             isok = true;
         };
         //拖拽函数
@@ -518,10 +570,10 @@
 
         //闭合
         function close(obj, comaddr, divid) {
-            var ele = obj;
-            addlogon(u_name, "设置", o_pid, "实图主页", "闭合回路【" + ele.l_name + "】", obj.l_identify);
-            var o = {};
-            o.l_comaddr = ele.l_comaddr;
+            var ele = {};
+            ele = obj;
+            addlogon(u_name, "设置", o_pid, "实图主页", "闭合回路【" + ele.l_name + "】", ele.l_identify);
+
             var vv = [];
             vv.push(1);
             vv.push(0x10);               //头指令 
@@ -530,7 +582,7 @@
             vv.push(infonum >> 8 & 0xff); //起始地址
             vv.push(infonum & 0xff);
 
-            vv.push(0);          
+            vv.push(0);
             vv.push(2);   //寄存器数目
             vv.push(4);           //字节数目长度 
 
@@ -544,7 +596,7 @@
 
 
 
-            var val2 = parseInt(0);
+            var val2 = parseInt(1);
             vv.push(val2 >> 8 & 0xff);   //控制值
             vv.push(val2 & 0xff);
 
@@ -592,7 +644,6 @@
             var data = buicode2(vv);
             console.log("data");
             console.log(data);
-            return ;
             dealsend3("10", data, "switchloopCB", comaddr, 0, ele.id, info, "${param.action}", divid);
             $('#panemask').showLoading({
                 'afterShow': function () {
@@ -604,6 +655,7 @@
 
         //回路设置回调函数
         function switchloopCB(obj) {
+            console.log(obj);
             $('#panemask').hideLoading();
             if (obj.status == "success") {
                 var data = Str2BytesH(obj.data);
@@ -618,9 +670,11 @@
                     if (data[2] == high && data[3] == low) {
                         var str = obj.type == 0 ? "断开成功" : "闭合成功";
                         if (obj.type == 0) {
-                            document.getElementById(obj.divid).innerHTML = "断开";
+                           
+                            document.getElementById(obj.divid).innerHTML = "关";
                         } else {
-                            document.getElementById(obj.divid).innerHTML = "闭合";
+
+                            document.getElementById(obj.divid).innerHTML = "开";
                         }
                         var param = {id: obj.param, l_switch: obj.type};
                         $.ajax({async: false, url: "loop.loopForm.modifySwitch.action", type: "get", datatype: "JSON", data: param,
@@ -640,18 +694,21 @@
                 }
 
             }
+            reft();
+            
 
         }
 
         //判断是否点中图标
         function isInPos(x, y, posx, posy, obj) {
-            var height = obj.height;
-            var width = obj.width;
-            if (x >= posx && x <= posx + width && y >= posy && y <= posy + obj.height) {
+            var height2 = parseInt(obj.height) + parseInt(posy);
+            var width2 = parseInt(obj.width) + parseInt(posx);
+            if (x >= posx && x <= width2 && y >= posy && y <= height2) {
                 return true;
             } else {
                 return false;
             }
+
         }
 
         function isHitImg(x, y) {
@@ -818,6 +875,116 @@
                 },
                 error: function () {
                     alert("提交添加失败！");
+                }
+            });
+        }
+
+        //刷新画版上的图标
+        function  reft() {
+            wg = {};
+            movObject = [];
+            loopArr = {};
+            //网关
+            var obj = {pid: o_pid, page: "ALL"};
+            $.ajax({async: false, url: "homePage.masterhome.getcomaddrSlist.action", type: "get", datatype: "JSON", data: obj,
+                success: function (data) {
+
+                    var rs = data.comaddrrs;
+                    for (var i = 0; i < rs.length; i++) {
+                        var cmd = rs[i];
+                        console.log(cmd);
+                        wg[cmd.id] = cmd;
+                        var imgtemp = new Image();
+                        if (cmd.online == 1) {
+                            imgtemp.src = "img/wzx.png";
+                        } else {
+                            imgtemp.src = "img/wlx.png";
+                        }
+
+                        imgtemp.name = "imgimg" + i.toString();
+                        imgtemp.alt = cmd.id;
+                        imgtemp.onload = function () {
+                            var m1 = "imgimg";
+                            var name = this.name;
+
+                            var id = this.alt;
+                            var o1 = wg[id];
+                            wg[id].img = this;
+                            var index = name.substring(m1.length, name.length);
+                            var index = parseInt(index);
+                            if (o1.posX != null && o1.posY != null) {
+                                this.posX = o1.posX;
+                                this.posY = o1.posY;
+                            } else {
+                                wg[id].posX = index * 40;
+                                wg[id].posY = 0;
+                                this.posX = index * 40;
+                                this.posY = 0;
+
+                            }
+                            this.model = 1;
+                            this.ooo = o1;
+                            movObject.push(this);
+                            draw(this, this.posX, this.posY);
+
+
+                        };
+                    }
+
+                },
+                error: function () {
+                    alert("提交失败！");
+                }
+            });
+
+            //回路
+            var objloop = {pid: o_pid, page: "ALL", l_deplayment: 1};
+            $.ajax({async: false, url: "loop.loopForm.getLoopList2.action", type: "get", datatype: "JSON", data: objloop,
+                success: function (data) {
+                    console.log(data);
+                    for (var j = 0; j < data.total; j++) {
+                        var oo = data.rows[j];
+                        loopArr[oo.lid] = oo;
+                        var imgtemp = new Image();
+                        if (oo.l_switch == 1) {
+                            imgtemp.src = "img/hl.png";
+                        } else {
+                            imgtemp.src = "img/lllh.png";
+                        }
+
+                        imgtemp.name = "looploop" + j.toString();
+                        imgtemp.alt = oo.lid;
+                        imgtemp.onload = function () {
+
+                            var m1 = "looploop";
+                            var name = this.name;
+                            var id = this.alt;
+                            var o1 = loopArr[id];
+                            loopArr[id].img = this;
+                            var index = name.substring(m1.length, name.length);
+                            var index = parseInt(index);
+
+                            if (o1.posX != null && o1.posY != null) {
+                                this.posX = o1.posX;
+                                this.posY = o1.posY;
+
+                            } else {
+                                loopArr[id].posX = index * 40;
+                                loopArr[id].posY = 0;
+                                this.posX = index * 60;
+                                this.posY = 80;
+                            }
+
+                            this.model = 2;
+                            this.ooo = o1;
+                            movObject.push(this);
+
+                            draw(this, this.posX, this.posY);
+                        };
+                    }
+                },
+                error: function () {
+                    alert("提交失败！");
                 }
             });
         }

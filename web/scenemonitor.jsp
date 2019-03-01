@@ -200,7 +200,7 @@
                                     }
                                 },
                                 onSelect: function (record) {
-
+                                    scenenum = -1;
                                     $("#identify").val(record.identify);
                                     var l_comaddr = record.id;
                                     var obj = {};
@@ -223,6 +223,7 @@
                                             alert("提交失败！");
                                         }
                                     });
+                                    //console.log(l_comaddr);
 
                                     $('#scenenum').combobox({
                                         url: "sensor.planForm.getSensorPlanBynum1.action?p_identify=" + record.identify,
@@ -286,7 +287,6 @@
 //                                        query: obj
 //                                    };
 //                                    $("#gravidaTable").bootstrapTable('refresh', opt);
-
 
                                 }
                             });
@@ -377,22 +377,27 @@
             })
 
             function getSceneNumCB(obj) {
+                $('#panemask').hideLoading();
                 var data = Str2BytesH(obj.data);
                 var v = "";
                 for (var i = 0; i < data.length; i++) {
                     v = v + sprintf("%02x", data[i]) + " ";
                 }
                 console.log(v);
-                var sceneval = data[3] * 256 + data[4];
-                console.log(scenenum, sceneval);
-                var data = $("#table0").bootstrapTable('getData');
-
-                if (data.length > 0) {
-                    if (scenenum != sceneval) {
-                        scenenum = sceneval;
-                        $("#table0").bootstrapTable('refresh');
-                    }
+                var sceneval = data[3] * 256 + data[4];            
+               // var data = $("#table0").bootstrapTable('getData');               
+                if(data[1]=="03"){
+                    layerAler("读取成功");
+                   scenenum = sceneval;
+                 $("#table0").bootstrapTable('refresh');
                 }
+                 
+//                if (data.length > 0) {
+//                    if (scenenum != sceneval) {
+//                        scenenum = sceneval;
+//                        $("#table0").bootstrapTable('refresh');
+//                    }
+//                }
             }
 
             function getSceneNum(l_comaddr) {
@@ -409,6 +414,12 @@
                 var data = buicode2(vv);
                 console.log(data);
                 dealsend2("03", data, "getSceneNumCB", l_comaddr, 0, 0, 3800, "${param.action}");
+                 $('#panemask').showLoading({
+                    'afterShow': function () {
+                        setTimeout("$('#panemask').hideLoading()", 10000);
+                    }
+                }
+                );
             }
 
             function switchloopCB(obj) {
@@ -549,6 +560,16 @@
                 );
 
             }
+            
+            //读取场景值
+            function  redval(){
+                var l_comaddr = $("#l_comaddr").val();
+                if (l_comaddr == "") {
+                    layerAler('请勾选网关');  //请勾选网关
+                    return;
+                }
+                 getSceneNum(l_comaddr);
+            }
 
 
         </script>
@@ -594,6 +615,11 @@
                                     <td>
                                         <button type="button" id="btnswitch" onclick="restoreloop()" class="btn btn-success btn-sm">
                                             恢复自动运行
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" id="btnred" onclick="redval()" class="btn btn-success btn-sm">
+                                            读取场景值
                                         </button>
                                     </td>
                                 </tr>
